@@ -32,10 +32,38 @@ El ensamblado se controlará con un manifiesto JSON versionado en Academia. Cada
 - repositorio y rama fuente;
 - carpeta fuente;
 - ruta pública;
+- archivo de configuración de marca;
 - rutas de recursos compartidos;
 - hostname anterior y destino canónico.
 
 El script de construcción leerá ese manifiesto. Añadir otra constelación no deberá exigir duplicar la lógica del build.
+
+## Contrato de marca de cada constelación
+
+La identidad visual no deberá quedar acoplada al HTML ni depender de reglas CSS dispersas. Cada constelación tendrá un archivo de configuración versionado que describa su personalidad dentro del sistema madre de Academia.
+
+El contrato conservará:
+
+- nombre, nombre corto, slug y descripción;
+- figura de constelación, nombre astronómico y recurso gráfico;
+- paleta mediante tokens semánticos: accent de texto, accent de superficie, fondo, panel, borde y glow;
+- familias tipográficas para display, cuerpo y texto técnico;
+- tratamiento de títulos: mayúsculas, peso, tracking, interlineado y segmento que recibe el accent;
+- motivo de fondo y densidad decorativa;
+- logotipo y assets propios, cuando existan;
+- etiquetas de navegación, categorías y terminología propia;
+- versión del esquema de configuración.
+
+El cascarón seguirá controlando la estructura común: navbar, navegación móvil, espaciado base, accesibilidad, tarjetas, estados de foco y regreso a Academia. La configuración sólo podrá modificar los tokens y variantes expresamente permitidos; no inyectará CSS o JavaScript arbitrario.
+
+Si un dato falta o no pasa validación, el cascarón usará el tema madre de La Red de Luz. Los colores de texto y controles deberán cumplir contraste antes de ser aceptados. Esto evita que una constelación nueva rompa la navegación o vuelva ilegible la interfaz.
+
+La primera extracción tomará como referencia las identidades vigentes:
+
+- DTMM: fondo cálido oscuro, dorado como accent, lenguaje de construcción y tipografía editorial/técnica.
+- Inglés: negro, rojo como accent, Archivo Black en titulares y lenguaje de conversación/comunidad.
+
+La configuración de marca y el contenido serán archivos separados. Cambiar clases, sesiones o recursos no deberá modificar el branding; cambiar el branding no deberá alterar el contenido didáctico.
 
 ## Flujo de publicación
 
@@ -76,6 +104,8 @@ El cambio se desplegará primero sin borrar las fuentes ni los dominios anterior
 ## Relación con la futura migración a React
 
 Las URLs públicas y el manifiesto serán contratos estables. Una futura aplicación React, Next.js o similar podrá reemplazar el ensamblador estático por rutas y componentes sin cambiar los enlaces visibles.
+
+El futuro cascarón resolverá una ruta, cargará la configuración de marca correspondiente y aplicará sus valores mediante tokens CSS y variantes de componentes. Después cargará el contenido de clases, sesiones y recursos. Esta separación permitirá reutilizar el mismo componente de hub sin uniformar visualmente las constelaciones.
 
 El motor de decks continuará separado del shell de navegación. La migración deberá envolverlo como módulo o aplicación embebida antes de reescribirlo, para evitar una reconstrucción innecesaria del contenido didáctico actual.
 
