@@ -1,0 +1,66 @@
+{
+  "programa": {
+    "nombre": "¡Hablemos Inglés!",
+    "eslogan": "Un espacio entre amigos para practicar, equivocarnos y reírnos en el intento."
+  },
+  "filas": [
+    {
+      "id": "sesiones",
+      "titulo": "Sesiones",
+      "subtitulo": "En orden",
+      "etiqueta": "Sesión",
+      "clases": [
+        {
+          "id": "sesion-1",
+          "parte": "Sesión 1",
+          "titulo": "Cinco palabras al día",
+          "resumen": "Presentaciones, gustos personales, la regla de la \"s\" en tercera persona y el sufijo -ing. Con Arturo.",
+          "deck": "sesion-1.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-08-15",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "id": "sesion-2",
+          "parte": "Sesión 2",
+          "titulo": "Construyendo nuestras primeras conversaciones",
+          "resumen": "Pronunciación sin miedo, mini role-play y los errores más chistosos que todos cometemos al empezar.",
+          "deck": "sesion-2.html"
+        }
+      ]
+    },
+    {
+      "id": "basico",
+      "titulo": "Inglés Básico",
+      "subtitulo": "3 clases de práctica",
+      "etiqueta": "Básico",
+      "clases": [
+        {
+          "id": "sesion-3",
+          "parte": "Clase 1",
+          "titulo": "Yo soy, tú eres",
+          "resumen": "Presentarte, saludar y preguntar sobre otra persona — con el verbo TO BE.",
+          "deck": "sesion-3.html"
+        },
+        {
+          "id": "sesion-4",
+          "parte": "Clase 2",
+          "titulo": "What do you do every day?",
+          "resumen": "Tu rutina diaria en presente simple — y la \"s\" que se te puede olvidar.",
+          "deck": "sesion-4.html"
+        },
+        {
+          "id": "sesion-5",
+          "parte": "Clase 3",
+          "titulo": "I'd like... I'm going to...",
+          "resumen": "Gustos, planes de fin de semana, y un role-play completo pidiendo comida en McDonald's.",
+          "deck": "sesion-5.html"
+        }
+      ]
+    }
+  ]
+}

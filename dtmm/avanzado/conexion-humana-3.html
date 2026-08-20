@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Lo que hace que alguien diga "exacto, eso me pasa a mí" — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* mensaje mal vs. mensaje reescrito, uno debajo del otro */
+.antes-despues{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:38rem}
+.antes-despues .bub{max-width:92%}
+.antes-despues .mal{align-self:flex-start;background:var(--char-soft);
+  border:1px solid rgba(200,68,46,.4);border-bottom-left-radius:4px;
+  padding:.8rem 1.1rem;border-radius:16px;color:var(--on-char-soft);
+  font-size:clamp(.88rem,1.2vw,1.02rem);line-height:1.4}
+.paper .antes-despues .mal{background:var(--paper-soft);border-color:rgba(200,68,46,.35);
+  color:var(--on-paper-soft)}
+.antes-despues .bien{align-self:flex-end;background:rgba(232,161,60,.14);
+  border:1px solid var(--sesame);border-bottom-right-radius:4px;
+  padding:.8rem 1.1rem;border-radius:16px;color:var(--on-char);
+  font-size:clamp(.88rem,1.2vw,1.02rem);line-height:1.4}
+.paper .antes-despues .bien{background:rgba(200,68,46,.1);border-color:var(--ketchup);
+  color:var(--on-paper)}
+.antes-despues .tag{display:block;font-family:'Martian Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem}
+.antes-despues .tag.x{color:var(--ketchup)}
+.antes-despues .tag.ok{color:var(--sesame)}
+.paper .antes-despues .tag.ok{color:var(--ketchup)}
+
+/* técnica: nombre + una línea de qué hace + ejemplo */
+.tecnica{width:100%;max-width:44rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.paper .tecnica{background:var(--paper-soft);border-color:var(--line-l)}
+.tecnica .nombre{font-family:'Unbounded',sans-serif;font-weight:600;
+  font-size:clamp(1.1rem,1.8vw,1.4rem);color:var(--sesame)}
+.paper .tecnica .nombre{color:var(--ketchup)}
+.tecnica .que{font-size:clamp(.9rem,1.3vw,1.05rem);line-height:1.5;
+  color:var(--on-char-soft);margin-top:.6rem}
+.paper .tecnica .que{color:var(--on-paper-soft)}
+.tecnica .ejemplo{font-family:'Fraunces',serif;font-style:italic;
+  font-size:clamp(1rem,1.6vw,1.3rem);line-height:1.45;margin-top:1rem;
+  padding-top:1rem;border-top:1px solid var(--line-d)}
+.paper .tecnica .ejemplo{border-color:var(--line-l)}
+
+/* la fórmula feel-felt-found, tres pasos horizontales */
+.fff{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.6rem;
+  align-items:center;width:100%}
+@media(max-width:820px){.fff{grid-template-columns:1fr;gap:.5rem}
+  .fff .arrow{display:none}}
+.fff .paso{background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px;
+  padding:clamp(.9rem,1.6vw,1.2rem);text-align:center}
+.paper .fff .paso{background:var(--paper-soft);border-color:var(--line-l)}
+.fff .paso .en{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--sesame)}
+.paper .fff .paso .en{color:var(--ketchup)}
+.fff .paso .es{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.9rem,1.4vw,1.1rem);margin-top:.4rem}
+.fff .arrow{color:var(--on-char-mute);font-size:1.3rem;text-align:center}
+.paper .fff .arrow{color:var(--on-paper-mute)}
+</style>
+</head>
+<body data-volver="../index.html" data-volver-texto="‹ Hub">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Esta clase va DESPUÉS de vender sin hartar (máscaras) y ANTES del taller final. La máscara abre la puerta; esto es lo que pasa una vez que la persona ya está en el chat contigo. <em>No es teoría de psicología — son frases exactas que se escriben distinto.</em>">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Avanzado · Parte 3 · Conexión humana</div>
+      <h1 class="mega">Lo que hace que alguien diga <span class="hl">"exacto, eso me pasa a mí."</span></h1>
+      <p class="lead wide mt-m">La máscara abrió la puerta. Ahora toca sostener la conversación sin que se sienta a venta.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · EL MOMENTO QUE BUSCAS -->
+    <section class="slide paper" data-notes="Este es el concepto ancla de toda la clase: <em>el momento &laquo;eso es exacto&raquo;</em>. Es el punto donde el filtro crítico de la persona baja más — por eso es el mejor lugar para meter lo que quieres decir. Todo lo que sigue son formas de llegar ahí.">
+      <div class="eyebrow">El momento que buscas</div>
+      <h2 class="h1">Cuando alguien piensa <span class="hl">"exacto, eso es lo que me pasa."</span></h2>
+      <p class="lead wide mt-m">Es el punto más alto de conexión en cualquier conversación. Justo ahí, el filtro crítico de la persona está más bajo que en cualquier otro momento — por eso es donde mejor entra lo que quieres decir.</p>
+      <div class="chip"><span class="dot"></span> Todo lo de hoy son formas distintas de llegar a ese momento</div>
+    </section>
+
+    <!-- 3 · EL ERROR: RESPONDER, NO CONECTAR -->
+    <section class="slide" data-notes="Muestra el error común primero. La respuesta &laquo;mal&raquo; no está mal escrita — es correcta, es amable, pero <em>no nombra nada</em>. Responde a lo que dijeron, no a lo que sienten. Ese es el punto ciego que van a corregir hoy.">
+      <div class="glow br"></div>
+      <div class="eyebrow">El error de siempre</div>
+      <h2 class="h1">Le respondes al mensaje, <span class="hl">no a la persona.</span></h2>
+      <div class="antes-despues mt-l">
+        <div class="bub mal"><span class="tag x">Ellos</span>He intentado de todo y nada me funciona.</div>
+        <div class="bub mal"><span class="tag x">Respuesta típica</span>Entiendo, ¡pero con esto sí te va a funcionar!</div>
+      </div>
+      <p class="lead wide mt-m">Es correcta. Es amable. Y no nombra nada — por eso no conecta.</p>
+    </section>
+
+    <!-- 4 · LABELING -->
+    <section class="slide paper" data-notes="Primera técnica: Labeling, de Chris Voss (viene de negociación de rehenes, aquí se usa como herramienta de escritura, no para negociar de verdad). Nombrar en voz alta lo que la persona siente <em>antes</em> de que ella lo diga. La frase &laquo;parece que...&raquo; es la llave.">
+      <div class="eyebrow">Técnica 01 · Chris Voss</div>
+      <h2 class="h1">Nombra lo que siente, <span class="hl">antes de que lo diga.</span></h2>
+      <div class="tecnica mt-l">
+        <div class="nombre">Labeling</div>
+        <div class="que">Dices en voz alta la emoción que la otra persona no ha dicho todavía. Genera validación instantánea: siente que ya la entendiste sin que tuviera que explicarte.</div>
+        <div class="ejemplo">"Parece que ya intentaste de todo y aun así sigues en el mismo lugar."</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Empieza con "parece que...", "suena como si...", "diría que sientes que..."</div>
+    </section>
+
+    <!-- 5 · MIRRORING -->
+    <section class="slide" data-notes="Segunda técnica: Mirroring. La diferencia con labeling es sutil pero importante: labeling nombra la emoción, mirroring <em>repite las palabras exactas</em> de la persona. Cuando alguien escucha su propia frase de vuelta, siente que le hablaste a ella y no a un genérico.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Técnica 02 · Chris Voss</div>
+      <h2 class="h1">Usa <span class="hl">sus palabras</span>, no las tuyas.</h2>
+      <div class="tecnica mt-l">
+        <div class="nombre">Mirroring</div>
+        <div class="que">En vez de parafrasear con tu propio vocabulario, repites la frase textual que la persona ya usó — en un comentario, un mensaje, una historia. Cuando escucha su propia frase de vuelta, siente que le hablaste directo a ella.</div>
+        <div class="ejemplo">Si te escribió "siento que estoy estancada", tu respuesta trae esa misma palabra: "estancada" — no "en un momento de transición" ni ningún sinónimo más bonito.</div>
+      </div>
+    </section>
+
+    <!-- 6 · FEEL-FELT-FOUND -->
+    <section class="slide paper" data-notes="Tercera técnica: la fórmula de Tom &laquo;Big Al&raquo; Schreiter, del mundo del network marketing. Es casi un labeling con resolución de historia incluida. Los tres pasos van en orden: primero reconoces, luego normalizas con un tercero, y al final resuelves con lo que ese tercero encontró — nunca con un argumento directo.">
+      <div class="eyebrow">Técnica 03 · Tom "Big Al" Schreiter</div>
+      <h2 class="h1">Sentir, sentiste, <span class="hl">encontré.</span></h2>
+      <div class="fff mt-l">
+        <div class="paso"><div class="en">Feel</div><div class="es">"Sé cómo te sientes"</div></div>
+        <div class="arrow">→</div>
+        <div class="paso"><div class="en">Felt</div><div class="es">"Otros se sintieron igual"</div></div>
+        <div class="arrow">→</div>
+        <div class="paso"><div class="en">Found</div><div class="es">"Y encontraron que..."</div></div>
+      </div>
+      <p class="lead wide mt-m">Reconoces, normalizas con un tercero, resuelves con lo que ese tercero descubrió. Nunca con un argumento directo — con una historia.</p>
+    </section>
+
+    <!-- 7 · LA CONVERSACIÓN COMPLETA -->
+    <section class="slide" data-notes="Aquí es donde se junta todo. Lee la conversación completa en voz alta, despacio. Nota cómo <em>ninguna línea vende nada</em> hasta que la persona ya está en el momento &laquo;eso es exacto&raquo; — y ahí la venta ni siquiera se siente como venta.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Las tres técnicas, juntas</div>
+      <h2 class="h1">Así se ve <span class="hl">en un chat real.</span></h2>
+      <div class="antes-despues mt-l">
+        <div class="bub mal"><span class="tag x">Ellos</span>Siento que estoy estancada. Ya probé de todo y nada.</div>
+        <div class="bub bien"><span class="tag ok">Tú · labeling + mirroring</span>Parece que ya intentaste de todo y aun así sigues sintiéndote estancada.</div>
+        <div class="bub mal"><span class="tag x">Ellos</span>Exacto, eso es justo lo que siento.</div>
+        <div class="bub bien"><span class="tag ok">Tú · feel-felt-found</span>Te entiendo. Yo me sentí igual hace un tiempo — y una alumna mía pasó por lo mismo. Lo que encontró fue que el problema nunca fue el esfuerzo, era la estructura.</div>
+      </div>
+    </section>
+
+    <!-- 8 · LA OBJECIÓN QUE NADIE DICE -->
+    <section class="slide paper" data-notes="Cuarta técnica: accusation audit, también de Voss. Se nombra la duda ANTES de que la piensen, para desarmarla. Conecta directo con &laquo;vender sin hartar&raquo; de la clase 2 — es otra forma de bajar el detector antipublicidad.">
+      <div class="eyebrow">Técnica 04 · Chris Voss</div>
+      <h2 class="h1">Di la duda <span class="hl">antes de que la piensen.</span></h2>
+      <div class="tecnica mt-l">
+        <div class="nombre">Accusation audit</div>
+        <div class="que">Nombras la objeción que la persona probablemente ya tiene, antes de que la piense. Cuando la dices tú primero, deja de sentirse como algo que hay que ocultar.</div>
+        <div class="ejemplo">"Seguro estás pensando que esto es otra promesa vacía más — y tienes toda la razón para dudarlo."</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Bajar la guardia antes de que la levanten es más fácil que bajarla después</div>
+    </section>
+
+    <!-- 9 · LO QUE NO ES -->
+    <section class="slide" data-notes="Slide de cierre conceptual, antes del ejercicio. <em>Importante aclarar esto</em>: no es manipulación, es escuchar mejor y decirlo antes. La diferencia entre técnica y manipulación es si lo que dices es verdad sobre lo que la otra persona siente, o si te lo inventas para presionar.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Antes de practicar</div>
+      <h2 class="h1">No es manipular. <span class="hl">Es escuchar mejor.</span></h2>
+      <p class="lead wide mt-m">Estas cuatro técnicas solo funcionan si lo que dices es verdad sobre lo que la otra persona siente. Si te lo inventas para presionar, deja de ser conexión y se vuelve el mismo pitch de siempre, con palabras más finas.</p>
+    </section>
+
+    <!-- 10 · EJERCICIO -->
+    <section class="slide paper" data-notes="Ejercicio en vivo. Que usen un chat real que tengan parado — no uno inventado. El punto es que sientan la diferencia entre responder al mensaje y responder a la persona, en algo que de verdad les importa cerrar.">
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Reescribe <span class="hl">un chat que tengas parado.</span></h2>
+      <p class="lead wide mt-m">Busca una conversación real donde te quedaste sin saber qué responder. Reescribe tu siguiente mensaje usando labeling o mirroring — nombra lo que sientes que esa persona siente, con sus propias palabras si las tienes.</p>
+      <div class="chip"><span class="dot"></span> Pégalo en el chat. Vamos a leer 2 o 3 antes de seguir</div>
+    </section>
+
+    <!-- 11 · TU RETO DE LA SEMANA -->
+    <section class="slide" data-notes="Mismo formato de reto que las demás clases del nivel. La instrucción es concreta: una conversación real, una técnica, y observar qué cambia — no memorizar las cuatro técnicas de golpe.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="h1">Una conversación real. <span class="hl">Una técnica.</span></h2>
+      <p class="lead wide mt-m">Elige una técnica de hoy y úsala en la próxima conversación de ventas que tengas. No las cuatro de golpe — una, bien puesta. Observa qué cambia en cómo te responden.</p>
+    </section>
+
+    <!-- 12 · CIERRE -->
+    <section class="slide center" data-notes="Cierre. La frase final resume la clase entera en una idea. Prepara al grupo para el taller de graduación, que junta esto con la conversación de la clase 1 y la IA de la clase 3.">
+      <div class="glow br"></div>
+      <div class="eyebrow" style="justify-content:center">Antes del taller final de avanzado</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">No vendes cuando <em class="serif" style="color:var(--on-char-soft)">convences.</em></p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="quote" style="margin-inline:auto;text-align:center">Vendes cuando <span class="hl">la persona se siente vista.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

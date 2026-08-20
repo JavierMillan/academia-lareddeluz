@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Constancia sin quemarte — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* calendario semanal: bloque de lote vs. días sueltos */
+.semana{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;width:100%}
+@media(max-width:820px){.semana{grid-template-columns:repeat(4,1fr)}}
+.dia{background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px;
+  padding:.6rem .3rem;text-align:center;min-height:3.4rem;
+  display:flex;flex-direction:column;justify-content:center;gap:.3rem}
+.paper .dia{background:var(--paper-soft);border-color:var(--line-l)}
+.dia .d{font-family:'Martian Mono',monospace;font-size:.55rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.paper .dia .d{color:var(--on-paper-mute)}
+.dia .e{font-size:1.1rem}
+.dia.lote{border-color:var(--sesame);background:rgba(232,161,60,.12)}
+.paper .dia.lote{border-color:var(--ketchup);background:rgba(200,68,46,.09)}
+</style>
+</head>
+<body data-volver="../clase.html?id=constancia-sin-quemarte-6" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Segunda clase sobre sostener el hábito, pero desde otro ángulo: no la cadencia (ya vista en Básico), sino <em>no quemarse</em> con ella. Normaliza el problema desde la portada.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Intermedio · Parte 6</div>
+      <h1 class="mega">Constancia <span class="hl">sin quemarte.</span></h1>
+      <p class="lead wide mt-m">Ya sabes cuánto publicar. Hoy vemos cómo sostenerlo sin que se vuelva trabajo forzado.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · EL DATO -->
+    <section class="slide paper" data-notes="Dato real de Sprout Social 2026. <em>Normaliza el problema antes de resolverlo</em> — que sepan que no es falta de disciplina propia, es un problema del oficio.">
+      <div class="eyebrow">Dato real · Sprout Social 2026</div>
+      <div class="split">
+        <div>
+          <div class="stat">33%</div>
+          <p class="lead wide mt-s">de los creadores de contenido dicen que su mayor miedo es el burnout.</p>
+        </div>
+        <div>
+          <p class="lead wide">No es un problema de disciplina. Es que casi nadie enseña a sostener esto sin que te consuma.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · NO ES DISCIPLINA, ES DISEÑO (PIVOTE) -->
+    <section class="slide" data-notes="El giro de la clase. <em>Publicar improvisando cada día agota más que producir por lotes</em>, aunque sea el mismo contenido al final. La diferencia está en cuántas veces te tienes que &laquo;prender&raquo; a crear.">
+      <div class="glow br"></div>
+      <div class="eyebrow">El cambio de marco</div>
+      <h2 class="h1">No es falta de disciplina. <span class="hl">Es diseño.</span></h2>
+      <p class="lead wide mt-m">Publicar todos los días improvisando lo que vas a decir agota, aunque publiques poco. Publicar por lotes no agota igual — aunque sea exactamente el mismo contenido.</p>
+    </section>
+
+    <!-- 4 · CÓMO SE VE UN LOTE -->
+    <section class="slide paper" data-notes="Compara los dos calendarios visualmente. El punto es que el esfuerzo de &laquo;prenderse creativamente&raquo; pasa una sola vez en vez de siete.">
+      <div class="eyebrow">La diferencia visible</div>
+      <h2 class="h1">Un día de grabar, <span class="hl">no siete.</span></h2>
+      <div class="semana mt-l">
+        <div class="dia"><span class="d">Lun</span><span class="e">😩</span></div>
+        <div class="dia"><span class="d">Mar</span><span class="e">😩</span></div>
+        <div class="dia"><span class="d">Mié</span><span class="e">😩</span></div>
+        <div class="dia"><span class="d">Jue</span><span class="e">😩</span></div>
+        <div class="dia"><span class="d">Vie</span><span class="e">😩</span></div>
+        <div class="dia"><span class="d">Sáb</span><span class="e">—</span></div>
+        <div class="dia"><span class="d">Dom</span><span class="e">—</span></div>
+      </div>
+      <p class="lead wide mt-m">Grabar un poco cada día suma 5 momentos de "tengo que prenderme" a la semana.</p>
+      <div class="semana mt-m">
+        <div class="dia lote"><span class="d">Lun</span><span class="e">🎬</span></div>
+        <div class="dia"><span class="d">Mar</span><span class="e">✓</span></div>
+        <div class="dia"><span class="d">Mié</span><span class="e">✓</span></div>
+        <div class="dia"><span class="d">Jue</span><span class="e">✓</span></div>
+        <div class="dia"><span class="d">Vie</span><span class="e">✓</span></div>
+        <div class="dia"><span class="d">Sáb</span><span class="e">—</span></div>
+        <div class="dia"><span class="d">Dom</span><span class="e">—</span></div>
+      </div>
+      <p class="lead wide mt-s">Un lote de 2 horas produce el contenido de toda la semana. El resto de los días solo publicas lo que ya está hecho.</p>
+    </section>
+
+    <!-- 5 · TU BANCO DE IDEAS -->
+    <section class="slide" data-notes="El error típico: sentarse a &laquo;pensar qué publicar&raquo; el mismo día que toca publicar. Un banco de ideas rompe ese ciclo — las ideas se anotan cuando llegan, no cuando se necesitan.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">La pieza que falta</div>
+      <h2 class="h1">Tu banco de <span class="hl">ideas.</span></h2>
+      <p class="lead wide mt-m">El error de siempre: sentarte a pensar qué publicar el mismo día que toca publicar. Las ideas se te ocurren en otros momentos — en la ducha, en el coche, respondiendo un mensaje. Anótalas ahí, no las dejes ir.</p>
+      <div class="chip"><span class="dot"></span> Un lugar fijo: notas del celular, un documento, lo que sea que revises seguido</div>
+    </section>
+
+    <!-- 6 · LA SEMANA SIN NADA QUE DECIR -->
+    <section class="slide paper" data-notes="Va a pasar, y está bien. Dales opciones concretas para esa semana en vez de dejarlos con la angustia de &laquo;no tengo nada&raquo;.">
+      <div class="eyebrow">Cuando el banco se seca</div>
+      <h2 class="h1">La semana que <span class="hl">no tienes nada.</span></h2>
+      <div class="steps mt-l">
+        <div class="step"><div class="ico">🔁</div><div class="st">Reciclas</div><div class="sh">Un post viejo, con un ángulo nuevo</div></div>
+        <div class="step"><div class="ico">❓</div><div class="st">Respondes</div><div class="sh">La pregunta que más te repiten</div></div>
+        <div class="step"><div class="ico">🎨</div><div class="st">Repites formato</div><div class="sh">La misma estructura, otro tema</div></div>
+        <div class="step"><div class="ico">🙋</div><div class="st">Preguntas</div><div class="sh">A tu audiencia qué quiere ver</div></div>
+      </div>
+    </section>
+
+    <!-- 7 · LA REGLA DE FONDO -->
+    <section class="slide" data-notes="Slide de cierre conceptual antes del ejercicio. Es la idea que sostiene toda la clase.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Antes de practicar</div>
+      <h2 class="h1">Menos decisiones, <span class="hl">más sistema.</span></h2>
+      <p class="lead wide mt-m">Cada vez que decides qué publicar el mismo día que publicas, gastas energía que no necesitas gastar. El banco de ideas y los lotes existen para que solo decidas una vez.</p>
+    </section>
+
+    <!-- 8 · MANOS A LA OBRA -->
+    <section class="slide paper" data-notes="Ejercicio central. Que salgan con 5 ideas reales y las agendadas en un bloque, no repartidas. El punto es que sientan la diferencia entre planear y improvisar.">
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Arma <span class="hl">tu lote de la semana.</span></h2>
+      <p class="lead wide mt-m">Escribe 5 ideas de contenido — de lo que se te ha ocurrido esta semana, aunque sea suelto. Luego agenda un solo bloque de tiempo para grabarlas o escribirlas todas juntas.</p>
+      <div class="chip"><span class="dot"></span> Pega tus 5 ideas y tu bloque de tiempo en el chat</div>
+    </section>
+
+    <!-- 9 · TU RETO DE LA SEMANA -->
+    <section class="slide" data-notes="Reto concreto y medible: un solo bloque, no publicar el mismo día que se decide qué publicar.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="h1">Un solo bloque, <span class="hl">toda la semana.</span></h2>
+      <p class="lead wide mt-m">Esta semana no publiques nada que hayas decidido el mismo día. Todo sale del lote que armaste hoy.</p>
+    </section>
+
+    <!-- 10 · RECURSOS -->
+    <section class="slide paper" data-notes="La plantilla es el recurso central de esta clase — sin ella, el banco de ideas se pierde en el chat. Insiste en que la guarden en un lugar fijo.">
+      <div class="eyebrow">Para llevarte a casa</div>
+      <h2 class="h1">Recursos de <span class="hl">esta clase.</span></h2>
+      <div class="reslist mt-l">
+        <a class="res" href="recursos/banco-de-ideas.html" target="_blank" rel="noopener">
+          <span class="ri">⌘</span>
+          <span class="rb">
+            <span class="rt">Plantilla de banco de ideas + calendario de lotes</span>
+            <span class="rd">Para llenar hoy y reutilizar cada semana. Trae ejemplos de cada categoría de idea, para que nunca te quedes en blanco.</span>
+          </span>
+          <span class="rgo">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 11 · CIERRE -->
+    <section class="slide center" data-notes="Cierre. La frase resume el mensaje: la constancia se sostiene con sistema, no con fuerza de voluntad.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">No necesitas más disciplina. <span class="hl">Necesitas menos decisiones al día.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Tu celular ya es suficiente — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* mal vs bien, para luz/encuadre/audio */
+.mb{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem);width:100%}
+@media(max-width:820px){.mb{grid-template-columns:1fr}}
+.mb .lado{border-radius:16px;padding:clamp(1.2rem,2.4vw,1.9rem);
+  display:flex;flex-direction:column;gap:.6rem}
+.mb .no{background:var(--char-soft);border:1px solid rgba(200,68,46,.4)}
+.paper .mb .no{background:var(--paper-soft);border-color:rgba(200,68,46,.35)}
+.mb .si{background:rgba(232,161,60,.1);border:1px solid var(--sesame)}
+.paper .mb .si{background:rgba(200,68,46,.08);border-color:var(--ketchup)}
+.mb .ico{font-size:1.6rem}
+.mb .txt{font-size:clamp(.9rem,1.25vw,1.05rem);line-height:1.45;color:var(--on-char-soft)}
+.paper .mb .txt{color:var(--on-paper-soft)}
+.mb .lab{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase}
+.mb .no .lab{color:var(--ketchup)}
+.mb .si .lab{color:var(--sesame)}
+.paper .mb .si .lab{color:var(--ketchup)}
+</style>
+</head>
+<body data-volver="../clase.html?id=tu-celular-ya-es-suficiente-5" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Cierra la brecha entre elegir formato (Parte 2) y de verdad grabarlo. Deja claro desde el título: <em>no van a comprar nada hoy</em>.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Básico · Parte 5</div>
+      <h1 class="mega">Tu celular <span class="hl">ya es suficiente.</span></h1>
+      <p class="lead wide mt-m">Luz, encuadre y audio con lo que ya tienes en la mano. Sin comprar nada.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · EL MITO -->
+    <section class="slide paper" data-notes="Nombra la excusa antes de que la digan ellos. La mayoría de la gente que no graba dice que le falta equipo — y casi nunca es cierto.">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">"Necesito una cámara mejor" <span class="hl">casi nunca es cierto.</span></h2>
+      <p class="lead wide mt-m">Es una excusa cómoda para no grabar. El celular que tienes ahorita graba mejor que la mayoría de las cámaras profesionales de hace 10 años.</p>
+      <div class="chip"><span class="dot"></span> Lo que sí importa: luz, encuadre y audio — los tres son gratis</div>
+    </section>
+
+    <!-- 3 · LUZ (PIVOTE) -->
+    <section class="slide" data-notes="El giro de la clase: la ventana es la mejor luz que van a tener, y es gratis. El error más común es grabar de noche contra la ventana — queda a contraluz, todo negro.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Lo único que sí importa</div>
+      <h2 class="h1">Tu mejor luz <span class="hl">es una ventana.</span></h2>
+      <div class="mb mt-l">
+        <div class="lado no">
+          <span class="ico">🌑</span>
+          <span class="lab">Mal</span>
+          <span class="txt">De espaldas a la ventana, o de noche con la luz del techo. Se ve oscuro o con sombras raras.</span>
+        </div>
+        <div class="lado si">
+          <span class="ico">☀️</span>
+          <span class="lab">Bien</span>
+          <span class="txt">De frente a la ventana, en el día. La luz natural te ilumina la cara pareja, sin gastar nada.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · ENCUADRE -->
+    <section class="slide paper" data-notes="Tres reglas simples: altura de ojos, aire arriba de la cabeza, y vertical según el formato. No entres en tecnicismos de cine.">
+      <div class="eyebrow">Dónde se para la cámara</div>
+      <h2 class="h1">A la altura <span class="hl">de tus ojos.</span></h2>
+      <div class="steps mt-l" style="grid-template-columns:repeat(3,1fr)">
+        <div class="step"><div class="ico">👁️</div><div class="st">Altura</div><div class="sh">Ni desde abajo (se ven las fosas nasales) ni desde arriba</div></div>
+        <div class="step"><div class="ico">📏</div><div class="st">Aire</div><div class="sh">Un poco de espacio arriba de tu cabeza, no pegada al borde</div></div>
+        <div class="step"><div class="ico">📱</div><div class="st">Orientación</div><div class="sh">Vertical para reel e historia, horizontal casi nunca</div></div>
+      </div>
+    </section>
+
+    <!-- 5 · AUDIO -->
+    <section class="slide" data-notes="El audio es lo que más arruina un video que se ve bien. El eco de un cuarto vacío es el error más común y el más fácil de arreglar sin gastar nada.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Lo que arruina un video bueno</div>
+      <h2 class="h1">El audio, <span class="hl">no la imagen.</span></h2>
+      <div class="mb mt-l">
+        <div class="lado no">
+          <span class="ico">🔊</span>
+          <span class="lab">Mal</span>
+          <span class="txt">Un cuarto vacío suena a eco. No lo notas al grabar, pero se escucha clarísimo al reproducir.</span>
+        </div>
+        <div class="lado si">
+          <span class="ico">🧣</span>
+          <span class="lab">Bien</span>
+          <span class="txt">Ropa colgada, un clóset abierto o una cobija absorben el eco. Y acércate más al teléfono de lo que crees necesario.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · HABLARLE AL LENTE -->
+    <section class="slide paper" data-notes="El error de ver tu propia cara en la pantalla en vez del lente. Se nota que no estás viendo a la cámara — la gente lo siente aunque no sepa explicar por qué.">
+      <div class="eyebrow">El detalle que se nota</div>
+      <h2 class="h1">Háblale al lente, <span class="hl">no a tu cara.</span></h2>
+      <p class="lead wide mt-m">Es normal ver tu propia imagen en la pantalla mientras grabas — pero si le hablas a tu cara y no al lente, se nota que no estás viendo a quien te ve.</p>
+      <div class="chip"><span class="dot"></span> Truco: pega un punto de color junto al lente y háblale a él</div>
+    </section>
+
+    <!-- 7 · LOS TRES JUNTOS -->
+    <section class="slide" data-notes="Recapitula los tres antes del ejercicio. Que quede claro que son solo tres cosas, no una lista larga de técnica.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Antes de grabar</div>
+      <h2 class="h1">Solo son <span class="hl">tres cosas.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">De frente a una ventana, de día</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">A la altura de tus ojos, con un poco de aire arriba</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">En un lugar sin eco, hablándole al lente</div></div>
+      </div>
+    </section>
+
+    <!-- 8 · MANOS A LA OBRA -->
+    <section class="slide paper" data-notes="Ejercicio en vivo. Que graben ahí mismo, en el salón o donde estén. El punto no es que quede perfecto, es que sientan la diferencia entre saberlo y hacerlo.">
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Graba <span class="hl">15 segundos</span>, ahora mismo.</h2>
+      <p class="lead wide mt-m">Busca la luz más cercana, párate a la altura correcta y graba un clip corto diciendo cualquier cosa. Luego lo vemos juntos en el grupo.</p>
+      <div class="chip"><span class="dot"></span> Compártelo en el chat — vamos a ver 2 o 3 y ajustar en vivo</div>
+    </section>
+
+    <!-- 9 · TU RETO DE LA SEMANA -->
+    <section class="slide" data-notes="Reto simple y concreto: aplicar los tres puntos al siguiente contenido real que graben, no a un ejercicio aparte.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="h1">Tu próximo post, <span class="hl">con los tres puntos.</span></h2>
+      <p class="lead wide mt-m">La próxima vez que grabes para publicar, revisa: ¿tengo luz de frente? ¿estoy a la altura correcta? ¿el lugar tiene eco?</p>
+    </section>
+
+    <!-- 10 · CIERRE -->
+    <section class="slide paper center" data-notes="Cierre. El mensaje central: el equipo nunca fue el problema.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">No te falta cámara. <span class="hl">Te faltaba saber dónde pararte.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

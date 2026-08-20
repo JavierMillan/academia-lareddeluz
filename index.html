@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="dtmm/assets/imgs/reddeluz.png">
+<title>Academia — La Red de Luz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
+:root{
+  --char:#0a0a0a; --char-soft:#161414;
+  --gold:#d4a94a; --gold-soft:rgba(212,169,74,.12);
+  --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
+  --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100svh}
+
+.wrap{max-width:64rem;margin:0 auto;padding:clamp(3rem,8vw,6rem) clamp(1.2rem,4vw,3rem) 5rem}
+
+.lockup{display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;margin-bottom:clamp(2.4rem,6vw,4rem)}
+.lockup img{width:56px;height:56px}
+.lockup .wordmark{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold)}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold);text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow::before,.eyebrow::after{content:"";width:28px;height:1px;background:currentColor;opacity:.5}
+h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.005em;
+  line-height:.98;font-size:clamp(2rem,6vw,3.4rem);text-align:center}
+h1 .hl{color:var(--gold)}
+.sub{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--on-char-soft);
+  max-width:44ch;margin:1.2rem auto 0;text-align:center}
+
+.constelaciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.1rem;margin-top:clamp(2.6rem,6vw,4rem)}
+.constelacion{position:relative;display:flex;flex-direction:column;gap:.9rem;
+  padding:clamp(1.5rem,3vw,2.1rem);border-radius:20px;overflow:hidden;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  text-decoration:none;color:inherit;transition:.25s var(--ease)}
+.constelacion:hover{transform:translateY(-4px);border-color:var(--card-accent);
+  box-shadow:0 30px 60px -34px var(--card-glow)}
+.constelacion::after{content:"";position:absolute;width:220px;height:220px;
+  right:-70px;bottom:-90px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,var(--card-accent),transparent 68%);opacity:.18}
+.const-top{position:relative;z-index:1;display:flex;align-items:center;gap:.9rem}
+.const-emoji{flex:none;width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+  background:rgba(255,255,255,.06)}
+.const-status{flex:none;margin-left:auto;font-family:'Martian Mono',monospace;font-size:.58rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--card-accent);
+  border:1px solid currentColor;border-radius:999px;padding:.3rem .7rem;white-space:nowrap}
+.const-title{position:relative;z-index:1;font-family:'Archivo Black',sans-serif;
+  text-transform:uppercase;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.05}
+.const-desc{position:relative;z-index:1;font-size:.9rem;color:var(--on-char-soft);line-height:1.5}
+.const-go{position:relative;z-index:1;margin-top:.3rem;font-family:'Martian Mono',monospace;
+  font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--card-accent);
+  display:flex;align-items:center;gap:.4rem}
+
+.soon{opacity:.55;cursor:default}
+.soon:hover{transform:none;box-shadow:none;border-color:var(--line-d)}
+
+.foot{margin-top:clamp(3rem,7vw,5rem);padding-top:1.6rem;border-top:1px solid var(--line-d);
+  text-align:center;font-family:'Martian Mono',monospace;font-size:.72rem;
+  letter-spacing:.05em;color:var(--on-char-mute)}
+.foot a{color:var(--gold);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media(max-width:480px){
+  .const-status{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="lockup">
+    <img src="dtmm/assets/imgs/reddeluz.png" alt="La Red de Luz">
+    <span class="wordmark">La Red de Luz</span>
+  </div>
+
+  <div class="eyebrow">Academia</div>
+  <h1>Elige tu <span class="hl">constelación.</span></h1>
+  <p class="sub">Cada constelación es un espacio de práctica propio, con su propia comunidad y su propio ritmo. Entra a la que estás cursando.</p>
+
+  <div class="constelaciones">
+    <a class="constelacion" href="dtmm/index.html" style="--card-accent:#e8a13c;--card-glow:rgba(232,161,60,.35)">
+      <div class="const-top">
+        <span class="const-emoji" aria-hidden="true">✍️</span>
+        <span class="const-status">Activa</span>
+      </div>
+      <h2 class="const-title">De tu mente al mundo</h2>
+      <p class="const-desc">Redes sociales con IA, ventas sin hartar, y encontrar tu voz — por niveles, de básico a avanzado.</p>
+      <span class="const-go">Entrar a las clases →</span>
+    </a>
+
+    <a class="constelacion" href="ingles/index.html" style="--card-accent:#c8102e;--card-glow:rgba(200,16,46,.35)">
+      <div class="const-top">
+        <span class="const-emoji" aria-hidden="true">🗣️</span>
+        <span class="const-status">Activa</span>
+      </div>
+      <h2 class="const-title">¡Hablemos Inglés!</h2>
+      <p class="const-desc">Sesiones en vivo para perder el miedo a hablar — vocabulario, práctica y role-plays reales.</p>
+      <span class="const-go">Entrar a las clases →</span>
+    </a>
+
+    <div class="constelacion soon" style="--card-accent:#8a8680;--card-glow:transparent">
+      <div class="const-top">
+        <span class="const-emoji" aria-hidden="true">✨</span>
+        <span class="const-status">Próximamente</span>
+      </div>
+      <h2 class="const-title">La que sigue</h2>
+      <p class="const-desc">Cada generación trae una constelación nueva. Esta es la próxima rama por nacer.</p>
+    </div>
+  </div>
+
+  <p class="foot">ACADEMIA · UNA INICIATIVA DE <a href="https://lareddeluz.com" target="_blank" rel="noopener">LA RED DE LUZ</a></p>
+</div>
+
+</body>
+</html>

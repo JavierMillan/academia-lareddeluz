@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Yo soy, tú eres — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en 3+ decks de este programa, súbelo a
+   assets/ingles.css)
+   ============================================================ */
+
+/* tarjeta de vocabulario: palabra + pronunciación */
+.vocab{width:100%;border-collapse:collapse;font-size:clamp(.86rem,1.3vw,1.05rem)}
+.vocab th{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:left;
+  padding:.5rem .8rem;border-bottom:1px solid var(--line-d2);font-weight:400}
+.paper .vocab th{color:var(--on-paper-mute)}
+.vocab td{padding:clamp(.55rem,1.2vw,.85rem) .8rem;border-bottom:1px solid var(--line-d);
+  line-height:1.35}
+.paper .vocab td{border-color:var(--line-l)}
+.vocab td.w{font-family:var(--font-display);font-weight:500}
+.vocab td.p{font-family:'Martian Mono',monospace;color:var(--sesame)}
+.paper .vocab td.p{color:var(--ketchup)}
+
+/* regla gramatical: forma + ejemplo */
+.regla{width:100%;max-width:44rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.paper .regla{background:var(--paper-soft);border-color:var(--line-l);border-left-color:var(--ketchup)}
+.regla .fila{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.regla .fila+.fila{margin-top:.7rem}
+.regla .persona{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute);
+  min-width:8rem}
+.paper .regla .persona{color:var(--on-paper-mute)}
+.regla .forma{font-family:var(--font-display);font-size:clamp(1rem,1.6vw,1.25rem)}
+.regla .forma .v{color:var(--sesame)}
+.paper .regla .forma .v{color:var(--ketchup)}
+
+/* diálogo A/B para role-play */
+.dialogo{display:flex;flex-direction:column;gap:.6rem;width:100%;max-width:38rem}
+.dialogo .linea{display:grid;grid-template-columns:2.4rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--sesame)}
+.paper .dialogo .quien{color:var(--ketchup)}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(1rem,1.6vw,1.25rem);
+  line-height:1.4}
+
+/* lista de preguntas para practicar en pareja */
+.preguntas{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:36rem}
+.preguntas .p{display:flex;align-items:baseline;gap:.7rem;
+  padding:.7rem 1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.paper .preguntas .p{background:var(--paper-soft);border-color:var(--line-l)}
+.preguntas .n{font-family:'Martian Mono',monospace;color:var(--sesame);flex:none}
+.paper .preguntas .n{color:var(--ketchup)}
+.preguntas .t{font-family:var(--font-body);font-size:clamp(.95rem,1.4vw,1.1rem)}
+
+/* pasos numerados de actividad, con tiempo */
+.pasos{display:flex;flex-direction:column;gap:.9rem;width:100%;max-width:40rem}
+.paso{display:flex;gap:1rem;align-items:flex-start}
+.paso .n{flex:none;width:2.2rem;height:2.2rem;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Martian Mono',monospace;font-size:.82rem;color:var(--sesame);
+  border:1px solid var(--sesame)}
+.paper .paso .n{color:var(--ketchup);border-color:var(--ketchup)}
+.paso .cuerpo .t{font-family:var(--font-display);font-weight:500;font-size:clamp(.98rem,1.5vw,1.15rem)}
+.paso .cuerpo .d{font-size:clamp(.88rem,1.2vw,1rem);color:var(--on-char-soft);margin-top:.25rem}
+.paper .paso .cuerpo .d{color:var(--on-paper-soft)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Primera de las 3 clases de Básico. Objetivo: presentarse, saludar y preguntar sobre otra persona. El eje gramatical es el verbo TO BE, pero el foco real es que hablen — no que expliquen la regla.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Yo soy, <span class="hl">tú eres.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Presentarte, saludar y preguntar sobre otra persona — con el verbo TO BE. Básico · Clase 1.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Básico · 1/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · OBJETIVO -->
+    <section class="slide paper" data-notes="Establece la meta clara antes de la regla. Que sepan a dónde van desde el inicio.">
+      <div class="eyebrow">Objetivo de hoy</div>
+      <h2 class="h1">Presentarte <span class="hl">y conocer a otros.</span></h2>
+      <p class="lead wide mt-m">Al final de esta clase vas a poder saludar, decir quién eres y hacer preguntas básicas sobre alguien más — sin leer, de memoria.</p>
+    </section>
+
+    <!-- 3 · VOCABULARIO -->
+    <section class="slide" data-notes="Vocabulario clave de la clase. Que lo lean en voz alta una vez antes de pasar a la regla.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Vocabulario de hoy</div>
+      <h2 class="h1">Palabras <span class="hl">para empezar.</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Hello / Hi</td><td class="p">jelou / jai</td></tr>
+          <tr><td class="w">Good morning</td><td class="p">gud mórning</td></tr>
+          <tr><td class="w">Goodbye</td><td class="p">gudbái</td></tr>
+          <tr><td class="w">Nice to meet you</td><td class="p">nais tu mit iu</td></tr>
+          <tr><td class="w">Married / Single</td><td class="p">márid / síngol</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 4 · REGLA: TO BE -->
+    <section class="slide paper" data-notes="La única regla gramatical de la clase, y breve a propósito — no profundices en excepciones. El objetivo es que lo usen, no que lo expliquen.">
+      <div class="eyebrow">Gramática de hoy · el verbo TO BE</div>
+      <h2 class="h1">Cambia según <span class="hl">quién habla.</span></h2>
+      <div class="regla mt-l">
+        <div class="fila"><span class="persona">I</span><span class="forma">am <span class="v">(I'm)</span></span></div>
+        <div class="fila"><span class="persona">You</span><span class="forma">are <span class="v">(You're)</span></span></div>
+        <div class="fila"><span class="persona">He / She / It</span><span class="forma">is <span class="v">(He's / She's)</span></span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Negativo: I'm not / you aren't · Pregunta: Are you...? / Is he...?</div>
+    </section>
+
+    <!-- 5 · WARM-UP -->
+    <section class="slide" data-notes="Warm-up de 10 min. Con 3 personas distintas, o simulado con el profesor en clase individual.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Warm-up · 10 min · en parejas o grupo</div>
+      <h2 class="h1">Salúdense <span class="hl">así.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">A</span><span class="txt">Hello! How are you?</span></div>
+        <div class="linea"><span class="quien">B</span><span class="txt">I'm fine, thank you. And you?</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Repite con 3 personas distintas</div>
+    </section>
+
+    <!-- 6 · PRÁCTICA GUIADA: MINI-PRESENTACIÓN -->
+    <section class="slide paper" data-notes="Práctica guiada, 15 min. El profesor modela primero, luego cada alumno construye su versión y la repite hasta que fluya sin leer.">
+      <div class="eyebrow">Práctica guiada · 15 min</div>
+      <h2 class="h1">Tu <span class="hl">mini-presentación.</span></h2>
+      <div class="frase-card mt-l">
+        <div class="en">Hello, my name is <span class="hueco">tu nombre</span>. I'm from <span class="hueco">tu ciudad</span>. I'm <span class="hueco">tu edad</span> years old. I'm a <span class="hueco">tu profesión</span>.</div>
+        <div class="pron">jelou, mai neim is ___. aim from ___. aim ___ íers old. aim e ___</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Dila en voz alta hasta que fluya sin leer</div>
+    </section>
+
+    <!-- 7 · PREGUNTAS Y RESPUESTAS -->
+    <section class="slide" data-notes="15 min en parejas. El profesor circula corrigiendo pronunciación, no gramática escrita — no interrumpas para corregir por escrito.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Preguntas y respuestas · 15 min · en parejas</div>
+      <h2 class="h1">Pregúntale <span class="hl">a tu compañero.</span></h2>
+      <div class="preguntas mt-l">
+        <div class="p"><span class="n">01</span><span class="t">What's your name?</span></div>
+        <div class="p"><span class="n">02</span><span class="t">Where are you from?</span></div>
+        <div class="p"><span class="n">03</span><span class="t">How old are you?</span></div>
+        <div class="p"><span class="n">04</span><span class="t">Are you married?</span></div>
+        <div class="p"><span class="n">05</span><span class="t">What's your job?</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · ROLE-PLAY: FIESTA -->
+    <section class="slide paper" data-notes="15 min. Simular una fiesta: caminan por el salón (o alternan turnos si es en línea) conociendo gente nueva.">
+      <div class="eyebrow">Práctica libre · 15 min</div>
+      <h2 class="h1">Estás en <span class="hl">una fiesta.</span></h2>
+      <p class="lead wide mt-m">Camina por el salón "conociendo gente nueva" — preséntate y hazle 2-3 preguntas a cada persona que saludes. (En línea: alternen turnos por parejas.)</p>
+      <div class="chip"><span class="dot"></span> Usa tu mini-presentación + 2 preguntas de la lista anterior</div>
+    </section>
+
+    <!-- 9 · CIERRE: PRESENTAR A OTRO -->
+    <section class="slide" data-notes="Cierre de 5 min. Refuerza he/she is de forma natural, presentando a otra persona en tercera persona — sin explicar la regla otra vez.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Cierre de la práctica · 5 min</div>
+      <h2 class="h1">Preséntala <span class="hl">tú.</span></h2>
+      <div class="frase-card mt-l">
+        <div class="en">This is Ana. <b>She's</b> from Hermosillo. <b>She's</b> a nurse.</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Presenta a otra persona del grupo en tercera persona</div>
+    </section>
+
+    <!-- 10 · CIERRE FINAL + TAREA -->
+    <section class="slide center" data-notes="Cierre. La tarea (audio de 30 seg) es baja fricción — un mensaje de voz, no un ensayo. Recuérdales grabarlo antes de la próxima sesión.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Buen primer paso!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">Hoy ya sabes <span class="hl">presentarte</span> en inglés.</p>
+      <p class="lead mt-m" style="text-align:center">Tarea: graba un audio de 30 segundos presentándote, como si fuera un mensaje de voz a un desconocido.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

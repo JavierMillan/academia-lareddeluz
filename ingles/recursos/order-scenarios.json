@@ -1,0 +1,55 @@
+{
+  "scenarios": [
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "tagline": "Fast food counter",
+      "emoji": "🍔",
+      "theme": { "primary": "#c8102e", "accent": "#ffbc0d", "surface": "#f5f3ed" },
+      "categories": ["burgers", "sides", "drinks", "combos"],
+      "categoryLabels": { "burgers": "Burgers", "sides": "Sides", "drinks": "Drinks", "combos": "Combos" },
+      "sizes": ["small", "medium", "large"],
+      "catalog": [
+        { "id": "hamburger", "category": "burgers", "name": "Hamburger", "description": "Beef patty, pickles and onions.", "prices": { "default": 35 }, "requiresSize": false, "emoji": "🍔" },
+        { "id": "cheeseburger", "category": "burgers", "name": "Cheeseburger", "description": "Beef patty with melted cheese.", "prices": { "default": 40 }, "requiresSize": false, "emoji": "🍔" },
+        { "id": "big-mac", "category": "burgers", "name": "Big Mac", "description": "Two patties and special sauce.", "prices": { "default": 75 }, "requiresSize": false, "featured": true, "emoji": "🍔" },
+        { "id": "quarter-pounder", "category": "burgers", "name": "Quarter Pounder", "description": "Quarter-pound beef patty and cheese.", "prices": { "default": 85 }, "requiresSize": false, "emoji": "🍔" },
+        { "id": "mcchicken", "category": "burgers", "name": "McChicken", "description": "Crispy chicken, lettuce and mayo.", "prices": { "default": 65 }, "requiresSize": false, "emoji": "🍗" },
+        { "id": "fries", "category": "sides", "name": "Fries", "description": "Golden and crispy.", "prices": { "small": 30, "medium": 40, "large": 50 }, "requiresSize": true, "emoji": "🍟" },
+        { "id": "apple-slices", "category": "sides", "name": "Apple Slices", "description": "Fresh sliced apple.", "prices": { "default": 25 }, "requiresSize": false, "emoji": "🍎" },
+        { "id": "soda", "category": "drinks", "name": "Soda", "description": "Cold fountain drink.", "prices": { "small": 25, "medium": 30, "large": 35 }, "requiresSize": true, "emoji": "🥤" },
+        { "id": "coffee", "category": "drinks", "name": "Coffee", "description": "Freshly brewed coffee.", "prices": { "default": 30 }, "requiresSize": false, "emoji": "☕" },
+        { "id": "bottled-water", "category": "drinks", "name": "Bottled Water", "description": "Chilled bottled water.", "prices": { "default": 25 }, "requiresSize": false, "emoji": "💧" },
+        { "id": "big-mac-combo", "category": "combos", "name": "Big Mac Combo", "description": "Big Mac, fries and soda.", "prices": { "small": 100, "medium": 110, "large": 120 }, "requiresSize": true, "comboContents": ["big-mac", "fries", "soda"], "emoji": "🍔" },
+        { "id": "quarter-pounder-combo", "category": "combos", "name": "Quarter Pounder Combo", "description": "Quarter Pounder, fries and soda.", "prices": { "small": 110, "medium": 120, "large": 130 }, "requiresSize": true, "comboContents": ["quarter-pounder", "fries", "soda"], "emoji": "🍔" },
+        { "id": "mcchicken-combo", "category": "combos", "name": "McChicken Combo", "description": "McChicken, fries and soda.", "prices": { "small": 85, "medium": 95, "large": 105 }, "requiresSize": true, "comboContents": ["mcchicken", "fries", "soda"], "emoji": "🍗" }
+      ],
+      "employeeGreeting": "Hi, welcome! What can I get for you?",
+      "employeeClosing": "Cash or card?"
+    },
+    {
+      "id": "cafe",
+      "name": "The Daily Grind",
+      "tagline": "Coffee shop counter",
+      "emoji": "☕",
+      "theme": { "primary": "#2f6b4f", "accent": "#d9a441", "surface": "#f3ede2" },
+      "categories": ["hot-drinks", "cold-drinks", "bakery"],
+      "categoryLabels": { "hot-drinks": "Hot Drinks", "cold-drinks": "Cold Drinks", "bakery": "Bakery" },
+      "sizes": ["small", "medium", "large"],
+      "catalog": [
+        { "id": "drip-coffee", "category": "hot-drinks", "name": "Drip Coffee", "description": "Freshly brewed, house blend.", "prices": { "small": 28, "medium": 34, "large": 40 }, "requiresSize": true, "emoji": "☕" },
+        { "id": "latte", "category": "hot-drinks", "name": "Latte", "description": "Espresso with steamed milk.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "featured": true, "emoji": "☕" },
+        { "id": "cappuccino", "category": "hot-drinks", "name": "Cappuccino", "description": "Espresso, milk and foam.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "emoji": "☕" },
+        { "id": "hot-chocolate", "category": "hot-drinks", "name": "Hot Chocolate", "description": "Steamed milk and cocoa.", "prices": { "default": 45 }, "requiresSize": false, "emoji": "🍫" },
+        { "id": "iced-coffee", "category": "cold-drinks", "name": "Iced Coffee", "description": "Cold brew over ice.", "prices": { "small": 38, "medium": 44, "large": 50 }, "requiresSize": true, "emoji": "🧊" },
+        { "id": "iced-latte", "category": "cold-drinks", "name": "Iced Latte", "description": "Espresso, cold milk, ice.", "prices": { "small": 45, "medium": 51, "large": 57 }, "requiresSize": true, "emoji": "🧊" },
+        { "id": "lemonade", "category": "cold-drinks", "name": "Lemonade", "description": "Fresh-squeezed, over ice.", "prices": { "default": 35 }, "requiresSize": false, "emoji": "🍋" },
+        { "id": "croissant", "category": "bakery", "name": "Croissant", "description": "Butter croissant, baked daily.", "prices": { "default": 32 }, "requiresSize": false, "emoji": "🥐" },
+        { "id": "muffin", "category": "bakery", "name": "Blueberry Muffin", "description": "Soft muffin, fresh blueberries.", "prices": { "default": 30 }, "requiresSize": false, "emoji": "🧁" },
+        { "id": "bagel", "category": "bakery", "name": "Bagel with Cream Cheese", "description": "Toasted, with cream cheese.", "prices": { "default": 38 }, "requiresSize": false, "emoji": "🥯" }
+      ],
+      "employeeGreeting": "Hi there! What can I start for you?",
+      "employeeClosing": "For here or to go?"
+    }
+  ]
+}

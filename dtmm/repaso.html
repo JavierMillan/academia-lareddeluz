@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/imgs/reddeluz.png">
+<title>Repaso — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/hub.css">
+<style>
+/* ============================================================
+   Modo repaso · el video y la presentación, lado a lado
+   ============================================================ */
+html,body{height:100%;overflow:hidden}
+body{display:flex;flex-direction:column;background:var(--char)}
+
+.repaso-bar{display:flex;align-items:center;gap:clamp(.7rem,2vw,1.3rem);flex-shrink:0;
+  padding:.7rem clamp(1rem,3vw,2rem);
+  background:rgba(25,20,15,.9);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.repaso-bar .titulo{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.82rem,1.5vw,1rem);line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.repaso-bar .volver{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  color:var(--on-char-soft);text-decoration:none;border:1px solid var(--line-d2);
+  border-radius:8px;padding:.42rem .8rem;white-space:nowrap;flex-shrink:0;
+  transition:.25s var(--ease)}
+.repaso-bar .volver:hover{border-color:var(--sesame);color:var(--sesame)}
+.repaso-bar .volver:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+
+/* selector de generación */
+.gens{display:flex;gap:.35rem;flex-shrink:0}
+.gens button{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.1em;
+  background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:999px;padding:.35rem .7rem;cursor:pointer;white-space:nowrap;
+  transition:.25s var(--ease);touch-action:manipulation}
+.gens button:hover{border-color:var(--sesame);color:var(--sesame)}
+.gens button[aria-pressed="true"]{background:rgba(232,161,60,.14);
+  border-color:var(--sesame);color:var(--sesame)}
+.gens button:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+
+/* dos paneles */
+.panes{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line-d);min-height:0}
+.pane{background:var(--char);min-width:0;min-height:0;display:flex;flex-direction:column}
+.pane .cab{font-family:'Martian Mono',monospace;font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute);
+  padding:.55rem clamp(.7rem,2vw,1.1rem);border-bottom:1px solid var(--line-d);
+  display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-shrink:0}
+.pane .cab a{color:var(--sesame);text-decoration:none;letter-spacing:.1em}
+.pane .cab a:hover{text-decoration:underline}
+.pane .cuerpo{flex:1;min-height:0;position:relative}
+/* la presentación sí llena su panel; el video se rige por .video-marco */
+.pane .cuerpo > iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* el video mantiene su proporción 16:9 y se centra en el panel.
+   El contenedor interno se encoge al 16:9 disponible; el iframe lo llena. */
+.video-marco{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:#000;container-type:size}
+.video-marco iframe{border:0;
+  width:min(100%, calc(100cqh * 16 / 9));
+  height:min(100%, calc(100cqw * 9 / 16));
+  aspect-ratio:16/9}
+.video-fallback{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--sesame);text-decoration:none;font-family:'Martian Mono',monospace;
+  font-size:.75rem;letter-spacing:.1em}
+.video-fallback:hover{text-decoration:underline}
+
+.vacio{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--on-char-mute);font-size:.9rem;text-align:center;padding:2rem;line-height:1.6}
+
+/* clase sin presentación: el video ocupa toda la pantalla */
+.panes.solo-video{grid-template-columns:1fr}
+.panes.solo-video .pane:last-child{display:none}
+.panes.solo-video .pane.video .cuerpo{flex:1}
+
+/* ---- vertical: el video arriba, la presentación abajo ---- */
+@media (max-width:900px), (orientation:portrait){
+  .panes{grid-template-columns:1fr;
+    /* el video toma lo que necesita para su 16:9; el deck se queda con el resto */
+    grid-template-rows:min-content minmax(0,1fr)}
+  /* .cuerpo es flex:1 en el layout base; aquí se fija a la altura del 16:9 */
+  .pane.video .cuerpo{flex:0 0 min(38vh, 56.25vw);position:relative}
+  .video-marco{position:absolute;inset:0}
+  .repaso-bar{flex-wrap:wrap}
+  .repaso-bar .titulo{order:3;width:100%;white-space:normal;flex-basis:100%;
+    font-size:.8rem;line-height:1.3}
+}
+</style>
+</head>
+<body>
+
+<div class="repaso-bar">
+  <a class="volver" id="volver" href="index.html">‹ Clase</a>
+  <div class="titulo" id="titulo">Cargando…</div>
+  <div class="gens" id="gens"></div>
+</div>
+
+<div class="panes">
+  <section class="pane video">
+    <div class="cab"><span id="cabVideo">Grabación</span></div>
+    <div class="cuerpo" id="paneVideo"></div>
+  </section>
+  <section class="pane">
+    <div class="cab"><span>Presentación</span>
+      <a id="abrirDeck" href="#" target="_blank" rel="noopener">Abrir sola ↗</a></div>
+    <div class="cuerpo" id="paneDeck"></div>
+  </section>
+</div>
+
+<script src="assets/video.js"></script>
+<script>
+(function(){
+  'use strict';
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,c=>(
+      {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  const params = new URLSearchParams(location.search);
+  const id  = params.get('id');
+  let   gen = parseInt(params.get('g'),10) || 0;
+
+  fetch('clases.json')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(data=>{
+      let clase=null, fila=null;
+      data.filas.forEach(f=>f.clases.forEach(c=>{ if(c.id===id){clase=c;fila=f;} }));
+      if(!clase){
+        document.getElementById('titulo').textContent='No encontramos esa clase';
+        document.getElementById('paneVideo').innerHTML=
+          '<div class="vacio">Revisa el enlace, o <a href="index.html" style="color:var(--sesame)">vuelve al hub</a>.</div>';
+        return;
+      }
+
+      document.title = clase.titulo + ' · Repaso — De tu mente al mundo';
+      document.getElementById('titulo').textContent = clase.titulo;
+      document.getElementById('volver').href = 'clase.html?id='+encodeURIComponent(clase.id);
+
+      // la presentación, en su panel. Si la clase no tiene deck (p.ej. una
+      // sesión abierta que solo se grabó), el video se queda con toda la pantalla.
+      if(clase.deck){
+        document.getElementById('paneDeck').innerHTML =
+          '<iframe src="'+esc(clase.deck)+'" title="Presentación de la clase"></iframe>';
+        document.getElementById('abrirDeck').href = clase.deck;
+      }else{
+        document.querySelector('.panes').classList.add('solo-video');
+      }
+
+      // grabaciones: formato nuevo o el viejo de una sola URL
+      // las entradas sin url son huecos preparados, no grabaciones todavía
+      const grabs = ((clase.grabaciones && clase.grabaciones.length)
+        ? clase.grabaciones.slice()
+        : (clase.grabacion ? [{url:clase.grabacion}] : [])
+      ).filter(g => g && g.url);
+      // la más reciente primero
+      grabs.sort((a,b)=>String(b.fecha||'').localeCompare(String(a.fecha||'')));
+
+      const paneVideo = document.getElementById('paneVideo');
+      const cabVideo  = document.getElementById('cabVideo');
+      const gens      = document.getElementById('gens');
+
+      if(!grabs.length){
+        paneVideo.innerHTML =
+          '<div class="vacio">La grabación de esta clase se sube después de la sesión.</div>';
+        return;
+      }
+
+      function mostrar(n){
+        gen = Math.max(0, Math.min(grabs.length-1, n));
+        const g = grabs[gen];
+        paneVideo.innerHTML = window.DTMMVideo.reproductor(g.url, clase.titulo);
+        cabVideo.textContent = g.generacion ? g.generacion+' generación' : 'Grabación';
+        [...gens.children].forEach((b,i)=>b.setAttribute('aria-pressed', i===gen?'true':'false'));
+        const u = new URL(location);
+        if(gen) u.searchParams.set('g',gen); else u.searchParams.delete('g');
+        try{ history.replaceState(null,'',u); }catch(e){}
+      }
+
+      // selector solo si hay más de una generación
+      if(grabs.length > 1){
+        gens.innerHTML = grabs.map((g,i)=>
+          '<button type="button" aria-pressed="false">'+
+          esc(g.generacion || ('Video '+(i+1)))+'</button>').join('');
+        [...gens.children].forEach((b,i)=>b.onclick=()=>mostrar(i));
+      }
+
+      mostrar(gen);
+    })
+    .catch(e=>{
+      document.getElementById('paneVideo').innerHTML =
+        '<div class="vacio">No se pudo cargar la clase.</div>';
+      console.error('[repaso]',e);
+    });
+})();
+</script>
+</body>
+</html>

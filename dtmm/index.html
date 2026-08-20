@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/imgs/reddeluz.png">
+<title>De tu mente al mundo — Clases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+
+<a class="skip-link" href="#rows">Saltar al contenido</a>
+
+<!-- top bar -->
+<header class="topbar">
+  <a class="brand" href="#top">De tu mente al <b>mundo</b></a>
+  <nav class="nav nav-desktop" id="navMain" aria-label="Secciones del programa">
+    <!-- los grupos y filas se agregan desde clases.json -->
+  </nav>
+  <a class="home" href="https://lareddeluz.com" target="_blank" rel="noopener">La Red de Luz ↗</a>
+  <button class="burger" id="burger" type="button" aria-label="Abrir menú"
+          aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
+</header>
+
+<!-- mobile drawer (fuera del topbar para escapar su stacking context) -->
+<nav class="nav-drawer" id="navDrawer" aria-label="Menú de navegación" aria-hidden="true">
+  <!-- los grupos y filas se agregan desde clases.json -->
+  <a class="dfoot" href="https://lareddeluz.com" target="_blank" rel="noopener">La Red de Luz ↗</a>
+</nav>
+<div class="nav-scrim" id="navScrim"></div>
+
+<!-- hero destacado · desde clases.json -->
+<div id="heroSlot"></div>
+
+<!-- filas por nivel · desde clases.json -->
+<div class="wrap pad rows-area" id="rows"></div>
+
+<div class="wrap pad">
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="https://lareddeluz.com" target="_blank" rel="noopener">La Red de Luz</a></p>
+</div>
+
+<script src="assets/hub.js"></script>
+</body>
+</html>

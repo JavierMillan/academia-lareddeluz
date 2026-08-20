@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Tu sistema completo, funcionando hoy — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* cronómetro del taller: cuánto dura cada bloque */
+.timer{display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--on-char-mute);
+  border:1px solid var(--line-d);border-radius:999px;padding:.35rem .8rem;
+  margin-bottom:clamp(.9rem,1.8vw,1.4rem);align-self:flex-start}
+.paper .timer{color:var(--on-paper-mute);border-color:var(--line-l)}
+.timer b{color:var(--sesame);font-weight:500}
+.paper .timer b{color:var(--ketchup)}
+
+/* las 3 piezas del nivel, encajando */
+.piezas{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.6rem,1.4vw,1.1rem);width:100%}
+@media(max-width:820px){.piezas{grid-template-columns:1fr}}
+.pieza{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(.95rem,1.8vw,1.4rem);position:relative;display:flex;flex-direction:column;gap:.45rem}
+.paper .pieza{background:var(--paper-soft);border-color:var(--line-l)}
+.pieza .clase{font-family:'Martian Mono',monospace;font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--sesame)}
+.paper .pieza .clase{color:var(--ketchup)}
+.pieza .que{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.15rem);line-height:1.25}
+.pieza .hoy{font-size:clamp(.82rem,1.1vw,.95rem);line-height:1.45;color:var(--on-char-soft)}
+.paper .pieza .hoy{color:var(--on-paper-soft)}
+
+/* plantilla de trabajo, para llenar en vivo */
+.plantilla{width:100%;max-width:46rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);
+  border-radius:12px;padding:clamp(1rem,2vw,1.5rem)}
+.paper .plantilla{background:var(--paper-soft);border-color:var(--line-l);
+  border-left-color:var(--ketchup)}
+.plantilla .linea{font-family:'Fraunces',serif;font-size:clamp(1rem,1.6vw,1.35rem);
+  line-height:1.7}
+.plantilla .linea + .linea{margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--line-d)}
+.paper .plantilla .linea + .linea{border-color:var(--line-l)}
+.plantilla .hueco{color:var(--sesame);border-bottom:1px dashed var(--sesame);
+  padding:0 .6em;font-style:italic}
+.paper .plantilla .hueco{color:var(--ketchup);border-bottom-color:var(--ketchup)}
+</style>
+</head>
+<body data-volver="../index.html" data-volver-texto="‹ Hub">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Taller de graduación del nivel avanzado. <em>Esta hora es de manos, no de libreta.</em> El objetivo es que salgan con su sistema armado y probado, no con más teoría. Ten listo el chat para que peguen sus avances.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Avanzado · Parte 5 · Taller en vivo</div>
+      <h1 class="mega">Tu sistema completo, <span class="hl">funcionando hoy.</span></h1>
+      <p class="lead wide mt-m">Las tres clases del nivel, armadas en una sola cosa que puedas usar mañana.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CÓMO FUNCIONA HOY -->
+    <section class="slide paper" data-notes="Igual que en los otros talleres: <em>que quede claro desde el primer minuto que hoy se trabaja</em>. Si alguien llegó sin las tareas de las clases anteriores, que las haga sobre la marcha con lo que tenga.">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">Esta hora es <span class="hl">de manos</span>, no de libreta.</h2>
+      <p class="lead wide mt-m">No hay slides que copiar. Vas a armar tu sistema en vivo, pegarlo en el chat y salir de aquí con algo que ya funciona.</p>
+      <div class="chip"><span class="dot"></span> Ten abierto tu chat de ventas y el asistente que uses</div>
+    </section>
+
+    <!-- 3 · LAS TRES PIEZAS -->
+    <section class="slide" data-notes="Recorre las tres rápido. El punto no es repasar: es que vean que <em>las tres son partes de una sola máquina</em>, no clases sueltas. Si alguien se perdió una, aquí se da cuenta de qué le falta.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Lo que ya tienes</div>
+      <h2 class="h1">Tres clases, <span class="hl">una sola máquina.</span></h2>
+      <div class="piezas mt-l">
+        <div class="pieza">
+          <span class="clase">Parte 1</span>
+          <span class="que">La conversación</span>
+          <span class="hoy">Reconocer, indagar, conectar, invitar. Sabes llevar un chat sin tirarle la venta a quien no está listo.</span>
+        </div>
+        <div class="pieza">
+          <span class="clase">Parte 2</span>
+          <span class="que">La historia</span>
+          <span class="hoy">Tus máscaras reales. Sabes vender contando algo tuyo, sin que se sienta a venta.</span>
+        </div>
+        <div class="pieza">
+          <span class="clase">Parte 3</span>
+          <span class="que">La IA</span>
+          <span class="hoy">75/25. Sabes delegar la estructura sin entregar tu voz.</span>
+        </div>
+      </div>
+      <p class="lead wide mt-m">Hoy las juntas en un solo flujo que puedas repetir cada semana.</p>
+    </section>
+
+    <!-- 4 · BLOQUE 1 · TU FACETA -->
+    <section class="slide paper" data-notes="<em>15 minutos, cronometrados.</em> Que elijan UNA faceta, no tres. El error clásico es querer contarlo todo. Si alguien se atora, la pregunta que desatora es: &laquo;¿qué te preguntan tus clientes que no tiene que ver con tu servicio?&raquo;">
+      <div class="timer">Bloque 1 · <b>15 min</b></div>
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Elige <span class="hl">una faceta</span> tuya. Solo una.</h2>
+      <p class="lead wide mt-m">De todas las máscaras que trabajamos en la clase 2, escoge la que mejor conecte con el problema que resuelves. No la más impresionante: la más verdadera.</p>
+      <div class="plantilla mt-m">
+        <div class="linea">Soy <span class="hueco">tu faceta real</span>, y por eso entiendo a quien <span class="hueco">el problema de tu cliente</span>.</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Escríbela y pégala en el chat. Vamos a leer 3 en voz alta</div>
+    </section>
+
+    <!-- 5 · BLOQUE 2 · TU GUION DE CHAT -->
+    <section class="slide" data-notes="<em>20 minutos.</em> Aquí es donde se junta la clase 1 con la clase 2: el guion de conversación deja de ser genérico porque lleva su faceta dentro. Insiste en que la invitación va al final — el error de siempre es querer invitar en el segundo mensaje.">
+      <div class="glow bl"></div>
+      <div class="timer">Bloque 2 · <b>20 min</b></div>
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Tu guion de chat, <span class="hl">con tu historia dentro.</span></h2>
+      <div class="plantilla mt-m">
+        <div class="linea"><b>Reconocer</b> — <span class="hueco">qué notaste de esa persona, específico</span></div>
+        <div class="linea"><b>Indagar</b> — <span class="hueco">tu pregunta abierta, la que no se contesta con sí o no</span></div>
+        <div class="linea"><b>Conectar</b> — <span class="hueco">aquí entra tu faceta del bloque 1</span></div>
+        <div class="linea"><b>Invitar</b> — <span class="hueco">qué le propones, sin presión</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Pruébalo con un chat real que tengas parado</div>
+    </section>
+
+    <!-- 6 · BLOQUE 3 · TU PROMPT -->
+    <section class="slide paper" data-notes="<em>15 minutos.</em> El objetivo NO es que la IA escriba por ellos: es que les ahorre el 75% mecánico. Recuérdales la regla de la clase 3 — <em>si le das instrucciones vagas, te entrega basura genérica</em>. El prompt tiene que llevar su faceta y su forma de hablar.">
+      <div class="timer">Bloque 3 · <b>15 min</b></div>
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">El prompt que <span class="hl">suena a ti.</span></h2>
+      <p class="lead wide mt-m">Ahora le enseñas al asistente quién eres, para que lo que salga no se sienta ajeno.</p>
+      <div class="plantilla mt-m">
+        <div class="linea">Hablo así: <span class="hueco">3 palabras que sí usas y 3 que nunca dirías</span></div>
+        <div class="linea">Mi faceta: <span class="hueco">la del bloque 1</span></div>
+        <div class="linea">Le hablo a: <span class="hueco">tu avatar, con su problema</span></div>
+        <div class="linea">No quiero: <span class="hueco">lo que te haría cerrar el chat si lo leyeras</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Pídele un contenido y ajústalo hasta que suene tuyo</div>
+    </section>
+
+    <!-- 7 · EL CICLO SEMANAL -->
+    <section class="slide" data-notes="Este es el <em>mensaje que quieres que se lleven</em>: no es un taller de una vez, es un ciclo que se repite. Enfatiza que el paso 4 alimenta al 1 — cada conversación real les enseña qué faceta funciona.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Cómo se sostiene</div>
+      <h2 class="h1">Tu semana, <span class="hl">en cuatro pasos.</span></h2>
+      <div class="steps mt-l">
+        <div class="step"><div class="ico">🎭</div><div class="st">Lunes</div><div class="sh">Eliges qué faceta cuenta el contenido de esta semana</div></div>
+        <div class="step"><div class="ico">🤖</div><div class="st">Martes</div><div class="sh">La IA te da la estructura, tú pones el alma</div></div>
+        <div class="step"><div class="ico">💬</div><div class="st">Toda la semana</div><div class="sh">Los chats que llegan, con tu guion</div></div>
+        <div class="step"><div class="ico">🔁</div><div class="st">Viernes</div><div class="sh">Qué conversación funcionó y por qué</div></div>
+      </div>
+      <p class="lead wide mt-m">El paso 4 alimenta al 1: cada chat real te dice qué faceta conecta de verdad.</p>
+    </section>
+
+    <!-- 8 · EL ENTREGABLE -->
+    <section class="slide paper" data-notes="Mismo formato de graduación que Básico e Intermedio. <em>Que nadie se vaya sin las tres cosas.</em> Si a alguien le falta una, que se quede los últimos minutos a terminarla.">
+      <div class="eyebrow">Tu entregable de graduación</div>
+      <h2 class="h1">Sales de aquí con <span class="hl">tres cosas.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Tu faceta elegida, escrita en una línea</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Tu guion de chat en cuatro pasos, probado con alguien real</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Tu prompt personal, guardado donde puedas volver a él</div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Pega los tres en el chat antes de salir</div>
+    </section>
+
+    <!-- 9 · CIERRE -->
+    <section class="slide center" data-notes="Cierre del nivel avanzado y del programa completo. <em>Si alguien se lleva una sola idea, que sea esta.</em> Es buen momento para reconocer a quien llegó hasta aquí: son los que sostuvieron los tres niveles.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Terminaste el nivel avanzado</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">La herramienta hace el trabajo. <span class="hl">Tú haces la diferencia.</span></p>
+      <p class="lead mt-m" style="text-align:center">Ya sabes conversar, contar tu historia y multiplicar tu voz sin perderla. Lo que sigue no es otra clase: es hacerlo cada semana.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Rutinas y presente simple — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en 3+ decks de este programa, súbelo a
+   assets/ingles.css)
+   ============================================================ */
+
+/* tarjeta de vocabulario: palabra + pronunciación */
+.vocab{width:100%;border-collapse:collapse;font-size:clamp(.86rem,1.3vw,1.05rem)}
+.vocab th{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:left;
+  padding:.5rem .8rem;border-bottom:1px solid var(--line-d2);font-weight:400}
+.paper .vocab th{color:var(--on-paper-mute)}
+.vocab td{padding:clamp(.55rem,1.2vw,.85rem) .8rem;border-bottom:1px solid var(--line-d);
+  line-height:1.35}
+.paper .vocab td{border-color:var(--line-l)}
+.vocab td.w{font-family:var(--font-display);font-weight:500}
+.vocab td.p{font-family:'Martian Mono',monospace;color:var(--sesame)}
+.paper .vocab td.p{color:var(--ketchup)}
+
+/* regla gramatical: forma + ejemplo */
+.regla{width:100%;max-width:44rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.paper .regla{background:var(--paper-soft);border-color:var(--line-l);border-left-color:var(--ketchup)}
+.regla .fila{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.regla .fila+.fila{margin-top:.7rem}
+.regla .persona{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute);
+  min-width:8rem}
+.paper .regla .persona{color:var(--on-paper-mute)}
+.regla .forma{font-family:var(--font-display);font-size:clamp(1rem,1.6vw,1.25rem)}
+.regla .forma .v{color:var(--sesame)}
+.paper .regla .forma .v{color:var(--ketchup)}
+
+/* secuencia de rutina: iconos + hora en orden */
+.rutina{display:flex;flex-direction:column;gap:.6rem;width:100%;max-width:38rem}
+.rutina .r{display:flex;align-items:center;gap:.9rem;
+  padding:.7rem 1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.paper .rutina .r{background:var(--paper-soft);border-color:var(--line-l)}
+.rutina .ico{font-size:1.3rem;flex:none}
+.rutina .en{font-family:var(--font-display);font-size:clamp(.95rem,1.4vw,1.1rem);flex:1}
+.rutina .hora{font-family:'Martian Mono',monospace;color:var(--sesame);font-size:.82rem}
+.paper .rutina .hora{color:var(--ketchup)}
+
+/* lista de preguntas para practicar en pareja */
+.preguntas{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:36rem}
+.preguntas .p{display:flex;align-items:baseline;gap:.7rem;
+  padding:.7rem 1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.paper .preguntas .p{background:var(--paper-soft);border-color:var(--line-l)}
+.preguntas .n{font-family:'Martian Mono',monospace;color:var(--sesame);flex:none}
+.paper .preguntas .n{color:var(--ketchup)}
+.preguntas .t{font-family:var(--font-body);font-size:clamp(.95rem,1.4vw,1.1rem)}
+
+/* chips de frecuencia (always/usually/sometimes/never) */
+.frecuencias{display:flex;flex-wrap:wrap;gap:.7rem;width:100%;justify-content:center}
+.frec{display:inline-flex;flex-direction:column;gap:.3rem;align-items:center;
+  padding:.9rem 1.3rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px;
+  min-width:7rem}
+.paper .frec{background:var(--paper-soft);border-color:var(--line-l)}
+.frec .en{font-family:var(--font-display);font-size:1.05rem;color:var(--sesame)}
+.paper .frec .en{color:var(--ketchup)}
+.frec .es{font-size:.78rem;color:var(--on-char-mute)}
+.paper .frec .es{color:var(--on-paper-mute)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Segunda de las 3 clases de Básico. Objetivo: describir la rutina diaria con presente simple. El foco gramatical es la 's' de tercera persona — el error más común y el que más vale la pena practicar oralmente.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">What do you do <span class="hl">every day?</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Rutinas y presente simple — cómo hablar de lo que haces todos los días. Básico · Clase 2.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Básico · 2/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · REPASO RÁPIDO -->
+    <section class="slide paper" data-notes="Warm-up de 5 min: repaso de la clase 1, cada alumno se presenta en una frase sin leer. No te detengas mucho.">
+      <div class="eyebrow">Warm-up · 5 min</div>
+      <h2 class="h1">Preséntate <span class="hl">otra vez.</span></h2>
+      <p class="lead wide mt-m">Cada quien se presenta en una sola frase, sin leer — como en la clase pasada.</p>
+    </section>
+
+    <!-- 3 · VOCABULARIO -->
+    <section class="slide" data-notes="Vocabulario de rutina + expresiones de frecuencia. Que lo lean en voz alta una vez.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Vocabulario de hoy</div>
+      <h2 class="h1">Tu día, <span class="hl">de principio a fin.</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Wake up</td><td class="p">uéik ap</td></tr>
+          <tr><td class="w">Take a shower</td><td class="p">téik e sháuer</td></tr>
+          <tr><td class="w">Have breakfast</td><td class="p">jav brékfast</td></tr>
+          <tr><td class="w">Go to work</td><td class="p">gou tu uérk</td></tr>
+          <tr><td class="w">Go to bed</td><td class="p">gou tu bed</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 4 · REGLA: PRESENTE SIMPLE -->
+    <section class="slide paper" data-notes="La regla gramatical central: presente simple, con énfasis en la 's' de tercera persona — es la duda más común y la que más vale la pena practicar oralmente.">
+      <div class="eyebrow">Gramática de hoy · presente simple</div>
+      <h2 class="h1">Ojo con la <span class="hl">"s".</span></h2>
+      <div class="regla mt-l">
+        <div class="fila"><span class="persona">I / You / We / They</span><span class="forma">work</span></div>
+        <div class="fila"><span class="persona">He / She / It</span><span class="forma">work<span class="v">s</span></span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Negativo: I don't work / He doesn't work · Pregunta: Do you...? / Does she...?</div>
+    </section>
+
+    <!-- 5 · SECUENCIA DE RUTINA -->
+    <section class="slide" data-notes="15 min. Con tarjetas o dibujos, el alumno ordena su día y lo dice en voz alta — primero individual, luego explicándole al compañero.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Secuencia de rutina · 15 min</div>
+      <h2 class="h1">Ordena <span class="hl">tu día.</span></h2>
+      <div class="rutina mt-l">
+        <div class="r"><span class="ico">⏰</span><span class="en">I wake up</span><span class="hora">7:00</span></div>
+        <div class="r"><span class="ico">🚿</span><span class="en">I take a shower</span><span class="hora">7:15</span></div>
+        <div class="r"><span class="ico">🍳</span><span class="en">I have breakfast</span><span class="hora">7:30</span></div>
+        <div class="r"><span class="ico">💼</span><span class="en">I go to work</span><span class="hora">8:30</span></div>
+        <div class="r"><span class="ico">🌙</span><span class="en">I go to bed</span><span class="hora">22:30</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Dilo en voz alta: primero solo, después explicándole tu día al compañero</div>
+    </section>
+
+    <!-- 6 · ENTREVISTA -->
+    <section class="slide paper" data-notes="15 min en parejas. Un alumno entrevista al otro. Después cada uno reporta la rutina del compañero al grupo en tercera persona — así se refuerza la 's' sin explicarla otra vez.">
+      <div class="eyebrow">Entrevista · 15 min · en parejas</div>
+      <h2 class="h1">Pregúntale <span class="hl">su rutina.</span></h2>
+      <div class="preguntas mt-l">
+        <div class="p"><span class="n">01</span><span class="t">What time do you wake up?</span></div>
+        <div class="p"><span class="n">02</span><span class="t">Do you have breakfast every day?</span></div>
+        <div class="p"><span class="n">03</span><span class="t">What time do you go to work?</span></div>
+        <div class="p"><span class="n">04</span><span class="t">Do you watch TV before bed?</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Después, cuéntale al grupo: "She wakes up at 6. She doesn't have breakfast at home."</div>
+    </section>
+
+    <!-- 7 · FRECUENCIA -->
+    <section class="slide" data-notes="10 min. Practicar always/usually/sometimes/never con hábitos reales. Cada alumno dice 3 oraciones verdaderas sobre sí mismo.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Frecuencia · 10 min</div>
+      <h2 class="h1">¿Qué tan <span class="hl">seguido?</span></h2>
+      <div class="frecuencias mt-l">
+        <div class="frec"><span class="en">Always</span><span class="es">siempre</span></div>
+        <div class="frec"><span class="en">Usually</span><span class="es">usualmente</span></div>
+        <div class="frec"><span class="en">Sometimes</span><span class="es">a veces</span></div>
+        <div class="frec"><span class="en">Never</span><span class="es">nunca</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Di 3 oraciones verdaderas: "I always drink coffee in the morning."</div>
+    </section>
+
+    <!-- 8 · PRÁCTICA LIBRE -->
+    <section class="slide paper" data-notes="10 min. Conversación abierta sin apoyo escrito — solo hablando. No dejes que lean, es el momento de soltarse.">
+      <div class="eyebrow">Práctica libre · 10 min · en parejas</div>
+      <h2 class="h1">Describe <span class="hl">un día normal.</span></h2>
+      <p class="lead wide mt-m">"Describe a normal day for you" — cuéntale a tu compañero tu rutina completa, sin leer, solo hablando.</p>
+    </section>
+
+    <!-- 9 · CIERRE -->
+    <section class="slide center" data-notes="Cierre de 5 min: ronda rápida comparando rutinas. La tarea es escribir o grabar 5 oraciones con una expresión de frecuencia — refuerza lo de hoy sin agregar contenido nuevo.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Buen trabajo!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">Ya puedes contar <span class="hl">tu rutina completa</span> en inglés.</p>
+      <p class="lead mt-m" style="text-align:center">Tarea: escribe o graba 5 oraciones sobre tu rutina diaria, usando al menos una expresión de frecuencia.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>
