@@ -1,127 +1,81 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="dtmm/assets/imgs/reddeluz.png">
-<title>Academia — La Red de Luz</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Academia — La Red de Luz</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
-:root{
-  --char:#0a0a0a; --char-soft:#161414;
-  --gold:#d4a94a; --gold-soft:rgba(212,169,74,.12);
-  --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
-  --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
-  --ease:cubic-bezier(0.22,1,0.36,1);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Spectral:ital,wght@0,500;0,600;1,500&display=swap');
+:root{--void:#0d0b16;--void2:#161423;--gold:#e4cd85;--gold2:#c08a2d;--blue:#163384;--warm:#f9f4e3;--line:rgba(228,205,133,.2);--soft:rgba(249,244,227,.68);--red:#e21b38}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--void);color:var(--warm);font-family:Inter,system-ui,sans-serif}body{background-image:radial-gradient(circle at 70% 12%,rgba(22,51,132,.18),transparent 28%),linear-gradient(rgba(228,205,133,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(228,205,133,.03) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px}
+.top{height:68px;padding:0 clamp(24px,3vw,58px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(13,11,22,.72);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:13px;font:500 10px JetBrains Mono;letter-spacing:.26em;color:var(--gold)}.brand img{width:34px;height:34px;object-fit:contain}.top-right{display:flex;align-items:center;gap:24px;font:500 8px JetBrains Mono;letter-spacing:.16em;color:rgba(249,244,227,.45)}.community{border:1px solid var(--line);border-radius:8px;color:var(--gold);padding:10px 13px}
+.stage{min-height:calc(100vh - 68px);display:grid;grid-template-columns:minmax(370px,36%) 1fr;gap:clamp(28px,4vw,76px);padding:clamp(32px,4.5vw,72px) clamp(24px,3vw,58px) clamp(26px,3vw,48px);overflow:hidden}.intro{display:flex;flex-direction:column;justify-content:center;position:relative;padding-right:10px}.intro::after{content:"";position:absolute;width:min(35vw,560px);height:min(35vw,560px);border:1px solid rgba(228,205,133,.1);border-radius:50%;left:-48%;top:50%;transform:translateY(-50%);box-shadow:0 0 0 64px rgba(228,205,133,.018),0 0 0 128px rgba(22,51,132,.025);z-index:-1}.coord{font:500 9px JetBrains Mono;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:11px}.coord::after{content:"";display:block;width:72px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}h1{font:600 clamp(48px,5.7vw,88px)/.87 Spectral,serif;letter-spacing:-.045em;margin:20px 0 20px;max-width:650px}h1 em{font-weight:500;color:var(--gold)}.intro-copy{font-size:clamp(14px,1.1vw,17px);line-height:1.65;color:var(--soft);max-width:520px;margin:0}.micro{margin-top:25px;font:500 8px JetBrains Mono;letter-spacing:.14em;line-height:1.7;color:rgba(249,244,227,.38)}.network{margin-top:34px;display:flex;align-items:center;gap:11px;font:500 8px JetBrains Mono;letter-spacing:.13em;color:rgba(249,244,227,.48)}.network b{color:var(--gold);font-weight:500}.network .nodes{display:flex;align-items:center}.network .nodes i{width:9px;height:9px;border:1px solid var(--gold);border-radius:50%;background:var(--void);display:block}.network .nodes span{width:20px;height:1px;background:var(--line)}
+.directory{display:flex;flex-direction:column;min-width:0;justify-content:center}.directory-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:18px}.directory-head h2{font:600 clamp(25px,2.6vw,40px)/1 Spectral;margin:9px 0 0}.head-tools{display:flex;align-items:center;gap:9px}.head-tools p{font-size:11px;color:rgba(249,244,227,.46);max-width:260px;text-align:right;line-height:1.45;margin:0 8px 0 0}.tool{width:40px;height:40px;border:1px solid var(--line);border-radius:9px;background:rgba(13,11,22,.72);color:rgba(249,244,227,.5);display:grid;place-items:center;cursor:pointer;font-size:17px}.tool:hover,.tool.active{color:var(--gold);border-color:rgba(228,205,133,.48);background:rgba(228,205,133,.06)}.tool:focus-visible{outline:2px solid var(--gold);outline-offset:2px}.rail-shell{position:relative;min-width:0}.portals{display:flex;gap:16px;min-height:min(66vh,620px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding-block:8px;margin-block:-8px}.portals::-webkit-scrollbar{display:none}.portal{position:relative;overflow:hidden;border-radius:16px;padding:clamp(22px,2.2vw,34px);border:1px solid color-mix(in srgb,var(--accent) 32%,rgba(255,255,255,.1));background-color:rgba(20,18,31,.92);display:flex;flex-direction:column;min-width:0;transition:.25s;flex:0 0 calc(50% - 8px);scroll-snap-align:start}.portal:hover{transform:translateY(-3px)}.portal>*{position:relative;z-index:2}.status{font:500 8px JetBrains Mono;letter-spacing:.17em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;color:var(--accent)}.portal h3{font:600 clamp(32px,3.4vw,58px)/.9 Spectral;margin:auto 0 16px;letter-spacing:-.03em}.portal p{font-size:12px;line-height:1.55;color:rgba(249,244,227,.62);max-width:420px;margin:0}.details{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}.details span{font:500 7px JetBrains Mono;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.12);padding:7px 8px;border-radius:6px;color:rgba(249,244,227,.48)}.cta{display:inline-flex;align-items:center;gap:9px;font:600 9px JetBrains Mono;letter-spacing:.12em;text-transform:uppercase;width:max-content;padding:11px 13px;border-radius:8px;margin-top:14px;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);background:color-mix(in srgb,var(--accent) 7%,transparent)}.portals.grid-view{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));align-content:start;overflow-y:auto;scroll-snap-type:none}.portals.grid-view .portal{min-height:245px;padding:20px;flex:auto}.portals.grid-view .portal h3{font-size:29px;margin:auto 0 12px}.portals.grid-view .portal p{font-size:10px}.portals.grid-view .details{margin-top:12px}.portals.grid-view .details span{padding:5px 6px}.portals.grid-view .cta{padding:8px 9px;font-size:7px}.portals.grid-view .future{display:flex}.future{--accent:#7284a8;opacity:.7;background-image:radial-gradient(circle at 74% 20%,rgba(114,132,168,.13),transparent 28%)}
+.dtmm{--accent:var(--gold);background-image:linear-gradient(rgba(228,205,133,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(228,205,133,.045) 1px,transparent 1px),radial-gradient(circle at 72% 28%,rgba(228,205,133,.12),transparent 25%);background-size:25px 25px,25px 25px,auto}.dtmm::before{content:"";position:absolute;width:190px;height:190px;right:-5px;top:75px;border:1px solid rgba(228,205,133,.2);transform:rotate(31deg);box-shadow:0 0 0 30px rgba(228,205,133,.025),0 0 0 60px rgba(228,205,133,.015)}
+.english{--accent:#ff3551;background-image:radial-gradient(circle at 76% 20%,rgba(226,27,56,.2),transparent 27%),linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:auto,27px 27px,27px 27px}.english::before,.english::after{content:"";position:absolute;left:-90px;right:-90px;height:180px;border:1px solid rgba(226,27,56,.3);border-radius:50%;transform:rotate(8deg)}.english::before{top:92px}.english::after{top:135px;border-color:rgba(249,244,227,.15);transform:rotate(-4deg)}.eng-nodes{position:absolute;inset:0;z-index:1}.eng-nodes i{position:absolute;width:13px;height:13px;border:2px solid var(--red);border-radius:50%;background:var(--void2);box-shadow:0 0 18px rgba(226,27,56,.42)}.eng-nodes i:nth-child(1){right:70px;top:94px}.eng-nodes i:nth-child(2){right:180px;top:154px;width:9px;height:9px}.eng-nodes i:nth-child(3){right:104px;top:220px;width:9px;height:9px}
+.growth{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 14px;border:1px dashed rgba(228,205,133,.18);border-radius:10px;color:rgba(249,244,227,.4);font:500 8px JetBrains Mono;letter-spacing:.12em;text-transform:uppercase}.growth b{font-weight:500;color:var(--gold)}
+.portal[href]{cursor:pointer;text-decoration:none;color:inherit}.portal[href]:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.figure-slot{position:absolute;z-index:1!important;left:50%;right:auto;top:78px;transform:translateX(-50%);width:clamp(132px,11vw,166px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;padding:clamp(20px,1.8vw,28px);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 52%,transparent);background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--accent) 16%,#0d0b16),rgba(13,11,22,.97) 66%);box-shadow:inset 0 0 0 8px rgba(13,11,22,.72),0 18px 46px -24px color-mix(in srgb,var(--accent) 78%,transparent);filter:none;opacity:1}.figure-slot::before,.figure-slot::after{content:"";position:absolute;border-radius:50%;border:1px solid color-mix(in srgb,var(--accent) 18%,transparent);pointer-events:none}.figure-slot::before{inset:13px}.figure-slot::after{inset:32px}.constellation-figure{display:block;width:100%;height:auto;overflow:visible;position:relative;z-index:1}.constellation-figure path{fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;opacity:.9}.constellation-figure circle{fill:var(--void2);stroke:currentColor;stroke-width:1.2}.constellation-figure circle[data-core]{fill:var(--warm);stroke:var(--warm);filter:drop-shadow(0 0 6px currentColor)}.figure-name{position:absolute;left:50%;right:auto;top:256px;transform:translateX(-50%);width:clamp(132px,11vw,166px);text-align:center;font:500 7px JetBrains Mono;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);opacity:.82}.portals.grid-view .figure-slot{width:78px;top:54px;left:50%;right:auto;padding:13px;opacity:1}.portals.grid-view .figure-slot::before{inset:7px}.portals.grid-view .figure-slot::after{display:none}.portals.grid-view .figure-name{display:none}
+@media(max-width:1050px){.stage{grid-template-columns:1fr;padding-top:45px;overflow:visible}.intro{min-height:auto;padding-right:0}.intro::after{display:none}.directory{padding-bottom:40px}.portals{min-height:540px}}
+@media(max-width:680px){.top{height:62px;padding-inline:18px}.top-right span{display:none}.stage{padding:38px 18px 30px;display:block}.intro{margin-bottom:45px}h1{font-size:50px}.directory-head{display:block}.head-tools{margin-top:16px}.head-tools p{display:none}.portals{min-height:auto}.portal{min-height:410px;flex-basis:86%}.portals.grid-view{grid-template-columns:repeat(2,minmax(0,1fr))}.portals.grid-view .portal{min-height:230px}.portals.grid-view .portal p,.portals.grid-view .details{display:none}.growth{align-items:flex-start;flex-direction:column}.brand{font-size:8px}.figure-slot{width:120px;left:50%;right:auto}}
+/* Grid: reserve a clear visual zone for the constellation avatar. */
+.portals.grid-view .portal{min-height:320px}
+.portals.grid-view .portal h3{margin:112px 0 12px}
+.portals.grid-view .figure-slot{width:76px;top:48px}
+.portals.grid-view .future h3{margin-top:auto}
+@media(max-width:680px){
+  body{overflow-x:hidden}
+  .tool{width:44px;height:44px}
+  h1 em{display:block}
+  .portal{min-height:480px}
+  .portal h3{margin:224px 0 14px}
+  .figure-slot{width:120px;top:72px}
+  .figure-name{top:210px}
+  .directory,.rail-shell,.portals{max-width:100%}
+  .portals.grid-view{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow-x:hidden}
+  .portals.grid-view .portal{width:100%;max-width:100%;min-height:228px;padding:14px}
+  .portals.grid-view .status{font-size:6px;letter-spacing:.08em}
+  .portals.grid-view .portal .status span:last-child{display:none}
+  .portals.grid-view .portal h3{font-size:24px;line-height:.9;margin:96px 0 0}
+  .portals.grid-view .portal p,.portals.grid-view .details,.portals.grid-view .cta{display:none}
+  .portals.grid-view .figure-slot{width:64px;top:44px;padding:11px}
+  .portals.grid-view .future h3{margin-top:auto}
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--char);color:var(--on-char);
-  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
-  -webkit-font-smoothing:antialiased;min-height:100svh}
-
-.wrap{max-width:64rem;margin:0 auto;padding:clamp(3rem,8vw,6rem) clamp(1.2rem,4vw,3rem) 5rem}
-
-.lockup{display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;margin-bottom:clamp(2.4rem,6vw,4rem)}
-.lockup img{width:56px;height:56px}
-.lockup .wordmark{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--gold)}
-
-.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--gold);text-align:center;
-  display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem}
-.eyebrow::before,.eyebrow::after{content:"";width:28px;height:1px;background:currentColor;opacity:.5}
-h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.005em;
-  line-height:.98;font-size:clamp(2rem,6vw,3.4rem);text-align:center}
-h1 .hl{color:var(--gold)}
-.sub{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--on-char-soft);
-  max-width:44ch;margin:1.2rem auto 0;text-align:center}
-
-.constelaciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:1.1rem;margin-top:clamp(2.6rem,6vw,4rem)}
-.constelacion{position:relative;display:flex;flex-direction:column;gap:.9rem;
-  padding:clamp(1.5rem,3vw,2.1rem);border-radius:20px;overflow:hidden;
-  background:var(--char-soft);border:1px solid var(--line-d);
-  text-decoration:none;color:inherit;transition:.25s var(--ease)}
-.constelacion:hover{transform:translateY(-4px);border-color:var(--card-accent);
-  box-shadow:0 30px 60px -34px var(--card-glow)}
-.constelacion::after{content:"";position:absolute;width:220px;height:220px;
-  right:-70px;bottom:-90px;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,var(--card-accent),transparent 68%);opacity:.18}
-.const-top{position:relative;z-index:1;display:flex;align-items:center;gap:.9rem}
-.const-emoji{flex:none;width:52px;height:52px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
-  background:rgba(255,255,255,.06)}
-.const-status{flex:none;margin-left:auto;font-family:'Martian Mono',monospace;font-size:.58rem;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--card-accent);
-  border:1px solid currentColor;border-radius:999px;padding:.3rem .7rem;white-space:nowrap}
-.const-title{position:relative;z-index:1;font-family:'Archivo Black',sans-serif;
-  text-transform:uppercase;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.05}
-.const-desc{position:relative;z-index:1;font-size:.9rem;color:var(--on-char-soft);line-height:1.5}
-.const-go{position:relative;z-index:1;margin-top:.3rem;font-family:'Martian Mono',monospace;
-  font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--card-accent);
-  display:flex;align-items:center;gap:.4rem}
-
-.soon{opacity:.55;cursor:default}
-.soon:hover{transform:none;box-shadow:none;border-color:var(--line-d)}
-
-.foot{margin-top:clamp(3rem,7vw,5rem);padding-top:1.6rem;border-top:1px solid var(--line-d);
-  text-align:center;font-family:'Martian Mono',monospace;font-size:.72rem;
-  letter-spacing:.05em;color:var(--on-char-mute)}
-.foot a{color:var(--gold);text-decoration:none}
-.foot a:hover{text-decoration:underline}
-
-@media(max-width:480px){
-  .const-status{display:none}
+/* Compact grid is an index, not a compressed promotional card. */
+.portals.grid-view{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.portals.grid-view .portal{min-height:172px;padding:18px}
+.portals.grid-view .figure-slot,.portals.grid-view .figure-name{display:none}
+.portals.grid-view .portal h3{font-size:clamp(23px,2vw,30px);line-height:.9;margin:auto 0 12px}
+.portals.grid-view .portal p,.portals.grid-view .details{display:none}
+.portals.grid-view .cta{padding:0;border:0;background:none;margin-top:0;font-size:7px}
+.portals.grid-view .future h3{margin-top:auto}
+@media(max-width:680px){
+  .portals.grid-view{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .portals.grid-view .portal{min-height:164px;padding:14px}
+  .portals.grid-view .portal h3{font-size:23px;margin:auto 0 10px}
+  .portals.grid-view .cta{display:inline-flex;font-size:6px}
 }
-</style>
-</head>
+</style></head>
 <body>
-
-<div class="wrap">
-  <div class="lockup">
-    <img src="dtmm/assets/imgs/reddeluz.png" alt="La Red de Luz">
-    <span class="wordmark">La Red de Luz</span>
-  </div>
-
-  <div class="eyebrow">Academia</div>
-  <h1>Elige tu <span class="hl">constelación.</span></h1>
-  <p class="sub">Cada constelación es un espacio de práctica propio, con su propia comunidad y su propio ritmo. Entra a la que estás cursando.</p>
-
-  <div class="constelaciones">
-    <a class="constelacion" href="dtmm/index.html" style="--card-accent:#e8a13c;--card-glow:rgba(232,161,60,.35)">
-      <div class="const-top">
-        <span class="const-emoji" aria-hidden="true">✍️</span>
-        <span class="const-status">Activa</span>
-      </div>
-      <h2 class="const-title">De tu mente al mundo</h2>
-      <p class="const-desc">Redes sociales con IA, ventas sin hartar, y encontrar tu voz — por niveles, de básico a avanzado.</p>
-      <span class="const-go">Entrar a las clases →</span>
-    </a>
-
-    <a class="constelacion" href="ingles/index.html" style="--card-accent:#c8102e;--card-glow:rgba(200,16,46,.35)">
-      <div class="const-top">
-        <span class="const-emoji" aria-hidden="true">🗣️</span>
-        <span class="const-status">Activa</span>
-      </div>
-      <h2 class="const-title">¡Hablemos Inglés!</h2>
-      <p class="const-desc">Sesiones en vivo para perder el miedo a hablar — vocabulario, práctica y role-plays reales.</p>
-      <span class="const-go">Entrar a las clases →</span>
-    </a>
-
-    <div class="constelacion soon" style="--card-accent:#8a8680;--card-glow:transparent">
-      <div class="const-top">
-        <span class="const-emoji" aria-hidden="true">✨</span>
-        <span class="const-status">Próximamente</span>
-      </div>
-      <h2 class="const-title">La que sigue</h2>
-      <p class="const-desc">Cada generación trae una constelación nueva. Esta es la próxima rama por nacer.</p>
-    </div>
-  </div>
-
-  <p class="foot">ACADEMIA · UNA INICIATIVA DE <a href="https://lareddeluz.com" target="_blank" rel="noopener">LA RED DE LUZ</a></p>
-</div>
-
-</body>
-</html>
+<nav class="top"><div class="brand"><img src="dtmm/assets/imgs/reddeluz.png" alt="">LA RED DE LUZ</div><div class="top-right"><span>ACADEMIA · ACCESO ABIERTO</span><span class="community">COMUNIDAD ↗</span></div></nav>
+<main class="stage">
+  <section class="intro">
+    <div class="coord">Observatorio de aprendizaje</div>
+    <h1>El conocimiento<br>se construye <em>en red.</em></h1>
+    <p class="intro-copy">Clases, herramientas y recursos gratuitos para aprender haciendo y crecer con otras personas.</p>
+    <div class="micro">ACCESO GRATUITO<br>CONTENIDO EN CRECIMIENTO · SIN RUIDO</div>
+    <div class="network"><div class="nodes"><i></i><span></span><i></i><span></span><i></i></div><b>PERSONA = NODO</b></div>
+  </section>
+  <section class="directory">
+    <header class="directory-head"><div><div class="coord">Constelaciones activas</div><h2>Encuentra dónde empezar.</h2></div><div class="head-tools"><p>Cada constelación tiene una misión y un lenguaje propios.</p><button class="tool" type="button" aria-label="Anterior" onclick="moveRail(-1)">‹</button><button class="tool active" id="wideBtn" type="button" aria-label="Vista amplia" onclick="setView('wide')">▤</button><button class="tool" id="gridBtn" type="button" aria-label="Vista grid" onclick="setView('grid')">▦</button><button class="tool" type="button" aria-label="Siguiente" onclick="moveRail(1)">›</button></div></header>
+    <div class="rail-shell"><div class="portals" id="portals">
+      <a class="portal dtmm" href="dtmm/index.html" aria-label="Entrar a las clases de De tu Mente al Mundo"><div class="status"><span>Constelación · Mental</span><span>Activa</span></div><div class="figure-slot" data-figure="lyra"><svg class="constellation-figure" viewBox="0 0 180 135" aria-hidden="true"><path d="M38 18L78 43L110 75L92 116L58 96L78 43"/><circle cx="38" cy="18" r="4.3" data-core="true"/><circle cx="78" cy="43" r="2"/><circle cx="110" cy="75" r="2"/><circle cx="92" cy="116" r="1.8"/><circle cx="58" cy="96" r="1.8"/></svg></div><span class="figure-name">Lyra · la creación</span><h3>De tu Mente<br>al Mundo</h3><p>Ideas, contenido, inteligencia artificial y presencia digital convertidos en algo que puedas construir.</p><div class="details"><span>Clases</span><span>Decks</span><span>Recursos</span></div><span class="cta">Entrar a las clases →</span></a>
+      <a class="portal english" href="ingles/index.html" aria-label="Entrar a las clases de Hablemos Inglés"><div class="eng-nodes"><i></i><i></i><i></i></div><div class="status"><span>Constelación · Inglés</span><span>Activa</span></div><div class="figure-slot" data-figure="gemini"><svg class="constellation-figure" viewBox="0 0 180 135" aria-hidden="true"><path d="M42 19L60 43L66 73L54 108"/><path d="M66 73L34 88"/><path d="M60 43L102 48L116 79L123 111"/><path d="M116 79L146 93"/><path d="M102 48L127 29"/><path d="M102 48L87 20"/><circle cx="42" cy="19" r="3.7" data-core="true"/><circle cx="60" cy="43" r="2"/><circle cx="66" cy="73" r="1.8"/><circle cx="54" cy="108" r="1.5"/><circle cx="34" cy="88" r="1.2"/><circle cx="102" cy="48" r="3.3" data-core="true"/><circle cx="116" cy="79" r="1.8"/><circle cx="123" cy="111" r="1.5"/><circle cx="146" cy="93" r="1.2"/><circle cx="127" cy="29" r="1.5"/><circle cx="87" cy="20" r="1.3"/></svg></div><span class="figure-name">Gemini · dos voces</span><h3>¡Hablemos<br>Inglés!</h3><p>Práctica didáctica, conversación y herramientas para ganar confianza hablando en comunidad.</p><div class="details"><span>Sesiones</span><span>Práctica</span><span>Recursos</span></div><span class="cta">Entrar a las clases →</span></a>
+      <article class="portal future"><div class="status"><span>Próxima constelación</span><span>En formación</span></div><h3>El cielo<br>sigue creciendo</h3><p>Nuevos espacios de aprendizaje irán apareciendo conforme crezca la comunidad.</p><div class="details"><span>Comunidad</span><span>Próximamente</span></div></article>
+    </div></div>
+    <div class="growth"><span><b>＋ Nueva constelación en formación</b></span><span>El cielo sigue creciendo</span></div>
+  </section>
+</main>
+<script>
+const rail=document.getElementById('portals');
+const wideBtn=document.getElementById('wideBtn');
+const gridBtn=document.getElementById('gridBtn');
+function setView(view){const grid=view==='grid';rail.classList.toggle('grid-view',grid);wideBtn.classList.toggle('active',!grid);gridBtn.classList.toggle('active',grid);wideBtn.setAttribute('aria-pressed',String(!grid));gridBtn.setAttribute('aria-pressed',String(grid));}
+function moveRail(direction){if(rail.classList.contains('grid-view'))return;rail.scrollBy({left:direction*rail.clientWidth*.72,behavior:'smooth'});}
+if(new URLSearchParams(location.search).get('view')==='grid'||location.hash==='#grid')setView('grid');
+</script>
+</body></html>
