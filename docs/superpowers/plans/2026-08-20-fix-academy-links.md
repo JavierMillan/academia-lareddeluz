@@ -76,7 +76,7 @@ Expected: `academy links: PASS`.
 
 - [ ] **Step 1: Add the Pages workflow**
 
-Checkout Academia, checkout `JavierMillan/De-tu-mente-al-mundo` into `.sources/dtmm`, run both tests, build `_site`, upload it with `actions/upload-pages-artifact`, and deploy with `actions/deploy-pages`. Trigger on `master`, manual dispatch, and a daily schedule.
+Checkout Academia, checkout the `main` branch of `JavierMillan/De-tu-mente-al-mundo` into `.sources/dtmm`, run both tests, build `_site`, upload it with `actions/upload-pages-artifact`, and deploy with `actions/deploy-pages`. Trigger on Academia's `master`, manual dispatch, and a daily schedule.
 
 - [ ] **Step 2: Build from the real local source checkout**
 

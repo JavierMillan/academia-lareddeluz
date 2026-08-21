@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: JavierMillan/De-tu-mente-al-mundo
-          ref: master
+          ref: main
           path: .sources/dtmm
           persist-credentials: false
 

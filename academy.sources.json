@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceRepository": "JavierMillan/De-tu-mente-al-mundo",
-  "sourceRef": "master",
+  "sourceRef": "main",
   "legacyHostname": "detumentealmundo.lareddeluz.com",
   "sharedPaths": [
     "assets"
