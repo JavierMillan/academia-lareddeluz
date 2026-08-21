@@ -1,1 +1,4 @@
 .worktrees/
+.artifacts/
+.sources/
+_site/

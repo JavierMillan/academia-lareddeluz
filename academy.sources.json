@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "JavierMillan/De-tu-mente-al-mundo",
+  "sourceRef": "master",
+  "legacyHostname": "detumentealmundo.lareddeluz.com",
+  "sharedPaths": [
+    "assets"
+  ],
+  "hubs": [
+    {
+      "id": "dtmm",
+      "sourcePath": "presentacion",
+      "publicPath": "dtmm",
+      "canonicalBase": "https://academia.lareddeluz.com/dtmm/"
+    },
+    {
+      "id": "english",
+      "sourcePath": "ingles",
+      "publicPath": "ingles",
+      "canonicalBase": "https://academia.lareddeluz.com/ingles/",
+      "rewrites": [
+        {
+          "from": "../presentacion/",
+          "to": "../dtmm/"
+        }
+      ]
+    }
+  ]
+}

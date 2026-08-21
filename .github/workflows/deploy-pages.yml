@@ -1,0 +1,58 @@
+name: Deploy Academia
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 12 * * *"
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Academia
+        uses: actions/checkout@v6
+
+      - name: Checkout constellation sources
+        uses: actions/checkout@v6
+        with:
+          repository: JavierMillan/De-tu-mente-al-mundo
+          ref: master
+          path: .sources/dtmm
+          persist-credentials: false
+
+      - name: Test Academy links
+        run: node scripts/test-academy-index.cjs
+
+      - name: Test Academy build
+        run: node scripts/test-build-academy.cjs
+
+      - name: Assemble Academy
+        run: node scripts/build-academy.cjs --source-root .sources/dtmm --out _site
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
