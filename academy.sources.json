@@ -1,28 +1,43 @@
 {
   "schemaVersion": 1,
-  "sourceRepository": "JavierMillan/De-tu-mente-al-mundo",
-  "sourceRef": "main",
   "legacyHostname": "detumentealmundo.lareddeluz.com",
-  "sharedPaths": [
-    "assets"
-  ],
+  "sources": {
+    "dtmm": {
+      "repository": "JavierMillan/De-tu-mente-al-mundo",
+      "ref": "main",
+      "sharedPaths": ["assets"]
+    },
+    "english": {
+      "repository": "JavierMillan/hablemos-ingles",
+      "ref": "master"
+    }
+  },
   "hubs": [
     {
       "id": "dtmm",
+      "sourceId": "dtmm",
       "sourcePath": "presentacion",
       "publicPath": "dtmm",
       "canonicalBase": "https://academia.lareddeluz.com/dtmm/"
     },
     {
       "id": "english",
-      "sourcePath": "ingles",
+      "sourceId": "english",
+      "sourcePath": ".",
       "publicPath": "ingles",
       "canonicalBase": "https://academia.lareddeluz.com/ingles/",
-      "rewrites": [
-        {
-          "from": "../presentacion/",
-          "to": "../dtmm/"
-        }
+      "includePaths": [
+        "index.html",
+        "recursos.html",
+        "recursos.json",
+        "clases.json",
+        "sesion-1.html",
+        "sesion-2.html",
+        "sesion-3.html",
+        "sesion-4.html",
+        "sesion-5.html",
+        "assets",
+        "recursos"
       ]
     }
   ]

@@ -132,36 +132,52 @@ function validateArtifact(outDir, legacyHostname) {
 
 function validateManifest(manifest) {
   if (manifest.schemaVersion !== 1) throw new Error(`Unsupported manifest schema: ${manifest.schemaVersion}`);
+  if (!manifest.sources || typeof manifest.sources !== 'object') throw new Error('Manifest must declare sources');
   if (!Array.isArray(manifest.hubs) || manifest.hubs.length === 0) throw new Error('Manifest must declare at least one hub');
   for (const hub of manifest.hubs) {
-    if (!hub.id || !hub.sourcePath || !hub.publicPath || !hub.canonicalBase) {
+    if (!hub.id || !hub.sourceId || !hub.sourcePath || !hub.publicPath || !hub.canonicalBase) {
       throw new Error(`Incomplete hub declaration: ${JSON.stringify(hub)}`);
     }
+    if (!manifest.sources[hub.sourceId]) throw new Error(`Unknown sourceId for hub ${hub.id}: ${hub.sourceId}`);
   }
 }
 
 function buildAcademy(options) {
   const academyRoot = path.resolve(options.academyRoot);
-  const sourceRoot = path.resolve(options.sourceRoot);
   const outDir = path.resolve(options.outDir);
   const manifestPath = path.resolve(options.manifestPath || path.join(academyRoot, 'academy.sources.json'));
   const manifest = readJson(manifestPath);
   validateManifest(manifest);
   ensureDirectory(academyRoot, 'Academy root');
-  ensureDirectory(sourceRoot, 'Source root');
+  const sourceRoots = {};
+  for (const sourceId of Object.keys(manifest.sources)) {
+    if (!options.sourceRoots || !options.sourceRoots[sourceId]) throw new Error(`Missing source root: ${sourceId}`);
+    sourceRoots[sourceId] = path.resolve(options.sourceRoots[sourceId]);
+    ensureDirectory(sourceRoots[sourceId], `Source root ${sourceId}`);
+  }
   prepareOutput(outDir);
 
   copyRequired(path.join(academyRoot, 'index.html'), path.join(outDir, 'index.html'), 'Academy index');
   copyRequired(path.join(academyRoot, 'CNAME'), path.join(outDir, 'CNAME'), 'Academy CNAME');
   copyRequired(path.join(academyRoot, 'assets'), path.join(outDir, 'assets'), 'Academy assets');
 
-  for (const sharedPath of manifest.sharedPaths || []) {
-    copyRequired(path.join(sourceRoot, sharedPath), path.join(outDir, sharedPath), `Shared path ${sharedPath}`);
+  for (const [sourceId, source] of Object.entries(manifest.sources)) {
+    for (const sharedPath of source.sharedPaths || []) {
+      copyRequired(path.join(sourceRoots[sourceId], sharedPath), path.join(outDir, sharedPath), `Shared path ${sourceId}:${sharedPath}`);
+    }
   }
 
   for (const hub of manifest.hubs) {
     const targetRoot = path.join(outDir, hub.publicPath);
-    copyRequired(path.join(sourceRoot, hub.sourcePath), targetRoot, `Hub ${hub.id}`);
+    const hubSourceRoot = path.join(sourceRoots[hub.sourceId], hub.sourcePath);
+    if (hub.includePaths) {
+      fs.mkdirSync(targetRoot, { recursive: true });
+      for (const includePath of hub.includePaths) {
+        copyRequired(path.join(hubSourceRoot, includePath), path.join(targetRoot, includePath), `Hub ${hub.id}:${includePath}`);
+      }
+    } else {
+      copyRequired(hubSourceRoot, targetRoot, `Hub ${hub.id}`);
+    }
     normalizeHtml(targetRoot, hub);
   }
 
@@ -174,14 +190,31 @@ function option(args, name, fallback) {
   return index >= 0 ? args[index + 1] : fallback;
 }
 
+function sourceOptions(args, academyRoot, sourceIds) {
+  const roots = Object.fromEntries(sourceIds.map((sourceId) => [sourceId, path.join(academyRoot, '.sources', sourceId)]));
+  for (let index = 0; index < args.length; index += 1) {
+    if (args[index] !== '--source') continue;
+    const declaration = args[index + 1] || '';
+    const separator = declaration.indexOf('=');
+    if (separator < 1) throw new Error(`Invalid --source declaration: ${declaration}`);
+    const sourceId = declaration.slice(0, separator);
+    if (!sourceIds.includes(sourceId)) throw new Error(`Unknown --source id: ${sourceId}`);
+    roots[sourceId] = declaration.slice(separator + 1);
+    index += 1;
+  }
+  return roots;
+}
+
 if (require.main === module) {
   const args = process.argv.slice(2);
   const academyRoot = path.resolve(__dirname, '..');
+  const manifestPath = option(args, '--manifest', path.join(academyRoot, 'academy.sources.json'));
+  const manifest = readJson(manifestPath);
   const result = buildAcademy({
     academyRoot,
-    sourceRoot: option(args, '--source-root', path.join(academyRoot, '.sources', 'dtmm')),
+    sourceRoots: sourceOptions(args, academyRoot, Object.keys(manifest.sources || {})),
     outDir: option(args, '--out', path.join(academyRoot, '_site')),
-    manifestPath: option(args, '--manifest', path.join(academyRoot, 'academy.sources.json'))
+    manifestPath
   });
   console.log(`Academy build complete: ${result.hubs} hubs, ${result.htmlFiles} HTML files, ${result.outDir}`);
 }
