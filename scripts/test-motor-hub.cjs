@@ -162,6 +162,14 @@ for (const curso of Object.values(manifest.courses)) {
   const html = fs.readFileSync(path.join(root, curso.sourcePath, 'index.html'), 'utf8');
   assert.match(html, /assets\/motor\/hub\.js/, `${curso.sourcePath} debe cargar el motor compartido`);
   assert.match(html, /assets\/motor\/temas\/\w+\.css/, `${curso.sourcePath} debe cargar su tema`);
+
+  /* El menú lo arma el motor desde constelacion.json. Un enlace escrito a
+     mano en el HTML sale duplicado, porque el motor añade el suyo igual. */
+  const nav = html.match(/<nav[^>]*id="navMain"[^>]*>([\s\S]*?)<\/nav>/);
+  assert.ok(nav, `${curso.sourcePath} necesita un #navMain`);
+  const sinComentarios = nav[1].replace(/<!--[\s\S]*?-->/g, '').trim();
+  assert.equal(sinComentarios, '',
+    `${curso.sourcePath}: #navMain debe ir sin enlaces — el motor lo llena desde constelacion.json`);
 }
 
 /* La rejilla sustituyó al riel: el carrusel cortaba la última tarjeta y
