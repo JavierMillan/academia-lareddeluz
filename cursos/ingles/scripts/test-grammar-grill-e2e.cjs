@@ -101,8 +101,9 @@ async function addTicketItems(page) {
 }
 
 (async () => {
-  const server = await startServer();
-  const origin = `http://127.0.0.1:${server.address().port}/`;
+  const liveOrigin = process.env.GRAMMAR_GRILL_ORIGIN;
+  const server = liveOrigin ? null : await startServer();
+  const origin = liveOrigin || `http://127.0.0.1:${server.address().port}/`;
   const browser = await chromium.launch({ executablePath: edgePath, headless: true });
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -143,7 +144,7 @@ async function addTicketItems(page) {
     console.log('grammar-grill browser flows: PASS');
   } finally {
     await browser.close();
-    await new Promise((resolve) => server.close(resolve));
+    if (server) await new Promise((resolve) => server.close(resolve));
   }
 })().catch((error) => {
   console.error(error);
