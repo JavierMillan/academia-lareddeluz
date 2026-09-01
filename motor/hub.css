@@ -382,11 +382,6 @@ body.menu-open{overflow:hidden}
   border:1px solid rgba(232,161,60,.32);border-radius:999px;padding:.22rem .55rem;
   display:inline-flex;align-items:center;gap:.35rem}
 
-/* progress bar (decorative for now) */
-.prog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(243,234,215,.08)}
-.prog i{display:block;height:100%;width:var(--p,0%);
-  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
-
 /* soon card */
 .deck-card.soon{cursor:default;border-style:dashed;border-color:var(--line-d)}
 .deck-card.soon:hover{transform:none;border-color:var(--line-d2);box-shadow:none;z-index:auto}
