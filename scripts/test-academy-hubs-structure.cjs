@@ -28,7 +28,7 @@ for (const [name, html] of [['DTMM', dtmmHtml], ['Inglés', englishHtml]]) {
 }
 
 assert.match(dtmmHtml, /theme-dtmm/);
-assert.match(englishHtml, /theme-english/);
+assert.match(englishHtml, /theme-ingles/);
 assert.doesNotMatch(englishHtml, /live-badge/);
 assert.doesNotMatch(englishHtml, />En vivo</i);
 

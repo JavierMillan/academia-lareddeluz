@@ -107,9 +107,9 @@ body.on-paper .navbtn:hover,body.on-paper .navbtn.on{border-color:var(--sesame);
 .frase-red::before,.frase-red::after{content:"//";color:var(--line-d2);margin:0 .5em}
 @media(max-width:420px){.frase-red{font-size:.52rem;letter-spacing:.16em}}
 
-.theme-english .deck-card .stripe{background:var(--accent-surface)}
-.theme-english .deck-card .lvl,.theme-english .deck-card .go{color:var(--accent-text)}
-.theme-english .deck-card:hover{border-color:var(--accent-surface)}
+.theme-ingles .deck-card .stripe{background:var(--accent-surface)}
+.theme-ingles .deck-card .lvl,.theme-ingles .deck-card .go{color:var(--accent-text)}
+.theme-ingles .deck-card:hover{border-color:var(--accent-surface)}
 
 /* ============================================================
    Átomos de "Inglés para la vida real" (sesiones 6-8)

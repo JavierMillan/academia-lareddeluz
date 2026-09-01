@@ -172,6 +172,35 @@ for (const curso of Object.values(manifest.courses)) {
     `${curso.sourcePath}: #navMain debe ir sin enlaces — el motor lo llena desde constelacion.json`);
 }
 
+/* ------------------------------------------------------------------
+   Toda página de una constelación declara su tema en dos sitios: el
+   <link> que lo carga y la clase del <body> que lo activa. Falta uno de
+   los dos y la página cae al tema por defecto del motor — que fue justo
+   lo que pasó al mover los tokens de :root a .theme-<id>: los decks de
+   Inglés salieron dorados.
+   ------------------------------------------------------------------ */
+for (const [cursoId, curso] of Object.entries(manifest.courses)) {
+  const cfg = JSON.parse(fs.readFileSync(path.join(root, curso.sourcePath, 'constelacion.json'), 'utf8'));
+  const tema = cfg.tema;
+  const raiz = path.join(root, curso.sourcePath);
+
+  const paginas = fs.readdirSync(raiz)
+    .filter((n) => n.endsWith('.html'))
+    .map((n) => path.join(raiz, n));
+
+  for (const pagina of paginas) {
+    const html = fs.readFileSync(pagina, 'utf8');
+    /* Sólo las páginas que usan el motor: las apps didácticas traen su
+       propio CSS y no dependen del tema. */
+    if (!/motor\/(deck|hub)\.css/.test(html)) continue;
+    const rel = path.relative(root, pagina);
+    assert.match(html, new RegExp(`motor/temas/${tema}\\.css`),
+      `${rel} debe cargar el tema ${tema}`);
+    assert.match(html, new RegExp(`<body[^>]*class="[^"]*theme-${tema}`),
+      `${rel}: el <body> debe llevar theme-${tema}, si no el tema no aplica`);
+  }
+}
+
 /* La rejilla sustituyó al riel: el carrusel cortaba la última tarjeta y
    metía un scroll dentro del scroll de la página. */
 assert.match(hubCss, /\.deck-grid\{[\s\S]*?grid-template-columns/, 'Las clases van en rejilla');

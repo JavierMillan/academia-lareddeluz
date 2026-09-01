@@ -12,7 +12,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
 
-.theme-ingles,.theme-english{
+.theme-ingles{
   /* --- superficie y acento ---
      Esta marca no tiene variante clara: paper == char, siempre negra. */
   --char:#0a0a0a; --char-soft:#161414;
@@ -53,34 +53,34 @@
   --lead:clamp(1.05rem,1.7vw,1.5rem);
 }
 
-.theme-ingles,.theme-english{background:var(--char);font-family:var(--font-body)}
+.theme-ingles{background:var(--char);font-family:var(--font-body)}
 
 /* Los titulares de esta marca van en caja alta y muy apretados. */
-.theme-ingles .hub-identity h1,.theme-english .hub-identity h1{
+.theme-ingles .hub-identity h1{
   font-family:var(--font-display);text-transform:uppercase;
   font-size:clamp(2.8rem,6vw,6.2rem);line-height:.88;letter-spacing:.005em}
-.theme-ingles .featured-class h2,.theme-english .featured-class h2,
-.theme-ingles .row-head h3,.theme-english .row-head h3,
-.theme-ingles .deck-card h4,.theme-english .deck-card h4{
+.theme-ingles .featured-class h2,
+.theme-ingles .row-head h3,
+.theme-ingles .deck-card h4{
   font-family:var(--font-display);text-transform:uppercase;letter-spacing:-.01em}
 
 /* Motivo: órbitas cruzadas — las dos voces de Géminis. */
-.theme-ingles .constellation-motif,.theme-english .constellation-motif{
+.theme-ingles .constellation-motif{
   position:absolute;inset:0;z-index:-1;background:
   radial-gradient(circle at 78% 18%,rgba(200,16,46,.22),transparent 30%),
   linear-gradient(rgba(242,240,236,.02) 1px,transparent 1px),
   linear-gradient(90deg,rgba(242,240,236,.02) 1px,transparent 1px);
   background-size:auto,34px 34px,34px 34px}
-.theme-ingles .constellation-motif::before,.theme-english .constellation-motif::before,
-.theme-ingles .constellation-motif::after,.theme-english .constellation-motif::after{
+.theme-ingles .constellation-motif::before,
+.theme-ingles .constellation-motif::after{
   content:"";position:absolute;left:-10%;width:120%;height:42%;
   border:1px solid rgba(200,16,46,.42);border-radius:50%}
-.theme-ingles .constellation-motif::before,.theme-english .constellation-motif::before{
+.theme-ingles .constellation-motif::before{
   top:18%;transform:rotate(5deg)}
-.theme-ingles .constellation-motif::after,.theme-english .constellation-motif::after{
+.theme-ingles .constellation-motif::after{
   top:34%;border-color:rgba(242,240,236,.1);transform:rotate(-3deg)}
 
 /* En móvil Archivo Black desborda con el piso del motor. */
 @media(max-width:480px){
-  .theme-ingles,.theme-english{--mega:clamp(1.7rem,9vw,2.6rem)}
+  .theme-ingles{--mega:clamp(1.7rem,9vw,2.6rem)}
 }

@@ -15,7 +15,7 @@ const temaCss = fs.readFileSync(path.join(root, '..', '..', 'motor', 'temas', 'i
 const motorJs = fs.readFileSync(path.join(root, '..', '..', 'motor', 'hub.js'), 'utf8');
 const constelacion = JSON.parse(read('constelacion.json'));
 
-assert.match(index, /<body class="theme-english">/, 'English must use its Academy theme');
+assert.match(index, /<body class="theme-ingles">/, 'English must use its Academy theme');
 assert.match(index, /class="topbar academy-shell"/, 'English must use the shared Academy shell');
 assert.match(index, /class="academy-brand"/, 'English must show the Academy brand');
 assert.match(index, /class="all-constellations"/, 'English must link to all constellations');
