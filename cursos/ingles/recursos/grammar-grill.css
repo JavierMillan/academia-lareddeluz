@@ -138,6 +138,12 @@ button,a{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;o
 .phrase-cancel{display:block;margin:1.3rem auto 0;background:none;border:0;color:var(--muted);
   font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-decoration:underline}
 .phrase-cancel:hover{color:var(--paper)}
+.conversation-card{max-height:min(92vh,48rem);overflow:auto}
+.conversation-speaker{margin:0 0 .35rem;color:var(--scenario-accent);font:700 .68rem var(--mono);letter-spacing:.16em}
+.conversation-progress{margin:0 0 .8rem;color:var(--muted);font:600 .64rem var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.conversation-summary{margin:.75rem 0 1rem;padding:.75rem .9rem;border-left:3px solid var(--scenario-accent);background:#191717;color:#d8d2ca;font:.7rem/1.5 var(--mono)}
+.conversation-help{margin:.9rem 0 0;padding:.85rem;border:1px solid #765f35;background:#2b2417;color:#f4deb0;font-size:.8rem;line-height:1.45}
+.conversation-starter{display:block;margin-top:.35rem;color:var(--scenario-accent);font-family:var(--mono);font-size:.7rem}
 .kiosk-side{min-width:0}.ticket,.cart{background:var(--paper);color:var(--ink);border-radius:6px;padding:1rem;box-shadow:0 20px 45px #0008}
 .ticket{position:relative;margin-bottom:.8rem;border-top:8px solid var(--red);background-image:linear-gradient(135deg,transparent 5px,var(--paper) 0),linear-gradient(225deg,transparent 5px,var(--paper) 0);
   background-position:bottom left,bottom right;background-size:10px 10px;background-repeat:repeat-x}

@@ -36,17 +36,154 @@
       "categories": ["hot-drinks", "cold-drinks", "bakery"],
       "categoryLabels": { "hot-drinks": "Hot Drinks", "cold-drinks": "Cold Drinks", "bakery": "Bakery" },
       "sizes": ["small", "medium", "large"],
+      "conversation": {
+        "profiles": {
+          "drip": ["size", "room", "milk", "sugar"],
+          "latte": ["size", "milk", "sweetness"],
+          "cappuccino": ["size", "milk"],
+          "hotChocolate": ["size", "milk", "whippedCream"],
+          "icedCoffee": ["size", "milk", "sweetness"],
+          "lemonade": ["size", "ice"],
+          "bakery": ["warmed"]
+        },
+        "questions": {
+          "size": {
+            "prompt": "What size would you like?",
+            "spanish": "¿De qué tamaño lo quieres?",
+            "starter": "I'd like a…",
+            "answers": [
+              { "value": "small", "text": "A small, please." },
+              { "value": "medium", "text": "A medium, please." },
+              { "value": "large", "text": "A large, please." }
+            ],
+            "distractors": ["Medium want I.", "Size is what?"]
+          },
+          "room": {
+            "prompt": "Would you like room for milk?",
+            "spanish": "¿Quieres espacio para agregar leche?",
+            "starter": "Yes, leave… / No…",
+            "answers": [
+              { "value": "room for milk", "text": "Yes, leave room for milk, please." },
+              { "value": "no room", "text": "No room, thank you." }
+            ],
+            "distractors": ["Room milk yes leave.", "No room is want."]
+          },
+          "milk": {
+            "prompt": "What kind of milk would you like?",
+            "spanish": "¿Qué tipo de leche quieres?",
+            "starter": "I'd like…",
+            "answers": [
+              { "value": "whole milk", "text": "Whole milk, please." },
+              { "value": "skim milk", "text": "Skim milk, please." },
+              { "value": "oat milk", "text": "Oat milk, please." },
+              { "value": "almond milk", "text": "Almond milk, please." },
+              { "value": "coconut milk", "text": "Coconut milk, please." }
+            ],
+            "distractors": ["Milk oat want I.", "What milk is me?"]
+          },
+          "sugar": {
+            "prompt": "Would you like sugar?",
+            "spanish": "¿Quieres azúcar?",
+            "starter": "Yes, with… / No…",
+            "answers": [
+              { "value": "with sugar", "text": "Yes, with sugar, please." },
+              { "value": "no sugar", "text": "No sugar, thank you." }
+            ],
+            "distractors": ["Sugar yes with.", "No want sugar me."]
+          },
+          "sweetness": {
+            "prompt": "How sweet would you like it?",
+            "spanish": "¿Qué tan dulce lo quieres?",
+            "starter": "I'd like it…",
+            "answers": [
+              { "value": "unsweetened", "text": "Unsweetened, please." },
+              { "value": "half sweet", "text": "Half sweet, please." },
+              { "value": "regular sweetness", "text": "Regular sweetness, please." }
+            ],
+            "distractors": ["Sweet half it.", "I sweet regular want."]
+          },
+          "whippedCream": {
+            "prompt": "Would you like whipped cream?",
+            "spanish": "¿Quieres crema batida?",
+            "starter": "Yes, with… / No…",
+            "answers": [
+              { "value": "whipped cream", "text": "Yes, with whipped cream, please." },
+              { "value": "no whipped cream", "text": "No whipped cream, thank you." }
+            ],
+            "distractors": ["Whipped cream yes with.", "No cream whipped want."]
+          },
+          "ice": {
+            "prompt": "How much ice would you like?",
+            "spanish": "¿Cuánto hielo quieres?",
+            "starter": "I'd like…",
+            "answers": [
+              { "value": "no ice", "text": "No ice, please." },
+              { "value": "light ice", "text": "Light ice, please." },
+              { "value": "regular ice", "text": "Regular ice, please." }
+            ],
+            "distractors": ["Ice light want.", "No want I ice."]
+          },
+          "warmed": {
+            "prompt": "Would you like that warmed up?",
+            "spanish": "¿Quieres que lo calienten?",
+            "starter": "Yes, please… / No…",
+            "answers": [
+              { "value": "warmed", "text": "Yes, please warm it up." },
+              { "value": "not warmed", "text": "No, thank you." }
+            ],
+            "distractors": ["Warm yes it.", "No warm want."]
+          }
+        },
+        "checkout": [
+          {
+            "id": "service",
+            "prompt": "Is that for here or to go?",
+            "spanish": "¿Es para comer aquí o para llevar?",
+            "starter": "For…",
+            "answers": [
+              { "value": "for here", "text": "For here, please." },
+              { "value": "to go", "text": "To go, please." }
+            ],
+            "distractors": ["Here for is."]
+          },
+          {
+            "id": "orderName",
+            "prompt": "Can I get a name for the order?",
+            "spanish": "¿Me das un nombre para la orden?",
+            "starter": "The name is…",
+            "answers": [
+              { "value": "Alex", "text": "The name is Alex." },
+              { "value": "Sam", "text": "The name is Sam." },
+              { "value": "Maria", "text": "The name is Maria." }
+            ],
+            "distractors": ["Name Alex is the."]
+          },
+          {
+            "id": "payment",
+            "prompt": "How would you like to pay?",
+            "spanish": "¿Cómo quieres pagar?",
+            "starter": "By… / With…",
+            "answers": [
+              { "value": "card", "text": "By card, please." },
+              { "value": "cash", "text": "With cash, please." }
+            ],
+            "distractors": ["Pay card I."]
+          }
+        ]
+      },
       "catalog": [
-        { "id": "drip-coffee", "category": "hot-drinks", "name": "Drip Coffee", "description": "Freshly brewed, house blend.", "prices": { "small": 28, "medium": 34, "large": 40 }, "requiresSize": true, "emoji": "☕" },
-        { "id": "latte", "category": "hot-drinks", "name": "Latte", "description": "Espresso with steamed milk.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "featured": true, "emoji": "☕" },
-        { "id": "cappuccino", "category": "hot-drinks", "name": "Cappuccino", "description": "Espresso, milk and foam.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "emoji": "☕" },
-        { "id": "hot-chocolate", "category": "hot-drinks", "name": "Hot Chocolate", "description": "Steamed milk and cocoa.", "prices": { "default": 45 }, "requiresSize": false, "emoji": "🍫" },
-        { "id": "iced-coffee", "category": "cold-drinks", "name": "Iced Coffee", "description": "Cold brew over ice.", "prices": { "small": 38, "medium": 44, "large": 50 }, "requiresSize": true, "emoji": "🧊" },
-        { "id": "iced-latte", "category": "cold-drinks", "name": "Iced Latte", "description": "Espresso, cold milk, ice.", "prices": { "small": 45, "medium": 51, "large": 57 }, "requiresSize": true, "emoji": "🧊" },
-        { "id": "lemonade", "category": "cold-drinks", "name": "Lemonade", "description": "Fresh-squeezed, over ice.", "prices": { "default": 35 }, "requiresSize": false, "emoji": "🍋" },
-        { "id": "croissant", "category": "bakery", "name": "Croissant", "description": "Butter croissant, baked daily.", "prices": { "default": 32 }, "requiresSize": false, "emoji": "🥐" },
-        { "id": "muffin", "category": "bakery", "name": "Blueberry Muffin", "description": "Soft muffin, fresh blueberries.", "prices": { "default": 30 }, "requiresSize": false, "emoji": "🧁" },
-        { "id": "bagel", "category": "bakery", "name": "Bagel with Cream Cheese", "description": "Toasted, with cream cheese.", "prices": { "default": 38 }, "requiresSize": false, "emoji": "🥯" }
+        { "id": "drip-coffee", "category": "hot-drinks", "name": "Drip Coffee", "description": "Freshly brewed, house blend.", "prices": { "small": 28, "medium": 34, "large": 40 }, "requiresSize": true, "customizationProfile": "drip", "emoji": "☕" },
+        { "id": "latte", "category": "hot-drinks", "name": "Latte", "description": "Espresso with steamed milk.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "customizationProfile": "latte", "featured": true, "emoji": "☕" },
+        { "id": "cappuccino", "category": "hot-drinks", "name": "Cappuccino", "description": "Espresso, milk and foam.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "customizationProfile": "cappuccino", "emoji": "☕" },
+        { "id": "hot-chocolate", "category": "hot-drinks", "name": "Hot Chocolate", "description": "Steamed milk and cocoa.", "prices": { "small": 42, "medium": 48, "large": 54 }, "requiresSize": true, "customizationProfile": "hotChocolate", "emoji": "🍫" },
+        { "id": "matcha-latte", "category": "hot-drinks", "name": "Matcha Latte", "description": "Stone-ground matcha with steamed milk.", "prices": { "small": 48, "medium": 54, "large": 60 }, "requiresSize": true, "customizationProfile": "latte", "featured": true, "emoji": "🍵" },
+        { "id": "iced-coffee", "category": "cold-drinks", "name": "Iced Coffee", "description": "Cold brew over ice.", "prices": { "small": 38, "medium": 44, "large": 50 }, "requiresSize": true, "customizationProfile": "icedCoffee", "emoji": "🧊" },
+        { "id": "iced-latte", "category": "cold-drinks", "name": "Iced Latte", "description": "Espresso, cold milk, ice.", "prices": { "small": 45, "medium": 51, "large": 57 }, "requiresSize": true, "customizationProfile": "latte", "emoji": "🧊" },
+        { "id": "iced-matcha-latte", "category": "cold-drinks", "name": "Iced Matcha Latte", "description": "Matcha, cold milk and ice.", "prices": { "small": 50, "medium": 56, "large": 62 }, "requiresSize": true, "customizationProfile": "latte", "featured": true, "emoji": "🍵" },
+        { "id": "lemonade", "category": "cold-drinks", "name": "Lemonade", "description": "Fresh-squeezed, over ice.", "prices": { "small": 32, "medium": 35, "large": 40 }, "requiresSize": true, "customizationProfile": "lemonade", "emoji": "🍋" },
+        { "id": "croissant", "category": "bakery", "name": "Croissant", "description": "Butter croissant, baked daily.", "prices": { "default": 32 }, "requiresSize": false, "customizationProfile": "bakery", "emoji": "🥐" },
+        { "id": "muffin", "category": "bakery", "name": "Blueberry Muffin", "description": "Soft muffin, fresh blueberries.", "prices": { "default": 30 }, "requiresSize": false, "customizationProfile": "bakery", "emoji": "🧁" },
+        { "id": "bagel", "category": "bakery", "name": "Bagel with Cream Cheese", "description": "Toasted, with cream cheese.", "prices": { "default": 38 }, "requiresSize": false, "customizationProfile": "bakery", "emoji": "🥯" }
       ],
       "employeeGreeting": "Hi there! What can I start for you?",
       "employeeClosing": "For here or to go?"

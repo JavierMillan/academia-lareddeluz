@@ -22,5 +22,22 @@ assert.doesNotMatch(js, /state\.(?:mode|mission)/);
 assert.doesNotMatch(js, /const sizes =/);
 assert.ok(scenarios.scenarios.some((scenario) => scenario.id === 'mcdonalds'));
 assert.ok(scenarios.scenarios.some((scenario) => scenario.id === 'cafe'));
+assert.match(js, /state\.conversation/);
+assert.match(js, /function openConversation\(/);
+assert.match(js, /function resolveConversationChoice\(/);
+assert.match(js, /Let me confirm your/);
+assert.match(js, /data-conversation-choice=/);
+assert.match(js, /conversation-progress/);
+assert.match(js, /conversation-speaker/);
+assert.match(js, /conversation-summary/);
+assert.match(js, /conversation-help/);
+assert.match(js, /conversation-starter/);
+assert.match(css, /\.conversation-progress\{/);
+assert.match(css, /\.conversation-summary\{/);
+assert.match(css, /\.conversation-help\{/);
+assert.ok(scenarios.scenarios.find((scenario) => scenario.id === 'cafe').catalog
+  .some((item) => item.id === 'matcha-latte'));
+assert.ok(scenarios.scenarios.find((scenario) => scenario.id === 'cafe').catalog
+  .some((item) => item.id === 'iced-matcha-latte'));
 
 console.log('grammar-grill UI contract: PASS');

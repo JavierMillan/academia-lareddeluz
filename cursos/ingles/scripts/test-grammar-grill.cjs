@@ -55,4 +55,66 @@ for (let index = 0; index < 50; index += 1) {
   for (const line of order.items) assert.ok(model.itemById(line.productId, catalog));
 }
 
+const cafe = scenarios.find((scenario) => scenario.id === 'cafe');
+const expectedProfiles = {
+  'drip-coffee': ['size', 'room', 'milk', 'sugar'],
+  latte: ['size', 'milk', 'sweetness'],
+  'iced-latte': ['size', 'milk', 'sweetness'],
+  cappuccino: ['size', 'milk'],
+  'hot-chocolate': ['size', 'milk', 'whippedCream'],
+  'iced-coffee': ['size', 'milk', 'sweetness'],
+  'matcha-latte': ['size', 'milk', 'sweetness'],
+  'iced-matcha-latte': ['size', 'milk', 'sweetness'],
+  lemonade: ['size', 'ice'],
+  croissant: ['warmed'],
+  muffin: ['warmed'],
+  bagel: ['warmed']
+};
+
+for (const [productId, questions] of Object.entries(expectedProfiles)) {
+  const item = model.itemById(productId, cafe.catalog);
+  assert.ok(item, `${productId} must exist in the coffee-shop catalog`);
+  assert.deepEqual(model.questionsForProduct(item, cafe).map((question) => question.id), questions);
+}
+
+const icedMatcha = model.itemById('iced-matcha-latte', cafe.catalog);
+const customerTurn = model.createConversationTurn({
+  item: icedMatcha, scenario: cafe, role: 'customer', questionIndex: 0, selection: {}
+});
+const employeeTurn = model.createConversationTurn({
+  item: icedMatcha, scenario: cafe, role: 'employee', questionIndex: 0, selection: {}
+});
+assert.equal(customerTurn.speaker, 'BARISTA');
+assert.equal(customerTurn.prompt, 'What size would you like?');
+assert.equal(employeeTurn.speaker, 'CUSTOMER');
+assert.equal(employeeTurn.correct, 'What size would you like?');
+assert.notEqual(customerTurn.correct, employeeTurn.correct);
+
+const mediumChoice = customerTurn.validChoices.find((choice) => choice.value === 'medium');
+assert.deepEqual(
+  model.applyConversationChoice(customerTurn, mediumChoice.text, {}),
+  { valid: true, selection: { size: 'medium', modifiers: {} } }
+);
+assert.deepEqual(
+  model.applyConversationChoice(customerTurn, 'Medium want I.', {}),
+  { valid: false, selection: { size: null, modifiers: {} } }
+);
+
+const customized = {
+  items: [{
+    productId: 'iced-matcha-latte', size: 'medium', quantity: 1,
+    modifiers: { milk: 'oat milk', sweetness: 'half sweet' }
+  }]
+};
+assert.deepEqual(model.normalizeOrder(customized).items[0].modifiers,
+  { milk: 'oat milk', sweetness: 'half sweet' });
+assert.equal(model.labelLine(customized.items[0], cafe.catalog),
+  '1 Medium Iced Matcha Latte · oat milk · half sweet');
+assert.equal(model.compareOrders(customized, {
+  items: [{
+    productId: 'iced-matcha-latte', size: 'medium', quantity: 1,
+    modifiers: { milk: 'almond milk', sweetness: 'half sweet' }
+  }]
+}, cafe.catalog).matches, false);
+
 console.log('grammar-grill model: PASS');

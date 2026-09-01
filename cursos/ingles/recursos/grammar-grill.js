@@ -15,6 +15,8 @@
     feedback: [],
     success: false,
     phraseCheck: null,   // { productId, size, item, correct, options, wrongPick, misses }
+    conversation: null,
+    checkout: null,
     phraseScore: { correct: 0, attempts: 0 },
     streak: 0   // frases acertadas AL PRIMER INTENTO, seguidas — se rompe al fallar una
   };
@@ -63,6 +65,8 @@
       feedback: [],
       success: false,
       phraseCheck: null,
+      conversation: null,
+      checkout: null,
       phraseScore: { correct: 0, attempts: 0 },
       streak: 0
     });
@@ -85,6 +89,8 @@
     state.feedback = [];
     state.success = false;
     state.phraseCheck = null;
+    state.conversation = null;
+    state.checkout = null;
     state.phraseScore = { correct: 0, attempts: 0 };
     state.streak = 0;
     state.target = role === 'delivery'
@@ -173,7 +179,11 @@
     // la frase (data-order en vez de data-add). "ADD" sin decir nada
     // en inglés no enseña nada; esto convierte cada click en una
     // producción de lenguaje real, tomada del vocabulario del deck.
-    const actions = item.requiresSize
+    const actions = item.customizationProfile
+      ? '<button class="primary" type="button" data-order="' + item.id + '" data-size="" ' +
+        'aria-label="Customize ' + item.name + '">CUSTOMIZE · FROM ' +
+        money(Math.min(...Object.values(item.prices))) + '</button>'
+      : item.requiresSize
       ? state.scenario.sizes.map((size) =>
           '<button class="size-button" type="button" data-order="' + item.id + '" data-size="' + size + '" ' +
           'aria-label="Order ' + titleCase(size) + ' ' + item.name + '">' +
@@ -197,6 +207,10 @@
   // la comida a sí mismo en vez de atender.
   function openPhraseCheck(productId, size) {
     const item = model.itemById(productId, state.scenario.catalog);
+    if (model.questionsForProduct(item, state.scenario).length) {
+      openConversation(productId);
+      return;
+    }
     const cleanSize = item.requiresSize ? size : null;
     const phraseRole = state.role === 'delivery' ? 'employee' : 'customer';
     const { correct, options } = model.phraseOptionsFor(
@@ -212,6 +226,111 @@
     if (state.phraseCheck) state.streak = 0;
     state.phraseCheck = null;
     render(false);
+  }
+
+  function conversationRole() {
+    return state.role === 'delivery' ? 'employee' : 'customer';
+  }
+
+  function setConversationTurn() {
+    const conversation = state.conversation;
+    const question = conversation.questions[conversation.index];
+    conversation.turn = model.createConversationTurn({
+      item: conversation.item || { name: 'order' },
+      scenario: state.scenario,
+      role: conversationRole(),
+      questionIndex: conversation.index,
+      selection: conversation.selection,
+      question
+    });
+    conversation.misses = 0;
+    conversation.wrongPick = null;
+  }
+
+  function openConversation(productId) {
+    const item = model.itemById(productId, state.scenario.catalog);
+    const questions = model.questionsForProduct(item, state.scenario);
+    if (conversationRole() === 'employee') {
+      questions.push({
+        id: 'confirm',
+        prompt: 'Let me confirm your ' + item.name.toLowerCase() + '. Is that correct?',
+        spanish: 'Confirma la bebida completa antes de prepararla.',
+        starter: 'Let me confirm…',
+        answers: [{ value: 'confirmed', text: 'Yes, that is correct.' }],
+        distractors: ['Confirm your is correct?', 'I confirm drink you?']
+      });
+    }
+    state.conversation = {
+      phase: 'product', item, questions,
+      index: 0, selection: { size: null, modifiers: {} }, misses: 0, wrongPick: null
+    };
+    setConversationTurn();
+    render(false);
+  }
+
+  function openCheckout() {
+    state.conversation = {
+      phase: 'checkout', item: null, questions: state.scenario.conversation.checkout,
+      index: 0, selection: { size: null, modifiers: {} }, misses: 0, wrongPick: null
+    };
+    setConversationTurn();
+    render(false);
+  }
+
+  function completeConversationProduct() {
+    const conversation = state.conversation;
+    addLine(conversation.item.id, conversation.selection.size, conversation.selection.modifiers);
+    state.conversation = { phase: 'anythingElse', item: conversation.item, selection: conversation.selection };
+    render(false);
+  }
+
+  function resolveConversationChoice(picked) {
+    const conversation = state.conversation;
+    if (!conversation) return;
+    if (conversation.phase === 'anythingElse') {
+      if (conversationRole() === 'employee') {
+        if (picked !== 'Anything else?') {
+          conversation.misses = (conversation.misses || 0) + 1;
+          conversation.wrongPick = picked;
+          render(false);
+          return;
+        }
+        openCheckout();
+        return;
+      }
+      if (picked === "Yes, I'd like something else.") {
+        state.conversation = null;
+        render(false);
+      } else if (picked === "No, that's all.") openCheckout();
+      return;
+    }
+
+    const result = model.applyConversationChoice(conversation.turn, picked, conversation.selection);
+    if (!result.valid) {
+      conversation.misses += 1;
+      conversation.wrongPick = picked;
+      state.streak = 0;
+      announce('Try again — help is now available.');
+      render(false);
+      return;
+    }
+    conversation.selection = result.selection;
+    conversation.index += 1;
+    if (conversation.index < conversation.questions.length) {
+      setConversationTurn();
+      render(false);
+      return;
+    }
+    if (conversation.phase === 'product') completeConversationProduct();
+    else {
+      state.checkout = conversation.selection.modifiers;
+      state.conversation = null;
+      state.feedback = [];
+      state.success = true;
+      announce('Order created!');
+      render(true);
+      launchConfetti();
+    }
   }
 
   // mensajes cálidos y variados en vez de un "Not quite" seco siempre
@@ -247,14 +366,15 @@
     }
   }
 
-  function addLine(productId, size) {
+  function addLine(productId, size, modifiers) {
     const item = model.itemById(productId, state.scenario.catalog);
     const cleanSize = item.requiresSize ? size : null;
     const existing = state.cart.items.find(
-      (line) => line.productId === productId && line.size === cleanSize
+      (line) => line.productId === productId && line.size === cleanSize &&
+        JSON.stringify(line.modifiers || {}) === JSON.stringify(modifiers || {})
     );
     if (existing) existing.quantity += 1;
-    else state.cart.items.push({ productId, size: cleanSize, quantity: 1 });
+    else state.cart.items.push({ productId, size: cleanSize, modifiers: { ...(modifiers || {}) }, quantity: 1 });
     state.feedback = [];
   }
 
@@ -276,7 +396,7 @@
 
     return '<ul class="cart-lines">' + state.cart.items.map((line) => {
       const item = model.itemById(line.productId, state.scenario.catalog);
-      const lineName = (line.size ? titleCase(line.size) + ' ' : '') + item.name;
+      const lineName = model.labelLine({ ...line, quantity: 1 }, state.scenario.catalog).replace(/^1 /, '');
       const controls = interactive
         ? '<span class="stepper">' +
             '<button type="button" data-change="-1" data-id="' + line.productId + '" data-size="' + (line.size || '') + '" aria-label="Remove one ' + lineName + '">−</button>' +
@@ -316,7 +436,16 @@
       state.feedback = result.feedback;
       state.success = result.matches;
       announce(result.matches ? 'Order ready!' : result.feedback.join('. '));
+      if (result.matches && state.scenario.conversation) {
+        state.success = false;
+        openCheckout();
+        return;
+      }
     } else {
+      if (state.scenario.conversation) {
+        openCheckout();
+        return;
+      }
       state.feedback = [];
       state.success = true;
       announce('Order created!');
@@ -370,6 +499,56 @@
         '<button type="button" class="phrase-cancel" id="phrase-cancel">‹ Back to menu</button>' +
       '</div>' +
     '</div>';
+  }
+
+  function renderConversationModal() {
+    const conversation = state.conversation;
+    if (!conversation) return '';
+    if (conversation.phase === 'anythingElse') {
+      const employee = conversationRole() === 'employee';
+      const options = employee
+        ? ['Anything else?', 'Else anything?', 'You want another is?']
+        : ["Yes, I'd like something else.", "No, that's all.", 'Else no is.'];
+      return '<div class="phrase-overlay" role="dialog" aria-modal="true" aria-labelledby="conversation-title"><div class="phrase-card conversation-card">' +
+        '<p class="conversation-speaker">' + (employee ? 'BARISTA' : 'BARISTA') + '</p>' +
+        '<p class="conversation-progress">FINAL QUESTION</p>' +
+        '<h2 id="conversation-title">' + (employee ? 'How do you ask if they want another item?' : 'Anything else?') + '</h2>' +
+        '<div class="phrase-options">' + options.map((text) => '<button type="button" class="phrase-option" data-conversation-choice="' + encodeURIComponent(text) + '">' + text + '</button>').join('') + '</div>' +
+        '<p class="conversation-summary">' + model.labelLine({ ...conversation.selection, productId: conversation.item.id, quantity: 1 }, state.scenario.catalog) + '</p>' +
+        '<button type="button" class="phrase-cancel" id="conversation-cancel">‹ Back to menu</button></div></div>';
+    }
+    const turn = conversation.turn;
+    const options = turn.options.map((text) => {
+      let className = 'phrase-option';
+      if (conversation.wrongPick === text) className += ' wrong';
+      return '<button type="button" class="' + className + '" data-conversation-choice="' + encodeURIComponent(text) + '">' + text + '</button>';
+    }).join('');
+    const help = conversation.misses
+      ? '<div class="conversation-help"><b>En español:</b> ' + turn.spanish +
+        '<span class="conversation-starter">Start with: “' + turn.starter + '”</span></div>'
+      : '';
+    const itemSummary = conversation.item
+      ? model.labelLine({ productId: conversation.item.id, size: conversation.selection.size, modifiers: conversation.selection.modifiers, quantity: 1 }, state.scenario.catalog)
+      : 'Checkout · ' + Object.values(conversation.selection.modifiers || {}).join(' · ');
+    return '<div class="phrase-overlay" role="dialog" aria-modal="true" aria-labelledby="conversation-title"><div class="phrase-card conversation-card">' +
+      '<p class="conversation-speaker">' + turn.speaker + '</p>' +
+      '<p class="conversation-progress">Question ' + (conversation.index + 1) + ' of ' + conversation.questions.length + '</p>' +
+      '<h2 id="conversation-title">' + turn.prompt + '</h2>' +
+      '<p class="conversation-summary">' + itemSummary + '</p>' +
+      '<div class="phrase-options">' + options + '</div>' + help +
+      '<button type="button" class="phrase-cancel" id="conversation-cancel">‹ Back to menu</button></div></div>';
+  }
+
+  function wireConversationModal() {
+    document.querySelectorAll('[data-conversation-choice]').forEach((button) => {
+      button.addEventListener('click', () => resolveConversationChoice(decodeURIComponent(button.dataset.conversationChoice)));
+    });
+    const cancel = document.getElementById('conversation-cancel');
+    if (cancel) cancel.addEventListener('click', () => {
+      state.conversation = null;
+      state.streak = 0;
+      render(false);
+    });
   }
 
   function wirePhraseModal() {
@@ -427,7 +606,7 @@
           '</aside>' +
         '</div>' +
       '</section>' +
-      renderPhraseModal();
+      renderPhraseModal() + renderConversationModal();
 
     app.querySelectorAll('[data-category]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -441,6 +620,7 @@
       });
     });
     wirePhraseModal();
+    wireConversationModal();
     app.querySelectorAll('[data-change]').forEach((button) => {
       button.addEventListener('click', () => {
         changeQuantity(

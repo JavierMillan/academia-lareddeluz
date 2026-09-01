@@ -12,8 +12,14 @@
      y opera sobre su catálogo, sus tamaños y sus frases.
      ============================================================ */
 
+  function cleanModifiers(modifiers) {
+    return Object.fromEntries(Object.entries(modifiers || {})
+      .filter(([, value]) => value != null && value !== '')
+      .sort(([left], [right]) => left.localeCompare(right)));
+  }
+
   function lineKey(line) {
-    return line.productId + '::' + (line.size || '');
+    return line.productId + '::' + (line.size || '') + '::' + JSON.stringify(cleanModifiers(line.modifiers));
   }
 
   function normalizeOrder(order) {
@@ -22,6 +28,7 @@
       const clean = {
         productId: String(line.productId),
         size: line.size || null,
+        modifiers: cleanModifiers(line.modifiers),
         quantity: Math.max(1, Number(line.quantity) || 1)
       };
       const key = lineKey(clean);
@@ -65,7 +72,9 @@
   function labelLine(line, catalog) {
     const item = itemById(line.productId, catalog);
     const size = line.size ? titleCase(line.size) + ' ' : '';
-    return line.quantity + ' ' + size + pluralName(item, line.quantity);
+    const modifiers = Object.values(line.modifiers || {});
+    return line.quantity + ' ' + size + pluralName(item, line.quantity) +
+      (modifiers.length ? ' · ' + modifiers.join(' · ') : '');
   }
 
   function compareOrders(target, attempt, catalog) {
@@ -90,7 +99,9 @@
       );
       if (wrongSize) {
         unmatchedActual.delete(lineKey(wrongSize));
-        feedback.push('Change ' + item.name + ' to ' + titleCase(line.size));
+        feedback.push(line.size !== wrongSize.size
+          ? 'Change ' + item.name + ' to ' + titleCase(line.size)
+          : 'Change the options for ' + item.name);
         return;
       }
 
@@ -228,6 +239,64 @@
     return { correct, options };
   }
 
+  function questionsForProduct(item, scenario) {
+    if (!item || !item.customizationProfile || !scenario.conversation) return [];
+    const questionIds = scenario.conversation.profiles[item.customizationProfile];
+    if (!Array.isArray(questionIds)) throw new Error('Unknown customization profile: ' + item.customizationProfile);
+    return questionIds.map((id) => {
+      const definition = scenario.conversation.questions[id];
+      if (!definition) throw new Error('Unknown conversation question: ' + id);
+      return { id, ...definition };
+    });
+  }
+
+  function createConversationTurn({ item, scenario, role, questionIndex, selection, question }) {
+    const definition = question || questionsForProduct(item, scenario)[questionIndex];
+    if (!definition) return null;
+    const answers = definition.answers || [];
+    if (!answers.length) throw new Error('Conversation question has no answers: ' + definition.id);
+    if (role === 'employee') {
+      const correct = definition.prompt;
+      return {
+        questionId: definition.id,
+        speaker: 'CUSTOMER',
+        prompt: questionIndex === 0
+          ? 'I\'d like a ' + item.name.toLowerCase() + ', please.'
+          : 'The customer is ready for the next question.',
+        correct,
+        options: shuffle([correct, ...(definition.distractors || [])], Math.random),
+        validChoices: [{ text: correct, value: answers[0].value }],
+        spanish: definition.spanish,
+        starter: definition.starter,
+        selection: selection || {}
+      };
+    }
+    return {
+      questionId: definition.id,
+      speaker: 'BARISTA',
+      prompt: definition.prompt,
+      correct: answers[0].text,
+      options: [...answers.map((answer) => answer.text), ...(definition.distractors || [])],
+      validChoices: answers,
+      spanish: definition.spanish,
+      starter: definition.starter,
+      selection: selection || {}
+    };
+  }
+
+  function applyConversationChoice(turn, picked, selection) {
+    const current = {
+      size: selection?.size || null,
+      modifiers: { ...(selection?.modifiers || {}) }
+    };
+    const choice = (turn.validChoices || []).find((candidate) => candidate.text === picked);
+    if (!choice) return { valid: false, selection: current };
+    if (turn.questionId === 'size') current.size = choice.value;
+    else if (turn.questionId === 'confirm') return { valid: true, selection: current };
+    else current.modifiers[turn.questionId] = choice.value;
+    return { valid: true, selection: current };
+  }
+
   return {
     normalizeOrder,
     calculateTotal,
@@ -235,6 +304,9 @@
     createRandomOrder,
     labelLine,
     phraseOptionsFor,
-    itemById
+    itemById,
+    questionsForProduct,
+    createConversationTurn,
+    applyConversationChoice
   };
 }));

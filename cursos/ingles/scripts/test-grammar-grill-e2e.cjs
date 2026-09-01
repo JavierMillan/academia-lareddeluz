@@ -36,6 +36,53 @@ async function chooseMcDonalds(page) {
   await page.getByRole('button', { name: /McDonald's/i }).click();
 }
 
+async function chooseCafe(page) {
+  await page.getByRole('button', { name: /The Daily Grind/i }).click();
+}
+
+async function completeCustomerMatcha(page) {
+  await chooseCafe(page);
+  await page.getByRole('button', { name: /I'm ordering food/i }).click();
+  await page.getByRole('button', { name: 'COLD DRINKS', exact: true }).click();
+  await page.getByRole('button', { name: 'Customize Iced Matcha Latte', exact: true }).click();
+  await page.getByRole('button', { name: 'Medium want I.', exact: true }).click();
+  await page.locator('.conversation-help').waitFor();
+  await page.getByRole('button', { name: 'A medium, please.', exact: true }).click();
+  await page.getByRole('button', { name: 'Oat milk, please.', exact: true }).click();
+  await page.getByRole('button', { name: 'Half sweet, please.', exact: true }).click();
+  await page.getByRole('button', { name: "No, that's all.", exact: true }).click();
+  await page.getByRole('button', { name: 'To go, please.', exact: true }).click();
+  await page.getByRole('button', { name: 'The name is Alex.', exact: true }).click();
+  await page.getByRole('button', { name: 'By card, please.', exact: true }).click();
+  await page.getByRole('heading', { name: 'ORDER CREATED!' }).waitFor();
+  const summary = await page.locator('.success-summary').innerText();
+  assert.match(summary, /Medium Iced Matcha Latte/i);
+  assert.match(summary, /oat milk/i);
+  assert.match(summary, /half sweet/i);
+}
+
+async function completeBaristaMatcha(page) {
+  await page.locator('#reset-app').click();
+  await chooseCafe(page);
+  await page.getByRole('button', { name: /I'm taking the order/i }).click();
+  await page.getByRole('button', { name: 'HOT DRINKS', exact: true }).click();
+  await page.getByRole('button', { name: 'Customize Matcha Latte', exact: true }).click();
+  for (const question of [
+    'What size would you like?',
+    'What kind of milk would you like?',
+    'How sweet would you like it?',
+    'Let me confirm your matcha latte. Is that correct?',
+    'Anything else?',
+    'Is that for here or to go?',
+    'Can I get a name for the order?',
+    'How would you like to pay?'
+  ]) {
+    await page.getByRole('button', { name: question, exact: true }).click();
+  }
+  await page.getByRole('heading', { name: 'ORDER READY!' }).waitFor();
+  assert.match(await page.locator('.success-summary').innerText(), /Matcha Latte/i);
+}
+
 async function addTicketItems(page) {
   const lines = await page.locator('.ticket-lines li').allTextContents();
   const catalog = [...mcdonalds.catalog].sort((left, right) => right.name.length - left.name.length);
@@ -77,10 +124,19 @@ async function addTicketItems(page) {
     await page.getByRole('button', { name: 'CHECK ORDER', exact: true }).click();
     await page.getByRole('heading', { name: 'ORDER READY!' }).waitFor();
     assert.deepEqual(errors, []);
+
+    await page.locator('#reset-app').click();
+    await completeCustomerMatcha(page);
+    await completeBaristaMatcha(page);
+    assert.deepEqual(errors, []);
     await page.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await mobile.goto(origin + 'recursos/grammar-grill.html');
+    await chooseCafe(mobile);
+    await mobile.getByRole('button', { name: /I'm ordering food/i }).click();
+    await mobile.getByRole('button', { name: 'COLD DRINKS', exact: true }).click();
+    await mobile.getByRole('button', { name: 'Customize Iced Matcha Latte', exact: true }).click();
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
     await mobile.close();
 
