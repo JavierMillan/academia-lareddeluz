@@ -19,7 +19,7 @@ assert.doesNotMatch(JSON.stringify(manifest), /JavierMillan\/(?:De-tu-mente-al-m
 // esta unificación resolvió.
 assert.equal(manifest.engine.sourcePath, 'motor');
 assert.equal(manifest.engine.publicPath, 'assets/motor');
-for (const file of ['deck.css', 'deck.js', 'hub.css']) {
+for (const file of ['deck.css', 'deck.js', 'hub.css', 'hub-model.js']) {
   assert.ok(fs.existsSync(path.join(root, 'motor', file)), `Engine must ship ${file}`);
   for (const course of Object.values(manifest.courses)) {
     const copy = path.join(root, course.sourcePath, 'assets', file);
@@ -36,6 +36,7 @@ for (const command of [
   'node scripts/test-build-academy.cjs',
   'node scripts/test-academy-hubs-structure.cjs',
   'node scripts/test-motor-hub.cjs',
+  'node scripts/test-hub-model.cjs',
   'node scripts/test-progreso.cjs',
   'node cursos/ingles/scripts/test-academy-shell.cjs',
   'node cursos/ingles/scripts/test-grammar-grill.cjs',

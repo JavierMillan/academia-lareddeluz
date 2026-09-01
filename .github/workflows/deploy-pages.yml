@@ -35,6 +35,7 @@ jobs:
           node scripts/test-build-academy.cjs
           node scripts/test-academy-hubs-structure.cjs
           node scripts/test-motor-hub.cjs
+          node scripts/test-hub-model.cjs
           node scripts/test-progreso.cjs
           node cursos/ingles/scripts/test-academy-shell.cjs
           node cursos/ingles/scripts/test-grammar-grill.cjs
