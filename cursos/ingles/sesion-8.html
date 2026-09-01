@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>De viaje: aeropuerto, hotel y Uber — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+/* agenda de la hora — misma anatomía que en sesion-6 y 7 */
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+/* diálogo: aquí el alumno siempre es "You", marcado en rojo para que
+   localice de un vistazo cuál es su línea al hacer role-play */
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .acot{grid-column:1/-1;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:center;
+  padding:.5rem 0;border-top:1px dashed var(--line-d);border-bottom:1px dashed var(--line-d);margin:.3rem 0}
+/* la barra "/" separa dos respuestas válidas: se puede elegir cualquiera */
+.dialogo .op{color:var(--accent-text);padding:0 .25em}
+
+/* tarjetas de escenario para el role-play final */
+.escenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;width:100%;max-width:48rem}
+@media(max-width:820px){.escenarios{grid-template-columns:1fr}}
+.esc{padding:1rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-top:3px solid var(--accent-surface);border-radius:12px}
+.esc .n{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent-text)}
+.esc .t{font-family:var(--font-display);font-size:clamp(.95rem,1.4vw,1.1rem);
+  text-transform:none;margin-top:.4rem}
+.esc .d{font-family:var(--font-body);font-size:.82rem;color:var(--on-char-mute);
+  line-height:1.4;margin-top:.35rem}
+
+/* repaso coral */
+.coro{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;
+  width:100%;max-width:48rem;margin-inline:auto}
+.coro span{font-family:var(--font-display);font-size:clamp(.85rem,1.8vw,1.25rem);
+  text-transform:none;padding:.4rem .8rem;border:1px solid var(--line-d2);border-radius:999px}
+.coro span.r{border-color:var(--accent-surface);color:var(--accent-text)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Última clase del bloque. Aquí la presión es distinta: en un viaje hay prisa, filas, y gente que no tiene tiempo de esperarte. Por eso las frases de hoy son cortas — están hechas para decirse rápido y bajo presión.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">De <span class="hl">viaje.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Aeropuerto, Uber y hotel — sin pánico y sin perder el vuelo. Inglés para la vida real · Clase 3.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Vida real · 3/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Repaso coral rápido de las dos clases anteriores. En un aeropuerto, 'Can you speak a little slower' vale oro — la gente ahí habla rapidísimo.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Lo que ya <span class="hl">traes contigo.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Can you speak a little slower, please?</span><span class="say">can iú spik é lítel slóuer plis</span>
+          <span class="use">En un aeropuerto, esta es la que más vas a usar.</span></div>
+        <div class="f"><span class="en">Sorry, what was that again?</span><span class="say">sóri uát uas dat aguén</span>
+          <span class="use">Para pedir que repitan, de forma casual.</span></div>
+        <div class="f"><span class="en">How do you say ___ in English?</span><span class="say">jáu du iú séi ___ in ínglish</span>
+          <span class="use">Cuando no sabes una palabra.</span></div>
+        <div class="f"><span class="en">I'm still learning English.</span><span class="say">aim stil lérnin ínglish</span>
+          <span class="use">Para pedir un poco de paciencia.</span></div>
+      </div>
+    </section>
+
+    <!-- 3 · LA SITUACIÓN -->
+    <section class="slide" data-notes="Píntales el día completo: check-in, migración, Uber, hotel. Todo en inglés, casi siempre con prisa. La buena noticia es que son conversaciones cortas y muy predecibles — siempre preguntan lo mismo.">
+      <div class="glow br"></div>
+      <div class="eyebrow">La situación de hoy</div>
+      <h2 class="h1">Todo un día <span class="hl">en inglés.</span></h2>
+      <p class="lead wide mt-m">Check-in en el aeropuerto, migración, un Uber y el registro en el hotel. Con prisa y sin ayuda. La buena noticia: siempre preguntan lo mismo.</p>
+      <div class="chip"><span class="dot"></span> Son conversaciones cortas y predecibles — se pueden ensayar</div>
+    </section>
+
+    <!-- 4 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Que vean que hay tres diálogos, no uno — la clase se siente más ligera así.">
+      <div class="eyebrow">La hora de hoy</div>
+      <h2 class="h1">Cómo <span class="hl">va la clase.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento: repaso coral de clases anteriores</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Tres diálogos: aeropuerto, Uber y hotel</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Frases para salir del apuro</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Modismos de viaje</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Números: vuelos, cuartos, precios y horas</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Role-play de viaje en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Repaso coral de cierre</span></div>
+      </div>
+    </section>
+
+    <!-- 5 · DIÁLOGO 1 · CHECK-IN -->
+    <section class="slide paper" data-notes="Primer diálogo. Tú haces de agente, un voluntario de pasajero. Lo importante: 'Here you go' resuelve casi cualquier momento en que entregas algo. Repítanla tres veces.">
+      <div class="eyebrow">Diálogo 1 · Aeropuerto</div>
+      <h2 class="h1">Check-in <span class="hl">y documentar.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">Agent</span><span class="txt">Good morning! Can I see your passport and ticket, please?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Sure, here you go.</span></div>
+        <div class="linea"><span class="quien">Agent</span><span class="txt">Are you checking any bags today?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Yes, just one.</span></div>
+        <div class="linea"><span class="quien">Agent</span><span class="txt">Okay, please put it on the scale... Alright, here's your boarding pass. Your gate is B12, and boarding starts at 4:45.</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Great, thank you!</span></div>
+      </div>
+    </section>
+
+    <!-- 6 · DIÁLOGO 1 · MIGRACIÓN -->
+    <section class="slide paper" data-notes="La parte que más nervios da. Diles la verdad: las respuestas son cortas y el oficial no quiere una historia larga. Dos o tres palabras bastan. Practíquenlo hasta que salga sin titubear.">
+      <div class="eyebrow">Diálogo 1 · continuación</div>
+      <h2 class="h1">En <span class="hl">migración.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="acot">Respuestas cortas — no necesitas contar tu vida</span></div>
+        <div class="linea"><span class="quien">Officer</span><span class="txt">What's the purpose of your visit?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">I'm here for business.<span class="op">/</span>I'm just visiting for vacation.</span></div>
+        <div class="linea"><span class="quien">Officer</span><span class="txt">How long are you staying?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">About a week.</span></div>
+        <div class="linea"><span class="quien">Officer</span><span class="txt">Alright, enjoy your trip.</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Contesta corto y directo — es lo que esperan</div>
+    </section>
+
+    <!-- 7 · DIÁLOGO 2 · UBER -->
+    <section class="slide paper" data-notes="El más corto de los tres. 'Hop in' los va a sorprender — nadie lo aprende en la escuela y todos los choferes lo dicen. Que se rían con lo literal ('brincar adentro').">
+      <div class="eyebrow">Diálogo 2 · Uber</div>
+      <h2 class="h1">Pidiendo <span class="hl">un Uber.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">Driver</span><span class="txt">Hey, are you Arturo?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Yes, that's me.</span></div>
+        <div class="linea"><span class="quien">Driver</span><span class="txt">Great, hop in! Where are you headed?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">The Marriott downtown, please.</span></div>
+        <div class="linea"><span class="quien">Driver</span><span class="txt">No problem, should take about twenty minutes.</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Sounds good, thanks.</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · DIÁLOGO 3 · HOTEL -->
+    <section class="slide paper" data-notes="El tercero. 'It's under Millán' es la fórmula para dar el nombre de una reservación — funciona en hoteles, restaurantes y citas médicas. Y ojo con el número de cuarto: 'twelve-oh-five', igual que la dirección de la clase 1.">
+      <div class="eyebrow">Diálogo 3 · Hotel</div>
+      <h2 class="h1">Check-in <span class="hl">en el hotel.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">Front desk</span><span class="txt">Welcome! Do you have a reservation with us?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Yes, it's under Millán.</span></div>
+        <div class="linea"><span class="quien">Front desk</span><span class="txt">Perfect, I found it. Can I see your ID and a credit card, please?</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Here you go.</span></div>
+        <div class="linea"><span class="quien">Front desk</span><span class="txt">You're all set. Your room is twelve-oh-five, on the twelfth floor. Checkout is at eleven.</span></div>
+        <div class="linea tu"><span class="quien">You</span><span class="txt">Thank you so much.</span></div>
+      </div>
+    </section>
+
+    <!-- 9 · FRASES CLAVE -->
+    <section class="slide" data-notes="10 min de repetición coral. Las primeras cuatro son las que oyes; las últimas son las que dices. Aclara esa diferencia — no todas hay que producirlas, algunas solo hay que reconocerlas.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Salir del apuro · 10 min</div>
+      <h2 class="h1">Lo que te <span class="hl">van a preguntar.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Are you checking any bags?</span><span class="say">ar iú chékin éni bags</span>
+          <span class="use">¿Va a documentar equipaje?</span></div>
+        <div class="f"><span class="en">What's the purpose of your visit?</span><span class="say">uáts de párpos of iór vísit</span>
+          <span class="use">¿Cuál es el motivo de su visita?</span></div>
+        <div class="f"><span class="en">Where are you headed?</span><span class="say">uér ar iú jéded</span>
+          <span class="use">¿A dónde te diriges?</span></div>
+        <div class="f"><span class="en">Do you have a reservation?</span><span class="say">du iú jav é reservéishon</span>
+          <span class="use">¿Tiene una reservación?</span></div>
+        <div class="f"><span class="en">You're all set.</span><span class="say">iór ol set</span>
+          <span class="use">Ya está todo listo. Significa que terminaste.</span></div>
+      </div>
+    </section>
+
+    <!-- 10 · FRASES QUE TÚ DICES -->
+    <section class="slide" data-notes="Estas sí hay que producirlas. 'I think there's a mistake with...' es la de los reclamos — la más útil y la que menos se practica. Que la digan tres veces, porque cuando la necesiten van a estar molestos y con prisa.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Salir del apuro · lo que dices tú</div>
+      <h2 class="h1">Y lo que <span class="hl">contestas tú.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Here you go.</span><span class="say">jíar iú góu</span>
+          <span class="use">Aquí tienes. Sirve cada vez que entregas algo.</span></div>
+        <div class="f"><span class="en">I'm just visiting.</span><span class="say">aim yast vísitin</span>
+          <span class="use">Vengo de vacaciones.</span></div>
+        <div class="f"><span class="en">I'm here for business.</span><span class="say">aim jíar for bísnes</span>
+          <span class="use">Vengo por trabajo.</span></div>
+        <div class="f"><span class="en">It's under [tu apellido].</span><span class="say">its ánder...</span>
+          <span class="use">Está a nombre de... — para cualquier reservación.</span></div>
+        <div class="f"><span class="en">Could I get a late checkout?</span><span class="say">cud ai guet é léit chekáut</span>
+          <span class="use">¿Podría tener checkout tarde?</span></div>
+        <div class="f"><span class="en">I think there's a mistake with...</span><span class="say">ai zink ders é mistéik uiz</span>
+          <span class="use">Creo que hay un error con... — para reclamar algo.</span></div>
+      </div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="10 min. 'Jet lag' ya lo conocen en español, úsalo de puente. 'Catch a flight' es la que más se usa — 'take a flight' se entiende pero suena a traducción.">
+      <div class="eyebrow">Modismos de viaje · 10 min</div>
+      <h2 class="h1">Lo que se dice <span class="hl">viajando.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">hop in</div><div class="say">jap in</div>
+          <div class="lit">brincar adentro</div>
+          <div class="real">Súbete al coche.</div>
+          <div class="ej">Hop in, I'll take you there.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">catch a flight</div><div class="say">cach é fláit</div>
+          <div class="lit">atrapar un vuelo</div>
+          <div class="real">Alcanzar o tomar un vuelo.</div>
+          <div class="ej">I need to catch my flight.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">jet lag</div><div class="say">yet lag</div>
+          <div class="lit">retraso de jet</div>
+          <div class="real">El cansancio por el cambio de horario.</div>
+          <div class="ej">I have really bad jet lag.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">pack light</div><div class="say">pak láit</div>
+          <div class="lit">empacar ligero</div>
+          <div class="real">Llevar poco equipaje.</div>
+          <div class="ej">I always try to pack light.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · MODISMOS · 2 -->
+    <section class="slide" data-notes="Los tres últimos del bloque completo. 'Home away from home' es el más bonito de los tres cursos — buen momento para cerrar con calidez.">
+      <div class="eyebrow">Modismos de viaje · continuación</div>
+      <h2 class="h1">Tres <span class="hl">más.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">run late</div><div class="say">ran léit</div>
+          <div class="lit">correr tarde</div>
+          <div class="real">Ir retrasado.</div>
+          <div class="ej">Sorry, I'm running late.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">make it</div><div class="say">méik it</div>
+          <div class="lit">lograrlo</div>
+          <div class="real">Llegar a tiempo a un lugar.</div>
+          <div class="ej">Did you make it to the gate on time?</div>
+        </div>
+        <div class="modismo">
+          <div class="en">home away from home</div><div class="say">jóum auéi from jóum</div>
+          <div class="lit">hogar lejos del hogar</div>
+          <div class="real">Un lugar donde te sientes como en casa.</div>
+          <div class="ej">This hotel feels like a home away from home.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 · NÚMEROS -->
+    <section class="slide paper" data-notes="5 min. La regla de hoy: en un viaje casi nada se lee como cantidad completa, sino dígito por dígito o en pares. Conecta con la clase 1: el cuarto 1205 se dice igual que la dirección 1205 — 'twelve-oh-five'.">
+      <div class="eyebrow">Números · 5 min</div>
+      <h2 class="h1">En pares, <span class="hl">no como cantidad.</span></h2>
+      <div class="nums mt-l">
+        <div class="n"><span class="dato">Puerta B12</span><span class="dice">gate B twelve</span>
+          <span class="say">guéit bí tuélv</span></div>
+        <div class="n"><span class="dato">Vuelo 2490</span><span class="dice">flight twenty-four ninety</span>
+          <span class="say">fláit tuénti for náinti</span></div>
+        <div class="n"><span class="dato">Cuarto 1205</span><span class="dice">room twelve-oh-five</span>
+          <span class="say">rum tuélv óu fáiv</span></div>
+        <div class="n"><span class="dato">Precio $45.99</span><span class="dice">forty-five ninety-nine</span>
+          <span class="say">fórti fáiv náinti náin</span></div>
+        <div class="n"><span class="dato">Hora 4:45 pm</span><span class="dice">four forty-five</span>
+          <span class="say">fóar fórti fáiv</span></div>
+        <div class="n"><span class="dato">Temperatura 75°F</span><span class="dice">seventy-five degrees</span>
+          <span class="say">séventi fáiv digrís</span></div>
+      </div>
+    </section>
+
+    <!-- 14 · ROLE-PLAY -->
+    <section class="slide" data-notes="10 min. Cada pareja elige un escenario, lo actúa cambiando los datos, y luego cambian de papel con otro escenario distinto. Circula y empuja a que improvisen los datos en vez de leer.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Role-play en parejas · 10 min</div>
+      <h2 class="h1">Elijan <span class="hl">uno y actúenlo.</span></h2>
+      <div class="escenarios mt-l">
+        <div class="esc"><div class="n">Escenario 01</div>
+          <div class="t">Aeropuerto</div>
+          <div class="d">Cambien el número de vuelo, la puerta y la hora de abordar.</div></div>
+        <div class="esc"><div class="n">Escenario 02</div>
+          <div class="t">Uber</div>
+          <div class="d">Cambien su nombre, el destino y cuánto se hace de camino.</div></div>
+        <div class="esc"><div class="n">Escenario 03</div>
+          <div class="t">Hotel</div>
+          <div class="d">Cambien el apellido de la reservación y el número de cuarto.</div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Después cambien de papel y hagan un escenario distinto</div>
+    </section>
+
+    <!-- 15 · REPASO CORAL -->
+    <section class="slide center" data-notes="5 min. El último repaso coral del bloque completo. Tómate el tiempo — que se oiga fuerte.">
+      <div class="eyebrow" style="justify-content:center">Repaso coral · 5 min</div>
+      <h2 class="h1" style="text-align:center">Todos juntos, <span class="hl">en voz alta.</span></h2>
+      <div class="coro mt-l">
+        <span>Here you go.</span><span>I'm here for business.</span>
+        <span>Where are you headed?</span><span>Do you have a reservation?</span>
+        <span>You're all set.</span>
+        <span class="r">hop in</span><span class="r">catch a flight</span>
+        <span class="r">jet lag</span><span class="r">pack light</span>
+        <span class="r">room twelve-oh-five</span><span class="r">gate B twelve</span>
+      </div>
+    </section>
+
+    <!-- 16 · CIERRE DEL BLOQUE + RETO -->
+    <section class="slide center" data-notes="Cierre del bloque completo de tres clases. Recuérdales lo que ya pueden hacer: entrar a una fiesta, sostener una junta y resolver un viaje. Es mucho más de lo que creían hace tres semanas.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Terminaste las tres clases!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Ya puedes entrar a una fiesta, sostener una junta <span class="hl">y resolver un viaje.</span></p>
+      <p class="lead mt-m" style="text-align:center">Reto: narra en voz alta, en inglés, cómo sería tu próximo viaje — del aeropuerto hasta tu cuarto de hotel. Usa al menos 5 frases de hoy.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Una junta de trabajo con angloparlantes — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+/* agenda de la hora — misma anatomía que en sesion-6 */
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+/* diálogo de junta: tres participantes, uno de ellos con rol entre paréntesis */
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:42rem}
+.dialogo .linea{display:grid;grid-template-columns:6.4rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--accent-text);line-height:1.3}
+.dialogo .quien small{display:block;color:var(--on-char-mute);font-size:.9em;letter-spacing:.02em}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.85rem,1.25vw,.98rem);line-height:1.4}
+
+/* la regla del "hundred": comparación forma moderna vs. antigua.
+   El tachado sobre la forma antigua es el argumento visual completo. */
+.hundred{width:100%;max-width:46rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--accent-surface);border-radius:14px;padding:clamp(1.1rem,2.2vw,1.6rem)}
+.hundred .titulo{font-family:var(--font-display);font-size:clamp(1rem,1.6vw,1.25rem);text-transform:none}
+.hundred .cuerpo{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.96rem);
+  color:var(--on-char-soft);line-height:1.5;margin-top:.5rem}
+.hundred .cuerpo b{color:var(--accent-text);font-weight:600}
+
+.comparar{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:46rem}
+.comparar .c{display:grid;grid-template-columns:7rem 1fr;gap:.3rem 1rem;align-items:baseline;
+  padding:.65rem .9rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.comparar .dato{font-family:var(--font-mono);font-size:clamp(.7rem,1vw,.82rem);color:var(--on-char-mute)}
+.comparar .nueva{font-family:var(--font-display);font-size:clamp(.86rem,1.25vw,1rem);text-transform:none}
+.comparar .say{grid-column:2;font-family:var(--font-mono);font-size:.63rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.15rem}
+.comparar .vieja{grid-column:2;font-family:var(--font-body);font-size:.74rem;color:var(--on-char-mute);
+  margin-top:.3rem;text-decoration:line-through;text-decoration-color:var(--line-d2)}
+@media(max-width:640px){
+  .comparar .c{grid-template-columns:1fr}
+  .comparar .say,.comparar .vieja{grid-column:1}
+}
+
+/* pasos del simulacro */
+.pasos{display:flex;flex-direction:column;gap:.75rem;width:100%;max-width:40rem}
+.paso{display:flex;gap:.9rem;align-items:flex-start}
+.paso .n{flex:none;width:2rem;height:2rem;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.75rem;color:var(--accent-text);border:1px solid var(--accent-surface)}
+.paso .cuerpo .t{font-family:var(--font-display);font-size:clamp(.92rem,1.35vw,1.05rem);text-transform:none}
+.paso .cuerpo .d{font-size:clamp(.82rem,1.15vw,.92rem);color:var(--on-char-mute);margin-top:.2rem}
+
+/* repaso coral */
+.coro{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;
+  width:100%;max-width:48rem;margin-inline:auto}
+.coro span{font-family:var(--font-display);font-size:clamp(.85rem,1.8vw,1.25rem);
+  text-transform:none;padding:.4rem .8rem;border:1px solid var(--line-d2);border-radius:999px}
+.coro span.r{border-color:var(--accent-surface);color:var(--accent-text)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Segunda clase del bloque. El miedo aquí es distinto al de la fiesta: en una junta se juega algo profesional. El mensaje central de la hora es que pedir que te repitan NO te hace ver mal — te hace ver profesional.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Una junta <span class="hl">de trabajo.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Dar tu actualización, opinar y pedir que te repitan — sin pena. Inglés para la vida real · Clase 2.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Vida real · 2/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Repaso coral del kit de supervivencia de la clase pasada. No lo saltes: en una junta estas frases valen todavía más que en una fiesta, porque el costo de no entender es mayor.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Primero, <span class="hl">lo de siempre.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Can you repeat that, please?</span><span class="say">can iú ripít dat plis</span>
+          <span class="use">Cuando no entendiste algo.</span></div>
+        <div class="f"><span class="en">Can you speak a little slower, please?</span><span class="say">can iú spik é lítel slóuer plis</span>
+          <span class="use">Cuando te hablan muy rápido.</span></div>
+        <div class="f"><span class="en">Sorry, my English isn't perfect, but I'll try.</span><span class="say">sóri mai ínglish ísnt pérfect bat aill trái</span>
+          <span class="use">Para romper el miedo a equivocarte.</span></div>
+        <div class="f"><span class="en">Does that make sense?</span><span class="say">das dat méik sens</span>
+          <span class="use">Para confirmar que te entendieron.</span></div>
+      </div>
+    </section>
+
+    <!-- 3 · LA SITUACIÓN -->
+    <section class="slide" data-notes="Píntales la escena: presencial o por videollamada, con colegas o clientes de Estados Unidos. Pregunta quién del grupo ya ha estado en una así y cómo le fue — normaliza el nervio.">
+      <div class="glow br"></div>
+      <div class="eyebrow">La situación de hoy</div>
+      <h2 class="h1">Tienes junta <span class="hl">y no eres el único que habla.</span></h2>
+      <p class="lead wide mt-m">Presencial o por videollamada, con colegas o clientes de Estados Unidos. Necesitas dar una actualización, opinar, pedir que te repitan algo y quedar en los siguientes pasos.</p>
+    </section>
+
+    <!-- 4 · LA IDEA CLAVE -->
+    <section class="slide paper" data-notes="Esta es la slide más importante de la clase. Dilo con todas sus letras: pedir que te repitan es lo que hace un profesional, no lo que hace alguien que no sabe. Los nativos lo hacen entre ellos todo el tiempo.">
+      <div class="eyebrow">Lo que hay que entender hoy</div>
+      <h2 class="h1">Pedir que te repitan <span class="hl">no es quedar mal.</span></h2>
+      <p class="lead wide mt-m">En una junta real, los que hablan inglés se piden que repitan entre ellos todo el tiempo. "Sorry, can you say that again?" es lo que dice alguien que está poniendo atención.</p>
+      <div class="chip"><span class="dot"></span> Peor es asentir sin entender y quedar en algo equivocado</div>
+    </section>
+
+    <!-- 5 · AGENDA -->
+    <section class="slide" data-notes="Un minuto, no más. Que vean que hay un simulacro al final — eso los mantiene atentos en las frases.">
+      <div class="eyebrow">La hora de hoy</div>
+      <h2 class="h1">Cómo <span class="hl">va la clase.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento: repaso coral de la clase anterior</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Diálogo modelo: Weekly Team Meeting</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Frases para participar en una junta</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Modismos de oficina</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Números: dinero, porcentajes y años</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Simulacro de junta en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Repaso coral de cierre</span></div>
+      </div>
+    </section>
+
+    <!-- 6 · DIÁLOGO MODELO -->
+    <section class="slide paper" data-notes="10 min. Repartan los tres papeles y léanlo en voz alta. Después cambien. Haz notar que Sarah pide que le repitan y nadie se incomoda — Arturo simplemente repite. Ese es el modelo a copiar.">
+      <div class="eyebrow">Diálogo modelo</div>
+      <h2 class="h1">Weekly <span class="hl">Team Meeting.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">John <small>manager</small></span><span class="txt">Alright, let's get started. Thanks everyone for joining. Arturo, can you give us a quick update on the numbers?</span></div>
+        <div class="linea"><span class="quien">Arturo</span><span class="txt">Sure. So, sales were up twelve hundred units compared to last month.</span></div>
+        <div class="linea"><span class="quien">John</span><span class="txt">Nice, that's great news. What about the budget?</span></div>
+        <div class="linea"><span class="quien">Arturo</span><span class="txt">We're at about eighty percent of the budget, so we're on track.</span></div>
+        <div class="linea"><span class="quien">Sarah</span><span class="txt">Sorry, can you say that again? I didn't quite catch that.</span></div>
+        <div class="linea"><span class="quien">Arturo</span><span class="txt">Of course — we've used eighty percent of the budget so far.</span></div>
+        <div class="linea"><span class="quien">John</span><span class="txt">Got it, thanks. Sarah, any thoughts on the marketing plan?</span></div>
+        <div class="linea"><span class="quien">Sarah</span><span class="txt">Yeah, I think we should push the deadline back a bit. Two weeks isn't enough time.</span></div>
+        <div class="linea"><span class="quien">John</span><span class="txt">That makes sense. Let's touch base again on Friday.</span></div>
+        <div class="linea"><span class="quien">Arturo</span><span class="txt">Sounds good to me.</span></div>
+        <div class="linea"><span class="quien">John</span><span class="txt">Great, let's circle back next week. Thanks, everyone!</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · FRASES: ABRIR Y ENTENDER -->
+    <section class="slide" data-notes="10 min de repetición coral. Ciclo: tú despacio, grupo en coro, 2-3 solos. 'I didn't quite catch that' es más suave que 'I don't understand' — suena a que fue el audio, no tu inglés. Ese matiz les va a servir mucho.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Participar en la junta · 10 min</div>
+      <h2 class="h1">Para empezar <span class="hl">y para entender.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Let's get started.</span><span class="say">lets guet stárted</span>
+          <span class="use">Empecemos. Con esto abres tú la junta.</span></div>
+        <div class="f"><span class="en">Can you give us a quick update?</span><span class="say">can iú guiv as é kuik apdéit</span>
+          <span class="use">¿Nos das una actualización rápida?</span></div>
+        <div class="f"><span class="en">Sorry, can you say that again?</span><span class="say">sóri can iú séi dat aguén</span>
+          <span class="use">Perdón, ¿lo puedes repetir?</span></div>
+        <div class="f"><span class="en">I didn't quite catch that.</span><span class="say">ai dídnt kuáit cach dat</span>
+          <span class="use">No entendí bien eso. Más suave que "I don't understand".</span></div>
+        <div class="f"><span class="en">Does that make sense?</span><span class="say">das dat méik sens</span>
+          <span class="use">Para confirmar que te entendieron a ti.</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · FRASES: OPINAR Y CERRAR -->
+    <section class="slide" data-notes="La segunda mitad. 'I see your point, but...' es la forma educada de estar en desacuerdo sin sonar agresivo — practíquenla dos veces, es la más difícil de decir con naturalidad.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Participar en la junta · opinar</div>
+      <h2 class="h1">Para opinar <span class="hl">y para cerrar.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">That makes sense.</span><span class="say">dat méiks sens</span>
+          <span class="use">Eso tiene sentido.</span></div>
+        <div class="f"><span class="en">I agree.</span><span class="say">ai agrí</span>
+          <span class="use">Estoy de acuerdo.</span></div>
+        <div class="f"><span class="en">I see your point, but...</span><span class="say">ai si iór póint bat</span>
+          <span class="use">Entiendo tu punto, pero... — desacuerdo educado.</span></div>
+        <div class="f"><span class="en">Sounds good to me.</span><span class="say">sáunds gud tu mi</span>
+          <span class="use">Me parece bien.</span></div>
+        <div class="f"><span class="en">Let's touch base on Friday.</span><span class="say">lets tach béis on fráidei</span>
+          <span class="use">Pongámonos al tanto el viernes.</span></div>
+        <div class="f"><span class="en">Let's circle back next week.</span><span class="say">lets sércol bak next uík</span>
+          <span class="use">Retomemos esto la próxima semana.</span></div>
+      </div>
+    </section>
+
+    <!-- 9 · MODISMOS -->
+    <section class="slide" data-notes="10 min. Estos son los que más se oyen en juntas reales y los que más confunden porque no significan nada de lo que parecen. 'Touch base' y 'circle back' son casi obligatorios en cualquier junta gringa.">
+      <div class="eyebrow">Modismos de oficina · 10 min</div>
+      <h2 class="h1">Lo que se dice <span class="hl">en toda junta.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">touch base</div><div class="say">tach béis</div>
+          <div class="lit">tocar base</div>
+          <div class="real">Ponerse en contacto brevemente.</div>
+          <div class="ej">Let's touch base tomorrow.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">circle back</div><div class="say">sércol bak</div>
+          <div class="lit">regresar en círculo</div>
+          <div class="real">Retomar un tema más adelante.</div>
+          <div class="ej">We'll circle back to this next meeting.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">on the same page</div><div class="say">on de séim péich</div>
+          <div class="lit">en la misma página</div>
+          <div class="real">Estar de acuerdo, entender lo mismo.</div>
+          <div class="ej">Let's make sure we're on the same page.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">ballpark figure</div><div class="say">bólpark fíguer</div>
+          <div class="lit">cifra de estadio</div>
+          <div class="real">Un número aproximado.</div>
+          <div class="ej">Give me a ballpark figure for the cost.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · MODISMOS · 2 -->
+    <section class="slide" data-notes="Los tres restantes. 'Hit the ground running' es el que más impresiona si lo usan bien en una junta — vale la pena repetirlo tres veces.">
+      <div class="eyebrow">Modismos de oficina · continuación</div>
+      <h2 class="h1">Tres <span class="hl">más.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">game plan</div><div class="say">guéim plan</div>
+          <div class="lit">plan de juego</div>
+          <div class="real">Estrategia o plan de acción.</div>
+          <div class="ej">What's our game plan for next quarter?</div>
+        </div>
+        <div class="modismo">
+          <div class="en">on track</div><div class="say">on trak</div>
+          <div class="lit">en la vía</div>
+          <div class="real">Va bien, según lo planeado.</div>
+          <div class="ej">We're on track to finish by Friday.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">hit the ground running</div><div class="say">jit de gráund ránin</div>
+          <div class="lit">golpear el suelo corriendo</div>
+          <div class="real">Empezar algo con mucha energía, de inmediato.</div>
+          <div class="ej">She hit the ground running on day one.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · LA REGLA DEL HUNDRED -->
+    <section class="slide" data-notes="10 min, y esta es la parte que casi nadie les enseñó. En la escuela aprendieron 'one thousand two hundred'; en una junta real nadie dice eso. Ancla la regla en los años, que ya la conocen: 1998 nunca fue 'one thousand nine hundred ninety-eight'.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Números · 10 min</div>
+      <h2 class="h1">La regla <span class="hl">del "hundred".</span></h2>
+      <div class="hundred mt-l">
+        <div class="titulo">Para números de 4 cifras (1,000 a 9,999)</div>
+        <div class="cuerpo">En vez de "one thousand two hundred", lo natural es decir <b>"twelve hundred"</b> — literalmente "doce cientos". Funciona igual que con los años: 1998 es <b>"nineteen ninety-eight"</b>, nunca "one thousand nine hundred ninety-eight".</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Para millones sí se usa la forma normal: "a million dollars"</div>
+    </section>
+
+    <!-- 12 · NÚMEROS EN LA PRÁCTICA -->
+    <section class="slide paper" data-notes="Que digan cada uno en voz alta. Insiste en que la forma tachada no está mal gramaticalmente — simplemente los delata como alguien que aprendió de libro y no de la calle.">
+      <div class="eyebrow">Números · en la práctica</div>
+      <h2 class="h1">Así <span class="hl">se dicen de verdad.</span></h2>
+      <div class="comparar mt-l">
+        <div class="c"><span class="dato">$1,200</span><span class="nueva">twelve hundred dollars</span>
+          <span class="say">tuélv jándred dálars</span>
+          <span class="vieja">one thousand two hundred dollars</span></div>
+        <div class="c"><span class="dato">$1,500</span><span class="nueva">fifteen hundred dollars</span>
+          <span class="say">fiftín jándred dálars</span>
+          <span class="vieja">one thousand five hundred dollars</span></div>
+        <div class="c"><span class="dato">$2,300</span><span class="nueva">twenty-three hundred dollars</span>
+          <span class="say">tuénti zrí jándred dálars</span>
+          <span class="vieja">two thousand three hundred dollars</span></div>
+        <div class="c"><span class="dato">Año 2024</span><span class="nueva">twenty twenty-four</span>
+          <span class="say">tuénti tuénti for</span>
+          <span class="vieja">two thousand twenty-four</span></div>
+        <div class="c"><span class="dato">80%</span><span class="nueva">eighty percent</span>
+          <span class="say">éiti persént</span></div>
+      </div>
+    </section>
+
+    <!-- 13 · SIMULACRO -->
+    <section class="slide" data-notes="10 min en parejas o tríos. Lo importante no es que salga perfecto: es que pasen por los cinco momentos. Insiste en el paso 03 — que de verdad pidan que les repitan, aunque hayan entendido. Es el músculo que estamos entrenando.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Simulacro de junta · 10 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="pasos mt-l">
+        <div class="paso"><span class="n">01</span><div class="cuerpo">
+          <div class="t">A abre la junta</div><div class="d">"Let's get started."</div></div></div>
+        <div class="paso"><span class="n">02</span><div class="cuerpo">
+          <div class="t">B da una actualización</div><div class="d">Con un número al estilo hundred: "We sold fifteen hundred units."</div></div></div>
+        <div class="paso"><span class="n">03</span><div class="cuerpo">
+          <div class="t">A pide que repita</div><div class="d">"Sorry, can you say that again?" — aunque sí hayas entendido.</div></div></div>
+        <div class="paso"><span class="n">04</span><div class="cuerpo">
+          <div class="t">B opina sobre el plan</div><div class="d">"I think we should..."</div></div></div>
+        <div class="paso"><span class="n">05</span><div class="cuerpo">
+          <div class="t">Cierren con próximos pasos</div><div class="d">"Let's touch base" o "Let's circle back next week."</div></div></div>
+      </div>
+    </section>
+
+    <!-- 14 · REPASO CORAL -->
+    <section class="slide center" data-notes="5 min. Todo el grupo, en voz alta, seguido. Los números al final: que 'twelve hundred' y 'twenty twenty-four' salgan sin pensar.">
+      <div class="eyebrow" style="justify-content:center">Repaso coral · 5 min</div>
+      <h2 class="h1" style="text-align:center">Todos juntos, <span class="hl">en voz alta.</span></h2>
+      <div class="coro mt-l">
+        <span>Let's get started.</span><span>Can you give us a quick update?</span>
+        <span>I didn't quite catch that.</span><span>That makes sense.</span>
+        <span>Sounds good to me.</span>
+        <span class="r">touch base</span><span class="r">circle back</span>
+        <span class="r">on the same page</span><span class="r">on track</span>
+        <span class="r">twelve hundred</span><span class="r">twenty twenty-four</span>
+      </div>
+    </section>
+
+    <!-- 15 · CIERRE + RETO -->
+    <section class="slide center" data-notes="El reto de esta semana es el más fácil de cumplir de las tres clases, porque cabe en un correo. Insiste en que lo hagan aunque sea en un mensaje de trabajo cualquiera.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Reto de la semana</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Usa "touch base" o "circle back" <span class="hl">en un correo real.</span></p>
+      <p class="lead mt-m" style="text-align:center">Y practica en voz alta un número de 4 cifras al estilo "hundred". Cuéntanos en el grupo.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

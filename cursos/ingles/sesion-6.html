@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>En una fiesta o reunión social — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums ya viven en assets/ingles.css —
+   los usan las tres clases de "Inglés para la vida real")
+   ============================================================ */
+
+/* agenda de la hora: tiempo + actividad, como guion del facilitador */
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+/* diálogo con dos interlocutores nombrados */
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.2rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--accent-text)}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .acot{grid-column:1/-1;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:center;
+  padding:.5rem 0;border-top:1px dashed var(--line-d);border-bottom:1px dashed var(--line-d);margin:.3rem 0}
+
+/* pasos de la práctica en parejas */
+.pasos{display:flex;flex-direction:column;gap:.75rem;width:100%;max-width:38rem}
+.paso{display:flex;gap:.9rem;align-items:flex-start}
+.paso .n{flex:none;width:2rem;height:2rem;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.75rem;color:var(--accent-text);border:1px solid var(--accent-surface)}
+.paso .cuerpo .t{font-family:var(--font-display);font-size:clamp(.92rem,1.35vw,1.05rem);text-transform:none}
+.paso .cuerpo .d{font-size:clamp(.82rem,1.15vw,.92rem);color:var(--on-char-mute);margin-top:.2rem}
+
+/* repaso coral final: las frases sueltas, grandes, para leer en voz alta */
+.coro{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;
+  width:100%;max-width:48rem;margin-inline:auto}
+.coro span{font-family:var(--font-display);font-size:clamp(.85rem,1.8vw,1.25rem);
+  text-transform:none;padding:.4rem .8rem;border:1px solid var(--line-d2);border-radius:999px}
+.coro span.r{border-color:var(--accent-surface);color:var(--accent-text)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Arranca el bloque 'Inglés para la vida real'. Esta no es una clase de gramática — dilo en voz alta al empezar. La meta es que ellos hablen la mayor parte de la hora, no tú. Si dudas entre explicar una regla o repetir una frase en coro, repite la frase.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">En una <span class="hl">fiesta.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Presentarte, platicar y despedirte sin sonar a libro de texto. Inglés para la vida real · Clase 1.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Vida real · 1/3</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · LA REGLA DE LA COMUNIDAD -->
+    <section class="slide paper" data-notes="Léelo tal cual. Esto baja la guardia del grupo desde el minuto uno: el permiso explícito de equivocarse es lo que hace que hablen. No lo saltes por ganar tiempo — es la slide que sostiene toda la hora.">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">Aquí <span class="hl">se vale equivocarse.</span></h2>
+      <p class="lead wide mt-m">No venimos a hablar perfecto. Venimos a salir del apuro y entendernos. Más práctica, menos teoría — y todo en voz alta.</p>
+      <div class="chip"><span class="dot"></span> Si dudamos entre explicar una regla o repetir una frase, repetimos la frase</div>
+    </section>
+
+    <!-- 3 · CÓMO LEER LA PRONUNCIACIÓN -->
+    <section class="slide" data-notes="Explica la clave de lectura una sola vez, aquí, y ya no vuelvas a explicarla en toda la hora. La pronunciación está escrita como si fuera español — no es exacta, pero alcanza para que los entiendan. Modela tú primero cada una de las cuatro notas.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Cómo leer esta clase</div>
+      <h2 class="h1">La pronunciación <span class="hl">se lee en español.</span></h2>
+      <div class="pron mt-l">
+        <div class="f">
+          <span class="en">La 'z' es el 'th' suave</span><span class="say">think → zink</span>
+          <span class="use">Sale entre los dientes, sin fuerza.</span>
+        </div>
+        <div class="f">
+          <span class="en">La 'd' es el 'th' fuerte</span><span class="say">this → dis</span>
+          <span class="use">Como una 'd' española, pero con la lengua asomada.</span>
+        </div>
+        <div class="f">
+          <span class="en">La 'r' no se arrastra</span><span class="say">car → cáar</span>
+          <span class="use">Más suave que en español, casi como una 'a' larga.</span>
+        </div>
+        <div class="f">
+          <span class="en">La sílaba acentuada va marcada</span><span class="say">óu = como en "no"</span>
+          <span class="use">Cuando veas 'ou', suena como la 'o' de "no", no como doble o.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · KIT DE SUPERVIVENCIA -->
+    <section class="slide" data-notes="5 min. Repetición coral: tú la dices despacio, el grupo la repite en coro, luego 2 o 3 personas solas. Estas frases se repiten en las tres clases hasta que salgan sin pensar. Son las que de verdad los salvan.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Kit de supervivencia · 5 min</div>
+      <h2 class="h1">Las frases <span class="hl">que te salvan siempre.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">Can you repeat that, please?</span><span class="say">can iú ripít dat plis</span>
+          <span class="use">Cuando no entendiste algo.</span></div>
+        <div class="f"><span class="en">Can you speak a little slower, please?</span><span class="say">can iú spik é lítel slóuer plis</span>
+          <span class="use">Cuando te hablan muy rápido.</span></div>
+        <div class="f"><span class="en">How do you say ___ in English?</span><span class="say">jáu du iú séi ___ in ínglish</span>
+          <span class="use">Cuando no sabes una palabra.</span></div>
+        <div class="f"><span class="en">Sorry, my English isn't perfect, but I'll try.</span><span class="say">sóri mai ínglish ísnt pérfect bat aill trái</span>
+          <span class="use">Para romper el miedo a equivocarte.</span></div>
+        <div class="f"><span class="en">Sorry, what was that again?</span><span class="say">sóri uát uas dat aguén</span>
+          <span class="use">Para pedir que repitan, de forma casual.</span></div>
+        <div class="f"><span class="en">I'm still learning English.</span><span class="say">aim stil lérnin ínglish</span>
+          <span class="use">Para pedir un poco de paciencia.</span></div>
+      </div>
+    </section>
+
+    <!-- 5 · LA SITUACIÓN -->
+    <section class="slide paper" data-notes="Píntales la escena antes del diálogo. Que se imaginen ahí: la incomodidad de no conocer a nadie es justo lo que vamos a practicar. Pregunta si a alguien ya le pasó.">
+      <div class="eyebrow">La situación de hoy</div>
+      <h2 class="h1">Llegas <span class="hl">y no conoces a nadie.</span></h2>
+      <p class="lead wide mt-m">Una fiesta de un amigo, del trabajo o de un vecino. Hay gente que habla inglés. Tienes que presentarte, sostener una plática ligera y despedirte bien.</p>
+    </section>
+
+    <!-- 6 · AGENDA -->
+    <section class="slide" data-notes="Enseña el mapa de la hora para que sepan hacia dónde van. No te detengas más de un minuto aquí.">
+      <div class="eyebrow">La hora de hoy</div>
+      <h2 class="h1">Cómo <span class="hl">va la clase.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento: kit de supervivencia en coro</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Diálogo modelo: At a Birthday Party</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Frases para romper el hielo</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Modismos de fiesta</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Números: teléfonos, direcciones y horas</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Role-play en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Repaso coral de cierre</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · DIÁLOGO MODELO -->
+    <section class="slide paper" data-notes="10 min. Primero léelo tú con un voluntario. Después en parejas, cambiando de papel. Señala lo natural que suena 'Hey! How's it going?' comparado con 'Hello, how are you?' — nadie dice eso en una fiesta.">
+      <div class="eyebrow">Diálogo modelo</div>
+      <h2 class="h1">At a <span class="hl">Birthday Party.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Hey! How's it going? I don't think we've met — I'm Mark.</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">Hi Mark, I'm Lupita. Nice to meet you.</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Nice to meet you too. So, how do you know Cindy?</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">We work together, actually. What about you?</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Oh cool, we're neighbors. She's an awesome host, right? This is a great party.</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">For sure! The food's amazing too.</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Right? So, what do you do, Lupita?</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">I'm a graphic designer. I actually just started my own thing.</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">That's awesome! Good for you. Hey, can I get you a drink?</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">Sure, I'll take a water, thanks.</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · DIÁLOGO: LA DESPEDIDA -->
+    <section class="slide paper" data-notes="La despedida es la parte que más se les olvida y la que más pena da. Practíquenla aparte, es corta. 'I should get going' es la fórmula educada universal — no hace falta inventar excusas.">
+      <div class="eyebrow">Diálogo modelo · continuación</div>
+      <h2 class="h1">Y cuando <span class="hl">te vas.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="acot">Un rato después, cuando la fiesta se acaba</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Well, it was really nice meeting you. I should get going, it's getting late.</span></div>
+        <div class="linea"><span class="quien">Lupita</span><span class="txt">It was nice meeting you too! Let's keep in touch — here, let me give you my number.</span></div>
+        <div class="linea"><span class="quien">Mark</span><span class="txt">Perfect, I'll text you.</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> En parejas: cambien de papel y léanlo otra vez</div>
+    </section>
+
+    <!-- 9 · FRASES PARA ROMPER EL HIELO -->
+    <section class="slide" data-notes="10 min de repetición coral. Ciclo por frase: tú despacio, grupo en coro, 2-3 personas solas. No expliques gramática de ninguna — solo el uso. 'How's it going?' no se contesta con un reporte largo: 'Good, you?' basta.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Romper el hielo · 10 min</div>
+      <h2 class="h1">Las frases <span class="hl">que abren la plática.</span></h2>
+      <div class="pron tight mt-l">
+        <div class="f"><span class="en">How's it going?</span><span class="say">jáus it góuin</span>
+          <span class="use">¿Cómo te va? — el saludo casual.</span></div>
+        <div class="f"><span class="en">I don't think we've met.</span><span class="say">ai dóunt zink uiv met</span>
+          <span class="use">Creo que no nos conocemos — para presentarte.</span></div>
+        <div class="f"><span class="en">Nice to meet you.</span><span class="say">náis tu mit iú</span>
+          <span class="use">Mucho gusto.</span></div>
+        <div class="f"><span class="en">What about you?</span><span class="say">uát abáut iú</span>
+          <span class="use">¿Y tú? — para regresar la pregunta.</span></div>
+        <div class="f"><span class="en">So, what do you do?</span><span class="say">sóu uát du iú du</span>
+          <span class="use">¿A qué te dedicas?</span></div>
+        <div class="f"><span class="en">Can I get you a drink?</span><span class="say">can ai guet iú é drink</span>
+          <span class="use">¿Te traigo algo de tomar?</span></div>
+      </div>
+    </section>
+
+    <!-- 10 · FRASES PARA CERRAR -->
+    <section class="slide" data-notes="Las de la despedida, en coro. Insiste en que 'Let's keep in touch' es lo que abre la puerta a intercambiar número — sin eso, la conversación se acaba ahí.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Romper el hielo · cierre</div>
+      <h2 class="h1">Y las que <span class="hl">la cierran bien.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">This is a great party!</span><span class="say">dis is é gréit párti</span>
+          <span class="use">¡Qué buena fiesta! — el comentario que nunca falla.</span></div>
+        <div class="f"><span class="en">It was nice meeting you.</span><span class="say">it uas náis mítin iú</span>
+          <span class="use">Fue un gusto conocerte — para despedirte.</span></div>
+        <div class="f"><span class="en">I should get going.</span><span class="say">ai shud guet góuin</span>
+          <span class="use">Ya me tengo que ir. No necesitas dar explicaciones.</span></div>
+        <div class="f"><span class="en">Let's keep in touch.</span><span class="say">lets kip in tach</span>
+          <span class="use">Mantengámonos en contacto.</span></div>
+      </div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="10 min. El contraste entre lo literal y lo real es lo que los hace memorables — señálalo con humor. 'Have a blast' literalmente es 'tener una explosión'. Pide que inventen una oración propia con dos de ellos.">
+      <div class="eyebrow">Modismos de fiesta · 10 min</div>
+      <h2 class="h1">Lo que dicen <span class="hl">y lo que quieren decir.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">break the ice</div><div class="say">bréik di áis</div>
+          <div class="lit">romper el hielo</div>
+          <div class="real">Iniciar plática con alguien que no conoces.</div>
+          <div class="ej">He told a joke to break the ice.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">small talk</div><div class="say">smol tok</div>
+          <div class="lit">plática pequeña</div>
+          <div class="real">Conversación ligera: clima, fin de semana, comida.</div>
+          <div class="ej">We made small talk about the weather.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">catch up</div><div class="say">cach ap</div>
+          <div class="lit">alcanzar</div>
+          <div class="real">Ponerse al día con alguien que no ves hace rato.</div>
+          <div class="ej">Let's catch up soon!</div>
+        </div>
+        <div class="modismo">
+          <div class="en">hang out</div><div class="say">jang áut</div>
+          <div class="lit">colgar afuera</div>
+          <div class="real">Pasar el rato, convivir.</div>
+          <div class="ej">Do you want to hang out this weekend?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · MODISMOS · 2 -->
+    <section class="slide" data-notes="Los tres restantes. 'The life of the party' es un piropo — úsalo con alguien del grupo para que se rían y se les quede.">
+      <div class="eyebrow">Modismos de fiesta · continuación</div>
+      <h2 class="h1">Tres <span class="hl">más.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo">
+          <div class="en">have a blast</div><div class="say">jav é blast</div>
+          <div class="lit">tener una explosión</div>
+          <div class="real">Pasarla increíble.</div>
+          <div class="ej">We had a blast at the party.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">the life of the party</div><div class="say">de láif of de párti</div>
+          <div class="lit">la vida de la fiesta</div>
+          <div class="real">La persona más divertida del grupo.</div>
+          <div class="ej">Jake is always the life of the party.</div>
+        </div>
+        <div class="modismo">
+          <div class="en">chill out</div><div class="say">chil áut</div>
+          <div class="lit">enfriarse</div>
+          <div class="real">Relajarse, tomarla con calma.</div>
+          <div class="ej">Let's just chill out and watch a movie.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 · NÚMEROS -->
+    <section class="slide paper" data-notes="5 min. Lo clave: el teléfono se dice dígito por dígito y el cero se dice 'oh', no 'zero'. Practica un número real del grupo en voz alta, dígito por dígito, dos o tres veces.">
+      <div class="eyebrow">Números · 5 min</div>
+      <h2 class="h1">Nadie dice los números <span class="hl">como los aprendiste.</span></h2>
+      <div class="nums mt-l">
+        <div class="n"><span class="dato">Teléfono 555-0132</span><span class="dice">five five five, oh one three two</span>
+          <span class="say">fáiv fáiv fáiv, óu uán zri tu</span></div>
+        <div class="n"><span class="dato">Edad 28 años</span><span class="dice">twenty-eight years old</span>
+          <span class="say">tuénti éit íers óuld</span></div>
+        <div class="n"><span class="dato">Hora 8:30</span><span class="dice">eight thirty</span>
+          <span class="say">éit zérti</span></div>
+        <div class="n"><span class="dato">Dirección 1205 Main St.</span><span class="dice">twelve-oh-five Main Street</span>
+          <span class="say">tuélv óu fáiv méin strit</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> El "0" en un teléfono se dice "oh", nunca "zero"</div>
+    </section>
+
+    <!-- 14 · ROLE-PLAY -->
+    <section class="slide" data-notes="15 min, el corazón de la clase. Que se paren si se puede — cambia la energía. Circula entre las parejas, no corrijas gramática: solo empuja a que sigan hablando. Al terminar, que una o dos parejas lo hagan frente al grupo.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="pasos mt-l">
+        <div class="paso"><span class="n">01</span><div class="cuerpo">
+          <div class="t">Preséntense</div><div class="d">Nombre y cómo conocen al anfitrión.</div></div></div>
+        <div class="paso"><span class="n">02</span><div class="cuerpo">
+          <div class="t">Hagan small talk</div><div class="d">La comida, la música, el clima. Lo que sea.</div></div></div>
+        <div class="paso"><span class="n">03</span><div class="cuerpo">
+          <div class="t">"So, what do you do?"</div><div class="d">Pregunten y contesten. Regresen la pregunta.</div></div></div>
+        <div class="paso"><span class="n">04</span><div class="cuerpo">
+          <div class="t">Intercambien teléfono</div><div class="d">En voz alta, dígito por dígito.</div></div></div>
+        <div class="paso"><span class="n">05</span><div class="cuerpo">
+          <div class="t">Despídanse</div><div class="d">"I should get going. Let's keep in touch."</div></div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Usen 3 frases del kit, 2 de la clase y 1 modismo</div>
+    </section>
+
+    <!-- 15 · REPASO CORAL -->
+    <section class="slide center" data-notes="5 min. Todo el grupo en voz alta, una sola vez, seguido. Esto es lo que hace que se queden — no lo saltes aunque vayas tarde.">
+      <div class="eyebrow" style="justify-content:center">Repaso coral · 5 min</div>
+      <h2 class="h1" style="text-align:center">Todos juntos, <span class="hl">en voz alta.</span></h2>
+      <div class="coro mt-l">
+        <span>How's it going?</span><span>Nice to meet you.</span><span>What about you?</span>
+        <span>This is a great party!</span><span>What do you do?</span><span>Can I get you a drink?</span>
+        <span>It was nice meeting you.</span><span>I should get going.</span><span>Let's keep in touch.</span>
+        <span class="r">break the ice</span><span class="r">small talk</span>
+        <span class="r">catch up</span><span class="r">have a blast</span>
+      </div>
+    </section>
+
+    <!-- 16 · CIERRE + RETO -->
+    <section class="slide center" data-notes="El reto es lo que convierte la clase en práctica real. Pide que lo compartan en el grupo durante la semana — la presión social amable es lo que hace que sí lo hagan.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Reto de la semana</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">Usa un modismo de hoy <span class="hl">en la vida real.</span></p>
+      <p class="lead mt-m" style="text-align:center">Aunque sea con alguien de la comunidad. Después cuéntanos en el grupo cómo te fue.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

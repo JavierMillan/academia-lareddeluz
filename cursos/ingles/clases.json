@@ -36,7 +36,7 @@
     {
       "id": "basico",
       "titulo": "Inglés Básico",
-      "subtitulo": "3 clases de práctica",
+      "subtitulo": "6 clases de práctica",
       "etiqueta": "Básico",
       "clases": [
         {
@@ -59,6 +59,27 @@
           "titulo": "I'd like... I'm going to...",
           "resumen": "Gustos, planes de fin de semana, y un role-play completo pidiendo comida en McDonald's.",
           "deck": "sesion-5.html"
+        },
+        {
+          "id": "sesion-6",
+          "parte": "Clase 4",
+          "titulo": "En una fiesta",
+          "resumen": "Presentarte, sostener small talk y despedirte bien. Con modismos de fiesta y cómo se dicen los teléfonos.",
+          "deck": "sesion-6.html"
+        },
+        {
+          "id": "sesion-7",
+          "parte": "Clase 5",
+          "titulo": "Una junta de trabajo",
+          "resumen": "Dar tu actualización, opinar y pedir que te repitan sin pena. Más la regla del \"twelve hundred\".",
+          "deck": "sesion-7.html"
+        },
+        {
+          "id": "sesion-8",
+          "parte": "Clase 6",
+          "titulo": "De viaje",
+          "resumen": "Aeropuerto, Uber y hotel — tres diálogos cortos para resolver un viaje completo en inglés.",
+          "deck": "sesion-8.html"
         }
       ]
     }

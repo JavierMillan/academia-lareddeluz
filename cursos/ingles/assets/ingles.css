@@ -157,3 +157,64 @@ body.on-paper .navbtn:hover,body.on-paper .navbtn.on{border-color:var(--sesame);
 .theme-english .deck-card .stripe{background:var(--accent-surface)}
 .theme-english .deck-card .lvl,.theme-english .deck-card .go{color:var(--accent-text)}
 .theme-english .deck-card:hover{border-color:var(--accent-surface)}
+
+/* ============================================================
+   Átomos de "Inglés para la vida real" (sesiones 6-8)
+   ------------------------------------------------------------
+   Suben aquí porque los tres decks del bloque los usan.
+   La columna de pronunciación en español es el corazón
+   metodológico del material: permite repetición coral sin IPA.
+   ============================================================ */
+
+/* .pron — frase en inglés + cómo suena + cuándo usarla.
+   Tres registros tipográficos para que el ojo los separe sin líneas:
+   display para el inglés, mono para el sonido, body para el uso. */
+.pron{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:46rem}
+.pron .f{display:grid;grid-template-columns:1fr auto;gap:.3rem 1.2rem;align-items:baseline;
+  padding:.7rem .95rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--sesame);border-radius:10px}
+.pron .en{font-family:var(--font-display);font-size:clamp(.9rem,1.35vw,1.08rem);
+  text-transform:none;line-height:1.2}
+.pron .say{font-family:var(--font-mono);font-size:clamp(.62rem,.92vw,.75rem);
+  letter-spacing:.04em;color:var(--accent-text);white-space:nowrap}
+.pron .use{grid-column:1/-1;font-family:var(--font-body);font-size:clamp(.78rem,1.1vw,.9rem);
+  color:var(--on-char-mute);line-height:1.35}
+@media(max-width:640px){
+  .pron .f{grid-template-columns:1fr}
+  .pron .say{white-space:normal}
+}
+
+/* variante compacta: cuando caben 6+ frases en una slide */
+.pron.tight .f{padding:.5rem .8rem}
+.pron.tight .en{font-size:clamp(.82rem,1.2vw,.98rem)}
+.pron.tight .use{font-size:clamp(.72rem,1vw,.82rem)}
+
+/* .modismo — expresión idiomática: literal vs. lo que de verdad significa.
+   El contraste literal/real es el chiste pedagógico, por eso van pegados. */
+.modismos{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;width:100%;max-width:52rem}
+@media(max-width:820px){.modismos{grid-template-columns:1fr}}
+.modismo{padding:.8rem 1rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.modismo .en{font-family:var(--font-display);font-size:clamp(.88rem,1.3vw,1.02rem);text-transform:none}
+.modismo .say{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.04em;
+  color:var(--accent-text);margin-top:.15rem}
+.modismo .lit{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-mute);
+  margin-top:.45rem;text-decoration:line-through;text-decoration-color:var(--line-d2)}
+.modismo .real{font-family:var(--font-body);font-size:clamp(.8rem,1.15vw,.92rem);
+  color:var(--on-char-soft);margin-top:.2rem}
+.modismo .ej{font-family:var(--font-body);font-size:.76rem;font-style:italic;
+  color:var(--on-char-mute);margin-top:.4rem;padding-top:.4rem;border-top:1px dashed var(--line-d)}
+
+/* .nums — cómo se dicen de verdad los números en la calle.
+   Columna izquierda: el dato. Derecha: cómo suena. */
+.nums{display:flex;flex-direction:column;gap:.55rem;width:100%;max-width:44rem}
+.nums .n{display:grid;grid-template-columns:9.5rem 1fr;gap:.3rem 1rem;align-items:baseline;
+  padding:.65rem .9rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:10px}
+.nums .dato{font-family:var(--font-mono);font-size:clamp(.68rem,1vw,.8rem);
+  color:var(--on-char-mute);letter-spacing:.03em}
+.nums .dice{font-family:var(--font-display);font-size:clamp(.85rem,1.25vw,1rem);text-transform:none}
+.nums .say{grid-column:2;font-family:var(--font-mono);font-size:.64rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.15rem}
+@media(max-width:640px){
+  .nums .n{grid-template-columns:1fr}
+  .nums .say{grid-column:1}
+}
