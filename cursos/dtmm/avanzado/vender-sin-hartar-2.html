@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Vender sin que se sienta a venta — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+/* cards */
+
+.card{background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:16px;padding:clamp(1.2rem,2.4vw,2rem)}
+.card.lit{border-color:var(--sesame);box-shadow:0 0 0 1px var(--sesame),0 20px 60px -30px var(--glow)}
+.card .tag{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.card.lit .tag{color:var(--sesame)}
+.card h3{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(1.1rem,1.8vw,1.5rem);
+  margin:.5rem 0 .7rem}
+.card p{color:var(--on-char-soft);font-size:clamp(.92rem,1.2vw,1.1rem);line-height:1.45}
+.card.lit p{color:var(--on-char)}
+.stack{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.3rem)}
+
+/* numbered editorial list (funnel-real / 4 etapas) */
+
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
+  padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
+.row:first-child{border-top:1px solid var(--sesame)}
+.row .n{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute)}
+.row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
+.row.key .t{color:var(--sesame)}
+
+/* transform examples (ahora tú) */
+
+.tx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.4rem);width:100%}
+@media(max-width:820px){.tx{grid-template-columns:1fr}}
+.tx .item{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1rem,1.8vw,1.4rem)}
+.tx .who{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);margin-bottom:.8rem}
+.tx .bad{color:var(--on-char-mute);font-size:.92rem;text-decoration:line-through;
+  text-decoration-color:var(--ketchup);text-decoration-thickness:1px;margin-bottom:.5rem}
+.tx .good{font-family:'Fraunces',serif;font-style:italic;color:var(--sesame);
+  font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
+
+/* flyer slide */
+
+.flyer-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;width:100%}
+@media(max-width:820px){.flyer-wrap{grid-template-columns:1fr}}
+.flyer-ph{aspect-ratio:3/4;border:1px dashed var(--line-l2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--on-paper-mute);padding:1.5rem;background:rgba(0,0,0,.03)}
+.flyer-img{width:100%;max-height:72vh;object-fit:contain;border-radius:12px;
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);transform:rotate(-1.5deg)}
+
+/* QR slide */
+
+.qr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
+  align-items:center;width:100%}
+@media(max-width:820px){.qr-wrap{grid-template-columns:1fr}}
+.qr-box{background:#fff;border-radius:20px;padding:clamp(1rem,2vw,1.6rem);
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);width:fit-content;margin-inline:auto}
+.qr-box img{display:block;width:clamp(220px,30vw,340px);height:auto;border-radius:8px}
+.qr-cap{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-paper-mute);text-align:center;margin-top:1rem}
+
+/* ikigai grid 2x2 */
+
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.2rem);width:100%;position:relative}
+@media(max-width:820px){.iki{grid-template-columns:1fr}}
+.iki .cell{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(1.1rem,2.2vw,1.8rem)}
+.iki .cell .z{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--sesame)}
+.iki .cell .q{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(1.05rem,1.7vw,1.45rem);margin-top:.5rem}
+.iki .cell p{color:var(--on-char-soft);font-size:clamp(.88rem,1.1vw,1.02rem);
+  line-height:1.4;margin-top:.4rem}
+.iki .core{position:absolute;inset:0;margin:auto;width:fit-content;height:fit-content;
+  pointer-events:none;background:var(--char);border:1px solid var(--sesame);border-radius:999px;
+  padding:.5rem 1.2rem;font-family:'Unbounded',sans-serif;font-weight:600;color:var(--sesame);
+  font-size:clamp(.9rem,1.5vw,1.3rem);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--char)}
+@media(max-width:820px){.iki .core{display:none}}
+
+/* ============ ÁTOMOS "FUERA DE LA CAJA" ============ */
+
+.bleed{position:absolute;font-family:'Unbounded',sans-serif;font-weight:800;
+  line-height:.8;letter-spacing:-.04em;color:var(--char-soft);
+  font-size:clamp(9rem,34vw,30rem);z-index:0;pointer-events:none;user-select:none;
+  white-space:nowrap}
+.bleed.br{bottom:-4vh;right:-3vw;color:rgba(232,161,60,.09)}
+.bleed.tl{top:-6vh;left:-2vw;-webkit-text-stroke:1px var(--line-d2);color:transparent}
+.slide > .z1{position:relative;z-index:1}
+
+.mark{font-family:'Fraunces',serif;font-weight:600;line-height:.7;
+  font-size:clamp(8rem,22vw,20rem);color:var(--sesame);opacity:.22;
+  position:absolute;top:2vh;left:clamp(1rem,4vw,4rem);z-index:0;pointer-events:none}
+.paper .mark{color:var(--ketchup);opacity:.18}
+
+.stair{display:flex;flex-direction:column;gap:.1em}
+.stair span{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:.98;font-size:clamp(1.8rem,6vw,4.6rem)}
+.stair span:nth-child(2){margin-left:1.4em}
+.stair span:nth-child(3){margin-left:2.8em}
+@media(max-width:820px){.stair span{margin-left:0 !important}}
+
+.aside{font-family:'Fraunces',serif;font-style:italic;color:var(--on-char-mute);
+  font-size:clamp(.92rem,1.3vw,1.15rem);max-width:34ch}
+.paper .aside{color:var(--on-paper-mute)}
+.aside::before{content:"↳ ";color:var(--sesame);font-style:normal}
+.paper .aside::before{color:var(--ketchup)}
+
+/* arquetipo · Diagonal ("El Corte") — eje de fuga propio, dos campos de peso desigual */
+
+.diagonal{isolation:isolate;overflow:hidden}
+.diagonal::before{content:"";position:absolute;inset:-20% -10%;z-index:0;
+  background:
+    radial-gradient(60% 55% at 88% 50%,rgba(232,161,60,.16) 0%,transparent 70%),
+    linear-gradient(115deg,var(--char) 68%,var(--sesame) 68.5%,var(--sesame) 69.7%,transparent 70.2%)}
+.paper .diagonal::before{background:
+    radial-gradient(60% 55% at 88% 50%,rgba(200,68,46,.12) 0%,transparent 70%),
+    linear-gradient(115deg,var(--paper) 68%,var(--ketchup) 68.5%,var(--ketchup) 69.7%,transparent 70.2%)}
+.diagonal .z1{max-width:56ch}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide active">
+      <div class="glow tr"></div>
+      <div class="bleed tl">venta</div>
+      <div class="z1">
+        <div class="eyebrow">Nivel Avanzado · Parte 2</div>
+        <h1 class="mega">Vender sin que<br>se sienta a <span class="hl">venta.</span></h1>
+        <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">Se puede vender y hacerse viral al mismo tiempo. Aquí está cómo.</p>
+      </div>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · REVISIÓN RÁPIDA -->
+    <section class="slide paper">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">¿Quién trae su <span class="hl">conversación</span> reescrita?</h2>
+      <p class="lead wide mt-m">La clase pasada quedamos en pasar 3 chats reales por Reconocer → Indagar → Conectar → Invitar. Vamos a leer 2 o 3 en el chat antes de seguir.</p>
+      <div class="chip"><span class="dot"></span> Comparte cómo cambió tu conversación</div>
+    </section>
+
+    <!-- 3 · EL DETECTOR ANTIPUBLICIDAD (diagonal, arquetipo nuevo) -->
+    <section class="slide diagonal">
+      <div class="z1">
+        <div class="eyebrow">Llevas toda tu vida entrenándolo</div>
+        <h2 class="h1" style="max-width:13ch">Hueles al vendedor antes de que <span class="hl">abra la boca.</span></h2>
+        <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem);max-width:38ch">El problema no es tu producto. Es que <span class="hl" style="font-style:normal;font-weight:500">tú eres la peor persona</span> para hablar bien de él — tu voz ya está descalificada.</p>
+      </div>
+    </section>
+
+    <!-- 4 · EL CARNAVAL DE VENECIA (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">La solución no es esconder</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">Ponte una <span class="hl">máscara</span> real.</h2>
+        </div>
+        <div>
+          <p class="lead wide">En el Carnaval de Venecia no importaba quién eras ni cuánto ganabas — solo lo que decías. Se rompía el prejuicio de quién daba el mensaje.</p>
+          <p class="lead wide mt-s">Julián se puso muchas: el científico, el novio inseguro, el fan de Cerati, el rebelde en el balcón. Ninguna mentira — todas facetas reales que abren la puerta por razones distintas a "te voy a vender algo".</p>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> ¿Qué faceta real tuya podría contar tu próxima historia?</div>
+    </section>
+
+    <!-- 5 · HISTORIA > ARGUMENTO -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Por qué una historia convence más que un dato</div>
+      <h2 class="h1">Tu cerebro entra en <span class="hl">"modo detective."</span></h2>
+      <p class="lead wide mt-m">Cuando escuchas un pitch, evalúas, comparas, buscas la trampa. Pero metido en una historia, te importa lo que le pasa al personaje — y el cerebro apaga los filtros críticos.</p>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <span class="label">Argumento directo</span>
+          <p class="txt">"Te puedo asegurar que mi gym es el mejor de la colonia."</p>
+        </div>
+        <div class="pub b">
+          <span class="label">Historia</span>
+          <p class="txt">"No te puedo decir que mi gym es el mejor. Pero sí que mi vecino de 50 años se metió hace 6 meses y ahora su ex le manda mensajes para cenar."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · EL CABALLO DE TROYA (PAPER, staircase) -->
+    <section class="slide paper">
+      <div class="eyebrow">Los griegos tardaron 10 años en entrar a Troya</div>
+      <div class="stair mt-s">
+        <span>Dejaron</span>
+        <span>de empujar.</span>
+        <span><span class="hl">Regalaron</span> un caballo.</span>
+      </div>
+      <p class="lead wide mt-l">Tu historia es ese caballo. No necesitas empujar tu venta contra el muro del detector — envuélvela en algo que tu audiencia quiera meter en su casa, por decisión propia.</p>
+    </section>
+
+    <!-- 7 · STALLONE/ROCKY -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Cuando no tienes tu propia historia</div>
+      <h2 class="h1">Pídele prestada una que <span class="hl">todos ya aman.</span></h2>
+      <p class="lead wide mt-m">Stallone tenía 50 dólares, no podía ni darle de comer a su perro. Se sentó a escribir Rocky.</p>
+      <p class="lead wide mt-s">La audiencia queda enganchada en "qué va a pasar" — y la idea real (la que querías vender) entra sin que la analicen, porque no llegó dentro de un pitch: llegó dentro de una historia que ya amaban.</p>
+    </section>
+
+    <!-- 8 · LA CICATRIZ, NO EL DIPLOMA (PAPER) -->
+    <section class="slide paper center">
+      <div class="mark">"</div>
+      <div class="z1">
+        <div class="eyebrow" style="justify-content:center">Vulnerabilidad como anti-manipulación</div>
+        <p class="bigline" style="margin-inline:auto;text-align:center">Enseña la <span class="hl">cicatriz,</span></p>
+        <div class="rule" style="margin-inline:auto"></div>
+        <p class="bigline" style="margin-inline:auto;text-align:center">no el <span class="hl">diploma.</span></p>
+        <p class="lead mt-m" style="text-align:center">A la cicatriz se le cree más. El error, la duda, el miedo — eso desactiva el detector de ventas mejor que casi cualquier otra técnica.</p>
+      </div>
+    </section>
+
+    <!-- 9 · MIL CAMINOS, NO UNA CARRETERA -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">La metáfora de la ciudad</div>
+      <h2 class="h1">No construyas <span class="hl">una carretera</span> con letrero de VENTA.</h2>
+      <p class="lead wide mt-m">La mayoría hace eso, y luego se pregunta por qué nadie quiere manejar por ahí.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.15rem,1.9vw,1.6rem)">Construye <span class="hl" style="font-style:normal;font-weight:500">mil caminos</span> — mil historias, mil ángulos — que la gente disfruta recorrer, aunque no se den cuenta de que llegaron al centro. El viaje ya valía la pena.</p>
+    </section>
+
+    <!-- 10 · SEDUCIR, NO MANIPULAR -->
+    <section class="slide paper">
+      <div class="eyebrow">La diferencia que lo cambia todo</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">Quien necesita <span class="hl">convencerte</span>, ya perdió.</h2>
+        </div>
+        <div>
+          <p class="lead wide">Si necesito convencerte es porque ni yo mismo lo siento del todo. La gente no le compra al convencedor — le compra al convencido.</p>
+          <p class="serif mt-s" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem)">Un buen cirujano no te pide que confíes en él. Te da evidencia, te da una cita. <span class="hl" style="font-style:normal;font-weight:500">No jala del brazo.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · CITA DE CIERRE -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Recuérdalo así</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">"El manipulador miente para vender lo que no necesitas. El que seduce da algo tan bueno que tú mismo <span class="hl">decides que quieres más.</span>"</p>
+    </section>
+
+    <!-- 12 · SIGUIENTE PASO -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="mega" style="max-width:16ch">Elige tu <span class="hl">máscara.</span></h2>
+      <p class="lead wide mt-m">Antes de tu próxima venta: ¿qué faceta real tuya va a contar la historia? El que se equivocó primero, el que lo probó consigo mismo, el que se arriesga a verse mal. Escríbela y súbela al grupo de WhatsApp.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft)">La próxima clase revisamos 2 o 3 en vivo, y vemos cómo la IA puede ayudarte sin quitarte la voz.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

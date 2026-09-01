@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Por qué nadie te escribe — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+/* cards */
+
+.card{background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:16px;padding:clamp(1.2rem,2.4vw,2rem)}
+.card.lit{border-color:var(--sesame);box-shadow:0 0 0 1px var(--sesame),0 20px 60px -30px var(--glow)}
+.card .tag{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.card.lit .tag{color:var(--sesame)}
+.card h3{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(1.1rem,1.8vw,1.5rem);
+  margin:.5rem 0 .7rem}
+.card p{color:var(--on-char-soft);font-size:clamp(.92rem,1.2vw,1.1rem);line-height:1.45}
+.card.lit p{color:var(--on-char)}
+.stack{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.3rem)}
+
+/* numbered editorial list (funnel-real / 4 etapas) */
+
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
+  padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
+.row:first-child{border-top:1px solid var(--sesame)}
+.row .n{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute)}
+.row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
+.row.key .t{color:var(--sesame)}
+
+/* transform examples (ahora tú) */
+
+.tx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.4rem);width:100%}
+@media(max-width:820px){.tx{grid-template-columns:1fr}}
+.tx .item{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1rem,1.8vw,1.4rem)}
+.tx .who{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);margin-bottom:.8rem}
+.tx .bad{color:var(--on-char-mute);font-size:.92rem;text-decoration:line-through;
+  text-decoration-color:var(--ketchup);text-decoration-thickness:1px;margin-bottom:.5rem}
+.tx .good{font-family:'Fraunces',serif;font-style:italic;color:var(--sesame);
+  font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
+
+/* flyer slide */
+
+.flyer-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;width:100%}
+@media(max-width:820px){.flyer-wrap{grid-template-columns:1fr}}
+.flyer-ph{aspect-ratio:3/4;border:1px dashed var(--line-l2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--on-paper-mute);padding:1.5rem;background:rgba(0,0,0,.03)}
+.flyer-img{width:100%;max-height:72vh;object-fit:contain;border-radius:12px;
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);transform:rotate(-1.5deg)}
+
+/* QR slide */
+
+.qr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
+  align-items:center;width:100%}
+@media(max-width:820px){.qr-wrap{grid-template-columns:1fr}}
+.qr-box{background:#fff;border-radius:20px;padding:clamp(1rem,2vw,1.6rem);
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);width:fit-content;margin-inline:auto}
+.qr-box img{display:block;width:clamp(220px,30vw,340px);height:auto;border-radius:8px}
+.qr-cap{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-paper-mute);text-align:center;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide active">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Masterclass de Psicología del Consumidor</div>
+      <h1 class="mega">Por qué nadie<br>te <span class="hl">escribe.</span></h1>
+      <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">El error silencioso que apaga tus ventas <em>antes</em> de que el embudo empiece.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · INTERACCIÓN HAMBURGUESA -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="mega">Piensa en una marca<br>de <span class="hl">hamburguesas.</span></h2>
+      <p class="lead wide mt-m">Escríbela en el chat ahora mismo. No lo pienses. La primera que llegó a tu mente.</p>
+      <div class="chip"><span class="dot"></span> Escríbela antes de seguir</div>
+    </section>
+
+    <!-- 3 · ¿POR QUÉ ESA MARCA? -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="split">
+        <div>
+          <div class="eyebrow">La revelación</div>
+          <h2 class="h1">¿Por qué <span class="serif" style="font-style:italic">esa</span> marca?</h2>
+          <p class="lead mt-m">No tenías hambre. No buscabas nada. Y aun así… apareció.</p>
+        </div>
+        <div>
+          <p class="serif" style="font-size:clamp(1.3rem,2.2vw,2rem);line-height:1.3">Eso se llama <span class="hl" style="font-weight:500">disponibilidad mental.</span></p>
+          <p class="lead mt-s">Es el activo más valioso que puede tener cualquier negocio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · NO VENDE EL MEJOR (PAPER) -->
+    <section class="slide paper center">
+      <div class="eyebrow">La verdad incómoda</div>
+      <h2 class="mega" style="max-width:18ch">No vende el mejor.<br>Vende el <span class="hl">más conocido.</span></h2>
+      <p class="lead mt-m">La calidad es solo el punto de partida. Si nadie te recuerda, nadie te compra. El premio real es ocupar un espacio en la mente de tu cliente.</p>
+    </section>
+
+    <!-- 5 · ATENCIÓN = RECUERDO -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">La atención no es que te <em class="serif" style="color:var(--on-char-soft)">vean</em>.</p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">La atención es que te <span class="hl">recuerden.</span></p>
+      <p class="lead mt-m" style="text-align:center">La mayoría de los negocios optimiza la que importa menos.</p>
+    </section>
+
+    <!-- 6 · STAT 95% -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="split stat-split">
+        <div class="stat">95<span style="font-size:.5em">%</span></div>
+        <div>
+          <div class="eyebrow">La ciencia de la decisión</div>
+          <p class="h1" style="font-size:clamp(1.4rem,2.6vw,2.2rem)">de las decisiones de compra son <span class="hl">inconscientes y emocionales.</span></p>
+          <p class="lead mt-m">La lógica solo las justifica después. <span class="mono" style="font-size:.8rem;color:var(--on-char-mute)">— estimación de G. Zaltman, Harvard</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · STAT ANTES DE BUSCAR -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">El recuerdo precede a la intención</div>
+      <h2 class="h1">El cerebro decide<br><span class="hl">antes</span> de buscar.</h2>
+      <div class="split mt-l" style="grid-template-columns:1fr 1fr;align-items:start">
+        <div class="card">
+          <div class="tag">Zero Moment of Truth · Google</div>
+          <p class="mt-s">Las personas ya decidieron antes de teclear la búsqueda. Si no estabas en su mente, no estás en la decisión.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Mental Availability · Ehrenberg-Bass</div>
+          <p class="mt-s">Se compran las marcas que vienen a la mente <em>primero</em> en el momento de la necesidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · A vs B -->
+    <section class="slide">
+      <div class="glow tr"></div>
+      <div class="eyebrow">¿Cuál recordarías mañana?</div>
+      <div class="ab mt-m">
+        <div class="pub a">
+          <span class="label">Publicación A</span>
+          <p class="txt">"Servicios de automatización, CRM, embudos, inteligencia artificial, landing pages y más."</p>
+        </div>
+        <div class="pub b">
+          <span class="label">Publicación B</span>
+          <p class="txt">"Publicas todos los días. ¿Por qué nadie te escribe?"</p>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> Vota en el chat: ¿cuál sentiste que hablaba de ti?</div>
+    </section>
+
+    <!-- 9 · EL CEREBRO NO RECUERDA INFORMACIÓN -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Cómo funciona el recuerdo</div>
+      <h2 class="h1">El cerebro no recuerda <span class="hl">información.</span></h2>
+      <div class="steps mt-l" style="grid-template-columns:repeat(4,1fr)">
+        <div class="step"><div class="st" style="color:var(--ketchup)">Se olvida</div><div class="sh">Información</div><p class="card" style="background:none;border:none;padding:.6rem 0 0;color:var(--on-char-mute)">Datos, precios, specs. Duran horas.</p></div>
+        <div class="step"><div class="st">Permanece</div><div class="sh">Historias</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">Conectan y se repiten.</p></div>
+        <div class="step"><div class="st">Reconoce</div><div class="sh">Problemas</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">Activan reconocimiento.</p></div>
+        <div class="step"><div class="st">Mueve</div><div class="sh">Emociones</div><p style="color:var(--on-char-soft);font-size:.92rem;margin-top:.6rem">Generan acción, no solo atención.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 · FLYER (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">El error más común</div>
+      <div class="flyer-wrap">
+        <img class="flyer-img" src="../../assets/imgs/ejemplo_flyer.png" alt="Flyer de ejemplo, lleno de logos, servicios y precios">
+        <div>
+          <h2 class="h1">Mira este flyer.<br>¿Está <span class="hl">mal?</span></h2>
+          <p class="lead wide mt-m">Lleno de logos. Lleno de servicios. Lleno de precios. Lleno de <em>todo</em>.</p>
+          <div class="chip"><span class="dot"></span> Vota en el chat: ¿sí o no?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · 4 ETAPAS -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Las 4 etapas de toda venta</div>
+      <div class="steps mt-m">
+        <div class="step"><span class="arrow">→</span><div class="ico">📣</div><div class="st">Etapa 01</div><div class="sh">Captación</div></div>
+        <div class="step"><span class="arrow">→</span><div class="ico">💬</div><div class="st">Etapa 02</div><div class="sh">Conversación</div></div>
+        <div class="step"><span class="arrow">→</span><div class="ico">📂</div><div class="st">Etapa 03</div><div class="sh">Información</div></div>
+        <div class="step"><div class="ico">🤝</div><div class="st">Etapa 04</div><div class="sh">Venta</div></div>
+      </div>
+      <p class="lead wide mt-l">El flyer no es inútil: es una herramienta de <span class="hl">cierre</span>, no de apertura. Cuando lo usas para captar, te saltas tres etapas. El prospecto aún no te conoce, no te recuerda, no confía en ti.</p>
+      <p class="serif mt-s" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem)">Olemos a vendedor. Y la verdad: <span class="hl" style="font-style:normal;font-weight:500">nos gusta comprar, no que nos vendan.</span></p>
+    </section>
+
+    <!-- 12 · DOLOR vs INTENCIÓN -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">El cliente correcto</div>
+      <h2 class="h1">No todos los que duelen<br>quieren <span class="hl">sanar.</span></h2>
+      <div class="ab mt-l">
+        <div class="card">
+          <div class="tag">Grupo A</div>
+          <h3>Persona con dolor</h3>
+          <p>Ve el anuncio. Lo reconoce. Lo olvida.</p>
+        </div>
+        <div class="card lit">
+          <div class="tag">Grupo B</div>
+          <h3>Persona con <span class="hl">intención</span></h3>
+          <p>Ve el anuncio. Se identifica. <span class="hl">Te escribe.</span></p>
+        </div>
+      </div>
+      <p class="lead wide mt-m">Tu publicidad debe <em>filtrar</em>, no solo atraer. El objetivo no es llenar tu bandeja: es llenarla de las <span class="hl">personas correctas.</span></p>
+    </section>
+
+    <!-- 13 · MEJORES CONVERSACIONES -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">El objetivo no es <em class="serif" style="color:var(--on-char-soft)">más</em> conversaciones.</p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">Es generar <span class="hl">mejores</span> conversaciones.</p>
+      <p class="lead mt-m" style="text-align:center">10 curiosos que nunca compran valen menos que 1 persona lista para resolver su problema hoy.</p>
+    </section>
+
+    <!-- 14 · EMBUDO REAL -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="split" style="grid-template-columns:1fr 1fr">
+        <div>
+          <div class="eyebrow">El embudo real</div>
+          <h2 class="h1">Lo que crees<br><span style="color:var(--on-char-soft)">vs.</span> lo que <span class="hl">ocurre.</span></h2>
+          <p class="mono mt-m" style="font-size:.8rem;color:var(--on-char-mute);letter-spacing:.15em">LO QUE LA GENTE CREE — 4 PASOS</p>
+          <div class="rows mt-s" style="opacity:.55">
+            <div class="row"><span class="n">01</span><span class="t">Anuncio</span></div>
+            <div class="row"><span class="n">02</span><span class="t">Clic</span></div>
+            <div class="row"><span class="n">03</span><span class="t">Formulario</span></div>
+            <div class="row"><span class="n">04</span><span class="t">Venta</span></div>
+          </div>
+          <p class="serif mt-s" style="font-style:italic;color:var(--on-char-mute)">El embudo corto solo existe en las presentaciones de venta.</p>
+        </div>
+        <div>
+          <p class="mono" style="font-size:.8rem;color:var(--sesame);letter-spacing:.15em">LO QUE REALMENTE OCURRE — 7 ETAPAS</p>
+          <div class="rows mt-s">
+            <div class="row"><span class="n">01</span><span class="t">Anuncio</span></div>
+            <div class="row key"><span class="n">02</span><span class="t">Identificación</span></div>
+            <div class="row key"><span class="n">03</span><span class="t">Recuerdo</span></div>
+            <div class="row key"><span class="n">04</span><span class="t">Confianza</span></div>
+            <div class="row"><span class="n">05</span><span class="t">Conversación</span></div>
+            <div class="row"><span class="n">06</span><span class="t">Evaluación</span></div>
+            <div class="row"><span class="n">07</span><span class="t">Compra</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 · AHORA TÚ -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Aplicación práctica</div>
+      <h2 class="h1">Ahora <span class="hl">tú.</span></h2>
+      <p class="lead wide mt-s">Transforma tu servicio en un <em>problema humano</em>. No una característica. Algo que tu cliente siente en el pecho.</p>
+      <div class="tx mt-l">
+        <div class="item"><div class="who">Dentista</div><div class="bad">Blanqueamiento dental profesional</div><div class="good">"Me da pena sonreír en las fotos."</div></div>
+        <div class="item"><div class="who">Nutriólogo</div><div class="bad">Plan nutricional personalizado</div><div class="good">"Estoy cansado de volver a subir de peso."</div></div>
+        <div class="item"><div class="who">Marketing</div><div class="bad">Automatización y CRM</div><div class="good">"Publico todos los días y nadie me escribe."</div></div>
+      </div>
+    </section>
+
+    <!-- 16 · CITA CIERRE (PAPER) -->
+    <section class="slide paper center">
+      <div class="eyebrow">El cierre que cambia todo</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">"No necesitas que entiendan tu servicio. Necesitas que <span class="hl">sienta que la entiendes a ella</span>."</p>
+      <p class="lead mt-l" style="text-align:center">Cuando un prospecto piensa <em>"esto es exactamente lo que me pasa"</em>, la venta ya empezó.</p>
+    </section>
+
+    <!-- 17 · REVELACIÓN FINAL -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">El problema no era el <em class="serif" style="color:var(--on-char-soft)">embudo</em>.</p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">Era que nadie se <span class="hl">veía reflejado</span> en el mensaje.</p>
+      <p class="lead mt-m" style="text-align:center">Eso cambia hoy. Ahora sabes dónde mirar primero.</p>
+    </section>
+
+    <!-- 18 · SIGUIENTE PASO -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Tu siguiente paso</div>
+      <h2 class="mega" style="max-width:16ch">Reescribe una<br>publicación.</h2>
+      <p class="lead wide mt-m">Usa el <span class="hl">problema de tu cliente</span>, no tu servicio. Una sola frase. La que se siente en el pecho.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft);max-width:24ch">Pero hacerlo solo es difícil. Por eso, lo que sigue…</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 19 · QR · EL SALTO (PAPER) -->
+    <section class="slide paper">
+      <div class="qr-wrap">
+        <div>
+          <div class="eyebrow">La Quebradita</div>
+          <h2 class="mega" style="max-width:13ch">Esta es tu<br>oportunidad de<br><span class="hl">dar el salto.</span></h2>
+          <p class="lead wide mt-m">Si llegaste hasta aquí, es porque algo dentro de ti ya decidió cambiar. No tienes que saltar al vacío en soledad: del otro lado hay mentores y personas avanzando contigo.</p>
+          <p class="lead wide mt-s">Escanea y entra a la <span class="hl">constelación De tu mente al mundo</span>. Adentro encontrarás el <span class="hl">GPT Ad Alchemist</span> para generar tu primer mensaje hoy mismo.</p>
+          <div class="chip"><span class="dot"></span> Para quienes están listos para <em>hacer</em>, no solo mirar.</div>
+        </div>
+        <div>
+          <div class="qr-box">
+            <img src="../../assets/imgs/qr 1er gen whats.png" alt="Código QR para entrar a la comunidad de WhatsApp De tu mente al mundo">
+          </div>
+          <p class="qr-cap">Escanea con tu cámara · WhatsApp</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

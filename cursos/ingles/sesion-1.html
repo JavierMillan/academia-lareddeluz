@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Cinco palabras al día — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en 3+ decks de este programa, súbelo a
+   assets/ingles.css)
+   ============================================================ */
+
+/* tarjeta de vocabulario: palabra + pronunciación */
+.vocab{width:100%;border-collapse:collapse;font-size:clamp(.86rem,1.3vw,1.05rem)}
+.vocab th{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:left;
+  padding:.5rem .8rem;border-bottom:1px solid var(--line-d2);font-weight:400}
+.vocab td{padding:clamp(.55rem,1.2vw,.85rem) .8rem;border-bottom:1px solid var(--line-d);
+  line-height:1.35}
+.vocab td.w{font-family:var(--font-display);font-weight:500}
+.vocab td.p{font-family:'Martian Mono',monospace;color:var(--sesame)}
+
+/* plantilla de frase para rellenar */
+.frase-card{width:100%;max-width:40rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.frase-card .en{font-family:'Fraunces',serif;font-style:italic;
+  font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.4}
+.frase-card .pron{font-family:'Martian Mono',monospace;font-size:.82rem;
+  color:var(--sesame);margin-top:.6rem}
+.frase-card .hueco{color:var(--sesame);border-bottom:1px dashed var(--sesame);padding:0 .5em}
+
+/* comparación mal/bien */
+.mb{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem);width:100%}
+@media(max-width:820px){.mb{grid-template-columns:1fr}}
+.mb .lado{border-radius:16px;padding:clamp(1.2rem,2.4vw,1.9rem);
+  display:flex;flex-direction:column;gap:.6rem}
+.mb .no{background:var(--char-soft);border:1px solid rgba(200,68,46,.4)}
+.mb .si{background:rgba(200,16,46,.1);border:1px solid var(--sesame)}
+.mb .ico{font-size:1.6rem}
+.mb .txt{font-size:clamp(.9rem,1.25vw,1.05rem);line-height:1.45;color:var(--on-char-soft)}
+.mb .lab{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase}
+.mb .no .lab{color:var(--ketchup)}
+.mb .si .lab{color:var(--sesame)}
+
+/* -ing: transformación de palabra */
+.transform{display:flex;align-items:center;justify-content:center;gap:1.2rem;
+  flex-wrap:wrap;width:100%}
+.transform .palabra{font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.4rem,3vw,2.2rem)}
+.transform .antes{color:var(--on-char-soft)}
+.transform .despues{color:var(--sesame)}
+.transform .flecha{font-size:1.6rem;color:var(--on-char-mute)}
+.transform .suf{color:var(--sesame);font-weight:800}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Primera sesión, con Arturo. Tono: entre amigos, cero pena. El corazón de todo el programa está aquí: 5 palabras nuevas al día, en un cuaderno. Todo lo demás son ejemplos de cómo usarlas.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Cinco palabras <span class="hl">al día.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Un espacio de la comunidad Red de Luz para practicar inglés sin miedo — con Arturo.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Sesión 1</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · EL MÉTODO -->
+    <section class="slide paper" data-notes="Esta es la idea que sostiene todo el programa: no es un curso de gramática completo, es constancia mínima y sostenible. Insiste en que las 5 palabras pueden salir de la clase o investigarlas por su cuenta.">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">No es aprender <span class="hl">todo el idioma.</span></h2>
+      <p class="lead wide mt-m">Es practicar de forma constante. La meta de cada clase: aprender 5 palabras nuevas — las que veamos aquí, o las que tú investigues por tu cuenta.</p>
+      <div class="chip"><span class="dot"></span> Anótalas en un cuaderno o en las notas de tu celular</div>
+    </section>
+
+    <!-- 3 · PERDER EL MIEDO -->
+    <section class="slide" data-notes="Slide de permiso, antes de pedirles que hablen. La idea de practicar con el micrófono apagado es útil y literal — dilo en voz alta como opción real, no solo como frase motivacional.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Lo primero de todo</div>
+      <h2 class="h1">No le temas <span class="hl">a la pronunciación.</span></h2>
+      <p class="lead wide mt-m">Practica en voz alta, aunque tengas el micrófono apagado. Los hablantes nativos que aprenden español celebran sus propios intentos, sin miedo a equivocarse — hoy hacemos lo mismo.</p>
+    </section>
+
+    <!-- 4 · TU PRESENTACIÓN -->
+    <section class="slide paper" data-notes="Primera estructura de la clase. Que cada quien la diga en voz alta, sustituyendo nombre y edad. Es la base de todo lo que sigue en la sesión.">
+      <div class="eyebrow">Estructura 1 · Presentarte</div>
+      <h2 class="h1">"Hello, my name is..." <span class="hl">y tu edad.</span></h2>
+      <div class="frase-card mt-l">
+        <div class="en">Hello, my name is <span class="hueco">tu nombre</span> and I am <span class="hueco">tu edad</span> years old.</div>
+        <div class="pron">jelou, mai neim is ___ and ai am ___ íers old</div>
+      </div>
+      <div class="chip"><span class="dot"></span> Dila en voz alta, sustituyendo tu nombre y tu edad</div>
+    </section>
+
+    <!-- 5 · TUS GUSTOS -->
+    <section class="slide" data-notes="Segunda estructura: gustos personales. El ejemplo real de la clase fue la playa y pescar — pero insiste en que cada quien sustituya con lo suyo. Aquí es donde la gente empieza a hablar de verdad, no solo repetir.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Estructura 2 · Tus gustos</div>
+      <h2 class="h1">"I really like..." <span class="hl">lo que sea tuyo.</span></h2>
+      <div class="frase-card mt-l">
+        <div class="en">I really like <span class="hueco">tu pasatiempo o interés</span>.</div>
+        <div class="pron">ai rili laik ___</div>
+      </div>
+      <p class="lead wide mt-m">Ejemplo real de la clase: "I really like the beach and go fishing" — la playa y pescar. Cambia esa parte por lo tuyo.</p>
+      <div class="chip"><span class="dot"></span> Piensa en un lugar o actividad que te guste, y dilo en voz alta</div>
+    </section>
+
+    <!-- 6 · LA REGLA DE LA "S" -->
+    <section class="slide paper" data-notes="Regla gramatical real de la clase: la 's' en tercera persona. Es la duda más común que surgió en la sesión. Explícala con el ejemplo de 'hijas' que usó una participante — She likes / I like.">
+      <div class="eyebrow">Gramática de hoy</div>
+      <h2 class="h1">La "s" que <span class="hl">se te puede olvidar.</span></h2>
+      <div class="mb mt-l">
+        <div class="lado no">
+          <span class="ico">🙋</span>
+          <span class="lab">Yo (primera persona)</span>
+          <span class="txt">"I like my daughters" — sin "s" en el verbo.</span>
+        </div>
+        <div class="lado si">
+          <span class="ico">👤</span>
+          <span class="lab">Él / Ella (tercera persona)</span>
+          <span class="txt">"She likes her daughters" — el verbo lleva "s".</span>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> "Daughters" = hijas. Solo la tercera persona lleva la "s"</div>
+    </section>
+
+    <!-- 7 · EL SUFIJO -ING -->
+    <section class="slide" data-notes="El sufijo -ing para acciones continuas. Usa el ejemplo real de la clase: walk → walking. Que noten el patrón, no memoricen la regla como texto.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Acciones que están pasando</div>
+      <h2 class="h1">Le agregas <span class="hl">"-ing".</span></h2>
+      <div class="transform mt-l">
+        <span class="palabra antes">Walk</span>
+        <span class="flecha">→</span>
+        <span class="palabra despues">Walk<span class="suf">ing</span></span>
+      </div>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Caminar → caminando. Así se marca que una acción está pasando ahora mismo.</p>
+    </section>
+
+    <!-- 8 · PROFESIONES -->
+    <section class="slide paper" data-notes="Vocabulario real que salió en la clase: psicóloga, emprendedor. Que cada quien piense en cómo se dice su propia profesión.">
+      <div class="eyebrow">Tu profesión</div>
+      <h2 class="h1">¿A qué te <span class="hl">dedicas?</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Psychologist</td><td class="p">saicólochist</td></tr>
+          <tr><td class="w">Entrepreneur</td><td class="p">antreprenér</td></tr>
+          <tr><td class="w">Businessman</td><td class="p">bísnesman</td></tr>
+        </tbody>
+      </table>
+      <div class="chip"><span class="dot"></span> "I am a ___" — piensa en tu profesión y practícala</div>
+    </section>
+
+    <!-- 9 · OBJETOS COTIDIANOS -->
+    <section class="slide" data-notes="Vocabulario de objetos que salió en la clase. Es la parte de repaso rápido / memorización — que lo digan en voz alta por turnos.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Repaso rápido</div>
+      <h2 class="h1">Objetos de <span class="hl">todos los días.</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Lettuce</td><td class="p">létis</td></tr>
+          <tr><td class="w">Potato</td><td class="p">poteito</td></tr>
+          <tr><td class="w">Table</td><td class="p">teibol</td></tr>
+          <tr><td class="w">Computer</td><td class="p">compiúter</td></tr>
+          <tr><td class="w">Glass</td><td class="p">glas</td></tr>
+          <tr><td class="w">Bed</td><td class="p">bed</td></tr>
+        </tbody>
+      </table>
+      <div class="chip"><span class="dot"></span> Actividad: por turnos, di una palabra de la lista</div>
+    </section>
+
+    <!-- 10 · EL ERROR DE "I LOVE YOU, MY BED" -->
+    <section class="slide paper" data-notes="Situación graciosa real de la clase, sobre 'I love my bed' vs 'I love you, my bed'. El 'you' implica que le hablas a una persona — con objetos se omite o se ajusta.">
+      <div class="eyebrow">El error gracioso</div>
+      <h2 class="h1">"I love you, my bed" <span class="hl">no se dice así.</span></h2>
+      <div class="mb mt-l">
+        <div class="lado no">
+          <span class="ico">🛏️</span>
+          <span class="lab">Con "you"</span>
+          <span class="txt">"I love you, my bed" — el "you" implica que le hablas a una persona, no a un objeto.</span>
+        </div>
+        <div class="lado si">
+          <span class="ico">✅</span>
+          <span class="lab">Correcto</span>
+          <span class="txt">"I love my bed" — sin "you", directo al objeto.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · ABREVIACIONES -->
+    <section class="slide" data-notes="Abreviaciones comunes que salieron en la clase: I am → I'm, do not → don't. Son de las formas más usadas en el lenguaje cotidiano — que las reconozcan al escuchar, no solo al leer.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Cómo se habla de verdad</div>
+      <h2 class="h1">Nadie dice <span class="hl">"I am" completo.</span></h2>
+      <div class="transform mt-l">
+        <span class="palabra antes">I am</span>
+        <span class="flecha">→</span>
+        <span class="palabra despues">I'm</span>
+      </div>
+      <div class="transform mt-m">
+        <span class="palabra antes">Do not</span>
+        <span class="flecha">→</span>
+        <span class="palabra despues">Don't</span>
+      </div>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Estas formas cortas son las que vas a escuchar todo el tiempo en la vida real.</p>
+    </section>
+
+    <!-- 12 · TALLAS -->
+    <section class="slide paper" data-notes="Vocabulario práctico de contexto comercial: tallas. Útil para viajes o compras. Que practiquen la pregunta completa, no solo la palabra suelta.">
+      <div class="eyebrow">Vocabulario útil</div>
+      <h2 class="h1">"What size <span class="hl">are you?"</span></h2>
+      <p class="lead wide mt-m">"Size" = talla o tamaño. Es una pregunta común en tiendas — te va a servir en cualquier viaje o compra.</p>
+    </section>
+
+    <!-- 13 · CIERRE -->
+    <section class="slide center" data-notes="Cierre. La disciplina se compara con la de un músico — 10 minutos diarios, no una sesión larga esporádica. Recuerda el compromiso del grupo: 5 palabras al día, en el cuaderno.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Buen primer paso!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">Como un músico: <span class="hl">10 minutos al día</span>, no una sesión larga de vez en cuando.</p>
+      <p class="lead mt-m" style="text-align:center">Tarea: 5 palabras nuevas cada día, anotadas en tu cuaderno. Usa música y películas para seguir practicando entre sesiones.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

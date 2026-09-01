@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Tu asistente con tu voz — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* sí digo / no digo, dos columnas */
+.si-no{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem);width:100%}
+@media(max-width:820px){.si-no{grid-template-columns:1fr}}
+.si-no .col{border-radius:16px;padding:clamp(1.1rem,2.2vw,1.6rem)}
+.si-no .col.si{background:rgba(232,161,60,.1);border:1px solid var(--sesame)}
+.paper .si-no .col.si{background:rgba(200,68,46,.08);border-color:var(--ketchup)}
+.si-no .col.no{background:var(--char-soft);border:1px solid rgba(200,68,46,.4)}
+.paper .si-no .col.no{background:var(--paper-soft);border-color:rgba(200,68,46,.35)}
+.si-no .lab{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase}
+.si-no .si .lab{color:var(--sesame)}
+.paper .si-no .si .lab{color:var(--ketchup)}
+.si-no .no .lab{color:var(--ketchup)}
+.si-no ul{margin-top:.7rem;padding-left:1.1rem}
+.si-no li{font-size:clamp(.86rem,1.2vw,1rem);line-height:1.5;margin-top:.4rem;
+  color:var(--on-char-soft)}
+.paper .si-no li{color:var(--on-paper-soft)}
+</style>
+</head>
+<body data-volver="../clase.html?id=tu-asistente-con-tu-voz-3" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Tercera clase de Herramientas de IA. Uso general de un asistente, no específico de redes — por eso vive aquí y no en Intermedio. Distinta de automatizar-ia-3 (Avanzado): esa diagnostica el síntoma, esta enseña la técnica.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Herramientas de IA · Clase 3</div>
+      <h1 class="mega">Tu asistente, <span class="hl">con tu voz.</span></h1>
+      <p class="lead wide mt-m">Cómo darle a cualquier asistente tu forma de escribir, para que deje de sonar genérico.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · POR QUÉ TODO SUENA IGUAL -->
+    <section class="slide paper" data-notes="Explica el mecanismo, no solo el síntoma. Sin instrucciones de voz, cualquier asistente regresa al promedio de todo internet — por eso el contenido con IA se parece tanto entre cuentas distintas.">
+      <div class="eyebrow">El problema real</div>
+      <h2 class="h1">Por qué todo lo que pide la IA <span class="hl">suena igual.</span></h2>
+      <p class="lead wide mt-m">Sin instrucciones de voz, un asistente regresa al promedio de todo lo que ha leído. No es que sea malo — es que no tiene forma de saber cómo hablas tú específicamente.</p>
+    </section>
+
+    <!-- 3 · EL DOCUMENTO DE VOZ (PIVOTE) -->
+    <section class="slide" data-notes="El giro central. &laquo;Escribe como yo&raquo; no funciona porque no es información concreta. Ejemplos específicos sí funcionan porque le dan algo real con qué trabajar.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Lo que sí funciona</div>
+      <h2 class="h1">No le digas <span class="hl">"escribe como yo."</span></h2>
+      <p class="lead wide mt-m">Esa instrucción no significa nada para un asistente. Lo que sí funciona es darle ejemplos concretos: frases que sí dirías, frases que nunca dirías, palabras que se te repiten.</p>
+    </section>
+
+    <!-- 4 · SÍ / NO -->
+    <section class="slide paper" data-notes="El corazón del documento de voz. Que entiendan que ambas columnas importan igual — decir qué NO eres es tan útil como decir qué sí eres.">
+      <div class="eyebrow">Las dos columnas que importan</div>
+      <h2 class="h1">Lo que dices <span class="hl">y lo que nunca dirías.</span></h2>
+      <div class="si-no mt-l">
+        <div class="col si">
+          <div class="lab">Sí digo</div>
+          <ul>
+            <li>"o sea"</li>
+            <li>"la neta"</li>
+            <li>Empiezo con una pregunta</li>
+          </ul>
+        </div>
+        <div class="col no">
+          <div class="lab">Nunca digo</div>
+          <ul>
+            <li>"En la actualidad..."</li>
+            <li>"Es importante mencionar que..."</li>
+            <li>Emojis en cada línea</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · DE DÓNDE SACAR LOS EJEMPLOS -->
+    <section class="slide" data-notes="Que no inventen los ejemplos desde cero — eso vuelve a caer en genérico. Sus propios mensajes de WhatsApp son el material más honesto que tienen.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">No los inventes</div>
+      <h2 class="h1">Saca los ejemplos <span class="hl">de lo que ya escribiste.</span></h2>
+      <p class="lead wide mt-m">Tus mensajes de WhatsApp reales, los posts que sientes que mejor te representan. Ahí está tu voz de verdad — no en lo que crees que deberías sonar.</p>
+    </section>
+
+    <!-- 6 · CORREGIR SIN REESCRIBIR -->
+    <section class="slide paper" data-notes="Truco práctico: editar lo que sale es más rápido que pedir otra versión completa. Y cada corrección alimenta el documento de voz para la próxima vez.">
+      <div class="eyebrow">Cuando no sale a la primera</div>
+      <h2 class="h1">Corrige, <span class="hl">no reinicies.</span></h2>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <div class="label">Lento</div>
+          <div class="txt">"Está bien pero no suena a mí" — pedir otra versión completa de cero.</div>
+        </div>
+        <div class="pub b">
+          <div class="label">Rápido</div>
+          <div class="txt">"Quítale esta palabra, súbele el tono a esta parte" — corregir lo que ya salió.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · GUARDA TU PERFIL DE VOZ -->
+    <section class="slide" data-notes="Cierra el ciclo práctico: el documento se guarda y se reutiliza, no se reescribe cada vez que abren una conversación nueva.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Para no repetirlo cada vez</div>
+      <h2 class="h1">Guarda tu <span class="hl">perfil de voz.</span></h2>
+      <p class="lead wide mt-m">Una vez que armes tu documento de voz, guárdalo en un lugar fijo. Pégalo al inicio de cada conversación nueva en vez de reexplicar quién eres cada vez.</p>
+    </section>
+
+    <!-- 8 · MANOS A LA OBRA -->
+    <section class="slide paper" data-notes="Ejercicio central. Que prueben el documento de una vez, pidiéndole algo concreto al asistente y comparando el resultado.">
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Arma <span class="hl">tu documento de voz.</span></h2>
+      <p class="lead wide mt-m">Escribe 3 frases que sí dirías y 3 que nunca dirías. Pégaselas a tu asistente y pídele un post con eso como instrucción.</p>
+      <div class="chip"><span class="dot"></span> Comparte el resultado en el chat — comparen cómo cambió</div>
+    </section>
+
+    <!-- 9 · TU RETO DE LA SEMANA -->
+    <section class="slide" data-notes="Reto de aplicación real, no de práctica aislada.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="h1">Usa tu documento <span class="hl">en tu próximo contenido.</span></h2>
+      <p class="lead wide mt-m">La próxima vez que le pidas algo a un asistente, pega tu documento de voz primero. Compara cómo sale contra lo que salía antes.</p>
+    </section>
+
+    <!-- 10 · RECURSOS -->
+    <section class="slide paper" data-notes="El prompt de arranque para construir el documento de voz desde cero, en formato copiar-pegar, como el de la clase de video.">
+      <div class="eyebrow">Para llevarte a casa</div>
+      <h2 class="h1">Recursos de <span class="hl">esta clase.</span></h2>
+      <div class="reslist mt-l">
+        <a class="res" href="recursos/documento-de-voz.html" target="_blank" rel="noopener">
+          <span class="ri">⌘</span>
+          <span class="rb">
+            <span class="rt">Prompt de arranque · documento de voz</span>
+            <span class="rd">Se copia y se pega al inicio de cualquier conversación con un asistente. Trae las preguntas para armar tu perfil de voz completo.</span>
+          </span>
+          <span class="rgo">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 11 · CIERRE -->
+    <section class="slide center" data-notes="Cierre. Resume el mensaje central de toda la clase.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">La IA no tiene voz propia. <span class="hl">Le prestas la tuya, o suena a nadie.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>La IA es tu intern, no tu jefe — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+/* cards */
+
+.card{background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:16px;padding:clamp(1.2rem,2.4vw,2rem)}
+.card.lit{border-color:var(--sesame);box-shadow:0 0 0 1px var(--sesame),0 20px 60px -30px var(--glow)}
+.card .tag{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.card.lit .tag{color:var(--sesame)}
+.card h3{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(1.1rem,1.8vw,1.5rem);
+  margin:.5rem 0 .7rem}
+.card p{color:var(--on-char-soft);font-size:clamp(.92rem,1.2vw,1.1rem);line-height:1.45}
+.card.lit p{color:var(--on-char)}
+.stack{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.3rem)}
+
+/* numbered editorial list (funnel-real / 4 etapas) */
+
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
+  padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
+.row:first-child{border-top:1px solid var(--sesame)}
+.row .n{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute)}
+.row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
+.row.key .t{color:var(--sesame)}
+
+/* transform examples (ahora tú) */
+
+.tx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.4rem);width:100%}
+@media(max-width:820px){.tx{grid-template-columns:1fr}}
+.tx .item{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1rem,1.8vw,1.4rem)}
+.tx .who{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);margin-bottom:.8rem}
+.tx .bad{color:var(--on-char-mute);font-size:.92rem;text-decoration:line-through;
+  text-decoration-color:var(--ketchup);text-decoration-thickness:1px;margin-bottom:.5rem}
+.tx .good{font-family:'Fraunces',serif;font-style:italic;color:var(--sesame);
+  font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
+
+/* flyer slide */
+
+.flyer-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;width:100%}
+@media(max-width:820px){.flyer-wrap{grid-template-columns:1fr}}
+.flyer-ph{aspect-ratio:3/4;border:1px dashed var(--line-l2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--on-paper-mute);padding:1.5rem;background:rgba(0,0,0,.03)}
+.flyer-img{width:100%;max-height:72vh;object-fit:contain;border-radius:12px;
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);transform:rotate(-1.5deg)}
+
+/* QR slide */
+
+.qr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
+  align-items:center;width:100%}
+@media(max-width:820px){.qr-wrap{grid-template-columns:1fr}}
+.qr-box{background:#fff;border-radius:20px;padding:clamp(1rem,2vw,1.6rem);
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);width:fit-content;margin-inline:auto}
+.qr-box img{display:block;width:clamp(220px,30vw,340px);height:auto;border-radius:8px}
+.qr-cap{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-paper-mute);text-align:center;margin-top:1rem}
+
+/* ikigai grid 2x2 */
+
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.2rem);width:100%;position:relative}
+@media(max-width:820px){.iki{grid-template-columns:1fr}}
+.iki .cell{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(1.1rem,2.2vw,1.8rem)}
+.iki .cell .z{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--sesame)}
+.iki .cell .q{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(1.05rem,1.7vw,1.45rem);margin-top:.5rem}
+.iki .cell p{color:var(--on-char-soft);font-size:clamp(.88rem,1.1vw,1.02rem);
+  line-height:1.4;margin-top:.4rem}
+.iki .core{position:absolute;inset:0;margin:auto;width:fit-content;height:fit-content;
+  pointer-events:none;background:var(--char);border:1px solid var(--sesame);border-radius:999px;
+  padding:.5rem 1.2rem;font-family:'Unbounded',sans-serif;font-weight:600;color:var(--sesame);
+  font-size:clamp(.9rem,1.5vw,1.3rem);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--char)}
+@media(max-width:820px){.iki .core{display:none}}
+
+/* ============ ÁTOMOS "FUERA DE LA CAJA" ============ */
+
+.bleed{position:absolute;font-family:'Unbounded',sans-serif;font-weight:800;
+  line-height:.8;letter-spacing:-.04em;color:var(--char-soft);
+  font-size:clamp(9rem,34vw,30rem);z-index:0;pointer-events:none;user-select:none;
+  white-space:nowrap}
+.bleed.br{bottom:-4vh;right:-3vw;color:rgba(232,161,60,.09)}
+.bleed.tl{top:-6vh;left:-2vw;-webkit-text-stroke:1px var(--line-d2);color:transparent}
+.slide > .z1{position:relative;z-index:1}
+
+.mark{font-family:'Fraunces',serif;font-weight:600;line-height:.7;
+  font-size:clamp(8rem,22vw,20rem);color:var(--sesame);opacity:.22;
+  position:absolute;top:2vh;left:clamp(1rem,4vw,4rem);z-index:0;pointer-events:none}
+.paper .mark{color:var(--ketchup);opacity:.18}
+
+.stair{display:flex;flex-direction:column;gap:.1em}
+.stair span{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:.98;font-size:clamp(1.8rem,6vw,4.6rem)}
+.stair span:nth-child(2){margin-left:1.4em}
+.stair span:nth-child(3){margin-left:2.8em}
+@media(max-width:820px){.stair span{margin-left:0 !important}}
+
+.aside{font-family:'Fraunces',serif;font-style:italic;color:var(--on-char-mute);
+  font-size:clamp(.92rem,1.3vw,1.15rem);max-width:34ch}
+.paper .aside{color:var(--on-paper-mute)}
+.aside::before{content:"↳ ";color:var(--sesame);font-style:normal}
+.paper .aside::before{color:var(--ketchup)}
+
+/* arquetipo · Radial ("El Núcleo") — satélites en órbita alrededor de un centro */
+
+.orbit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.2rem);width:100%;position:relative}
+@media(max-width:820px){.orbit{grid-template-columns:1fr}}
+.orbit .sat{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(1.1rem,2.2vw,1.8rem);text-align:center}
+.paper .orbit .sat{background:var(--paper-soft);border-color:var(--line-l)}
+.orbit .sat .ico{font-size:1.7rem;line-height:1}
+.orbit .sat .st{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--sesame);margin-top:.6rem}
+.paper .orbit .sat .st{color:var(--ketchup)}
+.orbit .sat .sh{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1.05rem,1.7vw,1.45rem);margin-top:.4rem;color:var(--on-char)}
+.paper .orbit .sat .sh{color:var(--on-paper)}
+.orbit .core{position:absolute;inset:0;margin:auto;width:fit-content;height:fit-content;
+  pointer-events:none;background:var(--char);border:1px solid var(--sesame);border-radius:999px;
+  padding:.5rem 1.2rem;font-family:'Unbounded',sans-serif;font-weight:600;color:var(--sesame);
+  font-size:clamp(.9rem,1.5vw,1.3rem);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--char);z-index:2}
+.paper .orbit .core{background:var(--paper);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--paper);color:var(--ketchup);border-color:var(--ketchup)}
+@media(max-width:820px){.orbit .core{display:none}}
+
+/* contraste correcto cuando .ab/.tx viven en slide .paper (fondo claro) */
+
+.paper .ab .a{background:var(--paper-soft);border-color:var(--line-l)}
+.paper .ab .b{background:rgba(200,68,46,.08);border-color:var(--ketchup);box-shadow:0 20px 60px -30px rgba(200,68,46,.3)}
+.paper .ab .a .label{color:var(--on-paper-mute)} .paper .ab .b .label{color:var(--ketchup)}
+.paper .ab .a .txt{color:var(--on-paper-soft)} .paper .ab .b .txt{color:var(--on-paper)}
+.paper .tx .item{background:var(--paper-soft);border-color:var(--line-l)}
+.paper .tx .who{color:var(--on-paper-mute)}
+.paper .tx .bad{color:var(--on-paper-mute)}
+.paper .tx .good{color:var(--ketchup)}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide active">
+      <div class="glow tr"></div>
+      <div class="bleed tl">75%</div>
+      <div class="z1">
+        <div class="eyebrow">Nivel Avanzado · Parte 3</div>
+        <h1 class="mega">La IA es tu<br><span class="hl">intern.</span> No tu jefe.</h1>
+        <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">Multiplica tu voz. Nunca la reemplaces.</p>
+      </div>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · REVISIÓN RÁPIDA -->
+    <section class="slide paper">
+      <div class="eyebrow">Antes de empezar</div>
+      <h2 class="h1">¿Quién eligió su <span class="hl">máscara?</span></h2>
+      <p class="lead wide mt-m">La clase pasada quedamos en definir qué faceta real tuya va a contar tu próxima venta. Vamos a leer 2 o 3 en el chat.</p>
+      <div class="chip"><span class="dot"></span> Comparte tu máscara y por qué la elegiste</div>
+    </section>
+
+    <!-- 3 · LA IA ES TU INTERN -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">La analogía que lo cambia todo</div>
+      <h2 class="mega" style="max-width:16ch">Trátala como un <span class="hl">pasante</span> recién graduado.</h2>
+      <p class="lead wide mt-m">Si le das instrucciones vagas, te entrega basura genérica. Si le explicas exactamente qué necesitas, te da un 75% de lo que tú harías.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.15rem,1.9vw,1.6rem)">Es excelente para lo que te drena — investigación, primeros borradores, estructuras. Pero <span class="hl" style="font-style:normal;font-weight:500">siempre</span> necesita tu supervisión.</p>
+    </section>
+
+    <!-- 4 · EL DATO QUE DUELE -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="split stat-split">
+        <div class="stat">40<span style="font-size:.5em">%</span></div>
+        <div>
+          <div class="eyebrow">ChurnZero &amp; Totango</div>
+          <p class="h1" style="font-size:clamp(1.4rem,2.6vw,2.2rem)">de la gente <span class="hl">abandona</span> un producto o contenido en los primeros 30 días.</p>
+          <p class="lead mt-m">No porque el contenido estuviera mal. Porque se sintió genérico — como si nadie estuviera del otro lado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · EL PROMPT MALO VS BUENO (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">La diferencia está en cómo le hablas</div>
+      <div class="ab mt-m">
+        <div class="pub a">
+          <span class="label">Prompt vago</span>
+          <p class="txt">"Escribe un post sobre marca personal."</p>
+        </div>
+        <div class="pub b">
+          <span class="label">Prompt con dirección</span>
+          <p class="txt">"Escribe para profesionales que se sienten vacíos por dentro. Tono crudo, sin motivación falsa. Incluye: 'el éxito sin alma es una prisión dorada'. Máximo 200 palabras. Sin emojis ni clichés."</p>
+        </div>
+      </div>
+      <p class="lead wide mt-m">El primero da contenido genérico que podría ser de cualquiera. El segundo ya trae tu esencia.</p>
+    </section>
+
+    <!-- 6 · LA REGLA DEL 75/25 -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">La regla que lo sostiene todo</div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">La IA te da el <span class="hl">75%.</span></p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">Tú le das el <span class="hl">alma.</span></p>
+      <p class="lead mt-m" style="text-align:center">Historias que solo tú viviste. Palabras que tú realmente usas. La vulnerabilidad que una máquina no puede fingir.</p>
+    </section>
+
+    <!-- 7 · EJEMPLO REAL DEL 25% (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">Antes y después de tu toque</div>
+      <div class="split">
+        <div>
+          <div class="tag" style="font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-paper-mute)">Lo que escribió la IA</div>
+          <p class="lead wide mt-s">"Es importante reconocer que el crecimiento personal requiere tiempo y dedicación."</p>
+        </div>
+        <div>
+          <div class="tag" style="font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ketchup)">Lo que tú publicaste</div>
+          <p class="lead wide mt-s serif" style="font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem)">"Crecer duele. Y quien te diga que es un proceso hermoso desde el día uno, te está mintiendo."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · TU ARSENAL (radial, arquetipo nuevo) -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">No todas las IA son iguales</div>
+      <h2 class="h1">Todas orbitan <span class="hl">tu voz.</span></h2>
+      <div class="orbit mt-m">
+        <div class="sat"><div class="ico">✍️</div><div class="st">Escritor</div><div class="sh">Contenido con profundidad</div></div>
+        <div class="sat"><div class="ico">🔍</div><div class="st">Investigador</div><div class="sh">Datos y fuentes reales</div></div>
+        <div class="sat"><div class="ico">💡</div><div class="st">Comodín</div><div class="sh">Brainstorming rápido</div></div>
+        <div class="sat"><div class="ico">🎨</div><div class="st">Diseñador</div><div class="sh">Slides e imágenes</div></div>
+        <span class="core">Tu voz</span>
+      </div>
+      <p class="lead wide mt-m">No busques una sola IA que lo haga todo. Arma tu equipo — pero todas giran alrededor de lo que solo tú puedes dar.</p>
+    </section>
+
+    <!-- 9 · TU PROMPT DE MARCA (PAPER, fill) -->
+    <section class="slide paper">
+      <div class="eyebrow">Esto es oro puro</div>
+      <h2 class="h1" style="max-width:22ch">Crea tu <span class="hl">prompt de marca personal.</span></h2>
+      <p class="fill mt-l">Mi audiencia: <span class="blank">quiénes son</span><br>Mi tono: <span class="blank">cómo hablas</span><br>Palabras que <span class="kw">NUNCA</span> uso: <span class="blank">tus clichés prohibidos</span></p>
+      <p class="lead wide mt-m">Guárdalo. Úsalo cada vez que necesites contenido. Dejas de empezar desde cero cada vez — ya tienes tu esencia integrada.</p>
+      <div class="chip"><span class="dot"></span> Escribe tu primera línea en el chat</div>
+    </section>
+
+    <!-- 10 · SEÑALES DE ALERTA -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Cuando la IA se vuelve tu muleta</div>
+      <h2 class="h1">Cuidado con estas <span class="hl">señales.</span></h2>
+      <div class="rows mt-l">
+        <div class="row"><span class="n">→</span><span class="t">Publicas sin leerlo completo</span></div>
+        <div class="row"><span class="n">→</span><span class="t">No reconoces tu voz en lo que compartes</span></div>
+        <div class="row key"><span class="n">→</span><span class="t">Te sientes vacío después de publicar, aunque tenga interacciones</span></div>
+        <div class="row"><span class="n">→</span><span class="t">Evitas escribir tú mismo "porque la IA lo hace más rápido"</span></div>
+      </div>
+      <div class="chip"><span class="dot"></span> ¿Alguna te suena? Sé honesto</div>
+    </section>
+
+    <!-- 11 · CÓMO VOLVER AL EQUILIBRIO (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">3 formas de recalibrar</div>
+      <div class="tx mt-m">
+        <div class="item"><div class="who">Borrador a mano</div><div class="good">Una vez al mes, escribe un post completo sin IA. A mano. Sin editar.</div></div>
+        <div class="item"><div class="who">La prueba del espejo</div><div class="good">Lee en voz alta lo que la IA escribió. Si no lo dirías en una charla real, reescríbelo.</div></div>
+        <div class="item"><div class="who">Ratio 70/30</div><div class="good">70% de tu contenido con tu participación real. 30% puede ser más automatizado.</div></div>
+      </div>
+    </section>
+
+    <!-- 12 · CITA DE CIERRE -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Recuérdalo así</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">"La gente no conecta con prompts perfectos. Conecta con <span class="hl">humanos imperfectos</span> que se atrevieron a mostrarse."</p>
+    </section>
+
+    <!-- 13 · SIGUIENTE PASO -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="mega" style="max-width:16ch">Construye tu <span class="hl">prompt de marca.</span></h2>
+      <p class="lead wide mt-m">Escribe tu prompt de marca personal completo (audiencia, tono, palabras prohibidas, estilo). Pruébalo esta semana en un post real — y súbelo al grupo de WhatsApp con el antes y después.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft)">La próxima sesión revisamos en vivo cómo les fue — y seguimos, porque esto no termina en una diapositiva.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

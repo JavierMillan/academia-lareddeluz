@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Te escribieron. Y ahora, ¿qué? — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* diálogo con mal/bien lado a lado */
+.antes-despues{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:38rem}
+.antes-despues .bub{max-width:92%;padding:.8rem 1.1rem;border-radius:16px;
+  font-size:clamp(.88rem,1.2vw,1.02rem);line-height:1.4}
+.antes-despues .mal{align-self:flex-start;background:var(--char-soft);
+  border:1px solid rgba(200,68,46,.4);border-bottom-left-radius:4px;color:var(--on-char-soft)}
+.paper .antes-despues .mal{background:var(--paper-soft);border-color:rgba(200,68,46,.35);
+  color:var(--on-paper-soft)}
+.antes-despues .bien{align-self:flex-end;background:rgba(232,161,60,.14);
+  border:1px solid var(--sesame);border-bottom-right-radius:4px;color:var(--on-char)}
+.paper .antes-despues .bien{background:rgba(200,68,46,.1);border-color:var(--ketchup);
+  color:var(--on-paper)}
+.antes-despues .tag{display:block;font-family:'Martian Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem}
+.antes-despues .tag.x{color:var(--ketchup)}
+.antes-despues .tag.ok{color:var(--sesame)}
+.paper .antes-despues .tag.ok{color:var(--ketchup)}
+
+/* tres tipos de mensaje, en tarjetas */
+.tipos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.6rem,1.4vw,1.1rem);width:100%}
+@media(max-width:820px){.tipos{grid-template-columns:1fr}}
+.tipo{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(.95rem,1.8vw,1.4rem)}
+.paper .tipo{background:var(--paper-soft);border-color:var(--line-l)}
+.tipo .nombre{font-family:'Unbounded',sans-serif;font-weight:600;
+  font-size:clamp(.98rem,1.5vw,1.2rem);color:var(--sesame)}
+.paper .tipo .nombre{color:var(--ketchup)}
+.tipo .senal{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);margin-top:.5rem}
+.paper .tipo .senal{color:var(--on-paper-mute)}
+.tipo .como{font-size:clamp(.84rem,1.15vw,.98rem);line-height:1.45;margin-top:.6rem;
+  color:var(--on-char-soft)}
+.paper .tipo .como{color:var(--on-paper-soft)}
+</style>
+</head>
+<body data-volver="../clase.html?id=te-escribieron-5" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Aclara desde el inicio que <em>esta NO es la clase de vender</em> — esa ya la vieron o la verán en Avanzado. Esta es la de sobrevivir los primeros 3 mensajes sin espantar a nadie. El puente entre publicar y vender.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Nivel Intermedio · Parte 5</div>
+      <h1 class="mega">Te escribieron. <span class="hl">Y ahora, ¿qué?</span></h1>
+      <p class="lead wide mt-m">No es la clase de vender. Es la de no arruinarlo en los primeros tres mensajes.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · EL ERROR DE RESPONDER RÁPIDO -->
+    <section class="slide paper" data-notes="El error que van a reconocer todos. La respuesta &laquo;mal&raquo; no está mal escrita — es amable, es rápida, y aun así <em>mata la conversación</em>. Pregúntales: ¿cuántas veces han mandado exactamente esto?">
+      <div class="eyebrow">El error de siempre</div>
+      <h2 class="h1">Responder rápido <span class="hl">no es lo mismo</span> que responder bien.</h2>
+      <div class="antes-despues mt-l">
+        <div class="bub mal"><span class="tag x">Ellos</span>Hola, ¿cuánto cuesta?</div>
+        <div class="bub mal"><span class="tag x">Respuesta típica</span>¡Hola! Claro que sí, te cuento 😊</div>
+      </div>
+      <p class="lead wide mt-m">Es correcta. Es amable. Y no lleva la conversación a ningún lado.</p>
+    </section>
+
+    <!-- 3 · COMENTARIO VS DM (PIVOTE) -->
+    <section class="slide" data-notes="Este es el giro de la clase. <em>La mayoría lo hace al revés</em>: responde en público lo específico y manda a DM lo genérico. Insiste en el error típico: mover a DM demasiado rápido, antes de que el comentario haya hecho su trabajo de prueba social.">
+      <div class="glow br"></div>
+      <div class="eyebrow">El momento que decide todo</div>
+      <h2 class="h1">Comentario o DM: <span class="hl">no es lo mismo.</span></h2>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <div class="label">Responder en el comentario</div>
+          <div class="txt">Todo el que pasa por ahí ve que respondes y que hay interés real. Es prueba social gratis.</div>
+        </div>
+        <div class="pub b">
+          <div class="label">Mover a DM</div>
+          <div class="txt">Cuando la conversación se vuelve específica de esa persona — precio, disponibilidad, su caso particular.</div>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> El error típico: mover a DM demasiado rápido, antes de que el comentario sume</div>
+    </section>
+
+    <!-- 4 · LA PREGUNTA QUE ABRE -->
+    <section class="slide paper" data-notes="Conecta con lo que ya vieron en Avanzado (si lo tomaron) o adelanta lo que van a ver: preguntas calibradas de Chris Voss. Aquí en su versión más simple. El punto es que &laquo;¿te interesa?&raquo; se contesta con un monosílabo y ahí muere.">
+      <div class="eyebrow">La herramienta de hoy</div>
+      <h2 class="h1">La pregunta que <span class="hl">abre</span>, no la que cierra.</h2>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <div class="label">Cierra</div>
+          <div class="txt">"¿Te interesa?" — se contesta con sí o no. Si dicen no, ahí murió.</div>
+        </div>
+        <div class="pub b">
+          <div class="label">Abre</div>
+          <div class="txt">"¿Qué es lo que más te está costando ahorita?" — obliga a contar algo, y ese algo es lo que vendes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · LOS TRES TIPOS DE MENSAJE -->
+    <section class="slide" data-notes="Que aprendan a distinguir estos tres ANTES de responder. Es fácil tratar al que ya decidió como si hubiera que convencerlo, o tratar al curioso como si ya fuera venta. El error cuesta la conversación.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Antes de responder, identifica</div>
+      <h2 class="h1">Los tres tipos de <span class="hl">mensaje que llegan.</span></h2>
+      <div class="tipos mt-l">
+        <div class="tipo">
+          <div class="nombre">El curioso</div>
+          <div class="senal">solo pregunta precio</div>
+          <div class="como">Dale el precio y una razón para quedarse en la conversación. No lo presiones.</div>
+        </div>
+        <div class="tipo">
+          <div class="nombre">El listo</div>
+          <div class="senal">ya decidió, confirma</div>
+          <div class="como">No le vendas — solo dale el siguiente paso claro y rápido.</div>
+        </div>
+        <div class="tipo">
+          <div class="nombre">El que duda</div>
+          <div class="senal">necesita algo más</div>
+          <div class="como">Aquí usas la pregunta que abre. Necesita contar su caso antes de decidir.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · CUANDO NO SABES RESPONDER -->
+    <section class="slide paper" data-notes="Slide de alivio, importante para que no improvisen precios o promesas por pena de quedar mal. &laquo;Déjame checarlo y te confirmo&raquo; es una respuesta completa, no una excusa.">
+      <div class="eyebrow">El permiso que nadie te da</div>
+      <h2 class="h1">Está bien <span class="hl">no saber</span>, ahí mismo.</h2>
+      <p class="lead wide mt-m">Si no sabes el precio exacto, la disponibilidad o los detalles, no improvises una respuesta que no puedas cumplir.</p>
+      <div class="chip"><span class="dot"></span> "Déjame checarlo y te confirmo" es una respuesta completa</div>
+    </section>
+
+    <!-- 7 · LA CONVERSACIÓN COMPLETA -->
+    <section class="slide" data-notes="Aquí se junta todo: identificar el tipo, decidir comentario o DM, hacer la pregunta que abre. Léela despacio en voz alta.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Todo junto</div>
+      <h2 class="h1">Así se ve <span class="hl">bien hecho.</span></h2>
+      <div class="antes-despues mt-l">
+        <div class="bub mal"><span class="tag x">Ellos, en un comentario</span>Se ve increíble, ¿cuánto cuesta?</div>
+        <div class="bub bien"><span class="tag ok">Tú, en el mismo comentario</span>¡Gracias! Cuesta $XXX. Te mando el detalle por aquí 👉 — ¿qué es lo que más buscas resolver?</div>
+        <div class="bub mal"><span class="tag x">Ellos, ya en DM</span>Pues llevo meses batallando con esto...</div>
+      </div>
+      <p class="lead wide mt-m">Respondiste en público (prueba social), abriste con una pregunta, y la conversación específica pasó sola a DM.</p>
+    </section>
+
+    <!-- 8 · EL SILENCIO TAMBIÉN CUENTA -->
+    <section class="slide paper" data-notes="Tema que casi nadie prepara: qué hacer cuando NO responden. No es parte del error — es parte normal del proceso. Que no lo tomen personal.">
+      <div class="eyebrow">Lo que nadie prepara</div>
+      <h2 class="h1">Cuando <span class="hl">no contestan.</span></h2>
+      <p class="lead wide mt-m">No todos van a responder, y no significa que hiciste algo mal. Es parte normal del proceso — el seguimiento tiene su propia clase, esta es solo para que no lo tomes personal.</p>
+    </section>
+
+    <!-- 9 · MANOS A LA OBRA -->
+    <section class="slide" data-notes="Ejercicio central. Que traigan capturas reales de mensajes que no supieron responder — si no tienen, que inventen uno típico de su nicho. El objetivo es que apliquen tipo + comentario/DM + pregunta que abre.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Manos a la obra</div>
+      <h2 class="h1">Reescribe <span class="hl">3 mensajes reales.</span></h2>
+      <p class="lead wide mt-m">Busca en tu bandeja un mensaje que no supiste responder bien, o que te dejó pensando. Identifica qué tipo es y reescribe tu respuesta con la pregunta que abre.</p>
+      <div class="chip"><span class="dot"></span> Pégalos en el chat. Vamos a leer 3 antes de seguir</div>
+    </section>
+
+    <!-- 10 · TU RETO DE LA SEMANA -->
+    <section class="slide paper" data-notes="Mismo formato de reto que el resto del programa. Concreto: los próximos 3 mensajes de verdad, no un ejercicio de práctica.">
+      <div class="eyebrow">Tu reto de la semana</div>
+      <h2 class="h1">Los próximos 3 mensajes <span class="hl">que te lleguen.</span></h2>
+      <p class="lead wide mt-m">Identifica el tipo, decide si responder en público o mover a DM, y usa una pregunta que abra en vez de una que cierre.</p>
+    </section>
+
+    <!-- 11 · RECURSOS -->
+    <section class="slide" data-notes="Chuleta de respuestas rápidas — la usan en el momento, no solo en la clase. Menciónala en voz alta y dales tiempo de abrirla en su teléfono.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Para llevarte a casa</div>
+      <h2 class="h1">Recursos de <span class="hl">esta clase.</span></h2>
+      <div class="reslist mt-l">
+        <a class="res" href="recursos/chuleta-respuestas.html" target="_blank" rel="noopener">
+          <span class="ri">⌘</span>
+          <span class="rb">
+            <span class="rt">Chuleta de respuestas rápidas</span>
+            <span class="rd">Los tres tipos de mensaje, con ejemplo de respuesta para cada uno. Ábrela cuando te llegue un mensaje real y no sepas por dónde empezar.</span>
+          </span>
+          <span class="rgo">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 12 · CIERRE -->
+    <section class="slide paper center" data-notes="Cierre. La frase resume el punto central: la conversación ya cambió de forma antes de que hables de dinero.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">No vendes en el primer mensaje. <span class="hl">Abres una conversación.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Los 3 mensajes de seguimiento — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:50ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+strong,b{color:var(--on-char);font-weight:600}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+/* mensaje con día + plantilla copiable */
+.msg-card{margin-top:1.4rem;background:#0f0c09;border:1px solid var(--line-d2);
+  border-radius:14px;overflow:hidden}
+.msg-card .mc-head{display:flex;align-items:center;gap:.6rem;
+  padding:.6rem .9rem;border-bottom:1px solid var(--line-d);
+  background:rgba(243,234,215,.04)}
+.msg-card .mc-head .dia{font-family:'Martian Mono',monospace;font-size:.62rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--sesame)}
+.msg-card .mc-head .fn{margin-left:auto;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--on-char-mute)}
+.msg-card .mc-body{padding:clamp(1rem,2.2vw,1.5rem);position:relative}
+.msg-card pre{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(.95rem,1.4vw,1.15rem);
+  line-height:1.6;color:var(--on-char);white-space:pre-wrap;word-break:break-word;
+  padding-right:4.5rem}
+.copybtn{position:absolute;top:1rem;right:1rem;
+  background:rgba(232,161,60,.12);border:1px solid var(--sesame);color:var(--sesame);
+  border-radius:7px;padding:.3rem .7rem;cursor:pointer;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  transition:.25s var(--ease)}
+.copybtn:hover{background:rgba(232,161,60,.24)}
+.copybtn.done{background:rgba(124,154,62,.2);border-color:var(--lettuce);color:var(--lettuce)}
+
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--ketchup);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar,.copybtn{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  p{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  .msg-card{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .msg-card .mc-head{background:#f0f0f0;border-color:#ddd}
+  .msg-card .mc-head .dia{color:#a8600f}
+  .msg-card .mc-head .fn{color:#666}
+  .msg-card pre{color:#222;padding-right:0}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=seguimiento-sin-incomodar-3">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Ventas · Clase 3 · Recurso · Con Arturo</div>
+  <h1>Los 3 mensajes de <span class="hl">seguimiento</span></h1>
+  <p class="sub">Listos para adaptar a cualquier prospecto que se haya quedado en "lo voy a pensar". Cambia lo que está entre corchetes por tu caso.</p>
+  <div class="rule"></div>
+
+  <h2>El calendario</h2>
+  <p>Día 0 es cuando la conversación queda en pausa. A partir de ahí:</p>
+
+  <div class="msg-card">
+    <div class="mc-head"><span class="dia">Día 3</span><span class="fn">Valor agregado</span></div>
+    <div class="mc-body">
+      <button class="copybtn" data-target="m1">Copiar</button>
+<pre id="m1">Hola [nombre]! Se me ocurrió algo que puede servirte con lo de [su problema] —
+¿te lo comparto?</pre>
+    </div>
+  </div>
+
+  <div class="msg-card">
+    <div class="mc-head"><span class="dia">Día 7</span><span class="fn">Urgencia real</span></div>
+    <div class="mc-body">
+      <button class="copybtn" data-target="m2">Copiar</button>
+<pre id="m2">Justo esta semana tengo [un espacio / una condición real] para arrancar contigo,
+por si te sigue interesando lo de [su necesidad].</pre>
+    </div>
+  </div>
+
+  <div class="msg-card">
+    <div class="mc-head"><span class="dia">Día 14</span><span class="fn">Cierre de puerta</span></div>
+    <div class="mc-body">
+      <button class="copybtn" data-target="m3">Copiar</button>
+<pre id="m3">No te voy a seguir escribiendo, pero aquí quedo si en algún momento se
+vuelve a acomodar 🙌 Fue un gusto platicar contigo.</pre>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">La regla del "día 7"</div>
+    <p>La urgencia solo funciona si es cierta. Si no tienes un espacio real o una condición real que ofrecer, no lo inventes — usa otro dato de valor en su lugar.</p>
+  </div>
+
+  <h2>Después del día 14</h2>
+  <p>Si no hay respuesta, sueltas. No hay un cuarto mensaje. Insistir más allá de esto no ayuda a la venta — daña la relación. El mensaje de cierre de puerta es justamente lo que deja la puerta abierta para que esa persona vuelva meses después, por su cuenta.</p>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../../clase.html?id=seguimiento-sin-incomodar-3">El seguimiento que no incomoda</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const txt=document.getElementById(btn.dataset.target).textContent;
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1800);
+  });
+});
+</script>
+</body>
+</html>

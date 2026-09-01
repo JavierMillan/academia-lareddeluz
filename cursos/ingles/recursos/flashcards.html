@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/motor/imgs/reddeluz.png">
+<title>Flashcards — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
+:root{
+  --char:#0a0a0a; --char-soft:#161414;
+  --sesame:#c8102e; --lettuce:#4caf6b;
+  --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
+  --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
+  --glow:rgba(200,16,46,0.45);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100svh}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(10,10,10,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-sp{flex:1}
+.tb-btn.on{border-color:var(--sesame);color:var(--sesame);background:rgba(200,16,46,.1)}
+.tb-btn[disabled]{opacity:.4;cursor:not-allowed;pointer-events:none}
+
+.wrap{max-width:40rem;margin:0 auto;padding:clamp(1.6rem,5vw,3rem) clamp(1.2rem,4vw,3rem) 5rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.005em;
+  line-height:.98;font-size:clamp(1.7rem,4.4vw,2.6rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(.95rem,1.5vw,1.1rem);color:var(--on-char-soft);
+  max-width:50ch;margin-top:1rem}
+
+.controles{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+
+/* barra de progreso de la sesión: cuántas tarjetas van */
+.barra{width:100%;height:4px;border-radius:999px;background:var(--line-d);
+  margin-top:1.6rem;overflow:hidden}
+.barra i{display:block;height:100%;width:0%;background:var(--sesame);
+  transition:width .3s var(--ease)}
+
+/* racha en vivo: solo aparece a partir de 2 seguidas, para no ser
+   ruido constante — un empujoncito breve, no un marcador permanente */
+.racha{display:none;align-items:center;justify-content:center;gap:.4rem;
+  margin-top:.8rem;font-family:'Martian Mono',monospace;font-size:.78rem;
+  color:var(--sesame);letter-spacing:.06em}
+.racha.on{display:flex}
+.racha .ico{font-size:.95rem;animation:rachaPulso .35s var(--ease)}
+.racha b,.racha #rachaN{font-size:.95rem}
+@keyframes rachaPulso{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.35)}
+  100%{transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){.racha .ico{animation:none}}
+
+/* la pila: hasta 3 tarjetas visibles, las de atrás asomándose.
+   La de arriba se arrastra (mouse/touch) o se voltea con click;
+   al responder, "vuela" hacia el lado y la siguiente sube un puesto. */
+/* margin-bottom reserva el espacio que ocupan las tarjetas de atrás
+   asomándose (offset*10px, hasta 2 posiciones detrás = 20px) — sin
+   esto, la 2ª/3ª tarjeta de la pila se salían del contenedor y
+   quedaban flotando encima de los botones de responder */
+.zona{margin-top:2rem;margin-bottom:1.6rem;perspective:1400px}
+.pila{position:relative;width:100%;height:16rem}
+.tarjeta{position:absolute;inset:0;cursor:grab;
+  transform-style:preserve-3d;will-change:transform,opacity;
+  transition:transform .45s var(--ease),opacity .45s var(--ease);
+  touch-action:none}
+.tarjeta:active{cursor:grabbing}
+.tarjeta.volteada .cara-int{transform:rotateY(180deg)}
+.tarjeta.arrastrando{transition:none}
+.cara-int{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .5s var(--ease)}
+.cara{position:absolute;inset:0;backface-visibility:hidden;
+  border-radius:20px;border:1px solid var(--line-d2);background:var(--char-soft);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:2rem;gap:.6rem}
+.cara.frente{box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.cara.reverso{transform:rotateY(180deg);border-color:var(--sesame);
+  box-shadow:0 30px 60px -30px var(--glow)}
+.cara .cat{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.cara .w{font-family:'Archivo Black',sans-serif;text-transform:uppercase;
+  font-size:clamp(1.6rem,5vw,2.6rem);line-height:1.05}
+.cara.reverso .w{color:var(--sesame)}
+.cara .p{font-family:'Martian Mono',monospace;font-size:.95rem;color:var(--sesame)}
+.cara.reverso .p{color:var(--on-char-mute)}
+.cara .m{font-size:1.1rem;color:var(--on-char);max-width:26ch}
+.cara .hint{position:absolute;bottom:1rem;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-char-mute)}
+
+/* sello de "me costó" / "ya la sé" que aparece al arrastrar */
+.sello{position:absolute;top:1.4rem;padding:.4rem .9rem;border-radius:8px;
+  font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1rem;
+  letter-spacing:.03em;opacity:0;transition:opacity .15s linear;pointer-events:none}
+.sello.izq{left:1.4rem;border:3px solid var(--sesame);color:var(--sesame);transform:rotate(-12deg)}
+.sello.der{right:1.4rem;border:3px solid var(--lettuce);color:var(--lettuce);transform:rotate(12deg)}
+
+/* botones de respuesta: ocupan su lugar desde el inicio (nada de layout
+   saltando cuando aparecen) pero se ven apagados/inertes hasta que la
+   tarjeta se voltea — así responder sigue siendo la 2ª acción, pero el
+   botón no "aparece de la nada" y su posición ya la puedes anticipar */
+.responder{display:flex;gap:.8rem;margin-top:1.6rem}
+.responder button{flex:1;padding:1rem;border-radius:14px;border:1px solid var(--line-d2);
+  background:var(--char-soft);color:var(--on-char-mute);font-family:'Martian Mono',monospace;
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:not-allowed;
+  transition:.2s var(--ease);display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  opacity:.35;pointer-events:none}
+.responder button .ico{font-size:1.3rem}
+.responder.on button{opacity:1;pointer-events:auto;cursor:pointer;color:var(--on-char)}
+.responder.on .costo:hover{border-color:var(--sesame);background:rgba(200,16,46,.1)}
+.responder.on .sabia:hover{border-color:var(--lettuce);background:rgba(76,175,107,.1)}
+
+/* atajos de teclado: solo se anuncian donde de verdad hay teclado +
+   mouse/trackpad (no en touch, donde el swipe ya es la vía natural) */
+.kbd-hint{display:none}
+@media(hover:hover) and (pointer:fine){
+  .kbd-hint{display:block;text-align:center;margin-top:1rem;
+    font-family:'Martian Mono',monospace;font-size:.72rem;color:var(--on-char-mute)}
+  .kbd-hint kbd{display:inline-block;padding:.15rem .45rem;border-radius:5px;
+    border:1px solid var(--line-d2);background:var(--char-soft);
+    color:var(--on-char-soft);font-family:inherit;font-size:.9em}
+}
+
+/* pantalla de fin de sesión: el ícono y el número entran con un pop,
+   no aparecen secos — es el único momento "de premio" de todo el flujo */
+.fin{display:none;text-align:center;margin-top:2.4rem}
+.fin.on{display:block}
+.fin .ico{font-size:2.6rem;display:inline-block;animation:finPop .5s var(--ease) both}
+.fin .n{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--sesame);
+  animation:finPop .5s var(--ease) .08s both}
+@keyframes finPop{
+  0%{transform:scale(.4) translateY(10px);opacity:0}
+  65%{transform:scale(1.12) translateY(0)}
+  100%{transform:scale(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .fin .ico,.fin .n{animation:none}
+}
+.fin p{color:var(--on-char-soft);margin-top:.6rem}
+.fin .msg{color:var(--on-char);font-size:1.05rem;font-weight:600;margin-top:1.2rem;max-width:32ch;
+  margin-left:auto;margin-right:auto}
+.fin .desglose{display:flex;justify-content:center;gap:1.6rem;margin-top:1rem;
+  font-family:'Martian Mono',monospace;font-size:.72rem;color:var(--on-char-mute)}
+.fin .desglose b{color:var(--on-char);font-size:.9rem}
+.fin .descanso{margin-top:1.4rem;padding:.9rem 1.2rem;border-radius:12px;
+  background:var(--char-soft);border:1px solid var(--line-d);color:var(--on-char-soft);
+  font-size:.88rem;display:none}
+.fin .descanso.on{display:block}
+.fin .btns{display:flex;gap:.8rem;justify-content:center;margin-top:1.6rem;flex-wrap:wrap}
+.fin .btns a,.fin .btns button{padding:.9rem 1.4rem;border-radius:12px;border:1px solid var(--line-d2);
+  background:transparent;color:var(--on-char-soft);font-family:'Martian Mono',monospace;
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;
+  transition:.2s var(--ease)}
+.fin .btns .primary{border-color:var(--sesame);color:var(--sesame)}
+.fin .btns a:hover,.fin .btns button:hover{border-color:var(--sesame);color:var(--sesame)}
+
+/* estado vacío: nada por repasar hoy */
+.vacio{display:none;text-align:center;margin-top:3rem;padding:2.4rem;
+  border:1px solid var(--line-d);border-radius:18px;background:var(--char-soft)}
+.vacio.on{display:block}
+.vacio .ico{font-size:2.4rem}
+.vacio h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;margin-top:.8rem;
+  font-size:1.3rem}
+.vacio p{color:var(--on-char-soft);margin-top:.6rem}
+
+/* "Cómo funciona": colapsable, no un bloque de texto siempre abierto */
+.nota{margin-top:2.4rem;border:1px solid var(--line-d);border-radius:10px;
+  border-left:3px solid var(--sesame);overflow:hidden;background:var(--char-soft)}
+.nota summary{list-style:none;cursor:pointer;padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--sesame)}
+.nota summary::-webkit-details-marker{display:none}
+.nota summary .arw{margin-left:auto;font-size:.75rem;color:var(--on-char-mute);
+  transition:transform .25s var(--ease)}
+.nota[open] summary .arw{transform:rotate(90deg)}
+.nota p{padding:0 1.2rem 1.1rem;font-size:.88rem;color:var(--on-char-soft)}
+.panel .nota{margin-top:0}
+
+/* panel lateral: título de sección corto arriba de los controles —
+   solo tiene sentido visual en desktop, donde el panel es un bloque
+   propio; en mobile queda oculto */
+.bloque-t{display:none;font-family:'Martian Mono',monospace;font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--on-char-mute)}
+
+/* "Esta tanda": desglose en vivo del repaso activo, para que el panel
+   lateral tenga algo útil que mostrar mientras repasas, no solo
+   configuración — solo aplica en desktop (ver media query) */
+.panel-tanda{display:none}
+.panel-tanda-num{font-family:'Archivo Black',sans-serif;font-size:1.7rem;
+  color:var(--on-char);margin-top:.3rem}
+.panel-tanda-num span#ptTotal,.panel-tanda-num{letter-spacing:-.01em}
+.panel-tanda-desglose{display:flex;gap:1rem;margin-top:.5rem;
+  font-family:'Martian Mono',monospace;font-size:.76rem;color:var(--on-char-mute)}
+.panel-tanda-desglose .ok{color:var(--lettuce)}
+.panel-tanda-desglose .no{color:var(--sesame)}
+.panel-tanda-desglose b{font-size:.88rem}
+
+/* salida discreta: son links de navegación, no acciones del repaso —
+   antes eran botones del mismo tamaño que "Me costó"/"Ya la sé" justo
+   debajo, y se leían como si hubiera 4 botones de la misma familia */
+.salir{display:flex;gap:1.6rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.4rem;
+  border-top:1px solid var(--line-d)}
+.salir a{display:inline-flex;align-items:center;gap:.4rem;
+  color:var(--on-char-mute);text-decoration:none;font-family:'Martian Mono',monospace;
+  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;transition:.25s var(--ease)}
+.salir a:hover{color:var(--sesame)}
+.salir a.primary{color:var(--sesame)}
+
+.foot{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.05em;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media(max-width:480px){
+  .responder{flex-direction:column}
+}
+
+/* ============================================================
+   DESKTOP (min-width:900px) — la columna angosta de mobile (40rem)
+   desperdiciaba muchísimo espacio en pantallas grandes. Aquí se abre
+   a dos columnas: tarjeta protagonista a la izquierda, panel fijo de
+   controles/ayuda a la derecha que se queda a la vista al hacer scroll.
+   Va AL FINAL del stylesheet a propósito: sin esto, las reglas base
+   .pila/.cara más abajo en el archivo pisaban a las de este media
+   query por tener la misma especificidad y venir después en cascada.
+   ============================================================ */
+@media(min-width:900px){
+  .wrap{max-width:76rem;padding-top:1.4rem}
+  .eyebrow,h1,.sub{max-width:44rem}
+  /* con la tarjeta+botones ya visibles sin scroll, el título no necesita
+     tanto peso — se compacta para dejarle presupuesto vertical al
+     repaso, que es lo que realmente hay que ver completo de un jalón */
+  h1{font-size:clamp(1.5rem,2.6vw,1.9rem)}
+  .sub{font-size:.95rem;margin-top:.5rem}
+
+  .layout{display:grid;grid-template-columns:1fr 21rem;gap:clamp(2.4rem,4vw,4rem);
+    align-items:start;margin-top:1.4rem}
+  /* en el HTML .panel va primero (así en mobile los controles quedan
+     arriba, antes de la tarjeta); aquí se reubica a la columna derecha
+     explícitamente, sin depender de su orden en el HTML */
+  .col-principal{grid-column:1;grid-row:1}
+  .panel{grid-column:2;grid-row:1;position:sticky;top:5.5rem;
+    display:flex;flex-direction:column;gap:1rem;
+    border:1px solid var(--line-d);border-radius:16px;
+    background:var(--char-soft);padding:1.3rem}
+  .bloque-t{display:block;margin-bottom:.2rem}
+  .panel-tanda{display:block;padding-bottom:1rem;border-bottom:1px dashed var(--line-d2)}
+  .panel .controles{margin-top:0;flex-direction:column;gap:.7rem}
+  .panel .controles .tb-btn{width:100%;justify-content:center;padding:.7rem .9rem}
+  .panel .nota{border:none;background:none;padding:0}
+  .panel .nota summary{padding:0 0 .3rem}
+  .panel .nota p{padding:0}
+  .panel .nota[open]{border-top:1px dashed var(--line-d2);padding-top:1rem;margin-top:.2rem}
+
+  /* la tarjeta crece en ANCHO con la pantalla, pero su alto se calcula
+     para que tarjeta + barra + racha + botones de responder quepan
+     completos en una pantalla típica de laptop (~800-900px de alto)
+     sin scroll — antes el límite era 52vh y no dejaba presupuesto para
+     el resto de los elementos, cortando los botones fuera de vista */
+  .pila{height:min(19rem,38svh)}
+  .cara{padding:2rem 2.4rem}
+  .cara .w{font-size:clamp(2rem,3.2vw,2.9rem)}
+  .cara .m{font-size:1.15rem;max-width:30ch}
+  .zona{margin-top:1.4rem}
+
+  .responder{max-width:26rem;margin-inline:auto}
+
+  /* el desglose de fin de sesión respira más al no estar comprimido
+     en una columna angosta */
+  .fin .msg{max-width:38ch}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../index.html">‹ Clases</a>
+  <a class="tb-btn" href="../recursos.html">‹ Recursos</a>
+  <div class="tb-sp"></div>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow" id="eyebrow">Recurso general · Repaso</div>
+  <h1 id="tituloH1">Tarjetas <span class="hl">para que no se te olviden</span></h1>
+  <p class="sub" id="subP">Le vas a dar vuelta a una tarjeta, vas a intentar recordar qué significa, y luego nos dices si te costó o no. Así de simple — y así es como de verdad se queda una palabra en la cabeza.</p>
+
+  <div class="layout">
+    <div class="panel">
+      <div class="panel-tanda" id="panelTanda">
+        <p class="bloque-t">Esta tanda</p>
+        <div class="panel-tanda-num"><span id="ptIdx">0</span> / <span id="ptTotal">0</span></div>
+        <div class="panel-tanda-desglose">
+          <span class="ok">✓ <b id="ptAciertos">0</b></span>
+          <span class="no">↺ <b id="ptCostaron">0</b></span>
+        </div>
+      </div>
+      <p class="bloque-t">Tu repaso</p>
+      <div class="controles" id="controles">
+        <button class="tb-btn" id="btnDificiles"><span id="btnDificilesTxt">★ Las que me cuestan</span> <span id="tbDificiles">(0)</span></button>
+        <button class="tb-btn" id="btnLimpiar" title="Borra todo tu progreso guardado en este navegador">⟲ Empezar de cero</button>
+      </div>
+      <details class="nota panel-nota" open>
+        <summary>Cómo funciona<span class="arw">▸</span></summary>
+        <p>Cada vez que aciertas, la palabra se aleja un poco más — tarda más en volver a aparecer. Si te cuesta, la marcamos y la vuelves a ver pronto, además de que se va sumando a tu montón de "las que me cuestan", por si un día quieres repasar solo esas. Todo se guarda en este navegador — nada de cuentas, pero tampoco se sincroniza si cambias de celular.</p>
+      </details>
+    </div>
+
+    <div class="col-principal">
+      <div class="barra"><i id="barraFill"></i></div>
+      <div class="racha" id="racha"><span class="ico">🔥</span><span id="rachaN">0</span> seguidas</div>
+
+      <div class="zona" id="zona">
+        <div class="pila" id="pila"></div>
+      </div>
+
+      <div class="responder" id="responder">
+        <button class="costo" data-r="0"><span class="ico">↺</span>Me costó</button>
+        <button class="sabia" data-r="1"><span class="ico">✓</span>Ya la sé</button>
+      </div>
+      <p class="kbd-hint"><kbd>Espacio</kbd> voltea · <kbd>←</kbd> me costó · <kbd>→</kbd> ya la sé</p>
+
+      <div class="fin" id="fin">
+        <div class="ico" id="finIco">🎉</div>
+        <div class="n" id="finN">0</div>
+        <p id="finTexto">palabras repasadas.</p>
+        <div class="desglose">
+          <span>✓ <b id="finAciertos">0</b> ya la sabías</span>
+          <span>↺ <b id="finCostaron">0</b> te costaron</span>
+        </div>
+        <p class="msg" id="finMsg"></p>
+        <p class="descanso" id="finDescanso"></p>
+        <div class="btns">
+          <button class="primary" id="btnOtraVez">Seguir repasando</button>
+          <a href="../recursos.html">‹ Más recursos</a>
+        </div>
+      </div>
+
+      <div class="vacio" id="vacio">
+        <div class="ico">✓</div>
+        <h2 id="vacioH2">Por hoy ya no hay nada pendiente</h2>
+        <p id="vacioP">Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="salir">
+    <a class="primary" href="../recursos.html">‹ Más recursos</a>
+    <a href="../index.html">‹ Volver a Clases</a>
+  </div>
+
+  <p class="foot">¡HABLEMOS INGLÉS! · UNA INICIATIVA DE <a href="https://lareddeluz.com" target="_blank" rel="noopener">LA RED DE LUZ</a></p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ============================================================
+     Sistema Leitner de 5 cajas (repetición espaciada simplificada).
+     - Cada palabra tiene una caja (1-5) y una fecha "vence" (ISO).
+     - "La sabía" -> sube de caja, se reprograma más lejos.
+     - "Me costó" -> vuelve a la caja 1, se reprograma para hoy/mañana.
+     - Progreso en localStorage por mazo (vocab-100.json).
+     ============================================================ */
+  const INTERVALOS = [0, 1, 3, 7, 16, 30]; // días hasta la próxima vez, por caja 1-5
+  const CLAVE = 'hi_srs_vocab-100';
+
+  const zona = document.getElementById('zona');
+  const pila = document.getElementById('pila');
+  const responder = document.getElementById('responder');
+  const fin = document.getElementById('fin');
+  const finIco = document.getElementById('finIco');
+  const finN = document.getElementById('finN');
+  const finTexto = document.getElementById('finTexto');
+  const finAciertos = document.getElementById('finAciertos');
+  const finCostaron = document.getElementById('finCostaron');
+  const finMsg = document.getElementById('finMsg');
+  const finDescanso = document.getElementById('finDescanso');
+  const vacio = document.getElementById('vacio');
+  const vacioH2 = document.getElementById('vacioH2');
+  const vacioP = document.getElementById('vacioP');
+  const barraFill = document.getElementById('barraFill');
+  const btnOtraVez = document.getElementById('btnOtraVez');
+  const btnDificiles = document.getElementById('btnDificiles');
+  const btnDificilesTxt = document.getElementById('btnDificilesTxt');
+  const tbDificiles = document.getElementById('tbDificiles');
+  const btnLimpiar = document.getElementById('btnLimpiar');
+  const eyebrow = document.getElementById('eyebrow');
+  const tituloH1 = document.getElementById('tituloH1');
+  const subP = document.getElementById('subP');
+  const ptIdx = document.getElementById('ptIdx');
+  const ptTotal = document.getElementById('ptTotal');
+  const ptAciertos = document.getElementById('ptAciertos');
+  const ptCostaron = document.getElementById('ptCostaron');
+  const racha = document.getElementById('racha');
+  const rachaN = document.getElementById('rachaN');
+
+  function hoyISO(){
+    return new Date().toISOString().slice(0,10);
+  }
+  function sumarDias(fechaISO, dias){
+    const d = new Date(fechaISO+'T00:00:00');
+    d.setDate(d.getDate()+dias);
+    return d.toISOString().slice(0,10);
+  }
+
+  function cargarEstado(){
+    try{
+      const raw = localStorage.getItem(CLAVE);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function guardarEstado(estado){
+    try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){}
+  }
+
+  let vocab = [];
+  let estado = cargarEstado();
+  let cola = [];
+  let idx = 0;
+  let repasadas = 0;
+  let aciertos = 0;
+  let costaron = 0;
+  let volteada = false;
+  let modoDificiles = false;
+  let vistasEnEstaVisita = 0; // no se resetea entre "seguir repasando" — es para el aviso de descanso
+  let hayMasPendientes = false; // si quedó vocabulario fuera de esta tanda de 15
+  let rachaActual = 0; // aciertos seguidos en esta tanda
+
+  function idDe(p){ return p.w; }
+
+  function estadoDe(p){
+    const id = idDe(p);
+    if(!estado[id]) estado[id] = {caja: 1, vence: hoyISO(), dificil: false};
+    return estado[id];
+  }
+
+  function barajar(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  const TAMANO_TANDA = 15; // repasar 100 de un jalón cansa — mejor en dosis chicas
+
+  function construirCola(){
+    let pendientes;
+    if(modoDificiles){
+      pendientes = vocab.filter(p => estadoDe(p).dificil);
+    }else{
+      const hoy = hoyISO();
+      pendientes = vocab.filter(p => estadoDe(p).vence <= hoy);
+    }
+    barajar(pendientes);
+    hayMasPendientes = pendientes.length > TAMANO_TANDA;
+    cola = pendientes.slice(0, TAMANO_TANDA);
+    idx = 0;
+  }
+
+  function contarDificiles(){
+    return vocab.filter(p=>estadoDe(p).dificil).length;
+  }
+
+  function actualizarStat(){
+    const n = contarDificiles();
+    if(!modoDificiles) tbDificiles.textContent = '('+n+')';
+    btnDificiles.disabled = n === 0 && !modoDificiles;
+  }
+
+  function actualizarModoUI(){
+    btnDificiles.classList.toggle('on', modoDificiles);
+    if(modoDificiles){
+      btnDificilesTxt.textContent = '← Volver al repaso normal';
+      tbDificiles.textContent = '';
+      eyebrow.textContent = 'Repasando · Las que te cuestan';
+      tituloH1.innerHTML = 'Las que <span class="hl">se te resisten</span>';
+      subP.textContent = 'Estas son las que has marcado como "me costó" al menos una vez. Repásalas las veces que quieras, sin esperar a que toque su turno.';
+    }else{
+      btnDificilesTxt.textContent = '★ Las que me cuestan';
+      eyebrow.textContent = 'Recurso general · Repaso';
+      tituloH1.innerHTML = 'Tarjetas <span class="hl">para que no se te olviden</span>';
+      subP.textContent = 'Le vas a dar vuelta a una tarjeta, vas a intentar recordar qué significa, y luego nos dices si te costó o no. Así de simple — y así es como de verdad se queda una palabra en la cabeza.';
+    }
+  }
+
+  const MAX_PILA = 3; // cuántas tarjetas se ven asomando detrás
+
+  function crearTarjetaEl(p){
+    const el = document.createElement('div');
+    el.className = 'tarjeta';
+    el.innerHTML =
+      '<div class="cara-int">'+
+        '<div class="cara frente">'+
+          '<div class="cat">'+p.cat+'</div>'+
+          '<div class="w">'+p.w+'</div>'+
+          '<div class="hint">Toca para ver el significado, o arrastra</div>'+
+        '</div>'+
+        '<div class="cara reverso">'+
+          '<div class="p">'+p.p+'</div>'+
+          '<div class="m">'+p.m+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="sello izq">Me costó</div>'+
+      '<div class="sello der">Ya la sé</div>';
+    return el;
+  }
+
+  // acomoda visualmente las tarjetas ya creadas en la pila (escala/offset
+  // según su posición), sin recrear DOM — para que la animación de salida
+  // de la tarjeta de arriba no se corte al re-renderizar
+  function acomodarPila(offsetInicial){
+    offsetInicial = offsetInicial || 0;
+    const els = [...pila.querySelectorAll('.tarjeta:not(.saliendo)')];
+    els.forEach((el, i)=>{
+      const offset = i + offsetInicial; // 0 = arriba (visualmente, ignorando la que sale)
+      el.style.zIndex = String(100 - offset);
+      if(!el.classList.contains('arrastrando')){
+        el.style.transform = 'translateY('+(offset*10)+'px) scale('+(1 - offset*0.045)+')';
+      }
+      el.style.opacity = offset < MAX_PILA ? String(1 - offset*0.28) : '0';
+      el.style.pointerEvents = (offset === 0 && offsetInicial === 0) ? 'auto' : 'none';
+    });
+  }
+
+  // reconstruye la pila SIN tocar una tarjeta marcada .saliendo (la que
+  // está en pleno vuelo) — así la animación nunca se corta a medio camino.
+  // Las tarjetas nuevas saltan de inmediato a su posición final (offset
+  // 0,1,2...) aunque la vieja todavía no haya terminado de salir: como la
+  // saliente vuela lejos y queda con opacity 0, no se superponen — si en
+  // vez de eso se dejaba la nueva "top" a medio offset esperando, se veía
+  // fantasma/transparentada encima de la que se iba.
+  function renderPila(){
+    [...pila.querySelectorAll('.tarjeta:not(.saliendo)')].forEach(el=>el.remove());
+    for(let i=0; i<MAX_PILA && (idx+i)<cola.length; i++){
+      const el = crearTarjetaEl(cola[idx+i]);
+      pila.appendChild(el);
+    }
+    acomodarPila(0);
+    activarDragEnTop();
+  }
+
+  // panel lateral en desktop: desglose en vivo de la tanda actual —
+  // le da al panel algo útil que mostrar durante el repaso, no solo
+  // configuración que no cambia mientras estás respondiendo tarjetas
+  function actualizarPanelTanda(){
+    ptIdx.textContent = Math.min(idx + 1, cola.length);
+    ptTotal.textContent = cola.length;
+    ptAciertos.textContent = aciertos;
+    ptCostaron.textContent = costaron;
+  }
+
+  function mostrarTarjeta(){
+    if(idx >= cola.length){
+      terminarSesion();
+      return;
+    }
+    volteada = false;
+    responder.classList.remove('on');
+    renderPila();
+    barraFill.style.width = (cola.length ? (idx/cola.length*100) : 0)+'%';
+    actualizarPanelTanda();
+  }
+
+  // saca visualmente la tarjeta de arriba volando hacia el lado elegido,
+  // y en paralelo ya arma la pila siguiente detrás de ella
+  function volarYAvanzar(sabia){
+    const top = pila.querySelector('.tarjeta:not(.saliendo)');
+    if(!top) return;
+    const dx = sabia ? 560 : -560;
+    const rot = sabia ? 24 : -24;
+    top.classList.add('saliendo');
+    top.style.zIndex = '200';
+    top.style.transition = 'transform .4s var(--ease), opacity .4s var(--ease)';
+    top.style.transform = 'translate('+dx+'px,-20px) rotate('+rot+'deg)';
+    top.style.opacity = '0';
+    setTimeout(()=>top.remove(), 420);
+    responderTarjeta(sabia);
+  }
+
+  function voltearTop(){
+    const top = pila.querySelector('.tarjeta:not(.saliendo)');
+    if(!top) return;
+    volteada = !volteada;
+    top.classList.toggle('volteada', volteada);
+    responder.classList.toggle('on', volteada);
+  }
+
+  function activarDragEnTop(){
+    const top = pila.querySelector('.tarjeta:not(.saliendo)');
+    if(!top || top.dataset.dragListo === '1') return;
+    top.dataset.dragListo = '1';
+
+    top.addEventListener('click', (e)=>{
+      if(top.dataset.arrastrado === '1'){ top.dataset.arrastrado = '0'; return; }
+      voltearTop();
+    });
+
+    let startX = 0, startY = 0, dx = 0, activo = false;
+    const selloIzq = top.querySelector('.sello.izq');
+    const selloDer = top.querySelector('.sello.der');
+
+    function onDown(e){
+      activo = true;
+      top.dataset.arrastrado = '0';
+      const pt = e.touches ? e.touches[0] : e;
+      startX = pt.clientX; startY = pt.clientY; dx = 0;
+      top.classList.add('arrastrando');
+    }
+    function onMove(e){
+      if(!activo) return;
+      e.preventDefault();
+      const pt = e.touches ? e.touches[0] : e;
+      dx = pt.clientX - startX;
+      const dy = pt.clientY - startY;
+      if(Math.abs(dx) > 8) top.dataset.arrastrado = '1';
+      const rot = dx / 22;
+      top.style.transform = 'translate('+dx+'px,'+(dy*0.15)+'px) rotate('+rot+'deg)';
+      const t = Math.min(1, Math.abs(dx) / 110);
+      selloIzq.style.opacity = dx < 0 ? String(t) : '0';
+      selloDer.style.opacity = dx > 0 ? String(t) : '0';
+    }
+    function onUp(){
+      if(!activo) return;
+      activo = false;
+      top.classList.remove('arrastrando');
+      const UMBRAL = 100;
+      if(Math.abs(dx) > UMBRAL){
+        volarYAvanzar(dx > 0);
+      }else{
+        top.style.transform = '';
+        selloIzq.style.opacity = '0';
+        selloDer.style.opacity = '0';
+      }
+    }
+
+    // pointermove/up van en el propio top con setPointerCapture, así el
+    // navegador redirige el arrastre a esta tarjeta aunque el dedo/mouse
+    // se salga de ella — y el listener muere con la tarjeta, sin acumularse
+    top.addEventListener('pointerdown', (e)=>{
+      top.setPointerCapture(e.pointerId);
+      onDown(e);
+    });
+    top.addEventListener('pointermove', onMove);
+    top.addEventListener('pointerup', onUp);
+    top.addEventListener('pointercancel', onUp);
+  }
+
+  function terminarSesion(){
+    zona.style.display = 'none';
+    responder.classList.remove('on');
+    document.querySelector('.barra').style.display = 'none';
+    finN.textContent = repasadas;
+    finTexto.textContent = modoDificiles
+      ? 'palabras de tu montón de "me cuestan".'
+      : 'palabras repasadas.';
+    finAciertos.textContent = aciertos;
+    finCostaron.textContent = costaron;
+
+    // mensaje según qué tanto costó la sesión, no solo cuántas viste
+    const ratio = repasadas ? aciertos / repasadas : 1;
+    if(modoDificiles){
+      finIco.textContent = ratio >= 0.6 ? '💪' : '🔁';
+      finMsg.textContent = ratio >= 0.6
+        ? 'Les estás ganando terreno a las difíciles.'
+        : 'Están tercas, pero cada vuelta cuenta. Ya casi.';
+    }else if(repasadas === 0){
+      finIco.textContent = '👀';
+      finMsg.textContent = '';
+    }else if(ratio === 1){
+      finIco.textContent = '🔥';
+      finMsg.textContent = 'Todas bien. Se te están quedando de verdad.';
+    }else if(ratio >= 0.7){
+      finIco.textContent = '🎉';
+      finMsg.textContent = 'Muy bien — las que te costaron van a volver pronto.';
+    }else{
+      finIco.textContent = '🌱';
+      finMsg.textContent = 'Está bien que cuesten al principio. Por eso vuelven a aparecer.';
+    }
+
+    // las tandas ya son chicas (15) a propósito — en vez de dejar que
+    // sigan de largo hasta cansarse, avisamos aquí mismo cuánto queda y
+    // dejamos claro que está bien parar. La constancia diaria en dosis
+    // cortas rinde más que una maratón de tarjetas.
+    if(hayMasPendientes){
+      finDescanso.textContent = 'Todavía queda vocabulario pendiente, pero por hoy con esto ya avanzaste bastante. Está perfecto si lo dejas aquí y regresas más tarde (o mañana).';
+      finDescanso.classList.add('on');
+      btnOtraVez.textContent = 'Repasar otra tanda';
+    }else{
+      finDescanso.classList.remove('on');
+      btnOtraVez.textContent = 'Seguir repasando';
+    }
+
+    fin.classList.add('on');
+    actualizarStat();
+  }
+
+  function actualizarRacha(){
+    racha.classList.toggle('on', rachaActual >= 2);
+    rachaN.textContent = rachaActual;
+    // vuelve a disparar el pulso reiniciando la animación
+    const ico = racha.querySelector('.ico');
+    ico.style.animation = 'none';
+    void ico.offsetWidth;
+    ico.style.animation = '';
+  }
+
+  function empezarSesion(){
+    fin.classList.remove('on');
+    vacio.classList.remove('on');
+    construirCola();
+    repasadas = 0;
+    aciertos = 0;
+    costaron = 0;
+    rachaActual = 0;
+    actualizarRacha();
+    if(!cola.length){
+      zona.style.display = 'none';
+      document.querySelector('.barra').style.display = 'none';
+      responder.classList.remove('on');
+      if(modoDificiles){
+        vacioH2.textContent = 'Por ahora no tienes ninguna difícil';
+        vacioP.textContent = 'En cuanto marques una tarjeta como "me costó", va a aparecer aquí para que la repases cuando quieras.';
+      }else{
+        vacioH2.textContent = 'Por hoy ya no hay nada pendiente';
+        vacioP.textContent = 'Terminaste todo lo que tocaba repasar. Regresa mañana y te vamos a tener listas las que ya están por vencerse.';
+      }
+      vacio.classList.add('on');
+      actualizarStat();
+      return;
+    }
+    zona.style.display = '';
+    document.querySelector('.barra').style.display = '';
+    mostrarTarjeta();
+    actualizarStat();
+  }
+
+  function responderTarjeta(sabia){
+    const p = cola[idx];
+    const e = estadoDe(p);
+    if(sabia){
+      e.caja = Math.min(5, e.caja + 1);
+      // si la responde bien estando en modo difíciles, se la quitamos del montón
+      if(modoDificiles) e.dificil = false;
+      aciertos++;
+    }else{
+      e.caja = 1;
+      e.dificil = true;
+      costaron++;
+    }
+    e.vence = sumarDias(hoyISO(), INTERVALOS[e.caja - 1]);
+    guardarEstado(estado);
+    repasadas++;
+    vistasEnEstaVisita++;
+    idx++;
+    mostrarTarjeta();
+    actualizarStat();
+  }
+
+  responder.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    e.stopPropagation();
+    volarYAvanzar(btn.dataset.r === '1');
+  });
+
+  btnOtraVez.addEventListener('click', empezarSesion);
+
+  btnDificiles.addEventListener('click', ()=>{
+    modoDificiles = !modoDificiles;
+    actualizarModoUI();
+    empezarSesion();
+  });
+
+  btnLimpiar.addEventListener('click', ()=>{
+    const ok = confirm('¿Borramos todo tu progreso? Vas a volver a empezar desde cero — esto no se puede deshacer.');
+    if(!ok) return;
+    estado = {};
+    guardarEstado(estado);
+    modoDificiles = false;
+    actualizarModoUI();
+    empezarSesion();
+  });
+
+  // atajos de teclado (patrón estándar de apps de flashcards tipo Anki):
+  // espacio voltea, flechas califican — evita depender del mouse en
+  // desktop, que es donde de verdad rinden los atajos en sesiones largas
+  document.addEventListener('keydown', (e)=>{
+    if(zona.style.display === 'none') return; // no hay tarjeta activa (fin/vacío)
+    if(e.code === 'Space'){
+      e.preventDefault();
+      voltearTop();
+    }else if(volteada && (e.code === 'ArrowLeft' || e.code === 'ArrowRight')){
+      e.preventDefault();
+      volarYAvanzar(e.code === 'ArrowRight');
+    }
+  });
+
+  fetch('vocab-100.json')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(data=>{
+      vocab = data.palabras || [];
+      empezarSesion();
+    })
+    .catch(e=>{
+      zona.innerHTML = '<p style="color:var(--on-char-mute);text-align:center">No se pudo cargar el mazo de palabras. '+
+        'Si abriste el archivo directamente, necesitas un servidor local.</p>';
+      document.querySelector('.barra').style.display = 'none';
+      console.error('[ingles/flashcards]', e);
+    });
+})();
+</script>
+</body>
+</html>

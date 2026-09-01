@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>Clase — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html">De tu mente al <b>mundo</b></a>
+  <div style="flex:1"></div>
+  <a class="home" href="index.html">‹ Hub</a>
+</div>
+
+<div class="detail" id="detail"></div>
+
+<script>
+(function(){
+  'use strict';
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,c=>(
+      {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  const id = new URLSearchParams(location.search).get('id');
+  const box = document.getElementById('detail');
+
+  function fechaLarga(iso){
+    const [a,m,d] = String(iso).split('-').map(Number);
+    if(!a||!m||!d) return esc(iso);
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio',
+                 'agosto','septiembre','octubre','noviembre','diciembre'];
+    return d+' de '+meses[m-1]+' de '+a;
+  }
+
+  function pinta(clase, fila){
+    document.title = clase.titulo + ' — De tu mente al mundo';
+
+    // admite el formato nuevo (lista de generaciones) y el viejo (una sola URL).
+    // Las entradas sin url son huecos preparados: aún no cuentan como grabación.
+    const grabs = (clase.grabaciones && clase.grabaciones.length
+      ? clase.grabaciones
+      : (clase.grabacion ? [{url:clase.grabacion}] : [])
+    ).filter(g => g && g.url);
+
+    const grabacion = grabs.length
+      ? grabs.map((g,i)=>
+          '<a class="item" href="repaso.html?id='+encodeURIComponent(clase.id)+
+            (i?'&g='+i:'')+'">'+
+            '<span class="ico">▶</span>'+
+            '<span class="body">'+
+              '<span class="t">'+(g.generacion?esc(g.generacion)+' generación':'Video de la sesión')+'</span>'+
+              '<span class="d">'+(g.fecha?fechaLarga(g.fecha)+' · ':'')+
+                'Se abre junto a la presentación.</span>'+
+            '</span>'+
+            '<span class="go">Ver →</span></a>').join('')
+      : '<span class="item soon">'+
+          '<span class="ico">▶</span>'+
+          '<span class="body"><span class="t">Video de la sesión</span>'+
+          '<span class="d">Se sube después de la clase.</span></span>'+
+          '<span class="go">Próximamente</span></span>';
+
+    const recursos = (clase.recursos||[]).map(r=>
+      '<a class="item" href="'+esc(r.url)+'">'+
+        '<span class="ico">'+esc(r.icono||'⌘')+'</span>'+
+        '<span class="body"><span class="t">'+esc(r.titulo)+'</span>'+
+        '<span class="d">'+esc(r.descripcion||'')+'</span></span>'+
+        '<span class="go">Abrir →</span></a>').join('');
+
+    const temas = (clase.temas||[]).map((t,i)=>
+      '<div class="topic"><div class="n">'+String(i+1).padStart(2,'0')+'</div>'+
+      '<div class="tx">'+esc(t)+'</div></div>').join('');
+
+    box.innerHTML =
+      '<div class="eyebrow">'+esc(fila.titulo)+' · '+esc(clase.parte)+'</div>'+
+      '<h1>'+esc(clase.titulo)+'</h1>'+
+      '<p class="lede">'+esc(clase.resumen)+'</p>'+
+      (clase.deck?'<a class="mainact" href="'+esc(clase.deck)+'">Abrir presentación <span class="arw">→</span></a>':'')+
+      '<h2>Grabación</h2><div class="items">'+grabacion+'</div>'+
+      (recursos?'<h2>Recursos</h2><div class="items">'+recursos+'</div>':'')+
+      (temas?'<h2>Qué vas a ver</h2><div class="topics">'+temas+'</div>':'')+
+      '<p class="foot">De tu mente al mundo · una iniciativa de '+
+      '<a href="../index.html">La Red de Luz</a></p>';
+  }
+
+  fetch('clases.json')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(data=>{
+      let encontrada=null, suFila=null;
+      data.filas.forEach(f=>f.clases.forEach(c=>{
+        if(c.id===id){ encontrada=c; suFila=f; }
+      }));
+      if(!encontrada){
+        box.innerHTML='<p class="loaderr">No encontramos esa clase. '+
+          '<a href="index.html" style="color:var(--sesame)">Volver al hub</a></p>';
+        return;
+      }
+      pinta(encontrada, suFila);
+    })
+    .catch(e=>{
+      box.innerHTML='<p class="loaderr">No se pudo cargar la clase. Si abriste el archivo '+
+        'directamente, necesitas un servidor local para leer clases.json.</p>';
+      console.error('[clase]',e);
+    });
+})();
+</script>
+</body>
+</html>

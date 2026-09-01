@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Prompt de arranque · Pipeline de edición de video — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3.2rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:46ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+h3{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(1rem,1.6vw,1.15rem);margin-top:1.8rem;color:var(--on-char)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+p.tight{margin-top:.4rem}
+strong,b{color:var(--on-char);font-weight:600}
+code{font-family:'Martian Mono',monospace;font-size:.86em;
+  background:rgba(243,234,215,.07);border:1px solid var(--line-d);
+  border-radius:5px;padding:.1em .42em;color:var(--sesame);
+  word-break:break-all}
+
+ol,ul{margin-top:1rem;padding-left:1.4rem;color:var(--on-char-soft)}
+li{margin-top:.7rem}
+li::marker{color:var(--sesame)}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+/* bloque del prompt copiable */
+.promptbox{position:relative;margin-top:1.6rem;
+  background:#0f0c09;border:1px solid var(--line-d2);border-radius:14px;overflow:hidden}
+.promptbox .pb-head{display:flex;align-items:center;gap:.5rem;
+  padding:.6rem .9rem;border-bottom:1px solid var(--line-d);
+  background:rgba(243,234,215,.04)}
+.promptbox .pb-head i{width:9px;height:9px;border-radius:50%;background:var(--line-d2);display:block}
+.promptbox .pb-head .tt{margin-left:.4rem;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+.promptbox pre{padding:clamp(1rem,2.4vw,1.5rem);overflow-x:auto;
+  font-family:'Martian Mono',monospace;font-size:clamp(.72rem,1.15vw,.86rem);
+  line-height:1.7;color:var(--on-char-soft);white-space:pre-wrap;word-break:break-word}
+.copybtn{position:absolute;top:.5rem;right:.6rem;
+  background:rgba(232,161,60,.12);border:1px solid var(--sesame);color:var(--sesame);
+  border-radius:7px;padding:.3rem .7rem;cursor:pointer;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  transition:.25s var(--ease)}
+.copybtn:hover{background:rgba(232,161,60,.24)}
+.copybtn.done{background:rgba(124,154,62,.2);border-color:var(--lettuce);color:var(--lettuce)}
+
+/* lecciones / avisos */
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--sesame);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+.lesson.hard{border-left-color:var(--ketchup)}
+
+/* tabla de herramientas */
+.tools{width:100%;border-collapse:collapse;margin-top:1.4rem;font-size:.93rem}
+.tools th{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:left;
+  padding:.5rem .7rem;border-bottom:1px solid var(--line-d2);font-weight:400}
+.tools td{padding:.75rem .7rem;border-bottom:1px solid var(--line-d);
+  vertical-align:top;color:var(--on-char-soft)}
+.tools td.k{font-family:'Unbounded',sans-serif;font-weight:500;
+  color:var(--on-char);white-space:nowrap}
+
+/* callout de campos a llenar */
+.fillnote{margin-top:1.2rem;padding:.9rem 1.1rem;border-radius:10px;
+  background:rgba(200,68,46,.1);border:1px solid rgba(200,68,46,.4);
+  font-size:.93rem;color:var(--on-char-soft)}
+.fillnote b{color:var(--ketchup)}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+/* ---- IMPRESIÓN / PDF ---- */
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar,.copybtn{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  h3{font-size:11pt;color:#111;break-after:avoid}
+  p,li{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  code{background:#f2f2f2;border-color:#ddd;color:#8a3b18}
+  .promptbox{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .promptbox .pb-head{background:#f0f0f0;border-color:#ddd}
+  .promptbox .pb-head i{background:#ccc}
+  .promptbox .pb-head .tt{color:#666}
+  .promptbox pre{color:#222;font-size:8.5pt}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .lesson.hard{border-left-color:#b03b22}
+  .tools td{color:#333;border-color:#ddd}
+  .tools th{color:#666;border-color:#bbb}
+  .tools td.k{color:#111}
+  .fillnote{background:#fdf2ef;border-color:#e0b3a8;color:#333;break-inside:avoid}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=video-con-codigo-1">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Herramientas de IA · Clase 1 · Recurso</div>
+  <h1>Prompt de arranque —<br><span class="hl">pipeline de edición de video</span></h1>
+  <p class="sub">Pega esto al abrir una conversación nueva en la que quieras trabajar video. Ajusta la sección "Mi material" a tu caso.</p>
+  <div class="rule"></div>
+
+  <!-- ===== PROMPT COMPLETO ===== -->
+  <h2>El prompt completo</h2>
+  <p>Cópialo tal cual. Lo único que tienes que tocar antes de mandarlo son los campos entre corchetes de <b>Mi material</b>.</p>
+
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Pégalo en una conversación nueva</span></div>
+    <button class="copybtn" data-target="p1">Copiar</button>
+<pre id="p1">Quiero montar (o usar) un pipeline para editar video hablado con código. Necesito
+que instales lo que falte y luego trabajemos la edición.
+
+## QUÉ QUIERO LOGRAR
+
+Tomar un video donde hablo de corrido y convertirlo en algo publicable: cortar
+muletillas y repeticiones, ponerle subtítulos, reencuadres y sonido. La edición
+se decide leyendo la transcripción, no rebobinando a oído.
+
+## MI MATERIAL
+
+- Cámara: [ej. DJI Pocket 4 — graba HEVC 10-bit, hay que transcodificar a H.264]
+- Formato: [ej. vertical 1080x1920, 23.976 fps]
+- Idioma: español
+- Carpeta: [ruta donde están los archivos]
+
+## HERRAMIENTAS DEL PIPELINE
+
+Revisa qué hay instalado antes de instalar nada — es probable que ya tenga algo.
+
+1. Python 3 — solo porque Whisper corre en él
+   `python --version` para revisar
+   `winget install Python.Python.3.12` si falta
+
+2. faster-whisper — transcripción con timestamps por palabra
+   `python -m pip install faster-whisper`
+   La primera corrida descarga el modelo large-v3 (~1.5 GB), una sola vez
+
+3. ffmpeg completo — cortar, extraer audio, encodear
+   `winget install --id Gyan.FFmpeg -e`
+   Revisa primero si ya existe en el sistema
+
+4. Node.js — solo si vamos a usar Remotion
+   `winget install OpenJS.NodeJS.LTS`
+
+5. Remotion — solo si quiero subtítulos/animación por código
+   `npx create-video@latest`
+
+## COSAS QUE YA APRENDIMOS Y NO QUIERO REPETIR
+
+El PATH después de winget. Cuando instales algo con winget, las terminales ya
+abiertas no ven el PATH nuevo. Usa la ruta absoluta al binario en vez de pelearte
+con eso. La de ffmpeg suele quedar en:
+%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg_*\ffmpeg-*-full_build\bin\ffmpeg.exe
+
+ffmpeg 9 quitó -filter_complex_script. El reemplazo es -/filter_complex archivo.txt
+Hace falta para filtergraphs largos que no caben en línea de comandos.
+
+Nunca canalices ffmpeg a grep para ver el progreso. El código de salida que
+recibes es el del grep, no el de ffmpeg — un fallo se ve como éxito. Manda todo a
+un log y léelo.
+
+Usa el fps real, no el redondeado. Si el material es 23.976, usar 24 desfasa
+los subtítulos medio segundo en cinco minutos. Sácalo con ffprobe antes de nada.
+
+Fusiona los tramos que se solapen antes de concatenar, o se repite audio en las
+uniones. Mete un afade de 0.02s en cada extremo para que los cortes no truenen.
+
+El ffmpeg que trae Remotion no sirve para todo. Está en
+node_modules\@remotion\compositor-*\ffmpeg.exe y viene con --disable-filters:
+no tiene subtitles ni drawtext. Sirve para extraer audio y stream-copy, nada más.
+
+Los renders de Remotion dejan procesos huérfanos. Revísalos y ciérralos al
+terminar.
+
+## EL FLUJO
+
+1. Extraer audio a 16 kHz mono
+2. Transcribir con word_timestamps=True, vad_filter=True, language="es"
+3. Enseñarme la poda propuesta antes de cortar — qué se va y qué se queda
+4. Cortar con trim/atrim + concat en un filtergraph
+5. Montar en Remotion si hace falta
+6. Renderizar y verificar el archivo de salida de verdad (duración, fotogramas)
+
+## CÓMO QUIERO QUE TRABAJES
+
+- Antes de cortar, muéstrame las decisiones. No borres cinco minutos de mi voz
+  según tu criterio sin que yo vea primero qué se va.
+- Verifica el resultado real, no el preview. Saca fotogramas del archivo final
+  y revisa duración y codec.
+- Dime cuando algo falle. Si el render no salió, dilo — no lo reportes como
+  hecho.
+- Poda, no reescribas. Si estoy limpiando mi forma de hablar, quita lo que
+  sobra pero no metas palabras que yo no usaría.
+- Si encuentras un error de contenido (un dato mal dicho, un término equivocado),
+  dímelo pero no lo "arregles" por tu cuenta — es mi voz.</pre>
+  </div>
+
+  <div class="fillnote">
+    <b>Antes de mandarlo:</b> llena los cuatro campos de <b>Mi material</b>. Son los que hacen que la respuesta sirva para tu video y no para uno genérico. Si no sabes tu fps, déjalo en blanco y pide que lo saquen con <code>ffprobe</code>.
+  </div>
+
+  <!-- ===== VARIANTE CORTA ===== -->
+  <h2>Variante corta</h2>
+  <p>Si ya tienes todo instalado y solo quieres trabajar:</p>
+
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Cuando el entorno ya existe</span></div>
+    <button class="copybtn" data-target="p2">Copiar</button>
+<pre id="p2">Ya tengo faster-whisper y ffmpeg full instalados. Quiero editar este video:
+[ruta]. Transcríbelo con timestamps por palabra, enséñame la poda propuesta
+(muletillas, repeticiones, frases a medias) antes de cortar nada, y cuando
+apruebe, córtalo. Es [formato/fps] — usa el fps real, no lo redondees.</pre>
+  </div>
+
+  <!-- ===== REFERENCIA RÁPIDA ===== -->
+  <h2>Referencia rápida de instalación</h2>
+  <p>Lo mismo que viene en el prompt, pero para consultarlo suelto. Revisa qué ya tienes antes de instalar nada.</p>
+
+  <table class="tools">
+    <thead><tr><th>Herramienta</th><th>Para qué</th><th>Comando</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Node.js</td><td>Deja correr JavaScript fuera del navegador. Lo necesita Remotion</td><td><code>node --version</code> para revisar<br><code>winget install OpenJS.NodeJS.LTS</code></td></tr>
+      <tr><td class="k">ffmpeg</td><td>Cortar, extraer audio, encodear</td><td><code>winget install --id Gyan.FFmpeg -e</code></td></tr>
+      <tr><td class="k">Python 3</td><td>Solo porque Whisper corre en él</td><td><code>python --version</code> para revisar<br><code>winget install Python.Python.3.12</code></td></tr>
+      <tr><td class="k">faster-whisper</td><td>Transcripción con timestamps por palabra</td><td><code>python -m pip install faster-whisper</code></td></tr>
+      <tr><td class="k">Remotion</td><td>Subtítulos y animación por código</td><td><code>npx create-video@latest</code><br>elige la plantilla <b>Blank</b>, luego <code>npm run dev</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="fillnote">
+    <b>Dos avisos que ahorran media hora:</b> después de instalar con winget, <b>cierra la terminal y abre una nueva</b> — las que ya estaban abiertas no ven la instalación. Y Whisper <b>descarga 1.5 GB la primera vez que lo corres</b>, no cuando lo instalas: hazlo en casa antes de la clase, no con el wifi del lugar.
+  </div>
+
+  <h3>Revisa antes de instalar</h3>
+  <p>Mucha gente ya tiene Node o Python sin saberlo. Si <code>node --version</code> responde algo como <code>v20.11.0</code>, ya está — no lo instales otra vez.</p>
+
+  <!-- ===== LECCIONES ===== -->
+  <h2>Las lecciones que ya costaron tiempo</h2>
+  <p>Van dentro del prompt para que no se repitan. Aquí están explicadas, por si quieres entender el porqué.</p>
+
+  <div class="lesson hard">
+    <div class="lt">El PATH después de winget</div>
+    <p>Cuando instalas algo con winget, las terminales <b>ya abiertas</b> no ven el PATH nuevo. Usa la ruta absoluta al binario en vez de pelearte con eso. La de ffmpeg suele quedar en <code>%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg_*\ffmpeg-*-full_build\bin\ffmpeg.exe</code></p>
+  </div>
+
+  <div class="lesson hard">
+    <div class="lt">Nunca canalices ffmpeg a grep</div>
+    <p>El código de salida que recibes es el <b>del grep</b>, no el de ffmpeg — un fallo se ve como éxito. Manda todo a un log y léelo.</p>
+  </div>
+
+  <div class="lesson hard">
+    <div class="lt">Usa el fps real, no el redondeado</div>
+    <p>Si el material es 23.976 y usas 24, los subtítulos se desfasan medio segundo en cinco minutos. Sácalo con <code>ffprobe</code> antes de nada.</p>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">Fusiona los tramos que se solapen</div>
+    <p>Antes de concatenar, o se repite audio en las uniones. Mete un <code>afade</code> de 0.02s en cada extremo para que los cortes no truenen.</p>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">ffmpeg 9 quitó <code>-filter_complex_script</code></div>
+    <p>El reemplazo es <code>-/filter_complex archivo.txt</code>. Hace falta para filtergraphs largos que no caben en línea de comandos.</p>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">El ffmpeg que trae Remotion no sirve para todo</div>
+    <p>Está en <code>node_modules\@remotion\compositor-*\ffmpeg.exe</code> y viene con <code>--disable-filters</code>: no tiene <code>subtitles</code> ni <code>drawtext</code>. Sirve para extraer audio y stream-copy, nada más.</p>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">Los renders de Remotion dejan procesos huérfanos</div>
+    <p>Revísalos y ciérralos al terminar.</p>
+  </div>
+
+  <!-- ===== EL FLUJO ===== -->
+  <h2>El flujo, paso por paso</h2>
+  <ol>
+    <li>Extraer audio a <b>16 kHz mono</b></li>
+    <li>Transcribir con <code>word_timestamps=True</code>, <code>vad_filter=True</code>, <code>language="es"</code></li>
+    <li><b>Ver la poda propuesta antes de cortar</b> — qué se va y qué se queda</li>
+    <li>Cortar con <code>trim</code>/<code>atrim</code> + <code>concat</code> en un filtergraph</li>
+    <li>Montar en Remotion si hace falta</li>
+    <li>Renderizar y <b>verificar el archivo de salida de verdad</b> (duración, fotogramas)</li>
+  </ol>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../video-con-codigo-1.html">Una página web que se convierte en video</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const txt=document.getElementById(btn.dataset.target).textContent;
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1800);
+  });
+});
+</script>
+</body>
+</html>

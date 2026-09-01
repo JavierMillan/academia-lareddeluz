@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/imgs/reddeluz.png">
+<title>De tu mente al mundo — Clases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="theme-dtmm">
+<a class="skip-link" href="#rows">Saltar al contenido</a>
+<header class="topbar academy-shell" id="academyHeader">
+  <a class="academy-brand" href="https://academia.lareddeluz.com/" aria-label="Volver a Academia La Red de Luz">
+    <img src="../assets/imgs/reddeluz.png" alt="" width="34" height="34">
+    <span>La Red de Luz · Academia</span>
+  </a>
+  <span class="shell-divider" aria-hidden="true">/</span>
+  <span class="constellation-context">DTMM</span>
+  <nav class="nav nav-desktop" id="navMain" aria-label="Secciones del programa">
+    <!-- los grupos y filas se agregan desde clases.json -->
+  </nav>
+  <a class="all-constellations" href="https://academia.lareddeluz.com/">Todas las constelaciones</a>
+  <button class="burger" id="burger" type="button" aria-label="Abrir menú"
+          aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
+</header>
+<nav class="nav-drawer" id="navDrawer" aria-label="Menú de navegación" aria-hidden="true">
+  <!-- los grupos y filas se agregan desde clases.json -->
+  <a class="dfoot" href="https://academia.lareddeluz.com/">Todas las constelaciones</a>
+</nav>
+<div class="nav-scrim" id="navScrim"></div>
+<main>
+  <div id="heroSlot"></div>
+  <div class="wrap pad rows-area" id="rows"></div>
+</main>
+<footer class="wrap pad hub-footer">
+  <p class="foot">De tu mente al mundo · una constelación de La Red de Luz</p>
+</footer>
+<script src="assets/hub.js"></script>
+</body>
+</html>

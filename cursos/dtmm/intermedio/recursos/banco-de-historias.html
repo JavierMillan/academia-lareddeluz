@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Plantilla de banco de historias — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:50ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+strong,b{color:var(--on-char);font-weight:600}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+/* zona editable */
+.zona-card{margin-top:1.2rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:12px;padding:clamp(1.1rem,2.2vw,1.6rem)}
+.zona-card.z1{border-left:3px solid var(--lettuce)}
+.zona-card.z2{border-left:3px solid var(--line-d2)}
+.zona-card.z3{border-left:3px solid var(--sesame)}
+.zona-card .nombre{font-family:'Unbounded',sans-serif;font-weight:600;
+  font-size:clamp(1rem,1.6vw,1.2rem)}
+.zona-card .desc{font-size:.9rem;color:var(--on-char-mute);margin-top:.3rem}
+.zona-card textarea{width:100%;margin-top:.9rem;background:rgba(243,234,215,.04);
+  border:1px solid var(--line-d);border-radius:9px;padding:.8rem .9rem;
+  font-family:'Fraunces',serif;font-style:italic;font-size:1rem;color:var(--on-char);
+  resize:vertical;min-height:4.5rem}
+.zona-card textarea::placeholder{color:var(--on-char-mute);opacity:.7}
+.zona-card textarea:focus{outline:none;border-color:var(--sesame)}
+
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--ketchup);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  p{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  .zona-card{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .zona-card .nombre{color:#111}
+  .zona-card .desc{color:#666}
+  .zona-card textarea{background:#fff;border-color:#ccc;color:#111}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=tu-historia-como-material-7">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Intermedio · Parte 7 · Recurso</div>
+  <h1>Plantilla de <span class="hl">banco de historias</span></h1>
+  <p class="sub">Un espacio por zona para que llenes tus 5 historias. Escribe aquí mismo — este archivo no guarda nada en un servidor, así que cuando termines cópialo a donde sí lo vayas a conservar (notas, un documento).</p>
+  <div class="rule"></div>
+
+  <h2>Zona pública</h2>
+  <p>Lo que ya cuentas sin pensarlo: tu trabajo, tus opiniones sobre tu tema. Escribe 2.</p>
+  <div class="zona-card z1">
+    <div class="nombre">Historia 1</div>
+    <div class="desc">Algo de tu trabajo que ya compartirías sin dudarlo</div>
+    <textarea placeholder="Ej. el proyecto que más me ha enseñado este año fue..."></textarea>
+  </div>
+  <div class="zona-card z1">
+    <div class="nombre">Historia 2</div>
+    <div class="desc">Una opinión fuerte sobre tu tema</div>
+    <textarea placeholder="Ej. la mayoría de la gente cree X, pero yo he visto que..."></textarea>
+  </div>
+
+  <h2>Zona de trabajo, con contexto</h2>
+  <p>Errores, aprendizajes, el detrás de cámaras. Escribe 2.</p>
+  <div class="zona-card z2">
+    <div class="nombre">Historia 3</div>
+    <div class="desc">Un error real que cometiste y qué aprendiste</div>
+    <textarea placeholder="Ej. la primera vez que hice X, me equivoqué en..."></textarea>
+  </div>
+  <div class="zona-card z2">
+    <div class="nombre">Historia 4</div>
+    <div class="desc">Algo detrás de cámaras que nadie ve</div>
+    <textarea placeholder="Ej. lo que nadie ve de mi día a día es..."></textarea>
+  </div>
+
+  <h2>Zona personal filtrada</h2>
+  <p>Un momento de tu vida que conecta con tu mensaje, contado con propósito. Escribe 1.</p>
+  <div class="zona-card z3">
+    <div class="nombre">Historia 5</div>
+    <div class="desc">Algo personal que conecta con lo que enseñas — filtrado, no todo</div>
+    <textarea placeholder="Ej. hace un tiempo yo también pasé por..."></textarea>
+  </div>
+
+  <div class="lesson">
+    <div class="lt">Recuerda: hay una zona que no aparece aquí</div>
+    <p>La zona privada (familia, salud, dinero) nunca es contenido. Si dudas si algo pertenece ahí, mejor no lo escribas en esta plantilla.</p>
+  </div>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../../clase.html?id=tu-historia-como-material-7">Tu historia como material</a></p>
+</div>
+</body>
+</html>

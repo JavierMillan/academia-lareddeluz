@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Construyendo Nuestras Primeras Conversaciones — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido de DTMM: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en 3+ decks de este programa, súbelo a
+   assets/ingles.css)
+   ============================================================ */
+
+/* tarjeta de vocabulario: palabra + pronunciación */
+.vocab{width:100%;border-collapse:collapse;font-size:clamp(.86rem,1.3vw,1.05rem)}
+.vocab th{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:left;
+  padding:.5rem .8rem;border-bottom:1px solid var(--line-d2);font-weight:400}
+.paper .vocab th{color:var(--on-paper-mute)}
+.vocab td{padding:clamp(.55rem,1.2vw,.85rem) .8rem;border-bottom:1px solid var(--line-d);
+  line-height:1.35}
+.paper .vocab td{border-color:var(--line-l)}
+.vocab td.w{font-family:'Unbounded',sans-serif;font-weight:500}
+.vocab td.p{font-family:'Martian Mono',monospace;color:var(--sesame)}
+.paper .vocab td.p{color:var(--ketchup)}
+
+/* diálogo A/B para role-play */
+.dialogo{display:flex;flex-direction:column;gap:.6rem;width:100%;max-width:38rem}
+.dialogo .linea{display:grid;grid-template-columns:2.4rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--sesame)}
+.paper .dialogo .quien{color:var(--ketchup)}
+.dialogo .txt{font-family:'Fraunces',serif;font-size:clamp(1rem,1.6vw,1.25rem);
+  line-height:1.4}
+
+/* frase con pronunciación abajo, tipo tarjeta */
+.frase-card{width:100%;max-width:40rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-left:3px solid var(--sesame);border-radius:14px;
+  padding:clamp(1.1rem,2.2vw,1.6rem)}
+.paper .frase-card{background:var(--paper-soft);border-color:var(--line-l);
+  border-left-color:var(--ketchup)}
+.frase-card .en{font-family:'Fraunces',serif;font-style:italic;
+  font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.4}
+.frase-card .pron{font-family:'Martian Mono',monospace;font-size:.82rem;
+  color:var(--sesame);margin-top:.6rem}
+.paper .frase-card .pron{color:var(--ketchup)}
+
+/* falsos amigos: palabra vs. lo que NO significa */
+.falso-amigo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.3rem);width:100%}
+@media(max-width:820px){.falso-amigo{grid-template-columns:1fr}}
+.falso-amigo .col{border-radius:14px;padding:clamp(1rem,2vw,1.4rem)}
+.falso-amigo .real{background:rgba(234,74,99,.06);border:1px solid var(--sesame)}
+.falso-amigo .trampa{background:var(--char-soft);border:1px solid rgba(234,74,99,.4)}
+.falso-amigo .lab{background:var(--char-soft);display:inline-block;padding:.2em .5em;border-radius:6px}
+.falso-amigo .lab{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase}
+.falso-amigo .real .lab{color:var(--sesame)}
+.falso-amigo .trampa .lab{color:var(--ketchup)}
+.falso-amigo .txt{font-size:clamp(.9rem,1.3vw,1.05rem);line-height:1.5;margin-top:.5rem;
+  color:var(--on-char-soft)}
+
+/* escenas del role-play, en tarjetas seleccionables */
+.escenas{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.6rem,1.4vw,1.1rem);width:100%}
+@media(max-width:820px){.escenas{grid-template-columns:1fr}}
+.escena{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(.95rem,1.8vw,1.3rem)}
+.paper .escena{background:var(--paper-soft);border-color:var(--line-l)}
+.escena .lugar{font-family:'Unbounded',sans-serif;font-weight:600;
+  font-size:clamp(.95rem,1.4vw,1.1rem);color:var(--sesame)}
+.paper .escena .lugar{color:var(--ketchup)}
+.escena .linea{font-family:'Fraunces',serif;font-style:italic;font-size:.86rem;
+  line-height:1.5;margin-top:.6rem;color:var(--on-char-soft)}
+.paper .escena .linea{color:var(--on-paper-soft)}
+
+/* las tarjetas .pub de "herramientas de hoy" ahora son <a> reales —
+   sin esto heredan el underline por defecto del navegador en .label/.txt,
+   y no tenían ningún indicador visual de que se puede abrir */
+.ab .pub{text-decoration:none;transition:.2s var(--ease);position:relative}
+.ab .pub:hover{transform:translateY(-3px)}
+.ab .pub-go{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+.ab .a .pub-go{color:var(--sesame)}
+.ab .b .pub-go{color:var(--on-char)}
+.paper .ab .a .pub-go{color:var(--ketchup)}
+.paper .ab .b .pub-go{color:var(--on-paper)}
+.ab .pub-go .arw{transition:transform .2s var(--ease)}
+.ab .pub:hover .pub-go .arw{transform:translateX(4px)}
+</style>
+</head>
+<body data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center" data-notes="Segunda sesión del programa. Tono: entre amigos, sin juicios. Recuérdales desde el inicio que equivocarse es parte del método — no una vergüenza.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Construyendo nuestras <span class="hl">primeras conversaciones.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Un espacio entre amigos para practicar, equivocarnos y reírnos en el intento.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Sesión 2</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · QUÉ VIMOS LA CLASE PASADA -->
+    <section class="slide paper" data-notes="Repaso rápido de la sesión 1. No te detengas mucho aquí — es para refrescar, no para reenseñar.">
+      <div class="eyebrow">¿Qué vimos la clase pasada?</div>
+      <h2 class="h1">Lo que ya <span class="hl">traes contigo.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Nos presentamos: "My name is… I am from… I like…"</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Perdimos el miedo — equivocarse es parte del método, no hay juicios aquí</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Frases de sobrevivencia: Hello, Thank you, I don't understand, Can you repeat?</div></div>
+      </div>
+    </section>
+
+    <!-- 3 · OBJETIVO DE HOY -->
+    <section class="slide" data-notes="Establece las tres metas de la sesión, en orden. El tercer punto (reírnos) es tan objetivo como los otros dos — dale el mismo peso.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Objetivo de hoy</div>
+      <h2 class="h1">Tres cosas <span class="hl">para hoy.</span></h2>
+      <div class="steps mt-l" style="grid-template-columns:repeat(3,1fr)">
+        <div class="step"><div class="ico">🗣️</div><div class="st">Pronunciar</div><div class="sh">Nuestras palabras sin miedo, con guía</div></div>
+        <div class="step"><div class="ico">💬</div><div class="st">Conversar</div><div class="sh">Armar conversaciones cortas de la vida real</div></div>
+        <div class="step"><div class="ico">😄</div><div class="st">Reírnos</div><div class="sh">Con situaciones chistosas que a todos nos han pasado</div></div>
+      </div>
+    </section>
+
+    <!-- 4 · WARM-UP -->
+    <section class="slide paper" data-notes="2 minutos, en parejas. Que lo digan en voz alta de verdad, no que lo lean en silencio. Este es el primer momento donde hablan inglés en la sesión — dales tiempo.">
+      <div class="eyebrow">Warm-Up · Rompiendo el hielo · 2 min · en parejas</div>
+      <h2 class="h1">Salúdense <span class="hl">usando esto.</span></h2>
+      <div class="dialogo mt-l">
+        <div class="linea"><span class="quien">A</span><span class="txt">Hello! How are you?</span></div>
+        <div class="linea"><span class="quien">B</span><span class="txt">I'm good, thank you! And you?</span></div>
+        <div class="linea"><span class="quien">A</span><span class="txt">I'm good too. What's your name?</span></div>
+        <div class="linea"><span class="quien">B</span><span class="txt">My name is ___. Nice to meet you!</span></div>
+      </div>
+    </section>
+
+    <!-- 5 · HERRAMIENTAS DE HOY -->
+    <section class="slide" data-notes="Menciona las dos herramientas de apoyo. Que las tengan abiertas en el celular durante toda la sesión — insiste en esto, es lo que hace que se atrevan a hablar.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Nuestras herramientas de hoy</div>
+      <h2 class="h1">Ten esto <span class="hl">a la mano.</span></h2>
+      <div class="ab mt-l">
+        <a class="pub a" href="recursos/100-palabras.html" target="_blank" rel="noopener">
+          <div class="label">100 palabras más útiles</div>
+          <div class="txt">Vocabulario por categoría, con pronunciación incluida — "today" = tudei. Todo en el mismo recurso.</div>
+          <div class="pub-go">Abrir recurso <span class="arw">→</span></div>
+        </a>
+        <a class="pub b" href="recursos/flashcards.html" target="_blank" rel="noopener">
+          <div class="label">Flashcards de repaso</div>
+          <div class="txt">Para que esas 100 palabras se queden — repetición espaciada, en tandas cortas.</div>
+          <div class="pub-go">Abrir recurso <span class="arw">→</span></div>
+        </a>
+      </div>
+      <div class="chip"><span class="dot"></span> Tip: ábrelo en tu celular durante toda la sesión</div>
+    </section>
+
+    <!-- 6 · SITUACIÓN GRACIOSA: COFFEE TO GO -->
+    <section class="slide paper" data-notes="La primera de las situaciones chistosas — cumple el objetivo 3. Léela con humor, sin burla. El error de &laquo;a coffee for go&raquo; es real y muy común.">
+      <div class="eyebrow">Situación graciosa · en la cafetería en Estados Unidos</div>
+      <h2 class="h1">"A coffee <span class="hl">for go</span>" no existe.</h2>
+      <p class="lead wide mt-m">Alguien quiere pedir un café "para llevar" y dice: "I want a coffee to go" — ¡y funciona! Pero si dices "a coffee for go", el barista te va a ver con cara de "¿mande?"</p>
+      <div class="frase-card mt-m">
+        <div class="en">"Can I get a coffee to go, please?"</div>
+        <div class="pron">can ai guet e cofi tu gou, plis</div>
+      </div>
+    </section>
+
+    <!-- 7 · REPASO: SALUDOS + PREGUNTAS -->
+    <section class="slide" data-notes="Categorías 1 y 2 de las 100 palabras. Actividad al final: por turnos, arman una pregunta usando una de estas palabras — que sea en voz alta.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Repaso rápido · categorías 1 y 2</div>
+      <h2 class="h1">Saludos <span class="hl">+ preguntas.</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Hello</td><td class="p">jelou</td></tr>
+          <tr><td class="w">Thank you</td><td class="p">zank iu</td></tr>
+          <tr><td class="w">Sorry</td><td class="p">sori</td></tr>
+          <tr><td class="w">Please</td><td class="p">plis</td></tr>
+          <tr><td class="w">What / Where</td><td class="p">uat / uer</td></tr>
+          <tr><td class="w">How much</td><td class="p">jau mach</td></tr>
+          <tr><td class="w">Can</td><td class="p">can</td></tr>
+        </tbody>
+      </table>
+      <div class="chip"><span class="dot"></span> Actividad: por turnos, arma una pregunta usando una de estas palabras</div>
+    </section>
+
+    <!-- 8 · FALSOS AMIGOS -->
+    <section class="slide paper" data-notes="Los falsos amigos son de las trampas más comunes para hispanohablantes. Léelos uno por uno, con ejemplo de la confusión real.">
+      <div class="eyebrow">Cuidado con los "falsos amigos"</div>
+      <h2 class="h1">Se oyen parecido. <span class="hl">Significan otra cosa.</span></h2>
+      <div class="falso-amigo mt-l">
+        <div class="col real">
+          <div class="lab">Significado real</div>
+          <div class="txt"><b>Embarrassed</b> = apenado/a<br><b>Actually</b> = en realidad<br><b>Realize</b> = darse cuenta<br><b>Exit</b> = salida</div>
+        </div>
+        <div class="col trampa">
+          <div class="lab">Ojo con...</div>
+          <div class="txt">NO significa "embarazada"<br>NO significa "actualmente"<br>NO significa "realizar"<br>NO significa "éxito"</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · EL CLÁSICO ERROR: "ESTOY CALIENTE" -->
+    <section class="slide" data-notes="El error más memorable de la sesión — probablemente el que más risas genere. Explica la regla de fondo: hablar del clima usa &laquo;it's&raquo;, hablar de un sentimiento propio usa &laquo;I am&raquo;.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">El clásico error</div>
+      <h2 class="h1">"I am hot" <span class="hl">no dice lo que crees.</span></h2>
+      <p class="lead wide mt-m">Si hace calor y dices "I am hot", en inglés eso suena más como "estoy buenísimo/a" — no es lo que queríamos decir. La forma correcta es hablar del clima, no de ti: <b>"It's hot today"</b> (its jat tudei).</p>
+      <div class="chip"><span class="dot"></span> Mismo caso con "It's cold" (its could) — pero "I am hungry" (ai am jangri) sí lleva "I am", porque es un sentimiento tuyo, no del clima</div>
+    </section>
+
+    <!-- 10 · REPASO: TIEMPO + SENTIMIENTOS -->
+    <section class="slide paper" data-notes="Categorías 6 y 9 de las 100 palabras. Actividad: que digan cómo se sienten ahorita usando una de estas palabras, en voz alta.">
+      <div class="eyebrow">Repaso rápido · categorías 6 y 9</div>
+      <h2 class="h1">Tiempo <span class="hl">+ sentimientos.</span></h2>
+      <table class="vocab mt-l">
+        <thead><tr><th>Palabra</th><th>Pronunciación</th></tr></thead>
+        <tbody>
+          <tr><td class="w">Today</td><td class="p">tudei</td></tr>
+          <tr><td class="w">Tomorrow</td><td class="p">tumorou</td></tr>
+          <tr><td class="w">Now / Later</td><td class="p">nau / leiter</td></tr>
+          <tr><td class="w">Happy</td><td class="p">japi</td></tr>
+          <tr><td class="w">Tired</td><td class="p">taird</td></tr>
+          <tr><td class="w">Hungry</td><td class="p">jangri</td></tr>
+          <tr><td class="w">Okay</td><td class="p">oquei</td></tr>
+        </tbody>
+      </table>
+      <div class="chip"><span class="dot"></span> Actividad: di cómo te sientes ahorita usando una de estas palabras</div>
+    </section>
+
+    <!-- 11 · ACTIVIDAD PRINCIPAL: MINI ROLE-PLAY -->
+    <section class="slide" data-notes="La actividad central de la sesión, 15 minutos en parejas. Que elijan una escena, no las tres. Recuérdales que pueden usar la guía de pronunciación si se traban — sin prisa.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Actividad principal · 15 min · en parejas</div>
+      <h2 class="h1">Mini <span class="hl">role-play.</span></h2>
+      <div class="escenas mt-l">
+        <div class="escena">
+          <div class="lugar">En la tienda</div>
+          <div class="linea">"How much is this?" / "It's ten dollars" / "Thank you!"</div>
+        </div>
+        <div class="escena">
+          <div class="lugar">En el restaurante</div>
+          <div class="linea">"Can I get a burger, please?" / "Sure! Anything else?"</div>
+        </div>
+        <div class="escena">
+          <div class="lugar">Pidiendo un Uber</div>
+          <div class="linea">"Hello! Where are you?" / "I'm at home. My address is…"</div>
+        </div>
+      </div>
+      <div class="chip"><span class="dot"></span> Elige una escena. Usa la guía de pronunciación si te trabas — no hay prisa</div>
+    </section>
+
+    <!-- 12 · TIP DE PRONUNCIACIÓN DEL DÍA -->
+    <section class="slide paper" data-notes="El sonido TH es de los más difíciles para hispanohablantes. Demuestra la posición de la lengua en vivo. El segundo tip (escuchar 10 min al día) es tarea pasiva, fácil de sostener.">
+      <div class="eyebrow">Tip de pronunciación del día</div>
+      <h2 class="h1">El sonido <span class="hl">"TH".</span></h2>
+      <p class="lead wide mt-m">Palabras como "think" o "thank you" — coloca la punta de la lengua entre los dientes y sopla suave. En nuestra guía lo simplificamos como "z", pero con práctica se acerca al sonido real.</p>
+      <div class="chip"><span class="dot"></span> Practica escuchando: canciones, videos o podcasts en inglés, 10 min al día — tu oído se entrena aunque no entiendas todo al principio</div>
+    </section>
+
+    <!-- 13 · CIERRE -->
+    <section class="slide center" data-notes="Cierre cálido. La tarea es simple y social a propósito — practicar con alguien en casa aunque no hable inglés. Recuerda el mensaje central: perder el miedo, no hablar perfecto.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Excelente trabajo hoy!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:28ch">El objetivo no es hablar perfecto. <span class="hl">Es perder el miedo</span> — y hoy ya avanzamos.</p>
+      <p class="lead mt-m" style="text-align:center">Tarea: practica 10 palabras de la lista con alguien en casa, aunque no hable inglés. Solo dilas en voz alta usando la guía de pronunciación — repetir en voz alta es lo que hace la diferencia.</p>
+      <p class="lead mt-s" style="text-align:center">Próxima sesión: se las confirmamos por WhatsApp.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

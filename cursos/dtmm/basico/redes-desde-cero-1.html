@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Antes de publicar, ¿a quién le hablas? — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/deck.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+/* cards */
+
+.card{background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:16px;padding:clamp(1.2rem,2.4vw,2rem)}
+.card.lit{border-color:var(--sesame);box-shadow:0 0 0 1px var(--sesame),0 20px 60px -30px var(--glow)}
+.card .tag{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.card.lit .tag{color:var(--sesame)}
+.card h3{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(1.1rem,1.8vw,1.5rem);
+  margin:.5rem 0 .7rem}
+.card p{color:var(--on-char-soft);font-size:clamp(.92rem,1.2vw,1.1rem);line-height:1.45}
+.card.lit p{color:var(--on-char)}
+.stack{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.3rem)}
+
+/* numbered editorial list (funnel-real / 4 etapas) */
+
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:baseline;
+  padding:clamp(.6rem,1.1vw,1rem) 0;border-top:1px solid var(--line-d)}
+.row:first-child{border-top:1px solid var(--sesame)}
+.row .n{font-family:'Martian Mono',monospace;font-size:.78rem;color:var(--on-char-mute)}
+.row .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1rem,1.6vw,1.4rem)}
+.row.key .t{color:var(--sesame)}
+
+/* transform examples (ahora tú) */
+
+.tx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.4rem);width:100%}
+@media(max-width:820px){.tx{grid-template-columns:1fr}}
+.tx .item{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:clamp(1rem,1.8vw,1.4rem)}
+.tx .who{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-char-mute);margin-bottom:.8rem}
+.tx .bad{color:var(--on-char-mute);font-size:.92rem;text-decoration:line-through;
+  text-decoration-color:var(--ketchup);text-decoration-thickness:1px;margin-bottom:.5rem}
+.tx .good{font-family:'Fraunces',serif;font-style:italic;color:var(--sesame);
+  font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
+
+/* flyer slide */
+
+.flyer-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;width:100%}
+@media(max-width:820px){.flyer-wrap{grid-template-columns:1fr}}
+.flyer-ph{aspect-ratio:3/4;border:1px dashed var(--line-l2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  color:var(--on-paper-mute);padding:1.5rem;background:rgba(0,0,0,.03)}
+.flyer-img{width:100%;max-height:72vh;object-fit:contain;border-radius:12px;
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);transform:rotate(-1.5deg)}
+
+/* QR slide */
+
+.qr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);
+  align-items:center;width:100%}
+@media(max-width:820px){.qr-wrap{grid-template-columns:1fr}}
+.qr-box{background:#fff;border-radius:20px;padding:clamp(1rem,2vw,1.6rem);
+  box-shadow:0 30px 80px -30px rgba(25,20,15,.5);width:fit-content;margin-inline:auto}
+.qr-box img{display:block;width:clamp(220px,30vw,340px);height:auto;border-radius:8px}
+.qr-cap{font-family:'Martian Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-paper-mute);text-align:center;margin-top:1rem}
+
+/* ikigai grid 2x2 */
+
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,1.6vw,1.2rem);width:100%;position:relative}
+@media(max-width:820px){.iki{grid-template-columns:1fr}}
+.iki .cell{background:var(--char-soft);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(1.1rem,2.2vw,1.8rem)}
+.iki .cell .z{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--sesame)}
+.iki .cell .q{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(1.05rem,1.7vw,1.45rem);margin-top:.5rem}
+.iki .cell p{color:var(--on-char-soft);font-size:clamp(.88rem,1.1vw,1.02rem);
+  line-height:1.4;margin-top:.4rem}
+.iki .core{position:absolute;inset:0;margin:auto;width:fit-content;height:fit-content;
+  pointer-events:none;background:var(--char);border:1px solid var(--sesame);border-radius:999px;
+  padding:.5rem 1.2rem;font-family:'Unbounded',sans-serif;font-weight:600;color:var(--sesame);
+  font-size:clamp(.9rem,1.5vw,1.3rem);box-shadow:0 0 40px -8px var(--glow),0 0 0 6px var(--char)}
+@media(max-width:820px){.iki .core{display:none}}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide active">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Redes desde cero · Nivel Básico · Parte 1</div>
+      <h1 class="mega">Antes de publicar,<br>¿a quién le <span class="hl">hablas?</span></h1>
+      <p class="lead wide mt-m serif" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.7rem)">La primera decisión que casi nadie toma… y la que lo cambia <em>todo</em>.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · DIAGNÓSTICO · UNA PREGUNTA -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Una pregunta para arrancar</div>
+      <h2 class="mega" style="max-width:17ch">¿Sabrías describir a tu <span class="hl">cliente</span> en una frase?</h2>
+      <p class="lead wide mt-m">No su edad ni su ciudad. Qué le <em>duele</em>, qué desea, por qué te elegiría a ti. Si te cuesta… es exactamente lo que resolvemos hoy.</p>
+      <div class="chip"><span class="dot"></span> Inténtalo en el chat en una frase</div>
+    </section>
+
+    <!-- 3 · MI HISTORIA (PAPER) -->
+    <section class="slide paper">
+      <div class="glow bl" style="background:radial-gradient(circle at center,rgba(200,68,46,.10) 0%,transparent 70%)"></div>
+      <div class="eyebrow">Te lo cuento de frente</div>
+      <div class="split">
+        <div>
+          <h2 class="mega" style="max-width:14ch">Tengo <span class="hl">poco</span> tiempo en redes.</h2>
+          <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.3rem,2.3vw,2rem);line-height:1.3;max-width:20ch">Pero muchísima <span class="hl" style="font-style:normal;font-weight:500">experiencia.</span></p>
+        </div>
+        <div>
+          <p class="lead wide">Llevo unos años publicando. Lo que llevo es <em>experimentando sin parar </em>: probando, cayéndome, corrigiendo — y ayudando a otros a lograr resultados en el camino.</p>
+          <p class="lead wide mt-s">Por eso hoy puedo ahorrarte las caídas que a mí me costaron meses. Empezando por la más importante.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · LOS 3 ERRORES -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Los 3 errores con los que todos empezamos</div>
+      <div class="ab mt-m" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card lit">
+          <div class="tag">Error 01 · hoy</div>
+          <h3>No sé <span class="hl">a quién le hablo</span></h3>
+          <p>Le hablo a todos, así que no le hablo a nadie.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Error 02 · próxima clase</div>
+          <h3>Fuerzo una cadencia que no es mía</h3>
+          <p>Quiero postear todo el día y me quemo.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Error 03 · próxima clase</div>
+          <h3>No me adapto ni experimento</h3>
+          <p>Publico a ciegas y culpo al algoritmo.</p>
+        </div>
+      </div>
+      <p class="lead wide mt-m">Los tres nacen del mismo lugar: <span class="hl">copiar recetas ajenas</span> sin leer las tuyas. Hoy vamos por el primero — los otros dos, en las próximas clases.</p>
+      <div class="chip"><span class="dot"></span> ¿Cuál te suena más? Coméntalo en el chat</div>
+    </section>
+
+    <!-- 5 · EL ERROR QUE SOSTIENE TODO -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">Si le hablas a <em class="serif" style="color:var(--on-char-soft)">todos</em>…</p>
+      <div class="rule" style="margin-inline:auto"></div>
+      <p class="bigline" style="margin-inline:auto;text-align:center">nadie te <span class="hl">escucha.</span></p>
+      <p class="lead mt-m" style="text-align:center">Ningún formato, ninguna hora de publicación, ningún truco arregla esto. Es el error que sostiene a los otros dos.</p>
+    </section>
+
+    <!-- 6 · QUÉ ES TU MENSAJE (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">La pieza que va antes de todo</div>
+      <div class="split">
+        <div>
+          <h2 class="h1">Tu mensaje <span class="hl">no</span> es tu servicio.</h2>
+          <p class="lead wide mt-m">Es el <em>problema humano</em> que resuelves… y para <em>quién</em> lo resuelves.</p>
+        </div>
+        <div>
+          <p class="serif" style="font-size:clamp(1.4rem,2.4vw,2.1rem);line-height:1.28">La gente no sigue lo que <span class="hl" style="font-weight:500">haces.</span></p>
+          <p class="serif mt-s" style="font-size:clamp(1.4rem,2.4vw,2.1rem);line-height:1.28">Sigue el problema que le <span class="hl" style="font-weight:500">quitas.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · DE TEMA A MENSAJE HUMANO -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Del servicio frío al problema que se siente</div>
+      <h2 class="h1">Un tema no conecta.<br>Un <span class="hl">dolor</span> sí.</h2>
+      <div class="tx mt-l">
+        <div class="item"><div class="who">Coach de vida</div><div class="bad">Sesiones de coaching de vida</div><div class="good">"Sabes lo que quieres, pero algo dentro te frena."</div></div>
+        <div class="item"><div class="who">Clases de inglés</div><div class="bad">Clases de inglés personalizadas</div><div class="good">"Entiendes todo, pero al hablar te congelas."</div></div>
+        <div class="item"><div class="who">Asesoría financiera</div><div class="bad">Asesoría financiera integral</div><div class="good">"Ganas bien y aun así no ves en qué se te va."</div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> ¿Cuál se sintió más real? Vótalo en el chat</div>
+    </section>
+
+    <!-- 8 · EL IKIGAI -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">De dónde nace tu mensaje</div>
+      <h2 class="h1">Tu <span class="hl">Ikigai:</span> cuatro preguntas, sin complicarte.</h2>
+      <div class="iki mt-l">
+        <div class="cell"><div class="z">Pasión</div><div class="q">Lo que <span class="hl">amas</span></div><p>Lo que harías aunque no te pagaran.</p></div>
+        <div class="cell"><div class="z">Profesión</div><div class="q">En lo que eres <span class="hl">bueno</span></div><p>Lo que haces con facilidad, aunque lo subestimes.</p></div>
+        <div class="cell"><div class="z">Misión</div><div class="q">Lo que el mundo <span class="hl">necesita</span></div><p>El problema que a otros les urge resolver.</p></div>
+        <div class="cell"><div class="z">Vocación</div><div class="q">Por lo que te <span class="hl">pagan</span></div><p>Lo que alguien pagaría por resolver.</p></div>
+        <span class="core">Ikigai</span>
+      </div>
+      <p class="lead wide mt-m">Solo <span class="hl">anótalos</span>, no los perfecciones. Tu propósito se va afinando con el tiempo — hoy basta con un primer borrador.</p>
+    </section>
+
+    <!-- 9 · TU RETO · LA FRASE (PAPER) -->
+    <section class="slide paper">
+      <div class="eyebrow">Tu primer reto</div>
+      <h2 class="h1" style="max-width:20ch">Escribe tu mensaje en <span class="hl">una frase.</span></h2>
+      <p class="fill mt-l">
+        <span class="blank">lo que amas</span> + <span class="blank">en lo que eres bueno</span>
+        <br><span class="kw">PARA</span><br>
+        <span class="blank">lo que el mundo necesita</span> + <span class="blank">por lo que te pagan</span>
+      </p>
+      <p class="lead wide mt-m serif" style="font-style:italic">Ej: "Enseño agricultura sostenible <em>(amo + soy bueno)</em> PARA empoderar a comunidades rurales <em>(necesitan)</em> con consultorías pagadas <em>(pago)</em>."</p>
+      <div class="chip"><span class="dot"></span> Escribe tu primera versión en el chat. Aunque esté imperfecta</div>
+    </section>
+
+    <!-- 10 · LLÉVATE EL WORKBOOK · QR (PAPER) -->
+    <section class="slide paper">
+      <div class="qr-wrap">
+        <div>
+          <div class="eyebrow">Llévate el workbook</div>
+          <h2 class="mega" style="max-width:13ch">Esto es solo el <span class="hl">primer trazo.</span></h2>
+          <p class="lead wide mt-m">La frase que escribiste hoy es un borrador. Para pulirla de verdad necesitas mirar los cuatro pilares con calma.</p>
+          <p class="lead wide mt-s">Escanea y llévate el <span class="hl">workbook completo "Cómo encontrar mi Ikigai"</span>: los 4 pilares, sus intersecciones y tu plan de acción.</p>
+          <div class="chip"><span class="dot"></span> Escanéalo ahora y hazlo esta semana</div>
+        </div>
+        <div>
+          <div class="qr-box">
+            <img src="../../assets/imgs/qr-ikigai.png" alt="Código QR para descargar el workbook Cómo encontrar mi Ikigai en PDF">
+          </div>
+          <p class="qr-cap">Escanea con tu cámara · workbook Ikigai (PDF)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · AUDIENCIA ≠ COMPRADORES (PUENTE) -->
+    <section class="slide">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Una verdad que casi nadie te dice</div>
+      <div class="split stat-split">
+        <div class="stat">1<span style="font-size:.5em">%</span></div>
+        <div>
+          <p class="h1" style="font-size:clamp(1.4rem,2.6vw,2.2rem)">Puedes tener <span class="hl">10,000 seguidores</span>… y que solo te compre una fracción.</p>
+          <p class="lead mt-m">Quien te escucha no siempre es quien te compra. No todos están listos: unos apenas te descubren, otros ya te buscan.</p>
+          <p class="lead wide mt-s">Te interesa tener audiencia — pero ciertos posts van dirigidos solo a quien <span class="hl">sí compra</span>: tu avatar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · CITA DE CIERRE -->
+    <section class="slide center">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Recuérdalo así</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:22ch">"No empiezas publicando. Empiezas sabiendo <span class="hl">a quién le hablas</span>."</p>
+    </section>
+
+    <!-- 13 · SIGUIENTE CLASE · EL AVATAR -->
+    <section class="slide">
+      <div class="glow br"></div>
+      <div class="eyebrow">Ya diste el paso más difícil</div>
+      <h2 class="mega" style="max-width:15ch">Tienes tu <span class="hl">mensaje.</span></h2>
+      <p class="lead wide mt-m">Ya sabes qué problema resuelves y quién lo necesita. Eso es más de lo que la mayoría logra.</p>
+      <p class="serif mt-m" style="font-style:italic;font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--on-char-soft);max-width:28ch">Lo que sigue es entrar en su cabeza: en la <span class="hl" style="font-style:normal;font-weight:500">próxima clase</span> construimos tu <span class="hl" style="font-style:normal;font-weight:500">avatar</span> — cómo piensa, qué teme y qué desea quien sí te compra.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/deck.js" defer></script>
+</body>
+</html>
