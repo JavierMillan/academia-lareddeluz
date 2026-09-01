@@ -28,22 +28,6 @@ jobs:
       - name: Checkout Academia
         uses: actions/checkout@v6
 
-      - name: Checkout constellation sources
-        uses: actions/checkout@v6
-        with:
-          repository: JavierMillan/De-tu-mente-al-mundo
-          ref: main
-          path: .sources/dtmm
-          persist-credentials: false
-
-      - name: Checkout English constellation
-        uses: actions/checkout@v6
-        with:
-          repository: JavierMillan/hablemos-ingles
-          ref: master
-          path: .sources/english
-          persist-credentials: false
-
       - name: Test Academy links
         run: node scripts/test-academy-index.cjs
 
@@ -51,7 +35,7 @@ jobs:
         run: node scripts/test-build-academy.cjs
 
       - name: Assemble Academy
-        run: node scripts/build-academy.cjs --source dtmm=.sources/dtmm --source english=.sources/english --out _site
+        run: node scripts/build-academy.cjs --out _site
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6

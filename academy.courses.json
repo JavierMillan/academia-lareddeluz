@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "legacyHostname": "detumentealmundo.lareddeluz.com",
+  "courses": {
+    "dtmm": {
+      "sourcePath": "cursos/dtmm",
+      "publicPath": "dtmm",
+      "canonicalBase": "https://academia.lareddeluz.com/dtmm/",
+      "sharedPublishes": [
+        {
+          "sourcePath": "shared/assets",
+          "publicPath": "assets"
+        }
+      ]
+    },
+    "english": {
+      "sourcePath": "cursos/ingles",
+      "publicPath": "ingles",
+      "canonicalBase": "https://academia.lareddeluz.com/ingles/"
+    }
+  }
+}
