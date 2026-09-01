@@ -1,0 +1,37 @@
+{
+  "esquema": 1,
+  "id": "dtmm",
+  "nombre": "De tu Mente al Mundo",
+  "resumen": "Ideas, contenido e inteligencia artificial convertidos en algo que puedas construir.",
+  "tema": "dtmm",
+  "figura": {
+    "nombre": "lyra",
+    "titulo": "Lyra · La creación",
+    "viewBox": "0 0 180 135",
+    "trazos": ["M38 18L78 43L110 75L92 116L58 96L78 43"],
+    "nodos": [
+      { "x": 38, "y": 18, "r": 4.3, "core": true },
+      { "x": 78, "y": 43, "r": 2 },
+      { "x": 110, "y": 75, "r": 2 },
+      { "x": 92, "y": 116, "r": 1.8 },
+      { "x": 58, "y": 96, "r": 1.8 }
+    ]
+  },
+  "menu": [
+    { "texto": "Clases", "href": "#rows", "despliega": "filas" }
+  ],
+  "capacidades": {
+    "grabaciones": true,
+    "recursos": true,
+    "temas": true,
+    "progreso": true
+  },
+  "textos": {
+    "destacado": "Clase destacada",
+    "abrir": "Abrir presentación",
+    "verClase": "Ver la clase",
+    "continuar": "Continuar aquí",
+    "repasar": "Repasar",
+    "proximamente": "Próximamente"
+  }
+}

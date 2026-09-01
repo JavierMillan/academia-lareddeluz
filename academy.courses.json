@@ -1,6 +1,10 @@
 {
   "schemaVersion": 1,
   "legacyHostname": "detumentealmundo.lareddeluz.com",
+  "engine": {
+    "sourcePath": "motor",
+    "publicPath": "assets/motor"
+  },
   "courses": {
     "dtmm": {
       "sourcePath": "cursos/dtmm",

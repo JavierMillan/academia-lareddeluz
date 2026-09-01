@@ -1,0 +1,51 @@
+{
+  "esquema": 1,
+  "id": "ingles",
+  "nombre": "¡Hablemos Inglés!",
+  "resumen": "Práctica didáctica y conversación para ganar confianza hablando en comunidad.",
+  "tema": "ingles",
+  "figura": {
+    "nombre": "gemini",
+    "titulo": "Gemini · Dos voces",
+    "viewBox": "0 0 180 135",
+    "trazos": [
+      "M42 19L60 43L66 73L54 108",
+      "M66 73L34 88",
+      "M60 43L102 48L116 79L123 111",
+      "M116 79L146 93",
+      "M102 48L127 29",
+      "M102 48L87 20"
+    ],
+    "nodos": [
+      { "x": 42, "y": 19, "r": 3.7, "core": true },
+      { "x": 60, "y": 43, "r": 2 },
+      { "x": 66, "y": 73, "r": 1.8 },
+      { "x": 54, "y": 108, "r": 1.5 },
+      { "x": 34, "y": 88, "r": 1.2 },
+      { "x": 102, "y": 48, "r": 3.3, "core": true },
+      { "x": 116, "y": 79, "r": 1.8 },
+      { "x": 123, "y": 111, "r": 1.5 },
+      { "x": 146, "y": 93, "r": 1.2 },
+      { "x": 127, "y": 29, "r": 1.5 },
+      { "x": 87, "y": 20, "r": 1.3 }
+    ]
+  },
+  "menu": [
+    { "texto": "Clases", "href": "#rows", "despliega": "filas" },
+    { "texto": "Recursos", "href": "recursos.html" }
+  ],
+  "capacidades": {
+    "grabaciones": true,
+    "recursos": false,
+    "temas": false,
+    "progreso": true
+  },
+  "textos": {
+    "destacado": "Sesión destacada",
+    "abrir": "Abrir sesión",
+    "verClase": "Ver la sesión",
+    "continuar": "Continuar aquí",
+    "repasar": "Repasar",
+    "proximamente": "Próximamente"
+  }
+}

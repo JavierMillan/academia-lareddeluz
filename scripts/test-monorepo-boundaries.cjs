@@ -13,6 +13,21 @@ assert.equal(manifest.courses.dtmm.publicPath, 'dtmm');
 assert.equal(manifest.courses.english.sourcePath, 'cursos/ingles');
 assert.equal(manifest.courses.english.publicPath, 'ingles');
 assert.doesNotMatch(JSON.stringify(manifest), /JavierMillan\/(?:De-tu-mente-al-mundo|hablemos-ingles)/);
+
+// El motor es de la academia y vive una sola vez. Cada copia dentro de un curso
+// vuelve a abrir la puerta a que los dos se desincronicen — que es justo lo que
+// esta unificación resolvió.
+assert.equal(manifest.engine.sourcePath, 'motor');
+assert.equal(manifest.engine.publicPath, 'assets/motor');
+for (const file of ['deck.css', 'deck.js', 'hub.css']) {
+  assert.ok(fs.existsSync(path.join(root, 'motor', file)), `Engine must ship ${file}`);
+  for (const course of Object.values(manifest.courses)) {
+    const copy = path.join(root, course.sourcePath, 'assets', file);
+    assert.equal(fs.existsSync(copy), false, `Engine file duplicated in course: ${copy}`);
+    const nested = path.join(root, course.sourcePath, 'assets', 'motor', file);
+    assert.equal(fs.existsSync(nested), false, `Engine file duplicated in course: ${nested}`);
+  }
+}
 assert.doesNotMatch(workflow, /Checkout constellation sources|Checkout English constellation/);
 assert.doesNotMatch(workflow, /repository:\s*JavierMillan\/(?:De-tu-mente-al-mundo|hablemos-ingles)/);
 for (const command of [
@@ -20,6 +35,8 @@ for (const command of [
   'node scripts/test-monorepo-boundaries.cjs',
   'node scripts/test-build-academy.cjs',
   'node scripts/test-academy-hubs-structure.cjs',
+  'node scripts/test-motor-hub.cjs',
+  'node scripts/test-progreso.cjs',
   'node cursos/ingles/scripts/test-academy-shell.cjs',
   'node cursos/ingles/scripts/test-grammar-grill.cjs',
   'node cursos/ingles/scripts/test-grammar-grill-ui.cjs',

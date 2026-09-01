@@ -1,0 +1,487 @@
+/* ============================================================
+   hub.js · motor de constelaciones
+   ------------------------------------------------------------
+   Un solo motor para todas las constelaciones. Lo que cambia
+   entre una y otra —identidad, figura, menú, capacidades— vive
+   en constelacion.json; lo que cambia entre clases, en clases.json.
+
+   Este archivo no conoce a DTMM ni a Inglés por nombre.
+
+       constelacion.json ─┐
+                          ├─→ hub.js ─→ DOM
+             clases.json ─┘
+
+   Para agregar una clase no se toca este archivo.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var TEXTOS = {
+    destacado: 'Clase destacada',
+    abrir: 'Abrir presentación',
+    verClase: 'Ver la clase',
+    continuar: 'Continuar aquí',
+    repasar: 'Repasar',
+    proximamente: 'Próximamente'
+  };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function txt(cfg, clave) {
+    return (cfg.textos && cfg.textos[clave]) || TEXTOS[clave];
+  }
+
+  /* ---------- figura de la constelación ----------
+     Sale de constelacion.json, no de una función por curso. */
+  function figura(cfg) {
+    var f = cfg.figura;
+    if (!f) return '';
+    var trazos = (f.trazos || []).map(function (d) {
+      return '<path d="' + esc(d) + '"/>';
+    }).join('');
+    var nodos = (f.nodos || []).map(function (n) {
+      return '<circle' + (n.core ? ' class="core"' : '') +
+        ' cx="' + n.x + '" cy="' + n.y + '" r="' + n.r + '"/>';
+    }).join('');
+    return '<svg viewBox="' + esc(f.viewBox || '0 0 180 135') + '" aria-hidden="true">' +
+      trazos + nodos + '</svg>';
+  }
+
+  /* ---------- lectura de una clase ---------- */
+  function grabacionesDe(clase) {
+    var lista = (clase.grabaciones && clase.grabaciones.length)
+      ? clase.grabaciones
+      : (clase.grabacion ? [{ url: clase.grabacion }] : []);
+    return lista.filter(function (g) { return g && g.url; });
+  }
+
+  /* Una clase con grabación o recursos merece vista de detalle. Si sólo
+     tiene deck, la tarjeta va directo a la presentación — así nunca se
+     crean páginas intermedias vacías. Las capacidades de la constelación
+     mandan: si no declara grabaciones, no se buscan. */
+  function tieneExtras(cfg, clase) {
+    var cap = cfg.capacidades || {};
+    var g = cap.grabaciones !== false && grabacionesDe(clase).length;
+    var r = cap.recursos !== false && clase.recursos && clase.recursos.length;
+    return !!(g || r);
+  }
+
+  function destino(cfg, clase) {
+    if (tieneExtras(cfg, clase)) return 'clase.html?id=' + encodeURIComponent(clase.id);
+    return clase.deck || null;
+  }
+
+  /* ---------- tarjeta ---------- */
+  function tarjeta(cfg, clase, etiqueta, progreso) {
+    var url = destino(cfg, clase);
+    var soon = !url;
+    var tag = soon ? 'span' : 'a';
+    var href = soon ? '' : ' href="' + esc(url) + '"';
+
+    var estado = progreso ? progreso[clase.id] : null;
+    var visto = estado === 'visto';
+    var enCurso = estado === 'curso';
+
+    var clases = ['deck-card'];
+    if (soon) clases.push('soon');
+    if (visto) clases.push('visto');
+    if (enCurso) clases.push('siguiente');
+
+    var marca = '';
+    if (visto) marca = '<span class="check" aria-hidden="true">✓</span>';
+    else if (enCurso) marca = '<span class="pulse" aria-hidden="true"></span>';
+
+    var extras = '';
+    if (!soon && tieneExtras(cfg, clase)) {
+      var chips = [];
+      var g = grabacionesDe(clase).length;
+      if (g) chips.push('<span class="tag">▶ ' + (g > 1 ? g + ' grabaciones' : 'Grabación') + '</span>');
+      var n = clase.recursos ? clase.recursos.length : 0;
+      if (n) chips.push('<span class="tag">⌘ ' + n + ' recurso' + (n > 1 ? 's' : '') + '</span>');
+      if (chips.length) extras = '<div class="extras">' + chips.join('') + '</div>';
+    }
+
+    var accion;
+    if (soon) accion = txt(cfg, 'proximamente');
+    else if (visto) accion = txt(cfg, 'repasar');
+    else if (enCurso) accion = txt(cfg, 'continuar');
+    else accion = tieneExtras(cfg, clase) ? txt(cfg, 'verClase') : txt(cfg, 'abrir');
+
+    var cta = soon
+      ? '<div class="go">' + esc(accion) + '</div>'
+      : '<div class="go">' + esc(accion) + ' <span class="arw">→</span></div>';
+
+    /* El estado también se anuncia en texto: el color y la forma no llegan
+       a quien usa lector de pantalla. */
+    var lectura = visto ? '<span class="sr-only">Ya la viste. </span>'
+      : enCurso ? '<span class="sr-only">Aquí te quedaste. </span>' : '';
+
+    return '<' + tag + ' class="' + clases.join(' ') + '"' + href + '>' +
+      '<span class="stripe"></span>' + marca +
+      '<div class="lvl"><span>' + esc(etiqueta) + '</span>' +
+      '<span class="part">' + esc(clase.parte) + (soon ? ' · próximamente' : '') + '</span></div>' +
+      '<h4>' + lectura + esc(clase.titulo) + '</h4>' +
+      '<p>' + esc(clase.resumen) + '</p>' +
+      extras + cta +
+      '</' + tag + '>';
+  }
+
+  /* ---------- fila ----------
+     Rejilla, no riel: el carrusel horizontal cortaba la última tarjeta
+     sin señal de que hubiera más, y metía un scroll dentro de otro. */
+  function fila(cfg, row, progreso) {
+    var cards = row.clases.map(function (c) {
+      return tarjeta(cfg, c, row.etiqueta || row.titulo, progreso);
+    }).join('');
+
+    var barra = '';
+    if (progreso && (cfg.capacidades || {}).progreso !== false) {
+      var ids = row.clases.filter(function (c) { return c.deck; }).map(function (c) { return c.id; });
+      var vistas = ids.filter(function (id) { return progreso[id] === 'visto'; }).length;
+      if (ids.length) {
+        var pct = Math.round((vistas / ids.length) * 100);
+        var lleno = vistas === ids.length ? ' full' : '';
+        barra = '<div class="prog' + lleno + '">' +
+          '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+          '<span class="txt">' + vistas + ' / ' + ids.length + '</span></div>';
+      }
+    }
+
+    return '<section class="row-sec" id="' + esc(row.id) + '">' +
+      '<div class="row-head">' +
+        '<div class="rt"><h3>' + esc(row.titulo) + '</h3>' +
+        '<span class="cnt">' + esc(row.subtitulo) + '</span></div>' + barra +
+      '</div>' +
+      '<div class="deck-grid">' + cards + '</div>' +
+      '</section>';
+  }
+
+  /* ---------- portada ----------
+     La clase destacada la declara clases.json; si no hay ninguna, se toma
+     la primera disponible (que es como lo resolvía Inglés). */
+  function claseDestacada(data) {
+    if (data.destacado) return data.destacado;
+    var primera = null;
+    data.filas.some(function (f) {
+      return f.clases.some(function (c) {
+        if (c.deck) { primera = c; return true; }
+        return false;
+      });
+    });
+    return primera;
+  }
+
+  function destacado(cfg, data) {
+    var d = claseDestacada(data);
+    if (!d) return '';
+    var titulo = String(d.titulo || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '');
+    var etiqueta = txt(cfg, 'destacado') + (d.estado ? ' · ' + d.estado : '');
+    var nombre = cfg.figura && cfg.figura.titulo ? cfg.figura.titulo : '';
+
+    return '<section class="hub-hero" id="top">' +
+      '<div class="constellation-motif" aria-hidden="true"></div>' +
+      '<div class="hub-identity">' +
+        '<div class="constellation-avatar">' + figura(cfg) + '</div>' +
+        (nombre ? '<span class="constellation-name">' + esc(nombre) + '</span>' : '') +
+        '<h1>' + esc(cfg.nombre) + '</h1>' +
+        (cfg.resumen ? '<p>' + esc(cfg.resumen) + '</p>' : '') +
+      '</div>' +
+      '<a class="featured-class" href="' + esc(d.deck) + '">' +
+        '<span class="featured-label">' + esc(etiqueta) + '</span>' +
+        '<h2>' + esc(titulo) + '</h2>' +
+        '<p>' + esc(d.resumen) + '</p>' +
+        '<span class="featured-go">' + esc(txt(cfg, 'abrir')) + ' →</span>' +
+      '</a>' +
+      '</section>';
+  }
+
+  /* ---------- navegación ----------
+     El menú sale de constelacion.json. Un ítem con "despliega":"filas"
+     se convierte en desplegable con las filas de clases.json dentro; el
+     resto son enlaces sueltos. Así Inglés lleva Recursos y DTMM no, sin
+     que el motor sepa de ninguno de los dos. */
+  function cuentaClases(f) {
+    return f.clases.filter(function (c) { return c.deck; }).length;
+  }
+
+  function agrupaFilas(data) {
+    var porId = new Map(data.filas.map(function (f) { return [f.id, f]; }));
+    var usadas = new Set();
+    var grupos = (data.grupos || []).map(function (g) {
+      var filas = (g.filas || []).map(function (id) { usadas.add(id); return porId.get(id); })
+        .filter(Boolean);
+      return { id: g.id, titulo: g.titulo, filas: filas };
+    }).filter(function (g) { return g.filas.length; });
+    var sueltas = data.filas.filter(function (f) { return !usadas.has(f.id); });
+    if (sueltas.length) {
+      grupos.push({ id: 'mas', titulo: grupos.length ? 'Más' : 'Clases', filas: sueltas });
+    }
+    return grupos;
+  }
+
+  function navEscritorio(cfg, data, grupos) {
+    return (cfg.menu || []).map(function (item) {
+      if (item.despliega !== 'filas') {
+        return '<a class="solo" href="' + esc(item.href) + '">' + esc(item.texto) + '</a>';
+      }
+      return grupos.map(function (g) {
+        var items = g.filas.map(function (f) {
+          var n = cuentaClases(f);
+          return '<a href="#' + esc(f.id) + '" data-fila="' + esc(f.id) + '">' +
+            '<span class="mt">' + esc(f.titulo) + '</span>' +
+            '<span class="md">' + esc(f.subtitulo) + '</span>' +
+            '<span class="mn">' + n + ' clase' + (n === 1 ? '' : 's') + '</span></a>';
+        }).join('');
+        return '<div class="navgroup" data-grupo="' + esc(g.id) + '">' +
+          '<button class="trigger" type="button" aria-expanded="false" aria-haspopup="true">' +
+          esc(grupos.length === 1 ? item.texto : g.titulo) + ' <span class="chev">▼</span></button>' +
+          '<div class="navmenu" role="menu">' + items + '</div></div>';
+      }).join('');
+    }).join('');
+  }
+
+  function navMovil(cfg, data, grupos) {
+    return (cfg.menu || []).map(function (item) {
+      if (item.despliega !== 'filas') {
+        return '<a href="' + esc(item.href) + '">' + esc(item.texto) + '</a>';
+      }
+      return grupos.map(function (g) {
+        var items = g.filas.map(function (f) {
+          return '<a href="#' + esc(f.id) + '" data-fila="' + esc(f.id) + '">' + esc(f.titulo) +
+            '<span class="mn">' + cuentaClases(f) + '</span></a>';
+        }).join('');
+        return '<div class="dgroup"><div class="dhead">' +
+          esc(grupos.length === 1 ? item.texto : g.titulo) + '</div>' + items + '</div>';
+      }).join('');
+    }).join('');
+  }
+
+  /* ---------- desplegables ---------- */
+  function activarDesplegables() {
+    var nav = document.getElementById('navMain');
+    if (!nav) return;
+    var grupos = [].slice.call(nav.querySelectorAll('.navgroup'));
+    if (!grupos.length) return;
+    var finoPuntero = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+    function cerrarTodos(excepto) {
+      grupos.forEach(function (g) {
+        if (g === excepto) return;
+        g.classList.remove('open');
+        g.querySelector('.trigger').setAttribute('aria-expanded', 'false');
+      });
+    }
+    function abrir(g, estado) {
+      g.classList.toggle('open', estado);
+      g.querySelector('.trigger').setAttribute('aria-expanded', estado ? 'true' : 'false');
+      if (estado) cerrarTodos(g);
+    }
+
+    grupos.forEach(function (g) {
+      var t = g.querySelector('.trigger');
+      t.addEventListener('click', function (e) {
+        e.preventDefault();
+        abrir(g, !g.classList.contains('open'));
+      });
+      if (finoPuntero) {
+        var cerrar;
+        g.addEventListener('mouseenter', function () { clearTimeout(cerrar); abrir(g, true); });
+        g.addEventListener('mouseleave', function () { cerrar = setTimeout(function () { abrir(g, false); }, 160); });
+      }
+      g.querySelectorAll('.navmenu a').forEach(function (a) {
+        a.addEventListener('click', function () { abrir(g, false); });
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.navgroup')) cerrarTodos(null);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') cerrarTodos(null);
+    });
+  }
+
+  /* ---------- resalta la fila que se está viendo ---------- */
+  function activarFilaActiva() {
+    var secciones = [].slice.call(document.querySelectorAll('.hub-hero[id], .row-sec[id]'));
+    var nav = document.getElementById('navMain');
+    if (!secciones.length || !nav || !('IntersectionObserver' in window)) return;
+
+    var porFila = new Map();
+    nav.querySelectorAll('[data-fila]').forEach(function (a) { porFila.set(a.dataset.fila, a); });
+    var solo = nav.querySelector('a.solo');
+
+    function marcar(id) {
+      nav.querySelectorAll('.current').forEach(function (x) { x.classList.remove('current'); });
+      if (id === 'top') { if (solo) solo.classList.add('current'); return; }
+      var a = porFila.get(id);
+      if (!a) return;
+      a.classList.add('current');
+      var grupo = a.closest('.navgroup');
+      if (grupo) grupo.querySelector('.trigger').classList.add('current');
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) marcar(e.target.id); });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    secciones.forEach(function (s) { io.observe(s); });
+  }
+
+  /* ---------- la barra se pliega cuando no cabe ---------- */
+  function activarNavAjustable() {
+    var header = document.getElementById('academyHeader');
+    var nav = document.getElementById('navMain');
+    if (!header || !nav || !('ResizeObserver' in window)) return;
+
+    function medir() {
+      document.body.classList.remove('nav-overflow');
+      var headerStyle = getComputedStyle(header);
+      var navStyle = getComputedStyle(nav);
+      var fixed = [].slice.call(header.children)
+        .filter(function (el) { return el !== nav && el.id !== 'burger'; })
+        .reduce(function (w, el) { return w + el.getBoundingClientRect().width; }, 0);
+      var navItems = [].slice.call(nav.children);
+      var navWidth = navItems.reduce(function (w, el) { return w + el.getBoundingClientRect().width; }, 0) +
+        Math.max(0, navItems.length - 1) * parseFloat(navStyle.gap || 0);
+      var outerItems = navItems.length ? 5 : 4;
+      var required = fixed + navWidth +
+        (outerItems - 1) * parseFloat(headerStyle.gap || 0) +
+        parseFloat(headerStyle.paddingLeft || 0) + parseFloat(headerStyle.paddingRight || 0);
+      document.body.classList.toggle('nav-overflow', required > header.clientWidth + 1 || innerWidth <= 760);
+    }
+
+    var observer = new ResizeObserver(medir);
+    observer.observe(header);
+    observer.observe(nav);
+    requestAnimationFrame(medir);
+    window.addEventListener('load', medir, { once: true });
+  }
+
+  /* ---------- cajón de navegación ----------
+     Abierto atrapa el foco y Esc lo cierra devolviéndolo al botón. */
+  function activarMenu() {
+    var burger = document.getElementById('burger');
+    var scrim = document.getElementById('navScrim');
+    var nav = document.getElementById('navDrawer');
+    if (!burger || !scrim || !nav) return;
+
+    function foco() {
+      return [].slice.call(nav.querySelectorAll('a[href],button:not([disabled])'))
+        .filter(function (el) { return el.offsetParent !== null; });
+    }
+    function set(open) {
+      var estaba = document.body.classList.contains('menu-open');
+      document.body.classList.toggle('menu-open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      nav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (open) { var f = foco(); if (f.length) f[0].focus(); }
+      else if (estaba) burger.focus();
+    }
+
+    burger.addEventListener('click', function () {
+      set(!document.body.classList.contains('menu-open'));
+    });
+    scrim.addEventListener('click', function () { set(false); });
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { set(false); });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!document.body.classList.contains('menu-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); set(false); return; }
+      if (e.key !== 'Tab') return;
+      var f = foco();
+      if (!f.length) return;
+      var primero = f[0], ultimo = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+    });
+  }
+
+  /* ---------- progreso ----------
+     Se lee de la capa Progreso, que hoy guarda en el navegador y mañana
+     en la cuenta de cada quien. Si no está disponible, el hub funciona
+     igual: sin marcas de estado. */
+  function leerProgreso(cfg) {
+    if ((cfg.capacidades || {}).progreso === false) return Promise.resolve(null);
+    if (typeof Progreso === 'undefined' || !Progreso.disponible()) return Promise.resolve(null);
+    return Progreso.delCurso(cfg.id).then(function (curso) {
+      var mapa = {};
+      Object.keys(curso.clases || {}).forEach(function (id) {
+        mapa[id] = curso.clases[id].estado;
+      });
+      /* Si nada está en curso, la primera sin ver es la siguiente. */
+      if (!Object.keys(mapa).some(function (id) { return mapa[id] === 'curso'; })) {
+        mapa.__siguiente = curso.ultima || null;
+      }
+      return mapa;
+    }).catch(function () { return null; });
+  }
+
+  /* Marca una clase como empezada al abrirla. */
+  function activarMarcado(cfg) {
+    if ((cfg.capacidades || {}).progreso === false) return;
+    if (typeof Progreso === 'undefined' || !Progreso.disponible()) return;
+    document.addEventListener('click', function (e) {
+      var card = e.target.closest('.deck-card[href]');
+      if (!card) return;
+      var id = card.dataset.clase;
+      if (id) Progreso.marcar(cfg.id, id, Progreso.ESTADOS.CURSO);
+    });
+  }
+
+  function error(msg) {
+    var rows = document.getElementById('rows');
+    if (rows) rows.innerHTML = '<p class="loaderr">' + esc(msg) + '</p>';
+  }
+
+  /* ---------- arranque ---------- */
+  function json(ruta) {
+    return fetch(ruta).then(function (r) {
+      if (!r.ok) throw new Error(ruta + ': HTTP ' + r.status);
+      return r.json();
+    });
+  }
+
+  Promise.all([json('constelacion.json'), json('clases.json')])
+    .then(function (res) {
+      var cfg = res[0], data = res[1];
+      return leerProgreso(cfg).then(function (progreso) {
+        var heroSlot = document.getElementById('heroSlot');
+        var rows = document.getElementById('rows');
+        var navMain = document.getElementById('navMain');
+        var navDraw = document.getElementById('navDrawer');
+        var grupos = agrupaFilas(data);
+
+        if (heroSlot) heroSlot.innerHTML = destacado(cfg, data);
+        if (rows) {
+          rows.innerHTML = data.filas.map(function (f) { return fila(cfg, f, progreso); }).join('');
+          /* el id de cada clase queda en la tarjeta para poder marcarla */
+          data.filas.forEach(function (f) {
+            f.clases.forEach(function (c) {
+              var card = rows.querySelector('[href*="' + c.id + '"]');
+              if (card) card.dataset.clase = c.id;
+            });
+          });
+        }
+        if (navMain) navMain.insertAdjacentHTML('afterbegin', navEscritorio(cfg, data, grupos));
+        if (navDraw) navDraw.insertAdjacentHTML('afterbegin', navMovil(cfg, data, grupos));
+
+        activarNavAjustable();
+        activarMenu();
+        activarDesplegables();
+        activarFilaActiva();
+        activarMarcado(cfg);
+      });
+    })
+    .catch(function (e) {
+      error('No se pudieron cargar las clases. Si abriste el archivo directamente, ' +
+        'necesitas un servidor local para que el navegador permita leer los datos.');
+      console.error('[hub]', e);
+    });
+})();

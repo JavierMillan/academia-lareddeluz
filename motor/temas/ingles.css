@@ -1,0 +1,86 @@
+/* ============================================================
+   Tema · ¡Hablemos Inglés!
+   ------------------------------------------------------------
+   Sólo identidad: tokens, tipografías y motivo. La estructura
+   vive en motor/hub.css y motor/deck.css y no se toca aquí.
+
+   Regla: si una regla de este archivo cambia cómo se COLOCA algo
+   en vez de cómo se VE, va en el motor, no en el tema.
+
+   DNA completo: cursos/ingles/brand-profile-hablemos-ingles.md
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
+
+.theme-ingles,.theme-english{
+  /* --- superficie y acento ---
+     Esta marca no tiene variante clara: paper == char, siempre negra. */
+  --char:#0a0a0a; --char-soft:#161414;
+  --paper:#0a0a0a; --paper-soft:#161414;
+  --sesame:#c8102e; --sesame-hi:#e13350; --sesame-deep:#c8102e;
+  --ketchup:#c8102e; --lettuce:#7c9a3e;
+
+  /* --- texto: el mismo sobre las dos superficies, porque son la misma --- */
+  --on-char:#f2f0ec; --on-char-soft:#c9c5be; --on-char-mute:#8a8680;
+  --on-paper:#f2f0ec; --on-paper-soft:#c9c5be; --on-paper-mute:#8a8680;
+
+  /* --- líneas y luz --- */
+  --line-d:rgba(242,240,236,0.12); --line-d2:rgba(242,240,236,0.22);
+  --line-l:rgba(242,240,236,0.12); --line-l2:rgba(242,240,236,0.22);
+  --glow:rgba(200,16,46,0.45);
+
+  /* --- lo que consume el hub --- */
+  --hub-panel-rgb:22,20,20;
+  --accent-text:#ea4a63;
+  --accent-surface:#c8102e;
+
+  /* --- tipografías ---
+     La marca no usa serif; el alias evita romper átomos heredados
+     del motor que sí lo piden. */
+  --font-display:'Archivo Black',system-ui,sans-serif;
+  --font-body:'Spline Sans',system-ui,sans-serif;
+  --font-serif:'Spline Sans',system-ui,sans-serif;
+  --font-mono:'Martian Mono',ui-monospace,monospace;
+
+  /* Sólo para el lockup de La Red de Luz — nunca como acento propio. */
+  --dorado-marca:#d4a94a;
+
+  /* --- escala ---
+     Archivo Black es más ancha que Unbounded, para la que se calibró
+     la escala del motor: necesita topes propios. */
+  --mega:clamp(2.1rem,7vw,6rem);
+  --h1:clamp(1.7rem,4.6vw,3.8rem);
+  --lead:clamp(1.05rem,1.7vw,1.5rem);
+}
+
+.theme-ingles,.theme-english{background:var(--char);font-family:var(--font-body)}
+
+/* Los titulares de esta marca van en caja alta y muy apretados. */
+.theme-ingles .hub-identity h1,.theme-english .hub-identity h1{
+  font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(2.8rem,6vw,6.2rem);line-height:.88;letter-spacing:.005em}
+.theme-ingles .featured-class h2,.theme-english .featured-class h2,
+.theme-ingles .row-head h3,.theme-english .row-head h3,
+.theme-ingles .deck-card h4,.theme-english .deck-card h4{
+  font-family:var(--font-display);text-transform:uppercase;letter-spacing:-.01em}
+
+/* Motivo: órbitas cruzadas — las dos voces de Géminis. */
+.theme-ingles .constellation-motif,.theme-english .constellation-motif{
+  position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(circle at 78% 18%,rgba(200,16,46,.22),transparent 30%),
+  linear-gradient(rgba(242,240,236,.02) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(242,240,236,.02) 1px,transparent 1px);
+  background-size:auto,34px 34px,34px 34px}
+.theme-ingles .constellation-motif::before,.theme-english .constellation-motif::before,
+.theme-ingles .constellation-motif::after,.theme-english .constellation-motif::after{
+  content:"";position:absolute;left:-10%;width:120%;height:42%;
+  border:1px solid rgba(200,16,46,.42);border-radius:50%}
+.theme-ingles .constellation-motif::before,.theme-english .constellation-motif::before{
+  top:18%;transform:rotate(5deg)}
+.theme-ingles .constellation-motif::after,.theme-english .constellation-motif::after{
+  top:34%;border-color:rgba(242,240,236,.1);transform:rotate(-3deg)}
+
+/* En móvil Archivo Black desborda con el piso del motor. */
+@media(max-width:480px){
+  .theme-ingles,.theme-english{--mega:clamp(1.7rem,9vw,2.6rem)}
+}
