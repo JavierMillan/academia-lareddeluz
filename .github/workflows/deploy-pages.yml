@@ -28,14 +28,21 @@ jobs:
       - name: Checkout Academia
         uses: actions/checkout@v6
 
-      - name: Test Academy links
-        run: node scripts/test-academy-index.cjs
-
-      - name: Test Academy build
-        run: node scripts/test-build-academy.cjs
+      - name: Test Academy
+        run: |
+          node scripts/test-academy-index.cjs
+          node scripts/test-monorepo-boundaries.cjs
+          node scripts/test-build-academy.cjs
+          node scripts/test-academy-hubs-structure.cjs
+          node cursos/ingles/scripts/test-academy-shell.cjs
+          node cursos/ingles/scripts/test-grammar-grill.cjs
+          node cursos/ingles/scripts/test-grammar-grill-ui.cjs
 
       - name: Assemble Academy
         run: node scripts/build-academy.cjs --out _site
+
+      - name: Verify public route parity
+        run: node scripts/test-route-parity.cjs _site
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
