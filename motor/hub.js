@@ -16,8 +16,12 @@
 (function () {
   'use strict';
 
+  var HubModel = window.HubModel;
+  if (!HubModel) throw new Error('Falta assets/motor/hub-model.js');
+
   var TEXTOS = {
     destacado: 'Clase destacada',
+    comenzar: 'Comenzar',
     abrir: 'Abrir presentación',
     verClase: 'Ver la clase',
     continuar: 'Continuar aquí',
@@ -51,38 +55,14 @@
       trazos + nodos + '</svg>';
   }
 
-  /* ---------- lectura de una clase ---------- */
-  function grabacionesDe(clase) {
-    var lista = (clase.grabaciones && clase.grabaciones.length)
-      ? clase.grabaciones
-      : (clase.grabacion ? [{ url: clase.grabacion }] : []);
-    return lista.filter(function (g) { return g && g.url; });
-  }
-
-  /* Una clase con grabación o recursos merece vista de detalle. Si sólo
-     tiene deck, la tarjeta va directo a la presentación — así nunca se
-     crean páginas intermedias vacías. Las capacidades de la constelación
-     mandan: si no declara grabaciones, no se buscan. */
-  function tieneExtras(cfg, clase) {
-    var cap = cfg.capacidades || {};
-    var g = cap.grabaciones !== false && grabacionesDe(clase).length;
-    var r = cap.recursos !== false && clase.recursos && clase.recursos.length;
-    return !!(g || r);
-  }
-
-  function destino(cfg, clase) {
-    if (tieneExtras(cfg, clase)) return 'clase.html?id=' + encodeURIComponent(clase.id);
-    return clase.deck || null;
-  }
-
   /* ---------- tarjeta ---------- */
   function tarjeta(cfg, clase, etiqueta, progreso) {
-    var url = destino(cfg, clase);
+    var url = HubModel.destino(cfg, clase);
     var soon = !url;
     var tag = soon ? 'span' : 'a';
     var href = soon ? '' : ' href="' + esc(url) + '"';
 
-    var estado = progreso ? progreso[clase.id] : null;
+    var estado = HubModel.estadoDe(progreso, clase.id);
     var visto = estado === 'visto';
     var enCurso = estado === 'curso';
 
@@ -96,9 +76,9 @@
     else if (enCurso) marca = '<span class="pulse" aria-hidden="true"></span>';
 
     var extras = '';
-    if (!soon && tieneExtras(cfg, clase)) {
+    if (!soon && HubModel.tieneExtras(cfg, clase)) {
       var chips = [];
-      var g = grabacionesDe(clase).length;
+      var g = HubModel.grabacionesDe(clase).length;
       if (g) chips.push('<span class="tag">▶ ' + (g > 1 ? g + ' grabaciones' : 'Grabación') + '</span>');
       var n = clase.recursos ? clase.recursos.length : 0;
       if (n) chips.push('<span class="tag">⌘ ' + n + ' recurso' + (n > 1 ? 's' : '') + '</span>');
@@ -109,7 +89,7 @@
     if (soon) accion = txt(cfg, 'proximamente');
     else if (visto) accion = txt(cfg, 'repasar');
     else if (enCurso) accion = txt(cfg, 'continuar');
-    else accion = tieneExtras(cfg, clase) ? txt(cfg, 'verClase') : txt(cfg, 'abrir');
+    else accion = HubModel.tieneExtras(cfg, clase) ? txt(cfg, 'verClase') : txt(cfg, 'abrir');
 
     var cta = soon
       ? '<div class="go">' + esc(accion) + '</div>'
@@ -141,7 +121,7 @@
     var barra = '';
     if (progreso && (cfg.capacidades || {}).progreso !== false) {
       var ids = row.clases.filter(function (c) { return c.deck; }).map(function (c) { return c.id; });
-      var vistas = ids.filter(function (id) { return progreso[id] === 'visto'; }).length;
+      var vistas = ids.filter(function (id) { return HubModel.estadoDe(progreso, id) === 'visto'; }).length;
       if (ids.length) {
         var pct = Math.round((vistas / ids.length) * 100);
         var lleno = vistas === ids.length ? ' full' : '';
@@ -160,27 +140,27 @@
       '</section>';
   }
 
-  /* ---------- portada ----------
-     La clase destacada la declara clases.json; si no hay ninguna, se toma
-     la primera disponible (que es como lo resolvía Inglés). */
-  function claseDestacada(data) {
-    if (data.destacado) return data.destacado;
-    var primera = null;
-    data.filas.some(function (f) {
-      return f.clases.some(function (c) {
-        if (c.deck) { primera = c; return true; }
-        return false;
-      });
-    });
-    return primera;
-  }
-
-  function destacado(cfg, data) {
-    var d = claseDestacada(data);
-    if (!d) return '';
-    var titulo = String(d.titulo || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '');
-    var etiqueta = txt(cfg, 'destacado') + (d.estado ? ' · ' + d.estado : '');
+  /* ---------- portada ---------- */
+  function destacado(cfg, data, progreso) {
+    var resumen = HubModel.resumenCurso(cfg, data, progreso || { clases: {}, ultima: null });
+    var d = resumen.recomendada;
     var nombre = cfg.figura && cfg.figura.titulo ? cfg.figura.titulo : '';
+    var estado = d ? HubModel.estadoDe(progreso, d.id) : 'nuevo';
+    var accion = estado === 'curso' ? txt(cfg, 'continuar') :
+      estado === 'visto' ? txt(cfg, 'repasar') : txt(cfg, 'comenzar');
+    var progresoVisible = progreso ?
+      '<div class="course-progress" aria-label="' + resumen.vistas + ' de ' + resumen.total +
+        ' clases vistas"><span>' + resumen.vistas + ' de ' + resumen.total + ' vistas</span>' +
+        '<div class="bar"><i style="width:' + resumen.porcentaje + '%"></i></div></div>' : '';
+    var recomendacion = d ?
+      '<a class="featured-class" href="' + esc(HubModel.destino(cfg, d)) +
+        '" data-clase="' + esc(d.id) + '">' +
+        '<span class="featured-label">Tu siguiente paso</span>' +
+        '<h2>' + esc(d.titulo) + '</h2>' +
+        '<p>' + esc(d.resumen || '') + '</p>' +
+        '<span class="featured-go">' + esc(accion) + ' →</span></a>' :
+      '<div class="featured-class empty"><span class="featured-label">Contenido</span>' +
+        '<h2>Próximamente</h2></div>';
 
     return '<section class="hub-hero" id="top">' +
       '<div class="constellation-motif" aria-hidden="true"></div>' +
@@ -188,15 +168,18 @@
         '<div class="constellation-avatar">' + figura(cfg) + '</div>' +
         (nombre ? '<span class="constellation-name">' + esc(nombre) + '</span>' : '') +
         '<h1>' + esc(cfg.nombre) + '</h1>' +
-        (cfg.resumen ? '<p>' + esc(cfg.resumen) + '</p>' : '') +
+        (cfg.resumen ? '<p>' + esc(cfg.resumen) + '</p>' : '') + progresoVisible +
       '</div>' +
-      '<a class="featured-class" href="' + esc(d.deck) + '">' +
-        '<span class="featured-label">' + esc(etiqueta) + '</span>' +
-        '<h2>' + esc(titulo) + '</h2>' +
-        '<p>' + esc(d.resumen) + '</p>' +
-        '<span class="featured-go">' + esc(txt(cfg, 'abrir')) + ' →</span>' +
-      '</a>' +
+      recomendacion +
       '</section>';
+  }
+
+  function navegacionCurso(cfg) {
+    return (cfg.menu || []).map(function (item) {
+      var activo = item.despliega === 'filas' ? ' current' : '';
+      return '<a class="course-tab' + activo + '" href="' + esc(item.href) + '"' +
+        (activo ? ' aria-current="page"' : '') + '>' + esc(item.texto) + '</a>';
+    }).join('');
   }
 
   /* ---------- navegación ----------
@@ -410,17 +393,7 @@
   function leerProgreso(cfg) {
     if ((cfg.capacidades || {}).progreso === false) return Promise.resolve(null);
     if (typeof Progreso === 'undefined' || !Progreso.disponible()) return Promise.resolve(null);
-    return Progreso.delCurso(cfg.id).then(function (curso) {
-      var mapa = {};
-      Object.keys(curso.clases || {}).forEach(function (id) {
-        mapa[id] = curso.clases[id].estado;
-      });
-      /* Si nada está en curso, la primera sin ver es la siguiente. */
-      if (!Object.keys(mapa).some(function (id) { return mapa[id] === 'curso'; })) {
-        mapa.__siguiente = curso.ultima || null;
-      }
-      return mapa;
-    }).catch(function () { return null; });
+    return Progreso.delCurso(cfg.id).catch(function () { return null; });
   }
 
   /* Marca una clase como empezada al abrirla. */
@@ -458,7 +431,9 @@
         var navDraw = document.getElementById('navDrawer');
         var grupos = agrupaFilas(data);
 
-        if (heroSlot) heroSlot.innerHTML = destacado(cfg, data);
+        if (heroSlot) heroSlot.innerHTML = destacado(cfg, data, progreso);
+        var courseTabs = document.getElementById('courseTabs');
+        if (courseTabs) courseTabs.innerHTML = navegacionCurso(cfg);
         if (rows) {
           rows.innerHTML = data.filas.map(function (f) { return fila(cfg, f, progreso); }).join('');
           /* el id de cada clase queda en la tarjeta para poder marcarla */

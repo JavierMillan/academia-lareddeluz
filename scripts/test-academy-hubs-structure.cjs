@@ -22,6 +22,9 @@ for (const [name, html] of [['DTMM', dtmmHtml], ['Inglés', englishHtml]]) {
   assert.match(html, /class="topbar academy-shell"/, `${name} must use the shared shell`);
   assert.match(html, /LA RED DE LUZ · ACADEMIA/i, `${name} must name Academia`);
   assert.match(html, /id="heroSlot"/, `${name} hero must be data-driven`);
+  assert.match(html, /id="courseTabs"/, `${name} needs curriculum tabs`);
+  assert.match(html, /assets\/motor\/hub-model\.js[\s\S]*assets\/motor\/hub\.js/,
+    `${name} must load the model before the renderer`);
   assert.match(html, /id="navMain"/);
   assert.match(html, /id="navDrawer"/);
   assert.match(html, /id="burger"/);
@@ -44,6 +47,10 @@ assert.match(englishCss, /Archivo Black/);
 
 assert.match(motorJs, /activarNavAjustable/,
   'El motor debe plegar la nav según el ancho disponible');
+assert.match(motorJs, /HubModel\.resumenCurso/,
+  'The hero must derive its recommendation from the shared model');
+assert.doesNotMatch(motorJs, /function\s+grabacionesDe/,
+  'Curriculum calculations belong in hub-model.js');
 
 // El motor no puede conocer a ninguna constelación por su nombre: si aparece
 // uno, la identidad volvió al código en vez de vivir en su configuración.
