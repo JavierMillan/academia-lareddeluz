@@ -1,0 +1,57 @@
+/* ============================================================
+   Tema · De tu Mente al Mundo
+   ------------------------------------------------------------
+   Sólo identidad: tokens, tipografías y motivo. La estructura
+   (layout, tarjetas, rejilla, menú) vive en motor/hub.css y
+   motor/deck.css y no se toca desde aquí.
+
+   Regla: si una regla de este archivo cambia cómo se COLOCA algo
+   en vez de cómo se VE, va en el motor, no en el tema.
+
+   DNA completo: brand-profile-dtmm.md
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap');
+
+.theme-dtmm{
+  /* --- superficie y acento --- */
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --sesame-hi:#f6c06a;
+  --ketchup:#c8442e; --lettuce:#7c9a3e;
+
+  /* --- texto sobre cada superficie --- */
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+
+  /* --- líneas y luz --- */
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --glow:rgba(232,161,60,0.5);
+
+  /* --- lo que consume el hub --- */
+  --hub-panel-rgb:36,29,22;
+  --accent-text:#e8a13c;
+  --accent-surface:#e8a13c;
+
+  /* --- tipografías --- */
+  --font-display:'Unbounded',system-ui,sans-serif;
+  --font-body:'Spline Sans',system-ui,sans-serif;
+  --font-serif:'Fraunces',Georgia,serif;
+  --font-mono:'Martian Mono',ui-monospace,monospace;
+
+  /* --- escala --- */
+  --mega:clamp(2.6rem,6.4vw,5.6rem);
+  --h1:clamp(2rem,4.4vw,3.6rem);
+  --lead:clamp(1.05rem,1.7vw,1.5rem);
+}
+
+.theme-dtmm{background:var(--char);font-family:var(--font-body)}
+.theme-dtmm .hub-hero{background:#19140f}
+
+/* Motivo: retícula fina con un corte diagonal de luz. */
+.theme-dtmm .constellation-motif{position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(124deg,transparent 52%,rgba(232,161,60,.07) 52% 67%,transparent 67%),
+  linear-gradient(rgba(232,161,60,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(232,161,60,.035) 1px,transparent 1px);
+  background-size:auto,34px 34px,34px 34px}

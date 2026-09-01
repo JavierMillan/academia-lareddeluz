@@ -48,9 +48,15 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:var(--font-bod
 
 #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 .deck{position:relative;width:100vw;height:100vh}
+/* El HUD, la ayuda y la firma son position:fixed y viven fuera del flujo,
+   así que ningún contenido alto sabe que debe dejarles sitio. La slide
+   reserva esa banda abajo: sin ella, una imagen con max-height en vh
+   (un QR, un flyer) crece hasta tapar los controles de navegación. */
+:root{--chrome-abajo:4.2rem}
 .slide{position:absolute;inset:0;opacity:0;visibility:hidden;
   display:flex;flex-direction:column;justify-content:center;
   padding:clamp(2.5rem,6vw,7rem);
+  padding-bottom:calc(clamp(2.5rem,6vw,7rem) + var(--chrome-abajo));
   transition:opacity .55s var(--ease);
   background:var(--char);color:var(--on-char);overflow:hidden}
 .slide.paper{background:var(--paper);color:var(--on-paper)}
@@ -253,8 +259,41 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:var(--font-bod
 .res.soon .rd{color:var(--on-char-mute)}
 .paper .res.soon .rd{color:var(--on-paper-mute)}
 
-/* firma de marca */
-.brandmark{position:absolute;bottom:clamp(1.2rem,2.4vw,2rem);left:clamp(2.5rem,6vw,7rem);
+/* Medios altos (flyers, QR, capturas)
+   Un max-height en vh no descuenta el chrome fijo de abajo, así que la
+   imagen crece hasta taparlo. --alto-util es lo que queda de verdad.
+   Vive en el motor porque el mismo átomo estaba repetido en 10 decks. */
+:root{--alto-util:calc(100vh - var(--chrome-abajo) - clamp(2.5rem,6vw,7rem))}
+.flyer-img,.medio-alto{max-height:var(--alto-util);object-fit:contain}
+/* Dos columnas con medio (QR, flyer)
+   El problema no era el tamaño de la imagen sino la composición: el grid
+   apilaba a una columna por debajo de 820px, y al apilar el alto se duplica
+   —el medio se estrella contra el HUD mientras media pantalla queda vacía
+   al lado. Se apila por sitio real, no por un ancho fijo: mientras quepan
+   dos columnas se conservan, que es donde el espacio se aprovecha.
+   Vive en el motor porque el mismo átomo está en 10 decks. */
+/* Son dos bloques —texto y medio—, así que el grid nunca pasa de dos
+   columnas: auto-fit a secas abriría una tercera vacía en pantallas
+   anchas y comprimiría el contenido.
+   !important porque cada deck trae su propio @media(max-width:820px) que
+   fuerza una columna; el motor es quien decide cuándo apilar. */
+.qr-wrap{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))!important;
+  align-items:center;max-width:74rem;margin-inline:auto}
+@media(min-width:56rem){
+  .qr-wrap{grid-template-columns:1.1fr .9fr!important}
+}
+/* Ya apilado, el medio cede el alto sobrante en vez de desbordar. */
+.qr-box{min-height:0;max-height:var(--alto-util);
+  display:flex;align-items:center;justify-content:center}
+.qr-box img{min-height:0;max-height:100%;width:auto;object-fit:contain}
+
+/* firma de marca
+   Comparte la esquina inferior izquierda con #hint (la ayuda de teclado que
+   genera deck.js). El hint mide ~19rem de ancho y arranca a 1.2rem del borde,
+   así que la firma se sienta encima de él en vez de a su lado: moverla en
+   horizontal no alcanza, y en móvil el hint se oculta y esta reserva sobra. */
+.brandmark{position:absolute;bottom:calc(clamp(1.2rem,2.4vw,2rem) + var(--reserva-hint,1.6rem));
+  left:clamp(2.5rem,6vw,7rem);max-width:calc(100% - clamp(5rem,12vw,14rem));
   font-family:var(--font-serif);font-size:.85rem;color:var(--on-char-mute);opacity:.7;z-index:2}
 .paper .brandmark{color:var(--on-paper-mute)}
 
@@ -317,6 +356,7 @@ body.notes-on #notes{transform:translateY(0)}
 .navbtn.vacio{opacity:.4}
 .navbtn.vacio:hover{opacity:.7}
 body.notes-on #hint{display:none}
+body.notes-on .brandmark{--reserva-hint:0rem}
 @media(max-width:640px){#notes{max-height:52vh}}
 @media print{#notes{display:none}}
 
@@ -352,7 +392,9 @@ body.notes-on #hint{display:none}
   .glow{width:70vmin;height:70vmin}
   #hud{bottom:.5rem;right:.6rem;gap:.55rem;font-size:.64rem}
   #hint{display:none}
-  .brandmark{font-size:.7rem;left:clamp(1.4rem,6vw,2.2rem);bottom:.6rem}
+  /* sin hint no hay nada debajo: la firma recupera la esquina */
+  .brandmark{font-size:.7rem;left:clamp(1.4rem,6vw,2.2rem);bottom:.6rem;
+    --reserva-hint:0rem;max-width:calc(100% - 5rem)}
 }
 @media (max-height:480px) and (orientation:landscape){
   .slide{padding:clamp(1rem,4vw,2.5rem);justify-content:center}
@@ -363,6 +405,7 @@ body.notes-on #hint{display:none}
   .steps{gap:.6rem}
   .glow{filter:blur(80px)}
   #hint{display:none}
+  .brandmark{--reserva-hint:0rem}
 }
 
 /* respeta a quien pide menos movimiento */

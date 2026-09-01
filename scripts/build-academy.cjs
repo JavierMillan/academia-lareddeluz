@@ -133,6 +133,9 @@ function validateArtifact(outDir, legacyHostname) {
 function validateManifest(manifest) {
   if (manifest.schemaVersion !== 1) throw new Error(`Unsupported manifest schema: ${manifest.schemaVersion}`);
   if (!manifest.courses || typeof manifest.courses !== 'object') throw new Error('Manifest must declare courses');
+  if (manifest.engine && (!manifest.engine.sourcePath || !manifest.engine.publicPath)) {
+    throw new Error(`Incomplete engine declaration: ${JSON.stringify(manifest.engine)}`);
+  }
   for (const [courseId, course] of Object.entries(manifest.courses)) {
     if (!course.sourcePath || !course.publicPath || !course.canonicalBase) {
       throw new Error(`Incomplete course declaration ${courseId}: ${JSON.stringify(course)}`);
@@ -167,6 +170,16 @@ function buildAcademy(options) {
     copyRequired(courseRoot, targetRoot, `Course ${courseId}`);
     for (const shared of course.sharedPublishes || []) {
       fs.rmSync(path.join(targetRoot, shared.sourcePath.split('/')[0]), { recursive: true, force: true });
+    }
+    // El motor es de la academia, no de un curso: vive una sola vez en el
+    // repositorio y se publica dentro de cada curso. Va después de copiar el
+    // curso porque esa copia sobrescribe el directorio destino.
+    if (manifest.engine) {
+      copyRequired(
+        path.join(academyRoot, manifest.engine.sourcePath),
+        path.join(targetRoot, manifest.engine.publicPath),
+        `Engine for ${courseId}`
+      );
     }
     normalizeHtml(targetRoot, course);
   }

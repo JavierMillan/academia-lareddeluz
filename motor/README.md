@@ -1,7 +1,12 @@
-# Motor de decks · DTMM
+# Motor de decks · Academia La Red de Luz
 
-Todos los decks del programa comparten `deck.css` (estructura y estilos) y
+Todos los decks de la academia comparten `deck.css` (estructura y estilos) y
 `deck.js` (navegación, HUD, notas). Un deck solo contiene **su contenido**.
+
+El motor vive **una sola vez**, aquí en `motor/`. El build lo publica dentro de
+cada curso como `assets/motor/`, así que desde un deck siempre se referencia con
+esa ruta. No lo copies a un curso: un arreglo hecho en dos lugares deja de
+hacerse en dos lugares tarde o temprano.
 
 ## Crear un deck nuevo
 
@@ -15,7 +20,7 @@ Todos los decks del programa comparten `deck.css` (estructura y estilos) y
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/deck.css">
+<link rel="stylesheet" href="../assets/motor/deck.css">
 </head>
 <body>
 
@@ -33,7 +38,7 @@ Todos los decks del programa comparten `deck.css` (estructura y estilos) y
   </div>
 </div>
 
-<script src="../assets/deck.js" defer></script>
+<script src="../assets/motor/deck.js" defer></script>
 </body>
 </html>
 ```

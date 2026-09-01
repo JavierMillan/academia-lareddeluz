@@ -34,6 +34,8 @@ jobs:
           node scripts/test-monorepo-boundaries.cjs
           node scripts/test-build-academy.cjs
           node scripts/test-academy-hubs-structure.cjs
+          node scripts/test-motor-hub.cjs
+          node scripts/test-progreso.cjs
           node cursos/ingles/scripts/test-academy-shell.cjs
           node cursos/ingles/scripts/test-grammar-grill.cjs
           node cursos/ingles/scripts/test-grammar-grill-ui.cjs
