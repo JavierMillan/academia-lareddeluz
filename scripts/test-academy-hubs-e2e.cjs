@@ -30,36 +30,26 @@ async function inspect(browser,base,route,name,viewport){
   const page = await context.newPage();
   const errors=[]; page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base+route,{waitUntil:'networkidle'});
-  await page.locator('.deck-card').first().waitFor();
+  await page.locator('.lesson-row').first().waitFor();
   const metrics = await page.evaluate(()=>{
     const rect = selector=>document.querySelector(selector).getBoundingClientRect();
-    const cards=[...document.querySelectorAll('.deck-card')];
     return {
       overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
-      header:rect('.academy-shell'),hero:rect('.hub-hero'),firstRow:rect('.row-sec'),
+      header:rect('.academy-shell'),hero:rect('.hub-hero'),firstRow:rect('.curriculum-section'),
       academyLinks:[...document.querySelectorAll('.academy-brand,.all-constellations,.dfoot')]
         .map(link=>link.href),
       burger:getComputedStyle(document.querySelector('#burger')).display,
-      nav:getComputedStyle(document.querySelector('#navMain')).display,
-      blurred:cards.every(card=>getComputedStyle(card).backdropFilter.includes('blur')),
-      cardBackground:getComputedStyle(cards[0]).backgroundColor,
-      rowProgress:(()=>{
-        const progress=document.querySelector('.row-head > .prog');
-        if(!progress) return null;
-        const style=getComputedStyle(progress);
-        const bounds=progress.getBoundingClientRect();
-        return {position:style.position,width:bounds.width,height:bounds.height};
-      })()
+      nav:getComputedStyle(document.querySelector('#navMain')).display
     };
   });
   assert.ok(metrics.overflow<=0, `${name} must not overflow at ${viewport.width}`);
   assert.ok(metrics.firstRow.top<viewport.height, `${name} first row must begin in first viewport`);
-  assert.ok(metrics.blurred, `${name} cards must blur their backdrop`);
-  assert.ok(metrics.rowProgress, `${name} must show row progress`);
-  assert.equal(metrics.rowProgress.position,'static',
-    `${name} row progress must stay in the row heading`);
-  assert.ok(metrics.rowProgress.width<=180 && metrics.rowProgress.height>=10,
-    `${name} row progress must render as a compact readable control`);
+  assert.ok(await page.locator('.curriculum-section').count()>=1,
+    `${name} must render curriculum categories`);
+  assert.ok(await page.locator('.lesson-row[href]').count()>=1,
+    `${name} must keep published lessons freely navigable`);
+  assert.equal(await page.locator('.deck-card').count(),0,
+    `${name} must not render the retired card grid`);
   assert.ok(metrics.academyLinks.length>=3, `${name} must expose academy navigation links`);
   assert.ok(metrics.academyLinks.every(href=>href==='https://academia.lareddeluz.com/'),
     `${name} academy navigation must return to the academy domain`);

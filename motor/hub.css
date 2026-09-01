@@ -292,120 +292,53 @@ body.menu-open{overflow:hidden}
 
 .wrap{position:relative;z-index:1;max-width:1320px;margin-inline:auto}
 
-/* ===== ROWS (niveles) ===== */
-.rows-area{padding-bottom:clamp(4rem,8vw,7rem);margin-top:clamp(.5rem,2vw,1.5rem)}
-.row-sec{margin-top:clamp(2.2rem,4vw,3.4rem)}
-.row-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-  margin-bottom:clamp(.9rem,1.8vw,1.3rem)}
-.row-head .rt{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap}
-.row-head h3{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
-  font-size:clamp(1.3rem,2.4vw,1.9rem)}
-.row-head .cnt{font-family:'Martian Mono',monospace;font-size:.7rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--on-char-mute)}
-.row-head .more{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--on-char-mute);background:none;border:none;cursor:pointer;
-  transition:color .25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
-.row-head .more:hover{color:var(--sesame)}
-
-/* ---- rejilla de clases ----
-   Antes era un riel horizontal: cortaba la última tarjeta sin señal de que
-   hubiera más, metía un scroll dentro del scroll de la página y en táctil
-   las flechas no servían. La rejilla se acomoda al ancho —de 1 a 4 columnas—
-   y nunca deja nada cortado. */
-.deck-grid{display:grid;gap:clamp(.8rem,1.5vw,1.15rem);
-  grid-template-columns:repeat(auto-fill,minmax(min(100%,232px),1fr));
-  padding:14px 0 1.6rem}
-
-/* ---- estado de una clase ----
-   El estado se lee por forma además de por color: franja, marca y relleno.
-   Sólo quien va en curso lleva fondo — es la que dice dónde retomar. */
-.deck-card .check{position:absolute;top:1.05rem;right:1.05rem;width:17px;height:17px;
-  border-radius:50%;background:var(--lettuce);display:grid;place-items:center;
-  font-size:.62rem;color:var(--char);font-weight:700;line-height:1;z-index:2}
-.deck-card .pulse{position:absolute;top:1.05rem;right:1.05rem;width:7px;height:7px;
-  border-radius:50%;background:var(--accent-text,var(--sesame));z-index:2;
-  box-shadow:0 0 0 0 var(--glow);animation:pulsoClase 2.4s var(--ease) infinite}
-@keyframes pulsoClase{
-  0%{box-shadow:0 0 0 0 var(--glow)}
-  70%{box-shadow:0 0 0 9px transparent}
-  100%{box-shadow:0 0 0 0 transparent}
-}
-/* la marca de estado ocupa la esquina: el nivel le cede el sitio */
-.deck-card .lvl{padding-right:1.5rem}
-
-.deck-card.visto .stripe{background:var(--lettuce);opacity:1}
-.deck-card.visto .lvl,.deck-card.visto .go{color:var(--lettuce)}
-.deck-card.visto h4{color:var(--on-char-soft)}
-
-.deck-card.siguiente{border-color:var(--accent-surface,var(--sesame));
-  background:color-mix(in srgb,var(--accent-surface,var(--sesame)) 12%,var(--char-soft))}
-.deck-card.siguiente .stripe{opacity:1}
-.deck-card.siguiente .go{color:var(--accent-text,var(--sesame))}
-
-@media(prefers-reduced-motion:reduce){
-  .deck-card .pulse{animation:none}
-}
+/* ===== Explorador curricular ===== */
+.rows-area{max-width:1120px;padding-top:clamp(1.5rem,4vw,3rem);padding-bottom:6rem}
+.curriculum-section{border-top:1px solid var(--line-d);scroll-margin-top:5rem}
+.curriculum-section:last-child{border-bottom:1px solid var(--line-d)}
+.curriculum-heading{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;
+  gap:1.2rem;align-items:center;padding:1.35rem 0;border:0;background:none;
+  color:inherit;text-align:left;cursor:pointer}
+.curriculum-heading:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px}
+.category-copy{display:flex;align-items:baseline;gap:.9rem;min-width:0}
+.category-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.1rem,2vw,1.45rem);font-weight:600}
+.category-meta{color:var(--on-char-mute);font:400 .65rem/1.4 'Martian Mono',monospace;
+  letter-spacing:.12em;text-transform:uppercase}
+.category-progress{display:flex;align-items:center;gap:.65rem;color:var(--on-char-mute);
+  font:400 .62rem/1 'Martian Mono',monospace;white-space:nowrap}
+.category-progress .bar{width:82px;height:3px;background:var(--line-d2);border-radius:99px;overflow:hidden}
+.category-progress .bar i{display:block;height:100%;background:var(--accent-surface)}
+.category-chevron{color:var(--accent-text);transition:transform .2s var(--ease)}
+.curriculum-section.open .category-chevron{transform:rotate(180deg)}
+.lesson-list{display:flex;flex-direction:column;padding-bottom:1rem}
+.lesson-row{display:grid;grid-template-columns:2.4rem minmax(0,1fr) auto;gap:1rem;align-items:center;
+  min-height:112px;padding:1rem;border:1px solid transparent;border-radius:12px;
+  color:inherit;text-decoration:none;transition:background .2s var(--ease),border-color .2s var(--ease)}
+.lesson-row:hover{background:rgba(var(--hub-panel-rgb),.72);border-color:var(--line-d2)}
+.lesson-row:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.lesson-row.curso{background:color-mix(in srgb,var(--accent-surface) 12%,transparent);
+  border-color:color-mix(in srgb,var(--accent-surface) 58%,transparent)}
+.lesson-status{width:2rem;height:2rem;display:grid;place-items:center;border:1px solid var(--line-d2);
+  border-radius:50%;color:var(--on-char-mute);font:500 .62rem/1 'Martian Mono',monospace}
+.lesson-row.visto .lesson-status{background:var(--lettuce);border-color:var(--lettuce);color:var(--char)}
+.lesson-row.curso .lesson-status{border-color:var(--accent-text);color:var(--accent-text)}
+.lesson-copy{display:flex;flex-direction:column;min-width:0}
+.lesson-kicker{color:var(--accent-text);font:500 .58rem/1.4 'Martian Mono',monospace;
+  letter-spacing:.12em;text-transform:uppercase}
+.lesson-copy strong{margin-top:.25rem;font-family:'Unbounded',sans-serif;font-size:1rem;line-height:1.25}
+.lesson-summary{margin-top:.3rem;color:var(--on-char-soft);font-size:.88rem;line-height:1.4}
+.lesson-materials{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.55rem}
+.material{color:var(--on-char-mute);font:400 .56rem/1.3 'Martian Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase}
+.lesson-action{padding-left:1rem;color:var(--accent-text);font:500 .62rem/1.3 'Martian Mono',monospace;
+  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.lesson-row.soon{opacity:.58;cursor:default}
+.curriculum-empty{padding:1rem;color:var(--on-char-mute)}
 
 /* texto sólo para lectores de pantalla: el estado no puede vivir
    únicamente en el color y la forma */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-
-/* ---- barra de progreso de la fila ---- */
-.prog{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
-.prog .bar{width:clamp(64px,11vw,104px);height:3px;border-radius:99px;
-  background:var(--line-d2);overflow:hidden}
-.prog .bar i{display:block;height:100%;border-radius:99px;
-  background:var(--accent-surface,var(--sesame));transition:width .6s var(--ease)}
-.prog .txt{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.12em;
-  color:var(--on-char-mute);font-variant-numeric:tabular-nums;white-space:nowrap}
-.prog.full .bar i{background:var(--lettuce)}
-.prog.full .txt{color:var(--lettuce)}
-}
-
-/* card */
-.deck-card{position:relative;flex:0 0 clamp(258px,30vw,332px);scroll-snap-align:start;
-  display:flex;flex-direction:column;min-height:238px;
-  background:var(--char-soft);border:1px solid var(--line-d);border-radius:18px;
-  padding:clamp(1.3rem,2.4vw,1.9rem);text-decoration:none;color:var(--on-char);overflow:hidden;
-  transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
-.deck-card:hover{border-color:var(--sesame);transform:translateY(-6px) scale(1.03);
-  box-shadow:0 34px 74px -38px var(--glow);z-index:2}
-.deck-card .stripe{position:absolute;top:0;left:0;width:3px;height:100%;
-  background:linear-gradient(180deg,var(--sesame),var(--ketchup));opacity:.5;
-  transition:opacity .3s var(--ease)}
-.deck-card:hover .stripe{opacity:1}
-.deck-card .lvl{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--sesame);display:flex;align-items:center;
-  justify-content:space-between;gap:1rem}
-.deck-card .lvl .part{color:var(--on-char-mute)}
-.deck-card h4{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
-  font-size:clamp(1.12rem,1.6vw,1.35rem);line-height:1.14;margin:.9rem 0 .55rem}
-.deck-card p{color:var(--on-char-soft);font-size:clamp(.86rem,1.05vw,.98rem);line-height:1.45}
-.deck-card .go{margin-top:auto;padding-top:1.1rem;font-family:'Martian Mono',monospace;
-  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--on-char-mute);
-  display:flex;align-items:center;gap:.5rem;transition:color .3s var(--ease)}
-.deck-card:hover .go{color:var(--sesame)}
-.deck-card .go .arw{transition:transform .3s var(--ease)}
-.deck-card:hover .go .arw{transform:translateX(4px)}
-
-/* marca de "esta clase tiene material extra" */
-.deck-card .extras{margin-top:.7rem;display:flex;flex-wrap:wrap;gap:.4rem}
-.deck-card .extras .tag{font-family:'Martian Mono',monospace;font-size:.58rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--sesame);
-  border:1px solid rgba(232,161,60,.32);border-radius:999px;padding:.22rem .55rem;
-  display:inline-flex;align-items:center;gap:.35rem}
-
-/* soon card */
-.deck-card.soon{cursor:default;border-style:dashed;border-color:var(--line-d)}
-.deck-card.soon:hover{transform:none;border-color:var(--line-d2);box-shadow:none;z-index:auto}
-.deck-card.soon .stripe{background:var(--line-d2);opacity:.4}
-.deck-card.soon .lvl{color:var(--on-char-mute)}
-.deck-card.soon h4{color:var(--on-char-soft)}
-.deck-card.soon p{color:var(--on-char-mute)}
-.deck-card.soon .go{color:var(--on-char-mute)}
-.deck-card.soon .go .arw{display:none}
-.deck-card.soon .prog{display:none}
 
 .foot{margin-top:clamp(3rem,5vw,4rem);font-family:'Fraunces',serif;font-style:italic;
   color:var(--on-char-mute);font-size:.95rem}
@@ -419,16 +352,8 @@ body.menu-open{overflow:hidden}
   .hero h1{font-size:clamp(2.1rem,10vw,3.2rem)}
   .hero p{font-size:1rem}
   .hero .cta{width:100%;justify-content:center}
-  .row-head{flex-wrap:wrap}
-  .row-head .more{order:3}
-  /* tarjeta casi ancho completo → se siente el swipe */
-  .deck-card{flex-basis:82vw;min-height:210px}
-  .deck-card:hover{transform:none}
-  .rail{scroll-snap-type:x mandatory;gap:.9rem}
-  .row-sec{scroll-margin-top:4.5rem}
 }
 @media(max-width:380px){
-  .deck-card{flex-basis:86vw}
   .brand{font-size:1rem}
 }
 
@@ -502,30 +427,10 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
   .item .go{grid-column:2;font-size:.6rem}
 }
 
-/* ===== Academy card depth and density ===== */
-.deck-card{position:relative;flex:0 0 clamp(260px,28vw,340px);min-height:220px;
-  display:flex;flex-direction:column;padding:clamp(1.25rem,2.2vw,1.75rem);
-  border:1px solid var(--line-d2);border-radius:14px;
-  background:rgba(var(--hub-panel-rgb),.88);
-  -webkit-backdrop-filter:blur(13px) saturate(.84);
-  backdrop-filter:blur(13px) saturate(.84);
-  box-shadow:inset 0 1px rgba(255,255,255,.028),0 16px 36px -34px rgba(0,0,0,.9);
-  color:var(--on-char);text-decoration:none;overflow:hidden;
-  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease)}
-@supports not (backdrop-filter:blur(1px)){
-  .deck-card{background:rgb(var(--hub-panel-rgb))}
-}
-.deck-card:hover{transform:translateY(-4px);border-color:var(--accent-surface);
-  box-shadow:0 28px 60px -40px var(--glow)}
-.deck-card .prog{display:none}
-.rows-area{padding-bottom:clamp(4rem,8vw,7rem);margin-top:0}
-.row-sec{margin-top:clamp(2rem,3.6vw,3rem)}
-
 @media(max-width:760px){
   .hub-hero{grid-template-columns:1fr;min-height:0;padding:2rem 1.25rem;gap:1.25rem}
   .featured-class{min-height:190px}
   .hub-identity h1{font-size:clamp(2.3rem,12vw,4.2rem)}
-  .deck-card{flex-basis:min(86vw,340px);min-height:230px}
   .all-constellations{display:none}
 }
 @media(max-width:480px){

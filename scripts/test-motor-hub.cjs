@@ -201,9 +201,12 @@ for (const [cursoId, curso] of Object.entries(manifest.courses)) {
   }
 }
 
-/* La rejilla sustituyó al riel: el carrusel cortaba la última tarjeta y
-   metía un scroll dentro del scroll de la página. */
-assert.match(hubCss, /\.deck-grid\{[\s\S]*?grid-template-columns/, 'Las clases van en rejilla');
+/* El índice curricular sustituye a las tarjetas grandes: permite recorrer
+   muchas clases sin convertir cada una en una portada equivalente. */
+assert.match(hubCss, /\.lesson-list\{/, 'Las clases deben usar una lista curricular compacta');
+assert.match(hubCss, /\.lesson-row\{/, 'Cada clase debe ser una fila curricular');
+assert.doesNotMatch(hubCss, /\.deck-grid\{/, 'La rejilla de tarjetas debe desaparecer');
+assert.doesNotMatch(hubCss, /\.deck-card\{/, 'Las tarjetas grandes deben desaparecer');
 assert.doesNotMatch(hubCss, /\.rail-wrap/, 'El riel horizontal no debe volver');
 
 console.log('motor hub: PASS');

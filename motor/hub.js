@@ -55,89 +55,53 @@
       trazos + nodos + '</svg>';
   }
 
-  /* ---------- tarjeta ---------- */
-  function tarjeta(cfg, clase, etiqueta, progreso) {
-    var url = HubModel.destino(cfg, clase);
-    var soon = !url;
-    var tag = soon ? 'span' : 'a';
-    var href = soon ? '' : ' href="' + esc(url) + '"';
-
-    var estado = HubModel.estadoDe(progreso, clase.id);
-    var visto = estado === 'visto';
-    var enCurso = estado === 'curso';
-
-    var clases = ['deck-card'];
-    if (soon) clases.push('soon');
-    if (visto) clases.push('visto');
-    if (enCurso) clases.push('siguiente');
-
-    var marca = '';
-    if (visto) marca = '<span class="check" aria-hidden="true">✓</span>';
-    else if (enCurso) marca = '<span class="pulse" aria-hidden="true"></span>';
-
-    var extras = '';
-    if (!soon && HubModel.tieneExtras(cfg, clase)) {
-      var chips = [];
-      var g = HubModel.grabacionesDe(clase).length;
-      if (g) chips.push('<span class="tag">▶ ' + (g > 1 ? g + ' grabaciones' : 'Grabación') + '</span>');
-      var n = clase.recursos ? clase.recursos.length : 0;
-      if (n) chips.push('<span class="tag">⌘ ' + n + ' recurso' + (n > 1 ? 's' : '') + '</span>');
-      if (chips.length) extras = '<div class="extras">' + chips.join('') + '</div>';
-    }
-
-    var accion;
-    if (soon) accion = txt(cfg, 'proximamente');
-    else if (visto) accion = txt(cfg, 'repasar');
-    else if (enCurso) accion = txt(cfg, 'continuar');
-    else accion = HubModel.tieneExtras(cfg, clase) ? txt(cfg, 'verClase') : txt(cfg, 'abrir');
-
-    var cta = soon
-      ? '<div class="go">' + esc(accion) + '</div>'
-      : '<div class="go">' + esc(accion) + ' <span class="arw">→</span></div>';
-
-    /* El estado también se anuncia en texto: el color y la forma no llegan
-       a quien usa lector de pantalla. */
-    var lectura = visto ? '<span class="sr-only">Ya la viste. </span>'
-      : enCurso ? '<span class="sr-only">Aquí te quedaste. </span>' : '';
-
-    return '<' + tag + ' class="' + clases.join(' ') + '"' + href + '>' +
-      '<span class="stripe"></span>' + marca +
-      '<div class="lvl"><span>' + esc(etiqueta) + '</span>' +
-      '<span class="part">' + esc(clase.parte) + (soon ? ' · próximamente' : '') + '</span></div>' +
-      '<h4>' + lectura + esc(clase.titulo) + '</h4>' +
-      '<p>' + esc(clase.resumen) + '</p>' +
-      extras + cta +
-      '</' + tag + '>';
+  /* ---------- índice curricular ---------- */
+  function chipsMateriales(cfg, clase) {
+    var iconos = { presentacion: '▤', grabacion: '▶', recursos: '⌘' };
+    return HubModel.materialesDe(cfg, clase).map(function (material) {
+      return '<span class="material ' + esc(material.tipo) + '"><span aria-hidden="true">' +
+        iconos[material.tipo] + '</span> ' + esc(material.texto) + '</span>';
+    }).join('');
   }
 
-  /* ---------- fila ----------
-     Rejilla, no riel: el carrusel horizontal cortaba la última tarjeta
-     sin señal de que hubiera más, y metía un scroll dentro de otro. */
-  function fila(cfg, row, progreso) {
-    var cards = row.clases.map(function (c) {
-      return tarjeta(cfg, c, row.etiqueta || row.titulo, progreso);
+  function filaClase(cfg, clase, indice, progreso) {
+    var url = HubModel.destino(cfg, clase);
+    var estado = HubModel.estadoDe(progreso, clase.id);
+    var soon = !url;
+    var clases = ['lesson-row', estado];
+    if (soon) clases.push('soon');
+    var accion = soon ? txt(cfg, 'proximamente') : estado === 'visto' ? txt(cfg, 'repasar') :
+      estado === 'curso' ? txt(cfg, 'continuar') : txt(cfg, 'abrir');
+    var numero = String(indice + 1).padStart(2, '0');
+    var estadoTexto = estado === 'visto' ? 'Vista' : estado === 'curso' ? 'En curso' : 'Sin comenzar';
+    var apertura = soon ? '<div' : '<a href="' + esc(url) + '" data-clase="' + esc(clase.id) + '"';
+    var cierre = soon ? '</div>' : '</a>';
+    return apertura + ' class="' + clases.join(' ') + '">' +
+      '<span class="lesson-status" aria-hidden="true">' + (estado === 'visto' ? '✓' : numero) + '</span>' +
+      '<span class="sr-only">' + estadoTexto + '. </span>' +
+      '<span class="lesson-copy"><span class="lesson-kicker">' +
+        esc(clase.parte || 'Clase ' + numero) + '</span>' +
+        '<strong>' + esc(clase.titulo) + '</strong><span class="lesson-summary">' +
+        esc(clase.resumen || '') + '</span><span class="lesson-materials">' +
+        chipsMateriales(cfg, clase) + '</span></span>' +
+      '<span class="lesson-action">' + esc(accion) + (soon ? '' : ' →') + '</span>' + cierre;
+  }
+
+  function categoriaCurricular(cfg, row, progreso) {
+    var resumen = HubModel.resumenFila(cfg, row, progreso);
+    var panelId = 'panel-' + row.id;
+    var clases = (row.clases || []).map(function (clase, indice) {
+      return filaClase(cfg, clase, indice, progreso);
     }).join('');
-
-    var barra = '';
-    if (progreso && (cfg.capacidades || {}).progreso !== false) {
-      var ids = row.clases.filter(function (c) { return c.deck; }).map(function (c) { return c.id; });
-      var vistas = ids.filter(function (id) { return HubModel.estadoDe(progreso, id) === 'visto'; }).length;
-      if (ids.length) {
-        var pct = Math.round((vistas / ids.length) * 100);
-        var lleno = vistas === ids.length ? ' full' : '';
-        barra = '<div class="prog' + lleno + '">' +
-          '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
-          '<span class="txt">' + vistas + ' / ' + ids.length + '</span></div>';
-      }
-    }
-
-    return '<section class="row-sec" id="' + esc(row.id) + '">' +
-      '<div class="row-head">' +
-        '<div class="rt"><h3>' + esc(row.titulo) + '</h3>' +
-        '<span class="cnt">' + esc(row.subtitulo) + '</span></div>' + barra +
-      '</div>' +
-      '<div class="deck-grid">' + cards + '</div>' +
-      '</section>';
+    if (!clases) clases = '<p class="curriculum-empty">Contenido próximamente</p>';
+    return '<section class="curriculum-section open" id="' + esc(row.id) + '" data-category>' +
+      '<button class="curriculum-heading" type="button" aria-expanded="true" aria-controls="' +
+        esc(panelId) + '"><span class="category-copy"><span class="category-title">' +
+        esc(row.titulo) + '</span><span class="category-meta">' + esc(row.subtitulo || '') +
+        '</span></span><span class="category-progress"><span>' + resumen.vistas + ' / ' +
+        resumen.total + '</span><span class="bar"><i style="width:' + resumen.porcentaje +
+        '%"></i></span></span><span class="category-chevron" aria-hidden="true">⌄</span></button>' +
+      '<div class="lesson-list" id="' + esc(panelId) + '">' + clases + '</div></section>';
   }
 
   /* ---------- portada ---------- */
@@ -401,9 +365,9 @@
     if ((cfg.capacidades || {}).progreso === false) return;
     if (typeof Progreso === 'undefined' || !Progreso.disponible()) return;
     document.addEventListener('click', function (e) {
-      var card = e.target.closest('.deck-card[href]');
-      if (!card) return;
-      var id = card.dataset.clase;
+      var lesson = e.target.closest('.lesson-row[href], .featured-class[data-clase]');
+      if (!lesson) return;
+      var id = lesson.dataset.clase;
       if (id) Progreso.marcar(cfg.id, id, Progreso.ESTADOS.CURSO);
     });
   }
@@ -435,14 +399,9 @@
         var courseTabs = document.getElementById('courseTabs');
         if (courseTabs) courseTabs.innerHTML = navegacionCurso(cfg);
         if (rows) {
-          rows.innerHTML = data.filas.map(function (f) { return fila(cfg, f, progreso); }).join('');
-          /* el id de cada clase queda en la tarjeta para poder marcarla */
-          data.filas.forEach(function (f) {
-            f.clases.forEach(function (c) {
-              var card = rows.querySelector('[href*="' + c.id + '"]');
-              if (card) card.dataset.clase = c.id;
-            });
-          });
+          rows.innerHTML = data.filas.map(function (f) {
+            return categoriaCurricular(cfg, f, progreso);
+          }).join('');
         }
         if (navMain) navMain.insertAdjacentHTML('afterbegin', navEscritorio(cfg, data, grupos));
         if (navDraw) navDraw.insertAdjacentHTML('afterbegin', navMovil(cfg, data, grupos));
