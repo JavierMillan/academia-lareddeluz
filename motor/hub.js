@@ -87,21 +87,70 @@
       '<span class="lesson-action">' + esc(accion) + (soon ? '' : ' →') + '</span>' + cierre;
   }
 
-  function categoriaCurricular(cfg, row, progreso) {
-    var resumen = HubModel.resumenFila(cfg, row, progreso);
-    var panelId = 'panel-' + row.id;
+  function contenidoCategoria(cfg, row, progreso) {
     var clases = (row.clases || []).map(function (clase, indice) {
       return filaClase(cfg, clase, indice, progreso);
     }).join('');
-    if (!clases) clases = '<p class="curriculum-empty">Contenido próximamente</p>';
-    return '<section class="curriculum-section open" id="' + esc(row.id) + '" data-category>' +
-      '<button class="curriculum-heading" type="button" aria-expanded="true" aria-controls="' +
-        esc(panelId) + '"><span class="category-copy"><span class="category-title">' +
-        esc(row.titulo) + '</span><span class="category-meta">' + esc(row.subtitulo || '') +
-        '</span></span><span class="category-progress"><span>' + resumen.vistas + ' / ' +
-        resumen.total + '</span><span class="bar"><i style="width:' + resumen.porcentaje +
-        '%"></i></span></span><span class="category-chevron" aria-hidden="true">⌄</span></button>' +
-      '<div class="lesson-list" id="' + esc(panelId) + '">' + clases + '</div></section>';
+    return clases || '<p class="curriculum-empty">Contenido próximamente</p>';
+  }
+
+  function panelCategoria(cfg, row, progreso) {
+    if (!row) {
+      return '<section class="active-category empty" aria-live="polite">' +
+        '<p class="curriculum-empty">Contenido próximamente</p></section>';
+    }
+    var resumen = HubModel.resumenFila(cfg, row, progreso);
+    return '<section class="active-category" aria-live="polite" data-active-category="' +
+      esc(row.id) + '"><header class="active-category-header"><span>' +
+        '<span class="category-meta">' + esc(row.subtitulo || '') + '</span>' +
+        '<h2>' + esc(row.titulo) + '</h2></span>' +
+        '<span class="category-progress">' + resumen.vistas + ' / ' + resumen.total +
+        ' vistas</span></header><div class="lesson-list">' +
+        contenidoCategoria(cfg, row, progreso) + '</div></section>';
+  }
+
+  function mapaCurso(cfg, data, progreso, activa) {
+    var botones = (data.filas || []).map(function (row) {
+      var resumen = HubModel.resumenFila(cfg, row, progreso);
+      var actual = activa && row.id === activa.id;
+      return '<button class="course-map-button" type="button" data-category-id="' +
+        esc(row.id) + '" aria-pressed="' + (actual ? 'true' : 'false') + '">' +
+        '<span>' + esc(row.titulo) + '</span><span>' + resumen.vistas + '/' +
+        resumen.total + '</span></button>';
+    }).join('');
+    return '<div class="curriculum-workspace"><nav class="course-map" aria-label="Mapa del curso">' +
+      '<span class="course-map-label">Mapa del curso</span>' + botones + '</nav>' +
+      '<div class="active-category-slot">' + panelCategoria(cfg, activa, progreso) +
+      '</div></div>';
+  }
+
+  function categoriaMovil(cfg, row, progreso, abierta) {
+    var resumen = HubModel.resumenFila(cfg, row, progreso);
+    var panelId = 'mobile-panel-' + row.id;
+    return '<section class="mobile-category" id="' + esc(row.id) +
+      '" data-mobile-category="' + esc(row.id) + '">' +
+      '<button class="mobile-category-heading" type="button" aria-expanded="' +
+        (abierta ? 'true' : 'false') + '" aria-controls="' + esc(panelId) + '">' +
+        '<span class="mobile-category-copy"><strong>' + esc(row.titulo) + '</strong>' +
+        '<small>' + esc(row.subtitulo || '') + '</small></span>' +
+        '<span class="mobile-category-progress">' + resumen.vistas + '/' + resumen.total +
+        ' <span aria-hidden="true">⌄</span></span></button>' +
+      '<div class="mobile-category-panel" id="' + esc(panelId) + '"' +
+        (abierta ? '' : ' hidden') + '><div class="lesson-list">' +
+        contenidoCategoria(cfg, row, progreso) + '</div></div></section>';
+  }
+
+  function curriculoMovil(cfg, data, progreso, activa) {
+    return '<div class="mobile-curriculum">' + (data.filas || []).map(function (row) {
+      return categoriaMovil(cfg, row, progreso, activa && row.id === activa.id);
+    }).join('') + '</div>';
+  }
+
+  function curriculoEnfocado(cfg, data, progreso) {
+    var activa = HubModel.categoriaInicial(cfg, data, progreso);
+    return '<div class="focused-curriculum" id="curriculum">' +
+      mapaCurso(cfg, data, progreso, activa) + curriculoMovil(cfg, data, progreso, activa) +
+      '</div>';
   }
 
   /* ---------- portada ---------- */
@@ -351,38 +400,44 @@
   }
 
   /* ---------- categorías curriculares ---------- */
-  function activarCategorias() {
-    var categorias = [].slice.call(document.querySelectorAll('[data-category]'));
-    if (!categorias.length) return;
-    var media = window.matchMedia('(max-width:760px)');
+  function activarCurriculo(cfg, data, progreso) {
+    var slot = document.querySelector('.active-category-slot');
 
-    function cambiar(categoria, abierta) {
-      var boton = categoria.querySelector('.curriculum-heading');
-      var panel = document.getElementById(boton.getAttribute('aria-controls'));
-      categoria.classList.toggle('open', abierta);
-      boton.setAttribute('aria-expanded', abierta ? 'true' : 'false');
-      panel.hidden = !abierta;
+    function seleccionar(id) {
+      var row = (data.filas || []).find(function (fila) { return fila.id === id; });
+      if (!row) return;
+      document.querySelectorAll('.course-map-button').forEach(function (button) {
+        button.setAttribute('aria-pressed', button.dataset.categoryId === id ? 'true' : 'false');
+      });
+      if (slot) slot.innerHTML = panelCategoria(cfg, row, progreso);
     }
 
-    function configurar() {
-      if (!media.matches) {
-        categorias.forEach(function (categoria) { cambiar(categoria, true); });
-        return;
-      }
-      var activa = categorias.find(function (categoria) {
-        return Boolean(categoria.querySelector('.lesson-row.curso'));
-      }) || categorias[0];
-      categorias.forEach(function (categoria) { cambiar(categoria, categoria === activa); });
+    function abrirMovil(button) {
+      document.querySelectorAll('.mobile-category-heading').forEach(function (other) {
+        var abierta = other === button;
+        other.setAttribute('aria-expanded', abierta ? 'true' : 'false');
+        document.getElementById(other.getAttribute('aria-controls')).hidden = !abierta;
+      });
     }
 
-    categorias.forEach(function (categoria) {
-      categoria.querySelector('.curriculum-heading').addEventListener('click', function () {
-        cambiar(categoria, !categoria.classList.contains('open'));
+    document.querySelectorAll('.course-map-button').forEach(function (button) {
+      button.addEventListener('click', function () { seleccionar(button.dataset.categoryId); });
+    });
+    document.querySelectorAll('.mobile-category-heading').forEach(function (button) {
+      button.addEventListener('click', function () { abrirMovil(button); });
+    });
+
+    document.querySelectorAll('[data-fila]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        seleccionar(link.dataset.fila);
+        var mobileButton = document.querySelector('.mobile-category[data-mobile-category="' +
+          CSS.escape(link.dataset.fila) + '"] .mobile-category-heading');
+        if (mobileButton) abrirMovil(mobileButton);
+        var curriculum = document.getElementById('curriculum');
+        if (curriculum) curriculum.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
-    if (media.addEventListener) media.addEventListener('change', configurar);
-    else media.addListener(configurar);
-    configurar();
   }
 
   /* ---------- progreso ----------
@@ -433,19 +488,14 @@
         if (heroSlot) heroSlot.innerHTML = destacado(cfg, data, progreso);
         var courseTabs = document.getElementById('courseTabs');
         if (courseTabs) courseTabs.innerHTML = navegacionCurso(cfg);
-        if (rows) {
-          rows.innerHTML = data.filas.map(function (f) {
-            return categoriaCurricular(cfg, f, progreso);
-          }).join('');
-          activarCategorias();
-        }
         if (navMain) navMain.insertAdjacentHTML('afterbegin', navEscritorio(cfg, data, grupos));
         if (navDraw) navDraw.insertAdjacentHTML('afterbegin', navMovil(cfg, data, grupos));
+        if (rows) rows.innerHTML = curriculoEnfocado(cfg, data, progreso);
 
         activarNavAjustable();
         activarMenu();
         activarDesplegables();
-        activarFilaActiva();
+        activarCurriculo(cfg, data, progreso);
         activarMarcado(cfg);
       });
     })

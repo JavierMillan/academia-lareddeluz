@@ -49,6 +49,8 @@ assert.match(motorJs, /activarNavAjustable/,
   'El motor debe plegar la nav según el ancho disponible');
 assert.match(motorJs, /HubModel\.resumenCurso/,
   'The hero must derive its recommendation from the shared model');
+assert.match(motorJs, /HubModel\.categoriaInicial/,
+  'The curriculum must derive its initial category from the shared model');
 assert.doesNotMatch(motorJs, /function\s+grabacionesDe/,
   'Curriculum calculations belong in hub-model.js');
 

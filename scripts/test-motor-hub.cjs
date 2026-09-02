@@ -4,6 +4,7 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const hubCss = fs.readFileSync(path.join(root, 'motor', 'hub.css'), 'utf8');
+const hubJs = fs.readFileSync(path.join(root, 'motor', 'hub.js'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'academy.courses.json'), 'utf8'));
 
 /* ------------------------------------------------------------------
@@ -208,5 +209,13 @@ assert.match(hubCss, /\.lesson-row\{/, 'Cada clase debe ser una fila curricular'
 assert.doesNotMatch(hubCss, /\.deck-grid\{/, 'La rejilla de tarjetas debe desaparecer');
 assert.doesNotMatch(hubCss, /\.deck-card\{/, 'Las tarjetas grandes deben desaparecer');
 assert.doesNotMatch(hubCss, /\.rail-wrap/, 'El riel horizontal no debe volver');
+
+/* El temario largo se enfoca en una categoría a la vez. */
+for (const contract of ['curriculum-workspace', 'course-map', 'course-map-button',
+  'active-category']) {
+  assert.match(hubJs, new RegExp(contract), `El renderer necesita ${contract}`);
+}
+assert.match(hubJs, /HubModel\.categoriaInicial\(/,
+  'La categoría inicial debe salir del modelo compartido');
 
 console.log('motor hub: PASS');
