@@ -6,6 +6,7 @@ const root = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
 
 const index = read('index.html');
+const resources = read('recursos.html');
 // El motor vive en la raíz de la academia; el build lo publica dentro del curso.
 const hubCss = fs.readFileSync(path.join(root, '..', '..', 'motor', 'hub.css'), 'utf8');
 const englishCss = read('assets/ingles.css');
@@ -34,6 +35,21 @@ assert.match(motorJs, /activarNavAjustable\(\)/, 'El motor mantiene la barra ada
 // DTMM no. Esa diferencia es configuración, no código.
 assert.ok(constelacion.menu.some((i) => /recursos/i.test(i.href)),
   'El menú de Inglés debe llevar Recursos');
+
+assert.match(resources, /class="topbar academy-shell"/,
+  'Resources must use the shared Academy shell');
+assert.match(resources, /class="academy-brand" href="\.\.\/"/,
+  'Resources must return to the current Academy origin');
+assert.match(resources, /class="constellation-context">Inglés \/ Recursos/,
+  'Resources must identify its course context');
+assert.match(resources, /class="resources-intro"/,
+  'Resources must use a compact editorial introduction');
+assert.match(resources, /class="resource-inventory" id="items"/,
+  'Resources must expose an editorial inventory');
+assert.match(resources, /class="inventory-count" id="resourceCount"/,
+  'Resources must announce the inventory count');
+assert.doesNotMatch(resources, /class="item"/,
+  'Resources must not return to the retired card list');
 
 const engineRoot = path.join(root, '..', '..', 'motor');
 
