@@ -113,21 +113,36 @@ async function inspect(browser,base,route,name,viewport){
 }
 
 async function inspectResources(browser,base){
-  const context = await browser.newContext({viewport:{width:430,height:844}});
-  const page = await context.newPage();
-  await page.goto(base+'/ingles/recursos.html',{waitUntil:'networkidle'});
-  await page.locator('#items .item').first().waitFor();
-  assert.ok(await page.evaluate(()=>document.querySelector('header.topbar').scrollWidth<=document.documentElement.clientWidth),
-    'english resources header must fit the mobile viewport');
-  assert.equal(await page.locator('header.topbar').count(),1,
-    'english resources must preserve its compact header');
-  assert.equal(await page.locator('header a[href="index.html"]').count(),2,
-    'english resources header must link back to classes');
-  assert.equal(await page.locator('header a[href="https://lareddeluz.com"]').count(),1,
-    'english resources header must link to La Red de Luz');
-  assert.equal(await page.locator('.salir a[href="index.html"]').count(),1,
-    'english resources body must expose its return to classes');
-  await context.close();
+  for(const viewport of [{width:1440,height:900},{width:430,height:844}]){
+    const context = await browser.newContext({viewport});
+    const page = await context.newPage();
+    await page.goto(base+'/ingles/recursos.html',{waitUntil:'networkidle'});
+    await page.locator('.resource-row').first().waitFor();
+    assert.equal(await page.locator('.resource-row').count(),3,
+      'english resources must render its three published tools');
+    assert.match(await page.locator('#resourceCount').innerText(),/3 recursos disponibles/i,
+      'english resources must announce its inventory count');
+    assert.equal(await page.locator('.item').count(),0,
+      'english resources must not render the retired cards');
+    assert.ok(await page.locator('.academy-brand').isVisible(),
+      'english resources must show the Academy identity');
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),
+      `english resources must not overflow at ${viewport.width}`);
+    assert.ok(await page.evaluate(()=>document.querySelector('.resources-intro').getBoundingClientRect().top<innerHeight),
+      `english resources intro must begin in the first viewport at ${viewport.width}`);
+    const links=await page.locator('.resource-row').evaluateAll(rows=>rows.map(row=>row.href));
+    assert.ok(links.every(href=>href.startsWith(base+'/ingles/recursos/')),
+      'english resources must preserve the current origin');
+    assert.equal(await page.locator('.academy-brand').evaluate(link=>link.href),base+'/',
+      'english resources must return to the current Academy origin');
+    if(viewport.width===1440){
+      assert.ok(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight),
+        'english resources inventory must fit in a desktop viewport');
+    }
+    await page.screenshot({path:path.join(results,
+      `ingles-resources-${viewport.width}x${viewport.height}.png`),fullPage:true});
+    await context.close();
+  }
 }
 
 async function seedProgress(context,courseId){
