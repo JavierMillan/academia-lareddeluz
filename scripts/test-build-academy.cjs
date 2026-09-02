@@ -20,7 +20,7 @@ try {
   write('academy/index.html', '<html><head></head><body><a class="portal dtmm" href="https://academia.lareddeluz.com/dtmm/">DTMM</a><a class="portal english" href="https://academia.lareddeluz.com/ingles/">English</a></body></html>');
   write('academy/CNAME', 'academia.lareddeluz.com\n');
   write('academy/assets/imgs/reddeluz.png', 'academy-logo');
-  write('academy/cursos/dtmm/index.html', '<html><head><title>DTMM</title></head><body><img src="../assets/imgs/reddeluz.png"></body></html>');
+  write('academy/cursos/dtmm/index.html', '<html><head><title>DTMM</title></head><body><a href="https://academia.lareddeluz.com/">Academia</a><img src="../assets/imgs/reddeluz.png"></body></html>');
   write('academy/cursos/dtmm/lesson.html', '<html><head><title>Lesson</title></head><body></body></html>');
   write('academy/cursos/dtmm/clases.json', JSON.stringify({ filas: [{ clases: [{ deck: 'lesson.html' }] }] }));
   write('academy/cursos/dtmm/shared/assets/imgs/reddeluz.png', 'source-logo');
@@ -45,6 +45,9 @@ try {
   assert.ok(fs.existsSync(path.join(outDir, 'assets', 'imgs', 'reddeluz.png')));
   assert.equal(fs.existsSync(path.join(outDir, 'dtmm', 'shared')), false);
   assert.match(fs.readFileSync(path.join(outDir, 'dtmm', 'index.html'), 'utf8'), /<link rel="canonical" href="https:\/\/academia\.lareddeluz\.com\/dtmm\/">/);
+  assert.match(fs.readFileSync(path.join(outDir, 'index.html'), 'utf8'), /href="\/dtmm\/"/);
+  assert.match(fs.readFileSync(path.join(outDir, 'index.html'), 'utf8'), /href="\/ingles\/"/);
+  assert.match(fs.readFileSync(path.join(outDir, 'dtmm', 'index.html'), 'utf8'), /href="\/"/);
   assert.match(fs.readFileSync(path.join(outDir, 'ingles', 'index.html'), 'utf8'), /CANONICAL ENGLISH/);
   assert.ok(fs.existsSync(path.join(outDir, 'ingles', 'recursos', 'order-scenarios.json')));
 

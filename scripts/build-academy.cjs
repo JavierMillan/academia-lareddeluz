@@ -50,13 +50,20 @@ function canonicalUrl(base, relativePath) {
   return new URL(normalized, base).href;
 }
 
-function normalizeHtml(targetRoot, course) {
+function localizeAcademyLinks(html, academyBase) {
+  return html
+    .split(`href="${academyBase}`).join('href="/')
+    .split(`href='${academyBase}`).join("href='/");
+}
+
+function normalizeHtml(targetRoot, course, academyBase) {
   for (const htmlPath of walkFiles(targetRoot, '.html')) {
     const relativePath = path.relative(targetRoot, htmlPath);
     let html = fs.readFileSync(htmlPath, 'utf8');
     for (const rewrite of course.rewrites || []) {
       html = html.split(rewrite.from).join(rewrite.to);
     }
+    html = localizeAcademyLinks(html, academyBase);
     html = html.replace(/\s*<link\b[^>]*rel=["']canonical["'][^>]*>/gi, '');
     const canonical = `<link rel="canonical" href="${canonicalUrl(course.canonicalBase, relativePath)}">`;
     if (!/<\/head>/i.test(html)) throw new Error(`HTML has no </head>: ${htmlPath}`);
@@ -149,10 +156,15 @@ function buildAcademy(options) {
   const manifestPath = path.resolve(options.manifestPath || path.join(academyRoot, 'academy.courses.json'));
   const manifest = readJson(manifestPath);
   validateManifest(manifest);
+  const firstCourse = Object.values(manifest.courses)[0];
+  const academyBase = `${new URL(firstCourse.canonicalBase).origin}/`;
   ensureDirectory(academyRoot, 'Academy root');
   prepareOutput(outDir);
 
   copyRequired(path.join(academyRoot, 'index.html'), path.join(outDir, 'index.html'), 'Academy index');
+  const academyIndexPath = path.join(outDir, 'index.html');
+  fs.writeFileSync(academyIndexPath,
+    localizeAcademyLinks(fs.readFileSync(academyIndexPath, 'utf8'), academyBase));
   copyRequired(path.join(academyRoot, 'CNAME'), path.join(outDir, 'CNAME'), 'Academy CNAME');
   copyRequired(path.join(academyRoot, 'assets'), path.join(outDir, 'assets'), 'Academy assets');
 
@@ -181,7 +193,7 @@ function buildAcademy(options) {
         `Engine for ${courseId}`
       );
     }
-    normalizeHtml(targetRoot, course);
+    normalizeHtml(targetRoot, course, academyBase);
   }
 
   const htmlFiles = validateArtifact(outDir, manifest.legacyHostname);

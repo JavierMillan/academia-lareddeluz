@@ -54,8 +54,8 @@ async function inspect(browser,base,route,name,viewport){
   assert.equal(await page.locator('.deck-card').count(),0,
     `${name} must not render the retired card grid`);
   assert.ok(metrics.academyLinks.length>=3, `${name} must expose academy navigation links`);
-  assert.ok(metrics.academyLinks.every(href=>href==='https://academia.lareddeluz.com/'),
-    `${name} academy navigation must return to the academy domain`);
+  assert.ok(metrics.academyLinks.every(href=>href===base+'/'),
+    `${name} academy navigation must preserve the current origin`);
   const headingContracts=await page.locator('.mobile-category-heading').evaluateAll(headings=>
     headings.map(button=>({expanded:button.getAttribute('aria-expanded'),
       controls:button.getAttribute('aria-controls'),
