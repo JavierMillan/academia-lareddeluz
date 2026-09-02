@@ -109,6 +109,62 @@ async function inspectResources(browser,base){
   await context.close();
 }
 
+async function seedProgress(context,courseId){
+  await context.addInitScript(({courseId})=>{
+    localStorage.setItem('lrdl.progreso',JSON.stringify({
+      esquema:1,
+      dispositivoId:'e2e-test',
+      cursos:{
+        [courseId]:{
+          ultima:'sesion-4',
+          clases:{
+            'sesion-3':{estado:'visto',ts:'2026-08-31T12:00:00.000Z'},
+            'sesion-4':{estado:'curso',ts:'2026-09-01T12:00:00.000Z'}
+          }
+        }
+      }
+    }));
+  },{courseId});
+}
+
+async function inspectProgress(browser,base){
+  const context=await browser.newContext({viewport:{width:430,height:844}});
+  await seedProgress(context,'ingles');
+  const page=await context.newPage();
+  await page.goto(base+'/ingles/',{waitUntil:'networkidle'});
+  await page.locator('.lesson-row').first().waitFor();
+  assert.equal(await page.locator('.lesson-row.visto').count(),1,
+    'english progress must show one completed lesson');
+  assert.equal(await page.locator('.lesson-row.curso').count(),1,
+    'english progress must show one active lesson');
+  assert.match(await page.locator('.featured-class h2').innerText(),/What do you do every day\?/i,
+    'hero must recommend the active lesson');
+  assert.match(await page.locator('.course-progress').innerText(),/1 de 8 vistas/i,
+    'hero must summarize completed progress');
+  assert.ok(await page.locator('.lesson-row[href]').count()>=8,
+    'progress must not lock published lessons');
+  assert.equal(await page.locator('.lesson-row.soon[href]').count(),0,
+    'upcoming lessons must not be links');
+  await context.close();
+}
+
+async function inspectUnavailableProgress(browser,base){
+  const context=await browser.newContext({viewport:{width:430,height:844}});
+  await context.addInitScript(()=>{
+    Storage.prototype.setItem=function(){throw new DOMException('Storage blocked','SecurityError');};
+  });
+  const page=await context.newPage();
+  const errors=[]; page.on('pageerror',error=>errors.push(error.message));
+  await page.goto(base+'/ingles/',{waitUntil:'networkidle'});
+  await page.locator('.lesson-row').first().waitFor();
+  assert.equal(await page.locator('.course-progress').count(),0,
+    'unavailable storage must hide personalized progress');
+  assert.ok(await page.locator('.lesson-row[href]').count()>=8,
+    'unavailable storage must keep published lessons navigable');
+  assert.deepEqual(errors,[],'unavailable storage must not break the hub');
+  await context.close();
+}
+
 (async()=>{
   fs.mkdirSync(results,{recursive:true});
   const httpServer=await server();
@@ -122,6 +178,8 @@ async function inspectResources(browser,base){
       }
     }
     await inspectResources(browser,base);
+    await inspectProgress(browser,base);
+    await inspectUnavailableProgress(browser,base);
     console.log('academy hubs browser layout: PASS');
   }finally{
     await browser.close();
