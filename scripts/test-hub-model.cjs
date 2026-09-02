@@ -53,4 +53,12 @@ assert.equal(Model.estadoDe(progreso, 'dos'), 'curso');
 assert.deepEqual(Model.resumenCurso(cfg, { filas: [] }, { clases: {}, ultima: null }),
   { total: 0, vistas: 0, porcentaje: 0, recomendada: null });
 
+assert.equal(Model.categoriaInicial(cfg, data, progreso).id, 'inicio');
+assert.equal(Model.categoriaInicial(cfg, data, { clases: {}, ultima: null }).id, 'inicio');
+assert.equal(Model.categoriaInicial(cfg, { filas: [
+  { id: 'vacia', clases: [{ id: 'x', titulo: 'Próximamente' }] },
+  { id: 'publicada', clases: [{ id: 'y', deck: 'y.html', titulo: 'Lista' }] }
+]}, { clases: {}, ultima: null }).id, 'publicada');
+assert.equal(Model.categoriaInicial(cfg, { filas: [] }, null), null);
+
 console.log('hub curriculum model: PASS');

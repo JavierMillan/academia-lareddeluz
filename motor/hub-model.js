@@ -92,6 +92,20 @@
     return resumen;
   }
 
+  function categoriaInicial(cfg, data, progreso) {
+    var filas = data.filas || [];
+    var recomendada = resumenCurso(cfg, data,
+      progreso || { clases: {}, ultima: null }).recomendada;
+    var porRecomendacion = recomendada && filas.find(function (fila) {
+      return (fila.clases || []).some(function (clase) {
+        return clase.id === recomendada.id;
+      });
+    });
+    return porRecomendacion || filas.find(function (fila) {
+      return (fila.clases || []).some(function (clase) { return destino(cfg, clase); });
+    }) || filas[0] || null;
+  }
+
   var HubModel = {
     grabacionesDe: grabacionesDe,
     tieneExtras: tieneExtras,
@@ -99,7 +113,8 @@
     materialesDe: materialesDe,
     estadoDe: estadoDe,
     resumenFila: resumenFila,
-    resumenCurso: resumenCurso
+    resumenCurso: resumenCurso,
+    categoriaInicial: categoriaInicial
   };
 
   global.HubModel = HubModel;
