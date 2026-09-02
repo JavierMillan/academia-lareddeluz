@@ -11,79 +11,121 @@
 <link rel="stylesheet" href="assets/motor/temas/ingles.css">
 <link rel="stylesheet" href="assets/ingles.css">
 <style>
-.topbar{border-bottom-color:var(--line-d)}
-.brand{font-family:var(--font-mono);letter-spacing:.14em;font-size:.85rem;
+.resources-nav{margin-left:auto;display:flex;align-items:center;gap:.35rem}
+.resources-nav a{min-height:44px;display:inline-flex;align-items:center;padding:0 .8rem;
+  color:var(--on-char-soft);text-decoration:none;font:500 .6rem var(--font-mono);
+  letter-spacing:.12em;text-transform:uppercase;border-radius:8px}
+.resources-nav a:last-child{border:1px solid color-mix(in srgb,var(--accent-surface) 34%,var(--academy-line));
+  color:var(--accent-text)}
+.resources-nav a:hover{color:var(--sesame)}
+.resources-nav a:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+
+.resources-page{width:min(1180px,calc(100% - clamp(2.5rem,10vw,9rem)));
+  margin:0 auto;padding:clamp(2.4rem,5vw,4.6rem) 0 clamp(3rem,6vw,5rem)}
+.resources-intro{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr);
+  column-gap:clamp(2rem,7vw,6rem);align-items:end;padding-bottom:clamp(2rem,4vw,3.2rem)}
+.resources-kicker{grid-column:1/-1;margin:0 0 1.25rem;color:var(--sesame);
+  font:600 .62rem var(--font-mono);letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.75rem}
+.resources-kicker::before{content:"";width:2.25rem;height:1px;background:currentColor}
+.resources-intro h1{max-width:18ch;margin:0;font-family:var(--font-display);font-weight:600;
+  font-size:clamp(2.25rem,4.7vw,4.8rem);line-height:.92;letter-spacing:-.035em;
   text-transform:uppercase}
-.brand b{color:var(--sesame);font-weight:600}
+.resources-summary{max-width:34ch;margin:0 0 .8rem;color:var(--on-char-soft);
+  font-size:clamp(.95rem,1.25vw,1.08rem);line-height:1.55}
+.inventory-count{grid-column:2;margin:.9rem 0 0;color:var(--on-char-mute);
+  font:500 .6rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase}
 
-.wrap{max-width:52rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
-.eyebrow{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--sesame);
-  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
-.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
-h1{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.005em;
-  line-height:.98;font-size:clamp(1.9rem,4.6vw,3rem)}
-h1 .hl{color:var(--sesame)}
-.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
-  max-width:56ch;margin-top:1.2rem}
-.rule{width:90px;height:2px;margin:1.6rem 0 2.2rem;background:var(--sesame)}
+.resource-inventory{position:relative;border-top:1px solid var(--line-d2)}
+.resource-inventory::before{content:"";position:absolute;left:4.45rem;top:0;bottom:0;
+  width:1px;background:linear-gradient(var(--sesame),var(--line-d) 22%,var(--line-d) 78%,transparent)}
+.resource-row{position:relative;display:grid;grid-template-columns:2.3rem 2.4rem minmax(0,1fr) auto;
+  align-items:center;gap:clamp(.9rem,2vw,1.6rem);min-height:112px;padding:1.2rem .35rem;
+  border-bottom:1px solid var(--line-d);color:inherit;text-decoration:none;
+  transition:background .22s var(--ease),padding .22s var(--ease)}
+.resource-row:hover{padding-inline:.9rem;background:rgba(255,255,255,.018)}
+.resource-row:focus-visible{outline:2px solid var(--sesame);outline-offset:-2px}
+.resource-index{align-self:start;padding-top:.25rem;color:var(--on-char-mute);
+  font:500 .58rem var(--font-mono);letter-spacing:.12em}
+.resource-symbol{position:relative;z-index:1;width:2.4rem;height:2.4rem;display:grid;place-items:center;
+  color:var(--sesame);background:var(--char);border:1px solid rgba(234,74,99,.42);
+  border-radius:50%;font-size:1rem;box-shadow:0 0 0 6px var(--char)}
+.resource-copy{display:flex;flex-direction:column;gap:.38rem;min-width:0}
+.resource-copy strong{font-family:var(--font-display);font-size:clamp(1rem,1.5vw,1.25rem);
+  line-height:1.15;text-transform:uppercase}
+.resource-copy>span{max-width:68ch;color:var(--on-char-soft);font-size:.9rem;line-height:1.48}
+.resource-action{min-height:44px;display:inline-flex;align-items:center;gap:.65rem;padding-left:1rem;
+  color:var(--sesame);font:600 .61rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase}
+.resource-row:hover .resource-action span{transform:translateX(4px)}
+.resource-action span{transition:transform .22s var(--ease)}
+.resource-state{padding:2rem 0;color:var(--on-char-mute);
+  font:500 .7rem/1.5 var(--font-mono);letter-spacing:.08em}
+.resources-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding-top:1.4rem;color:var(--on-char-mute);font:500 .58rem var(--font-mono);
+  letter-spacing:.12em;text-transform:uppercase}
+.resources-footer a{color:var(--sesame);text-decoration:none}
+.resources-footer a:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
 
-.items{display:flex;flex-direction:column;gap:.8rem}
-.item{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.3rem;
-  background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
-  text-decoration:none;color:inherit;transition:.25s var(--ease)}
-.item:hover{border-color:var(--sesame);box-shadow:0 20px 44px -28px var(--glow)}
-.item .ico{flex:none;width:2.6rem;height:2.6rem;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(200,16,46,.12);color:var(--sesame);font-size:1.2rem}
-.item .body{flex:1;min-width:0}
-.item .t{font-weight:600;color:var(--on-char);display:block}
-.item .d{font-size:.9rem;color:var(--on-char-soft);margin-top:.25rem;display:block}
-.item .go{flex:none;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;
-  color:var(--on-char-mute);transition:.25s var(--ease)}
-.item:hover .go{color:var(--sesame)}
-
-.loaderr{color:var(--on-char-mute);font-family:var(--font-mono);font-size:.85rem}
-
-.foot{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
-  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--on-char-mute)}
-.foot a{color:var(--sesame);text-decoration:none}
-.foot a:hover{text-decoration:underline}
-
-.salir{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line-d)}
-.salir a{display:inline-flex;align-items:center;gap:.5rem;
-  padding:1rem 1.6rem;border-radius:12px;border:1px solid var(--line-d2);
-  color:var(--on-char-soft);text-decoration:none;font-family:var(--font-mono);
-  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:.25s var(--ease)}
-.salir a:hover{border-color:var(--sesame);color:var(--sesame)}
+@media(max-width:680px){
+  .academy-shell{min-height:62px}
+  .academy-brand span{display:none}
+  .shell-divider{display:inline}.constellation-context{display:inline;font-size:.56rem}
+  .resources-nav a{padding-inline:.45rem}
+  .resources-nav a:last-child{display:none}
+  .resources-page{width:calc(100% - 2.25rem);padding-top:2.25rem}
+  .resources-intro{display:block;padding-bottom:2rem}
+  .resources-kicker{margin-bottom:1rem;font-size:.56rem}
+  .resources-intro h1{font-size:clamp(2rem,11vw,3.15rem);max-width:12ch}
+  .resources-summary{margin-top:1.15rem;max-width:31rem}
+  .inventory-count{margin-top:1.1rem}
+  .resource-inventory::before{left:2.95rem}
+  .resource-row{grid-template-columns:1.45rem 2.2rem minmax(0,1fr);gap:.75rem;
+    align-items:start;min-height:0;padding:1.25rem 0}
+  .resource-row:hover{padding-inline:.35rem}
+  .resource-index{font-size:.53rem}
+  .resource-symbol{width:2.2rem;height:2.2rem;box-shadow:0 0 0 5px var(--char)}
+  .resource-copy strong{font-size:1rem;line-height:1.18}
+  .resource-copy>span{font-size:.84rem;line-height:1.45}
+  .resource-action{grid-column:3;min-height:32px;padding:0;margin-top:.15rem}
+  .resources-footer{align-items:flex-start;flex-direction:column;padding-top:1.2rem;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){
+  .resource-row,.resource-action span{transition:none}
+}
 </style>
 </head>
 <body class="theme-ingles">
 
-<header class="topbar">
-  <a class="brand" href="index.html">¡Hablemos <b>Inglés!</b></a>
-  <nav class="nav nav-desktop" aria-label="Secciones del programa">
-    <a href="index.html" class="solo">‹ Clases</a>
+<header class="topbar academy-shell">
+  <a class="academy-brand" href="../" aria-label="Volver a Academia La Red de Luz">
+    <img src="assets/motor/imgs/reddeluz.png" alt="" width="34" height="34">
+    <span>La Red de Luz · Academia</span>
+  </a>
+  <span class="shell-divider" aria-hidden="true">/</span>
+  <span class="constellation-context">Inglés / Recursos</span>
+  <nav class="resources-nav" aria-label="Navegación de recursos">
+    <a href="index.html">Clases</a>
+    <a href="../">Todas las constelaciones</a>
   </nav>
-  <a class="home" href="https://lareddeluz.com" target="_blank" rel="noopener">La Red de Luz ↗</a>
 </header>
 
-<div class="wrap">
-  <div class="eyebrow">Almacén de recursos</div>
-  <h1>Material de <span class="hl">consulta libre</span></h1>
-  <p class="sub">Vocabulario, plantillas y chuletas que sirven para cualquier sesión — no están atados a una sola clase. Cada uno se puede guardar como PDF.</p>
-  <div class="rule"></div>
+<main class="resources-page">
+  <header class="resources-intro">
+    <p class="resources-kicker">Biblioteca · Consulta libre</p>
+    <h1>Herramientas para volver cuando las necesites.</h1>
+    <p class="resources-summary">Práctica, vocabulario y sistemas de memoria para acompañar cualquier clase.</p>
+    <p class="inventory-count" id="resourceCount" aria-live="polite">Cargando inventario…</p>
+  </header>
 
-  <div class="items" id="items">
-    <p class="loaderr">Cargando recursos…</p>
-  </div>
+  <section class="resource-inventory" id="items" aria-label="Recursos disponibles">
+    <p class="resource-state">Cargando recursos…</p>
+  </section>
 
-  <div class="salir">
-    <a href="index.html">‹ Volver a Clases</a>
-  </div>
-
-  <p class="foot">¡HABLEMOS INGLÉS! · UNA INICIATIVA DE <a href="https://lareddeluz.com" target="_blank" rel="noopener">LA RED DE LUZ</a></p>
-</div>
+  <footer class="resources-footer">
+    <a href="index.html">← Volver a Clases</a>
+    <span>¡Hablemos Inglés! · Una constelación de La Red de Luz</span>
+  </footer>
+</main>
 
 <script>
 (function(){
@@ -92,25 +134,31 @@ h1 .hl{color:var(--sesame)}
     return String(s==null?'':s).replace(/[&<>"']/g,c=>(
       {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-  function tarjeta(r){
-    return '<a class="item" href="'+esc(r.url)+'">'+
-      '<span class="ico">'+esc(r.icono||'⌘')+'</span>'+
-      '<span class="body"><span class="t">'+esc(r.titulo)+'</span>'+
-      '<span class="d">'+esc(r.descripcion||'')+'</span></span>'+
-      '<span class="go">Abrir →</span></a>';
+  function filaRecurso(r,index){
+    return '<a class="resource-row" href="'+esc(r.url)+'">'+
+      '<span class="resource-index">'+String(index+1).padStart(2,'0')+'</span>'+
+      '<span class="resource-symbol" aria-hidden="true">'+esc(r.icono||'⌘')+'</span>'+
+      '<span class="resource-copy"><strong>'+esc(r.titulo)+'</strong>'+
+      '<span>'+esc(r.descripcion||'')+'</span></span>'+
+      '<span class="resource-action">Abrir <span aria-hidden="true">→</span></span></a>';
   }
   fetch('recursos.json')
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(data=>{
       const box = document.getElementById('items');
+      const count = document.getElementById('resourceCount');
       const recursos = data.recursos||[];
       box.innerHTML = recursos.length
-        ? recursos.map(tarjeta).join('')
-        : '<p class="loaderr">Todavía no hay recursos publicados.</p>';
+        ? recursos.map(filaRecurso).join('')
+        : '<p class="resource-state">Todavía no hay recursos publicados.</p>';
+      count.textContent = recursos.length
+        ? recursos.length+' recurso'+(recursos.length===1?'':'s')+' disponibles'
+        : 'Inventario vacío';
     })
     .catch(e=>{
       const box = document.getElementById('items');
-      box.innerHTML = '<p class="loaderr">No se pudieron cargar los recursos. '+
+      document.getElementById('resourceCount').textContent = 'Inventario no disponible';
+      box.innerHTML = '<p class="resource-state">No se pudieron cargar los recursos. '+
         'Si abriste el archivo directamente, necesitas un servidor local.</p>';
       console.error('[ingles/recursos]', e);
     });
