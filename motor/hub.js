@@ -350,6 +350,41 @@
     });
   }
 
+  /* ---------- categorías curriculares ---------- */
+  function activarCategorias() {
+    var categorias = [].slice.call(document.querySelectorAll('[data-category]'));
+    if (!categorias.length) return;
+    var media = window.matchMedia('(max-width:760px)');
+
+    function cambiar(categoria, abierta) {
+      var boton = categoria.querySelector('.curriculum-heading');
+      var panel = document.getElementById(boton.getAttribute('aria-controls'));
+      categoria.classList.toggle('open', abierta);
+      boton.setAttribute('aria-expanded', abierta ? 'true' : 'false');
+      panel.hidden = !abierta;
+    }
+
+    function configurar() {
+      if (!media.matches) {
+        categorias.forEach(function (categoria) { cambiar(categoria, true); });
+        return;
+      }
+      var activa = categorias.find(function (categoria) {
+        return Boolean(categoria.querySelector('.lesson-row.curso'));
+      }) || categorias[0];
+      categorias.forEach(function (categoria) { cambiar(categoria, categoria === activa); });
+    }
+
+    categorias.forEach(function (categoria) {
+      categoria.querySelector('.curriculum-heading').addEventListener('click', function () {
+        cambiar(categoria, !categoria.classList.contains('open'));
+      });
+    });
+    if (media.addEventListener) media.addEventListener('change', configurar);
+    else media.addListener(configurar);
+    configurar();
+  }
+
   /* ---------- progreso ----------
      Se lee de la capa Progreso, que hoy guarda en el navegador y mañana
      en la cuenta de cada quien. Si no está disponible, el hub funciona
@@ -402,6 +437,7 @@
           rows.innerHTML = data.filas.map(function (f) {
             return categoriaCurricular(cfg, f, progreso);
           }).join('');
+          activarCategorias();
         }
         if (navMain) navMain.insertAdjacentHTML('afterbegin', navEscritorio(cfg, data, grupos));
         if (navDraw) navDraw.insertAdjacentHTML('afterbegin', navMovil(cfg, data, grupos));

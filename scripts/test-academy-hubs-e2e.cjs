@@ -53,6 +53,12 @@ async function inspect(browser,base,route,name,viewport){
   assert.ok(metrics.academyLinks.length>=3, `${name} must expose academy navigation links`);
   assert.ok(metrics.academyLinks.every(href=>href==='https://academia.lareddeluz.com/'),
     `${name} academy navigation must return to the academy domain`);
+  const headingContracts=await page.locator('.curriculum-heading').evaluateAll(headings=>
+    headings.map(button=>({expanded:button.getAttribute('aria-expanded'),
+      controls:button.getAttribute('aria-controls'),
+      panel:Boolean(document.getElementById(button.getAttribute('aria-controls')))})));
+  assert.ok(headingContracts.every(item=>item.panel && /^(true|false)$/.test(item.expanded)),
+    `${name} category headings must control real panels`);
   assert.deepEqual(errors,[]);
   if(viewport.width===1440){
     assert.equal(metrics.burger,'none',`${name} desktop navigation should fit at 1440`);
@@ -65,6 +71,21 @@ async function inspect(browser,base,route,name,viewport){
     await page.locator('#navDrawer[aria-hidden="false"]').waitFor();
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#burger').getAttribute('aria-expanded'),'false');
+  }
+  if(viewport.width===430){
+    const categories=page.locator('[data-category]');
+    assert.ok(await categories.count()>=1, `${name} needs mobile categories`);
+    assert.equal(await categories.locator('.curriculum-heading[aria-expanded="true"]').count(),1,
+      `${name} must initially open one mobile category`);
+    const closed=categories.locator('.curriculum-heading[aria-expanded="false"]').first();
+    if(await closed.count()){
+      const panelId=await closed.getAttribute('aria-controls');
+      await closed.click();
+      const opened=page.locator(`.curriculum-heading[aria-controls="${panelId}"]`);
+      assert.equal(await opened.getAttribute('aria-expanded'),'true');
+      assert.ok(await page.locator('#'+panelId).isVisible(),
+        `${name} must reveal a category from its accessible control`);
+    }
   }
   await page.screenshot({path:path.join(results,`${name}-${viewport.width}x${viewport.height}.png`),fullPage:true});
   await context.close();

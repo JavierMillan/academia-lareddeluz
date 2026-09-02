@@ -429,11 +429,21 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
 
 @media(max-width:760px){
   .hub-hero{grid-template-columns:1fr;min-height:0;padding:2rem 1.25rem;gap:1.25rem}
-  .featured-class{min-height:190px}
+  .featured-class{min-height:0}
   .hub-identity h1{font-size:clamp(2.3rem,12vw,4.2rem)}
+  .course-tabs{overflow-x:auto;padding-inline:1.25rem}
+  .rows-area{padding-inline:1.25rem}
+  .category-copy{flex-direction:column;align-items:flex-start;gap:.3rem}
+  .category-progress .bar{display:none}
+  .lesson-row{grid-template-columns:2.2rem minmax(0,1fr);min-height:0;padding:.95rem .25rem}
+  .lesson-action{grid-column:2;padding:.35rem 0 0;min-height:44px;display:flex;align-items:center}
   .all-constellations{display:none}
 }
 @media(max-width:480px){
   .academy-brand span{max-width:8.5rem;white-space:normal;line-height:1.25}
   .shell-divider,.constellation-context{display:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .category-chevron,.lesson-row{transition:none}
 }
