@@ -30,12 +30,13 @@ async function inspect(browser,base,route,name,viewport){
   const page = await context.newPage();
   const errors=[]; page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base+route,{waitUntil:'networkidle'});
-  await page.locator('.lesson-row').first().waitFor();
+  await page.locator(viewport.width<=760 ?
+    '.mobile-category-heading[aria-expanded="true"]' : '.active-category .lesson-row').first().waitFor();
   const metrics = await page.evaluate(()=>{
     const rect = selector=>document.querySelector(selector).getBoundingClientRect();
     return {
       overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
-      header:rect('.academy-shell'),hero:rect('.hub-hero'),firstRow:rect('.curriculum-section'),
+      header:rect('.academy-shell'),hero:rect('.hub-hero'),firstRow:rect('.focused-curriculum'),
       academyLinks:[...document.querySelectorAll('.academy-brand,.all-constellations,.dfoot')]
         .map(link=>link.href),
       burger:getComputedStyle(document.querySelector('#burger')).display,
@@ -44,8 +45,10 @@ async function inspect(browser,base,route,name,viewport){
   });
   assert.ok(metrics.overflow<=0, `${name} must not overflow at ${viewport.width}`);
   assert.ok(metrics.firstRow.top<viewport.height, `${name} first row must begin in first viewport`);
-  assert.ok(await page.locator('.curriculum-section').count()>=1,
-    `${name} must render curriculum categories`);
+  assert.equal(await page.locator('.curriculum-workspace').count(),1,
+    `${name} must render one focused curriculum workspace`);
+  assert.equal(await page.locator('.active-category').count(),1,
+    `${name} must render one active desktop category`);
   assert.ok(await page.locator('.lesson-row[href]').count()>=1,
     `${name} must keep published lessons freely navigable`);
   assert.equal(await page.locator('.deck-card').count(),0,
@@ -53,7 +56,7 @@ async function inspect(browser,base,route,name,viewport){
   assert.ok(metrics.academyLinks.length>=3, `${name} must expose academy navigation links`);
   assert.ok(metrics.academyLinks.every(href=>href==='https://academia.lareddeluz.com/'),
     `${name} academy navigation must return to the academy domain`);
-  const headingContracts=await page.locator('.curriculum-heading').evaluateAll(headings=>
+  const headingContracts=await page.locator('.mobile-category-heading').evaluateAll(headings=>
     headings.map(button=>({expanded:button.getAttribute('aria-expanded'),
       controls:button.getAttribute('aria-controls'),
       panel:Boolean(document.getElementById(button.getAttribute('aria-controls')))})));
@@ -63,6 +66,18 @@ async function inspect(browser,base,route,name,viewport){
   if(viewport.width===1440){
     assert.equal(metrics.burger,'none',`${name} desktop navigation should fit at 1440`);
     assert.notEqual(metrics.nav,'none',`${name} desktop navigation must remain visible at 1440`);
+    assert.ok(await page.locator('.course-map').isVisible(),`${name} desktop course map must be visible`);
+    assert.equal(await page.locator('.course-map-button[aria-pressed="true"]').count(),1,
+      `${name} desktop course map must select one category`);
+    assert.ok(await page.locator('.active-category').isVisible(),
+      `${name} active category must be visible on desktop`);
+    const target=page.locator('.course-map-button').nth(1);
+    const targetId=await target.getAttribute('data-category-id');
+    const before=page.url();
+    await target.click();
+    assert.equal(page.url(),before,`${name} category switching must not navigate`);
+    assert.equal(await page.locator('.active-category').getAttribute('data-active-category'),targetId,
+      `${name} category switching must replace the active lesson panel`);
   }
   if(viewport.width===760){
     assert.notEqual(metrics.burger,'none',`${name} burger must appear when nav does not fit`);
@@ -73,16 +88,22 @@ async function inspect(browser,base,route,name,viewport){
     assert.equal(await page.locator('#burger').getAttribute('aria-expanded'),'false');
   }
   if(viewport.width===430){
-    const categories=page.locator('[data-category]');
+    assert.equal(await page.locator('.course-map').isVisible(),false,
+      `${name} desktop map must hide on mobile`);
+    assert.ok(await page.locator('.mobile-curriculum').isVisible(),
+      `${name} mobile curriculum must be visible`);
+    const categories=page.locator('[data-mobile-category]');
     assert.ok(await categories.count()>=1, `${name} needs mobile categories`);
-    assert.equal(await categories.locator('.curriculum-heading[aria-expanded="true"]').count(),1,
+    assert.equal(await categories.locator('.mobile-category-heading[aria-expanded="true"]').count(),1,
       `${name} must initially open one mobile category`);
-    const closed=categories.locator('.curriculum-heading[aria-expanded="false"]').first();
+    const closed=categories.locator('.mobile-category-heading[aria-expanded="false"]').first();
     if(await closed.count()){
       const panelId=await closed.getAttribute('aria-controls');
       await closed.click();
-      const opened=page.locator(`.curriculum-heading[aria-controls="${panelId}"]`);
+      const opened=page.locator(`.mobile-category-heading[aria-controls="${panelId}"]`);
       assert.equal(await opened.getAttribute('aria-expanded'),'true');
+      assert.equal(await categories.locator('.mobile-category-heading[aria-expanded="true"]').count(),1,
+        `${name} mobile disclosure must keep exactly one category open`);
       assert.ok(await page.locator('#'+panelId).isVisible(),
         `${name} must reveal a category from its accessible control`);
     }
@@ -128,28 +149,31 @@ async function seedProgress(context,courseId){
 }
 
 async function inspectProgress(browser,base){
-  const context=await browser.newContext({viewport:{width:430,height:844}});
+  const context=await browser.newContext({viewport:{width:1440,height:900}});
   await seedProgress(context,'ingles');
   const page=await context.newPage();
   await page.goto(base+'/ingles/',{waitUntil:'networkidle'});
   await page.locator('.lesson-row').first().waitFor();
-  assert.equal(await page.locator('.lesson-row.visto').count(),1,
+  assert.equal(await page.locator('.active-category .lesson-row.visto').count(),1,
     'english progress must show one completed lesson');
-  assert.equal(await page.locator('.lesson-row.curso').count(),1,
+  assert.equal(await page.locator('.active-category .lesson-row.curso').count(),1,
     'english progress must show one active lesson');
   assert.match(await page.locator('.featured-class h2').innerText(),/What do you do every day\?/i,
     'hero must recommend the active lesson');
   assert.match(await page.locator('.course-progress').innerText(),/1 de 8 vistas/i,
     'hero must summarize completed progress');
-  assert.ok(await page.locator('.lesson-row[href]').count()>=8,
-    'progress must not lock published lessons');
-  assert.equal(await page.locator('.lesson-row.soon[href]').count(),0,
+  assert.ok(await page.locator('.active-category .lesson-row[href]').count()>=6,
+    'progress must keep the active category lessons navigable');
+  await page.locator('.course-map-button[data-category-id="sesiones"]').click();
+  assert.equal(await page.locator('.active-category .lesson-row[href]').count(),2,
+    'progress must allow freely exploring another category');
+  assert.equal(await page.locator('.focused-curriculum .lesson-row.soon[href]').count(),0,
     'upcoming lessons must not be links');
   await context.close();
 }
 
 async function inspectUnavailableProgress(browser,base){
-  const context=await browser.newContext({viewport:{width:430,height:844}});
+  const context=await browser.newContext({viewport:{width:1024,height:768}});
   await context.addInitScript(()=>{
     Storage.prototype.setItem=function(){throw new DOMException('Storage blocked','SecurityError');};
   });
@@ -159,8 +183,11 @@ async function inspectUnavailableProgress(browser,base){
   await page.locator('.lesson-row').first().waitFor();
   assert.equal(await page.locator('.course-progress').count(),0,
     'unavailable storage must hide personalized progress');
-  assert.ok(await page.locator('.lesson-row[href]').count()>=8,
-    'unavailable storage must keep published lessons navigable');
+  assert.ok(await page.locator('.active-category .lesson-row[href]').count()>=2,
+    'unavailable storage must keep the initial category navigable');
+  await page.locator('.course-map-button[data-category-id="basico"]').click();
+  assert.equal(await page.locator('.active-category .lesson-row[href]').count(),6,
+    'unavailable storage must keep other categories navigable');
   assert.deepEqual(errors,[],'unavailable storage must not break the hub');
   await context.close();
 }

@@ -55,9 +55,9 @@ body.nav-overflow.menu-open .nav-drawer{transform:translateX(0)}
 
 /* ===== Compact constellation hero ===== */
 .hub-hero{position:relative;isolation:isolate;min-height:0;
-  padding:clamp(2rem,5vw,4rem) max(clamp(1.25rem,5vw,5rem),calc((100vw - 1320px)/2));
-  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
-  align-items:center;gap:clamp(1.5rem,4vw,4rem);overflow:hidden;
+  padding:clamp(2rem,4vw,3rem) max(clamp(1.25rem,5vw,5rem),calc((100vw - 1320px)/2));
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  align-items:center;gap:clamp(2rem,5vw,4.5rem);overflow:hidden;
   border-bottom:1px solid var(--line-d)}
 .hub-identity{display:grid;grid-template-columns:58px minmax(0,1fr);
   grid-template-rows:58px auto auto;column-gap:.9rem;align-content:center}
@@ -72,7 +72,7 @@ body.nav-overflow.menu-open .nav-drawer{transform:translateX(0)}
 .constellation-name{grid-column:2;grid-row:1;align-self:center;color:var(--accent-text);
   font:600 .64rem 'Martian Mono',monospace;letter-spacing:.16em;text-transform:uppercase}
 .hub-identity h1{grid-column:1/-1;margin:1rem 0 .8rem;font-family:'Unbounded',sans-serif;
-  font-size:clamp(2.25rem,5vw,5rem);line-height:.94;letter-spacing:-.035em}
+  font-size:clamp(2.25rem,4.5vw,4.3rem);line-height:.94;letter-spacing:-.035em}
 .hub-identity>p{grid-column:1/-1;max-width:48ch;color:var(--on-char-soft);line-height:1.55}
 .course-progress{grid-column:1/-1;max-width:25rem;margin-top:1.25rem;
   color:var(--on-char-mute);font:400 .65rem/1.3 'Martian Mono',monospace;
@@ -80,15 +80,14 @@ body.nav-overflow.menu-open .nav-drawer{transform:translateX(0)}
 .course-progress .bar{height:4px;margin-top:.55rem;border-radius:99px;
   background:var(--line-d2);overflow:hidden}
 .course-progress .bar i{display:block;height:100%;border-radius:inherit;background:var(--accent-surface)}
-.featured-class{position:relative;display:flex;flex-direction:column;padding:clamp(1.4rem,3vw,2.2rem);
-  min-height:240px;border:1px solid color-mix(in srgb,var(--accent-surface) 38%,var(--line-d));
-  border-radius:14px;background:rgba(var(--hub-panel-rgb),.92);
-  backdrop-filter:blur(18px) saturate(.82);color:var(--on-char);text-decoration:none}
+.featured-class{position:relative;display:flex;flex-direction:column;padding:0 0 0 clamp(1.5rem,3vw,2.5rem);
+  min-height:0;border:0;border-left:1px solid var(--line-d);border-radius:0;background:transparent;
+  color:var(--on-char);text-decoration:none}
 .featured-label,.featured-go{color:var(--accent-text);font:600 .62rem 'Martian Mono',monospace;
   letter-spacing:.14em;text-transform:uppercase}
-.featured-class h2{font:500 clamp(1.6rem,3vw,2.5rem)/1 Fraunces,serif;margin:1.3rem 0 .7rem}
+.featured-class h2{font:500 clamp(1.45rem,2.4vw,2.15rem)/1.05 Fraunces,serif;margin:.75rem 0 .5rem}
 .featured-class p{color:var(--on-char-soft);font-size:.92rem;line-height:1.5}
-.featured-go{margin-top:auto;padding-top:1.4rem}
+.featured-go{margin-top:0;padding-top:1rem}
 .course-tabs{display:flex;gap:1.8rem;padding-top:1.25rem;padding-bottom:.4rem;
   border-bottom:1px solid var(--line-d)}
 .course-tab{position:relative;padding:.75rem 0;color:var(--on-char-mute);text-decoration:none;
@@ -294,30 +293,39 @@ body.menu-open{overflow:hidden}
 
 /* ===== Explorador curricular ===== */
 .rows-area{max-width:1120px;padding-top:clamp(1.5rem,4vw,3rem);padding-bottom:6rem}
-.curriculum-section{border-top:1px solid var(--line-d);scroll-margin-top:5rem}
-.curriculum-section:last-child{border-bottom:1px solid var(--line-d)}
-.curriculum-heading{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;
-  gap:1.2rem;align-items:center;padding:1.35rem 0;border:0;background:none;
-  color:inherit;text-align:left;cursor:pointer}
-.curriculum-heading:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px}
-.category-copy{display:flex;align-items:baseline;gap:.9rem;min-width:0}
-.category-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.1rem,2vw,1.45rem);font-weight:600}
+.focused-curriculum{scroll-margin-top:5rem}
+.curriculum-workspace{display:grid;grid-template-columns:220px minmax(0,1fr);gap:clamp(2rem,5vw,4rem)}
+.course-map{position:sticky;top:5.5rem;align-self:start;padding-right:1.5rem;
+  border-right:1px solid var(--line-d)}
+.course-map-label{display:block;margin-bottom:.8rem;color:var(--on-char-mute);
+  font:500 .58rem/1 'Martian Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.course-map-button{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem;
+  align-items:center;width:100%;min-height:46px;padding:.7rem .5rem .7rem 1.15rem;border:0;
+  background:none;color:var(--on-char-soft);text-align:left;cursor:pointer}
+.course-map-button::before{content:"";position:absolute;left:.15rem;width:6px;height:6px;
+  border:1px solid var(--on-char-mute);border-radius:50%}
+.course-map-button span:first-child{font-family:'Unbounded',sans-serif;font-size:.78rem;font-weight:500}
+.course-map-button span:last-child{color:var(--on-char-mute);font:400 .55rem/1 'Martian Mono',monospace}
+.course-map-button:hover{color:var(--on-char);background:rgba(var(--hub-panel-rgb),.35)}
+.course-map-button[aria-pressed="true"]{color:var(--on-char);background:rgba(var(--hub-panel-rgb),.62)}
+.course-map-button[aria-pressed="true"]::before{border-color:var(--accent-text);background:var(--accent-text)}
+.course-map-button:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.active-category-header{display:flex;justify-content:space-between;gap:1.5rem;align-items:end;
+  min-height:52px;padding-bottom:1rem;border-bottom:1px solid var(--line-d)}
+.active-category-header h2{margin-top:.25rem;font-family:'Unbounded',sans-serif;
+  font-size:clamp(1.3rem,2.4vw,1.75rem);font-weight:600}
 .category-meta{color:var(--on-char-mute);font:400 .65rem/1.4 'Martian Mono',monospace;
   letter-spacing:.12em;text-transform:uppercase}
-.category-progress{display:flex;align-items:center;gap:.65rem;color:var(--on-char-mute);
+.category-progress{color:var(--on-char-mute);
   font:400 .62rem/1 'Martian Mono',monospace;white-space:nowrap}
-.category-progress .bar{width:82px;height:3px;background:var(--line-d2);border-radius:99px;overflow:hidden}
-.category-progress .bar i{display:block;height:100%;background:var(--accent-surface)}
-.category-chevron{color:var(--accent-text);transition:transform .2s var(--ease)}
-.curriculum-section.open .category-chevron{transform:rotate(180deg)}
-.lesson-list{display:flex;flex-direction:column;padding-bottom:1rem}
+.lesson-list{display:flex;flex-direction:column}
 .lesson-row{display:grid;grid-template-columns:2.4rem minmax(0,1fr) auto;gap:1rem;align-items:center;
-  min-height:112px;padding:1rem;border:1px solid transparent;border-radius:12px;
+  min-height:80px;padding:.7rem .25rem;border:0;border-bottom:1px solid var(--line-d);border-radius:0;
   color:inherit;text-decoration:none;transition:background .2s var(--ease),border-color .2s var(--ease)}
-.lesson-row:hover{background:rgba(var(--hub-panel-rgb),.72);border-color:var(--line-d2)}
+.lesson-row:hover{background:rgba(var(--hub-panel-rgb),.48)}
 .lesson-row:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
 .lesson-row.curso{background:color-mix(in srgb,var(--accent-surface) 12%,transparent);
-  border-color:color-mix(in srgb,var(--accent-surface) 58%,transparent)}
+  box-shadow:inset 2px 0 0 var(--accent-text)}
 .lesson-status{width:2rem;height:2rem;display:grid;place-items:center;border:1px solid var(--line-d2);
   border-radius:50%;color:var(--on-char-mute);font:500 .62rem/1 'Martian Mono',monospace}
 .lesson-row.visto .lesson-status{background:var(--lettuce);border-color:var(--lettuce);color:var(--char)}
@@ -326,14 +334,27 @@ body.menu-open{overflow:hidden}
 .lesson-kicker{color:var(--accent-text);font:500 .58rem/1.4 'Martian Mono',monospace;
   letter-spacing:.12em;text-transform:uppercase}
 .lesson-copy strong{margin-top:.25rem;font-family:'Unbounded',sans-serif;font-size:1rem;line-height:1.25}
-.lesson-summary{margin-top:.3rem;color:var(--on-char-soft);font-size:.88rem;line-height:1.4}
-.lesson-materials{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.55rem}
+.lesson-summary{margin-top:.25rem;color:var(--on-char-soft);font-size:.82rem;line-height:1.35;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lesson-materials{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.35rem}
 .material{color:var(--on-char-mute);font:400 .56rem/1.3 'Martian Mono',monospace;
   letter-spacing:.08em;text-transform:uppercase}
 .lesson-action{padding-left:1rem;color:var(--accent-text);font:500 .62rem/1.3 'Martian Mono',monospace;
   letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 .lesson-row.soon{opacity:.58;cursor:default}
 .curriculum-empty{padding:1rem;color:var(--on-char-mute)}
+.mobile-curriculum{display:none}
+.mobile-category{border-top:1px solid var(--line-d)}
+.mobile-category:last-child{border-bottom:1px solid var(--line-d)}
+.mobile-category-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem;align-items:center;
+  width:100%;min-height:60px;padding:.8rem 0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.mobile-category-copy{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.mobile-category-copy strong{font-family:'Unbounded',sans-serif;font-size:1rem}
+.mobile-category-copy small{color:var(--on-char-mute);font:400 .58rem/1.4 'Martian Mono',monospace;
+  letter-spacing:.09em;text-transform:uppercase}
+.mobile-category-progress{color:var(--on-char-mute);font:400 .58rem/1 'Martian Mono',monospace;white-space:nowrap}
+.mobile-category-heading[aria-expanded="true"] .mobile-category-progress span{display:inline-block;transform:rotate(180deg)}
+.mobile-category-heading:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 
 /* texto sólo para lectores de pantalla: el estado no puede vivir
    únicamente en el color y la forma */
@@ -429,13 +450,14 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
 
 @media(max-width:760px){
   .hub-hero{grid-template-columns:1fr;min-height:0;padding:2rem 1.25rem;gap:1.25rem}
-  .featured-class{min-height:0}
+  .featured-class{min-height:0;padding:1.25rem 0 0;border-left:0;border-top:1px solid var(--line-d)}
   .hub-identity h1{font-size:clamp(2.3rem,12vw,4.2rem)}
   .course-tabs{overflow-x:auto;padding-inline:1.25rem}
   .rows-area{padding-inline:1.25rem}
-  .category-copy{flex-direction:column;align-items:flex-start;gap:.3rem}
-  .category-progress .bar{display:none}
+  .curriculum-workspace{display:none}
+  .mobile-curriculum{display:block}
   .lesson-row{grid-template-columns:2.2rem minmax(0,1fr);min-height:0;padding:.95rem .25rem}
+  .lesson-summary{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
   .lesson-action{grid-column:2;padding:.35rem 0 0;min-height:44px;display:flex;align-items:center}
   .all-constellations{display:none}
 }
@@ -445,5 +467,5 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .category-chevron,.lesson-row{transition:none}
+  .mobile-category-progress span,.lesson-row{transition:none}
 }
