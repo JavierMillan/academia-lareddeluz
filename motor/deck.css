@@ -371,7 +371,12 @@ body.notes-on .brandmark{--reserva-hint:0rem}
   }
 }
 @media (max-width:640px){
+  /* el shorthand de dos valores pisaba el padding-bottom calculado de la
+     regla base, dejando la slide sin la reserva de --chrome-abajo: en
+     pantallas cortas el contenido largo (un diálogo de 11 líneas) pasaba
+     por debajo del HUD. La reserva se vuelve a declarar aquí. */
   .slide{padding:clamp(1.3rem,4.5vh,2rem) clamp(1.4rem,6vw,2.2rem);
+    padding-bottom:calc(clamp(1.3rem,4.5vh,2rem) + var(--chrome-abajo));
     overflow-y:auto;overflow-x:hidden;justify-content:safe center}
   .slide::-webkit-scrollbar{width:0}
   .mt-s{margin-top:clamp(.6rem,1.4vh,1rem)}
