@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Conectar tu IA a Notion y Drive — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-char-soft);text-decoration:none;
+  border:1px solid var(--line-d2);border-radius:8px;padding:.5rem .8rem;
+  background:transparent;cursor:pointer;transition:.25s var(--ease);white-space:nowrap}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-sp{flex:1}
+
+.wrap{max-width:52rem;margin-inline:auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--sesame);display:flex;align-items:center;gap:.8rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.025em;
+  font-size:clamp(1.9rem,4.4vw,3.1rem);line-height:1.04;margin:1rem 0 0;text-wrap:balance}
+.hl{color:var(--sesame)}
+.sub{color:var(--on-char-soft);font-size:clamp(1rem,1.4vw,1.15rem);margin-top:1.1rem;max-width:44rem}
+.rule{width:100%;height:1px;background:var(--line-d);margin:clamp(2rem,4vw,3rem) 0}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.015em;
+  font-size:clamp(1.25rem,2.4vw,1.75rem);line-height:1.15;margin:clamp(2.4rem,4vw,3.2rem) 0 .9rem;
+  text-wrap:balance}
+h3{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(1.02rem,1.7vw,1.22rem);margin:1.8rem 0 .6rem}
+p{color:var(--on-char-soft);margin-bottom:.9rem}
+p strong,li strong{color:var(--on-char);font-weight:600}
+a{color:var(--sesame)}
+
+ol,ul{margin:0 0 1.1rem 1.3rem;color:var(--on-char-soft)}
+li{margin-bottom:.55rem}
+
+/* pasos numerados grandes */
+.pasos{list-style:none;margin:1.2rem 0 0;padding:0;counter-reset:paso}
+.pasos li{counter-increment:paso;position:relative;padding-left:3.1rem;
+  margin-bottom:1.15rem;min-height:2rem}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:-.1rem;
+  width:2.1rem;height:2.1rem;border-radius:9px;border:1px solid var(--sesame);
+  color:var(--sesame);font-family:'Martian Mono',monospace;font-size:.82rem;
+  display:flex;align-items:center;justify-content:center}
+
+/* caja de dato/aviso */
+.nota{border-left:2px solid var(--sesame);background:rgba(232,161,60,.06);
+  border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin:1.4rem 0}
+.nota p:last-child{margin-bottom:0}
+.nota.ojo{border-left-color:var(--ketchup);background:rgba(200,68,46,.07)}
+
+/* tarjetas de asistente */
+.asistentes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+@media(max-width:700px){.asistentes{grid-template-columns:1fr}}
+.asis{background:var(--char-soft);border:1px solid var(--line-d);border-radius:14px;
+  padding:1.2rem 1.35rem}
+.asis .nom{font-family:'Unbounded',sans-serif;font-weight:600;font-size:1.05rem}
+.asis .plan{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;margin-top:.45rem;display:inline-block;
+  border-radius:999px;padding:.24rem .6rem}
+.asis .plan.libre{color:var(--lettuce);border:1px solid rgba(124,154,62,.5)}
+.asis .plan.pago{color:var(--ketchup);border:1px solid rgba(200,68,46,.45)}
+.asis ol{margin:.9rem 0 0 1.1rem;font-size:.94rem}
+
+/* caja copiable */
+.promptbox{position:relative;background:#120f0b;border:1px solid var(--line-d2);
+  border-radius:12px;margin:1.1rem 0 1.6rem;overflow:hidden}
+.pb-head{display:flex;align-items:center;gap:.45rem;padding:.7rem .9rem;
+  border-bottom:1px solid var(--line-d);background:rgba(255,255,255,.02)}
+.pb-head i{width:9px;height:9px;border-radius:50%;background:var(--line-d2);display:block}
+.pb-head .tt{margin-left:.5rem;font-family:'Martian Mono',monospace;font-size:.6rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--on-char-mute)}
+.copybtn{position:absolute;top:.55rem;right:.7rem;z-index:2;
+  font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-char-soft);background:rgba(25,20,15,.9);
+  border:1px solid var(--line-d2);border-radius:7px;padding:.35rem .6rem;cursor:pointer;
+  transition:.22s var(--ease)}
+.copybtn:hover{border-color:var(--sesame);color:var(--sesame)}
+.copybtn:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+.copybtn.ok{color:var(--lettuce);border-color:rgba(124,154,62,.6)}
+pre{font-family:'Martian Mono',monospace;font-size:.78rem;line-height:1.75;
+  color:var(--on-char-soft);padding:1.1rem 1.2rem;overflow-x:auto;white-space:pre-wrap;
+  word-break:break-word}
+
+/* tabla */
+.tabla-wrap{overflow-x:auto;border:1px solid var(--line-d);border-radius:12px;margin:1.3rem 0}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.93rem}
+th,td{text-align:left;padding:.75rem .95rem;border-bottom:1px solid var(--line-d);
+  vertical-align:top;color:var(--on-char-soft)}
+th{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--on-char-mute);font-weight:400;
+  background:rgba(255,255,255,.02)}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--on-char)}
+
+.foot{margin-top:4rem;padding-top:1.6rem;border-top:1px solid var(--line-d);
+  color:var(--on-char-mute);font-size:.85rem}
+
+@media print{
+  .topbar{display:none}
+  body{background:#fff;color:#000}
+  .wrap{max-width:100%;padding:0}
+  h1,h2,h3{color:#000}
+  p,li,td,th{color:#222}
+  .promptbox{background:#f5f5f5;border-color:#ccc;break-inside:avoid}
+  pre{color:#000}
+  .copybtn{display:none}
+  .asis,.nota{break-inside:avoid;border-color:#ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=mi-espacio-de-trabajo">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Herramientas de IA · Clase 2 · Recurso</div>
+  <h1>Conecta tu IA a<br><span class="hl">Notion y Drive</span></h1>
+  <p class="sub">Una vez conectada, tu asistente puede leer tus tareas, crearlas, cambiar estados y encontrar tus archivos — sin que tú escribas nada a mano. Estas son las instrucciones para dejarlo funcionando.</p>
+  <div class="rule"></div>
+
+  <h2>Qué cambia cuando lo conectas</h2>
+  <p>Sin conexión, tú escribes en Notion y le cuentas a la IA lo que hay. Con conexión, le hablas normal y ella se encarga.</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead>
+        <tr><th>Le dices</th><th>Ella hace</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>«¿Qué tengo pendiente esta semana?»</td>
+          <td>Lee tus tareas y te responde, sin que abras Notion.</td>
+        </tr>
+        <tr>
+          <td>«Apunta que hay que reservar el lugar»</td>
+          <td>Crea la tarea con su proyecto y su estado.</td>
+        </tr>
+        <tr>
+          <td>«Ya terminé la agenda»</td>
+          <td>Cambia el estado a <strong>Listo</strong>.</td>
+        </tr>
+        <tr>
+          <td>«Pásame el archivo de materiales»</td>
+          <td>Lo busca en tu Drive y te da el enlace.</td>
+        </tr>
+        <tr>
+          <td>«Resume lo que hicimos este mes»</td>
+          <td>Lee todo y te escribe el resumen.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>El sistema completo son tres piezas: <strong>Notion</strong> guarda lo que hay que hacer, <strong>Drive</strong> guarda los archivos, y <strong>la IA</strong> mueve las dos cosas por ti.</p>
+
+  <div class="rule"></div>
+
+  <h2>Antes de empezar</h2>
+  <p>Necesitas dos cosas:</p>
+  <ul>
+    <li>Una cuenta de <strong>Notion</strong> — sirve la gratuita.</li>
+    <li>Un asistente que acepte conexiones. Aquí van los dos más comunes.</li>
+  </ul>
+
+  <div class="asistentes">
+    <div class="asis">
+      <div class="nom">Claude</div>
+      <div class="plan libre">Funciona en el plan gratuito</div>
+      <ol>
+        <li>Entra a <a href="https://claude.com/connectors/notion" target="_blank" rel="noopener">claude.com/connectors/notion</a></li>
+        <li>Pulsa <strong>Add to Claude</strong></li>
+        <li>Inicia sesión en Notion y autoriza</li>
+      </ol>
+    </div>
+    <div class="asis">
+      <div class="nom">ChatGPT</div>
+      <div class="plan pago">Requiere plan de pago</div>
+      <ol>
+        <li>Abre <strong>Configuración → Aplicaciones</strong> (o Conectores)</li>
+        <li>Busca <strong>Notion</strong> y pulsa Conectar</li>
+        <li>Inicia sesión en Notion y autoriza</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="nota">
+    <p><strong>Sobre el plan de ChatGPT:</strong> los conectores no están en la versión gratuita. Si no quieres pagar, usa Claude — su conector de Notion funciona sin plan.</p>
+  </div>
+
+  <div class="nota ojo">
+    <p><strong>Esto hay que saberlo antes de autorizar:</strong> el asistente entra con <em>tus mismos permisos de Notion</em>. Puede ver todo lo que tú ves en ese espacio de trabajo, no solo la página que le enseñes.</p>
+    <p>Si tienes cosas privadas en tu Notion, la recomendación es crear un espacio aparte solo para esto — o empezar duplicando la plantilla de la clase, que no tiene nada personal.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <h2>Conectar Drive</h2>
+  <p>Es el mismo camino. En Claude, desde el directorio de conectores; en ChatGPT, desde <strong>Configuración → Aplicaciones</strong>. Buscas Google Drive, conectas y autorizas con tu cuenta de Google.</p>
+  <p>Con Drive conectado, la IA puede buscar tus archivos y leerlos para responderte — sin que tú los abras.</p>
+
+  <div class="rule"></div>
+
+  <h2>Comprobar que quedó bien</h2>
+  <p>Abre una conversación nueva con tu asistente y pídele esto. Si te responde con tus tareas de verdad, está conectado.</p>
+
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Prueba de conexión</span></div>
+    <button class="copybtn" data-target="p1">Copiar</button>
+<pre id="p1">Busca en mi Notion la página "Mi espacio de trabajo" y dime qué
+tareas tengo, con su estado. Si no la encuentras, dímelo en vez
+de inventar.</pre>
+  </div>
+
+  <p>Esa última frase importa: sin ella, algunos asistentes se inventan una respuesta plausible en vez de admitir que no encontraron nada.</p>
+
+  <div class="rule"></div>
+
+  <h2>Tres formas de pedirle las cosas</h2>
+  <p>Cópialos y cámbialos por lo tuyo. Son el arranque; con el uso vas a encontrar los tuyos.</p>
+
+  <h3>Para empezar el día</h3>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Qué tengo hoy</span></div>
+    <button class="copybtn" data-target="p2">Copiar</button>
+<pre id="p2">Mira mis tareas en Notion y dime:
+1. Qué está En marcha ahora mismo.
+2. Qué sigue Por hacer.
+3. Cuál me conviene atacar primero y por qué.
+
+Si algo lleva mucho tiempo En marcha, dímelo.</pre>
+  </div>
+
+  <h3>Para apuntar sin abrir nada</h3>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Crear una tarea hablando</span></div>
+    <button class="copybtn" data-target="p3">Copiar</button>
+<pre id="p3">Apunta esto como tarea nueva en mi Notion:
+
+[escribe aquí lo que hay que hacer, con tus palabras]
+
+Ponle el proyecto que corresponda y déjala en Por hacer.
+Si no tienes claro a qué proyecto va, pregúntame antes de crearla.</pre>
+  </div>
+
+  <h3>Para cerrar la semana</h3>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Resumen semanal</span></div>
+    <button class="copybtn" data-target="p4">Copiar</button>
+<pre id="p4">Revisa mis tareas en Notion y escríbeme un resumen corto:
+
+- Qué terminé esta semana.
+- Qué quedó a medias.
+- Qué no empecé.
+
+Después dime una sola cosa en la que debería enfocarme la
+semana que viene. Una, no cinco.</pre>
+  </div>
+
+  <div class="rule"></div>
+
+  <h2>Cuando algo no funciona</h2>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead>
+        <tr><th>Lo que pasa</th><th>Qué hacer</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dice que no encuentra la página</strong></td>
+          <td>Al autorizar se elige a qué espacio entra. Revisa que sea el mismo donde está tu página, y que la página no esté en la papelera.</td>
+        </tr>
+        <tr>
+          <td><strong>La lee pero no la puede cambiar</strong></td>
+          <td>Algunos conectores entran solo para leer. Revisa los permisos al conectar y vuelve a autorizar si hace falta.</td>
+        </tr>
+        <tr>
+          <td><strong>Se inventa tareas que no existen</strong></td>
+          <td>Casi siempre es que no está conectado y está adivinando. Haz la prueba de conexión de arriba.</td>
+        </tr>
+        <tr>
+          <td><strong>Creó la tarea en el lugar equivocado</strong></td>
+          <td>Dile explícitamente dónde: «créala dentro de Mis tareas, en el espacio Mi espacio de trabajo».</td>
+        </tr>
+        <tr>
+          <td><strong>No aparece el conector en ChatGPT</strong></td>
+          <td>Los conectores necesitan plan de pago. En el gratuito no salen.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rule"></div>
+
+  <h2>Una costumbre que vale la pena</h2>
+  <p>Al principio, <strong>revisa lo que hizo</strong>. No porque falle seguido, sino porque así aprendes cómo entiende tus instrucciones — y descubres cómo pedirle mejor las cosas.</p>
+  <p>Cuando se equivoque, dile qué esperabas. Con el tiempo necesitas revisar menos.</p>
+
+  <div class="nota">
+    <p><strong>Empieza por una sola cosa.</strong> Conecta Notion, úsalo una semana para ver tus tareas y crear alguna. Cuando eso sea natural, conecta Drive. Conectar todo el primer día es la forma más rápida de abandonarlo.</p>
+  </div>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de La Red de Luz<br>
+  Los pasos de cada aplicación cambian de vez en cuando. Si algo no coincide con lo que ves, busca «conectores» o «aplicaciones» en los ajustes de tu asistente.</p>
+
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var t = document.getElementById(b.dataset.target);
+    if(!t) return;
+    navigator.clipboard.writeText(t.innerText).then(function(){
+      var antes = b.textContent;
+      b.textContent = '✓ Copiado';
+      b.classList.add('ok');
+      setTimeout(function(){ b.textContent = antes; b.classList.remove('ok'); }, 1800);
+    });
+  });
+});
+</script>
+</body>
+</html>

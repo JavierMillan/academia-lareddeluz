@@ -345,6 +345,29 @@
           ]
         },
         {
+          "id": "mi-espacio-de-trabajo",
+          "parte": "Clase 2",
+          "titulo": "Mi espacio de trabajo",
+          "resumen": "Notion, Drive y tu asistente trabajando juntos: tú le hablas, él organiza.",
+          "deck": "herramientas-ia/mi-espacio-de-trabajo.html",
+          "temas": [
+            "La libreta y el archivador: dónde vive cada cosa.",
+            "Qué cambia cuando conectas tu asistente a las dos.",
+            "Una lista de tareas con tres columnas y tres estados.",
+            "Pedirle a la IA que cree, actualice y resuma por ti.",
+            "Cómo dejarlo conectado y empezar con tu propia copia."
+          ],
+          "recursos": [
+            {
+              "tipo": "guia",
+              "icono": "⌘",
+              "titulo": "Conectar tu IA a Notion y Drive",
+              "descripcion": "Los pasos para dejar tu asistente conectado, los primeros prompts y qué hacer cuando algo falla. Se guarda como PDF.",
+              "url": "herramientas-ia/recursos/conectar-tu-ia.html"
+            }
+          ]
+        },
+        {
           "id": "tu-asistente-con-tu-voz-3",
           "parte": "Clase 3",
           "titulo": "Tu asistente con tu voz",
