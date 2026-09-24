@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>En la farmacia y la clínica — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/motor/temas/ingles.css">
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .say{display:block;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.12rem}
+
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;max-width:52rem}
+@media(max-width:900px){.vocab{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vocab{grid-template-columns:1fr}}
+.vocab .v{padding:.6rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:9px}
+.vocab .en{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;line-height:1.15}
+.vocab .say{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.03em;
+  color:var(--accent-text);margin-top:.18rem}
+.vocab .es{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-soft);margin-top:.3rem}
+.vocab .v.ojo{border-color:rgba(200,16,46,.4)}
+.vocab .v.ojo .es{color:var(--on-char)}
+
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%;max-width:48rem}
+@media(max-width:760px){.parejas{grid-template-columns:1fr}}
+.rol{padding:1rem 1.2rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.rol .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.rol .hace{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.97rem);
+  color:var(--on-char-soft);line-height:1.45;margin-top:.55rem}
+
+.coro{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;max-width:50rem}
+.coro span{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;padding:.5rem .8rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:999px}
+.coro span.r{border-color:rgba(200,16,46,.45);color:var(--accent-text)}
+
+/* abecedario para deletrear */
+.letras{display:flex;flex-wrap:wrap;gap:.45rem;width:100%;max-width:46rem}
+.letras .l{display:flex;flex-direction:column;align-items:center;gap:.15rem;
+  min-width:3.4rem;padding:.55rem .6rem;background:var(--char-soft);
+  border:1px solid rgba(200,16,46,.4);border-radius:9px}
+.letras .l b{font-family:var(--font-display);font-size:1.05rem;text-transform:none;font-weight:400}
+.letras .l span{font-family:var(--font-mono);font-size:.62rem;color:var(--accent-text)}
+</style>
+</head>
+<body class="theme-ingles" data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center active" data-notes="Clase 2 del bloque. Esta es la que más nervios da, porque cuando uno está enfermo no tiene paciencia para traducir. Diles eso de entrada: por eso vamos a ensayar las frases hasta que salgan solas.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Farmacia y <span class="hl">clínica.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Recoger una receta, explicar qué te duele y entender las instrucciones. Situaciones del día a día · Clase 2.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Día a día · 2/5</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Preguntas fáciles para soltar la lengua. Ojo con 'often': la t casi no suena, dilo tú primero un par de veces.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Para <span class="hl">empezar.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">How do you feel today?</span><span class="say">jáu du yu fil tudéi</span>
+          <span class="use">¿Cómo te sientes hoy?</span></div>
+        <div class="f"><span class="en">Do you get sick often?</span><span class="say">du yu guet sik ófen</span>
+          <span class="use">¿Te enfermas seguido? — la «t» de often casi no suena.</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Contesten como puedan — lo importante es arrancar</div>
+    </section>
+
+    <!-- 3 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Señala que hoy hay dos escenarios distintos: farmacia y clínica. Son conversaciones parecidas pero con vocabulario propio.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Así vamos hoy</div>
+      <h2 class="h1">Dos lugares, <span class="hl">una hora.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Vocabulario de salud</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Frases de farmacia y de clínica</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Diálogo modelo en la farmacia</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Modismos</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Práctica en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Cierre — tu fecha de nacimiento</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · VOCABULARIO -->
+    <section class="slide paper" data-notes="10 min. Lee cada palabra y que repitan dos veces. 'Urgent care' merece explicación: allá es la clínica para lo que no es grave — mucho más barata que emergencias. Es un concepto que no existe igual en México.">
+      <div class="eyebrow">Vocabulario · 10 min</div>
+      <h2 class="h1">Palabras <span class="hl">de salud.</span></h2>
+      <div class="vocab mt-m">
+        <div class="v"><div class="en">pharmacy</div><div class="say">fármasi</div><div class="es">farmacia</div></div>
+        <div class="v"><div class="en">prescription</div><div class="say">preskrípshon</div><div class="es">receta</div></div>
+        <div class="v"><div class="en">pick up</div><div class="say">pik ap</div><div class="es">recoger</div></div>
+        <div class="v"><div class="en">refill</div><div class="say">rífil</div><div class="es">resurtir la receta</div></div>
+        <div class="v"><div class="en">over the counter</div><div class="say">óuver de káunter</div><div class="es">sin receta</div></div>
+        <div class="v"><div class="en">insurance</div><div class="say">inshúrans</div><div class="es">seguro médico</div></div>
+        <div class="v"><div class="en">copay</div><div class="say">kóupei</div><div class="es">copago</div></div>
+        <div class="v"><div class="en">appointment</div><div class="say">apóintment</div><div class="es">cita</div></div>
+        <div class="v ojo"><div class="en">urgent care</div><div class="say">érdyent ker</div><div class="es">clínica de urgencias — para lo que no es grave</div></div>
+        <div class="v"><div class="en">symptoms</div><div class="say">símptoms</div><div class="es">síntomas</div></div>
+        <div class="v"><div class="en">fever</div><div class="say">fíver</div><div class="es">fiebre</div></div>
+        <div class="v"><div class="en">sore throat</div><div class="say">sor zróut</div><div class="es">dolor de garganta</div></div>
+        <div class="v"><div class="en">cough</div><div class="say">kaf</div><div class="es">tos</div></div>
+        <div class="v"><div class="en">headache</div><div class="say">jédeik</div><div class="es">dolor de cabeza</div></div>
+        <div class="v"><div class="en">stomachache</div><div class="say">stómakeik</div><div class="es">dolor de estómago</div></div>
+        <div class="v"><div class="en">dizzy</div><div class="say">dízi</div><div class="es">mareado</div></div>
+        <div class="v"><div class="en">side effects</div><div class="say">sáid ifékts</div><div class="es">efectos secundarios</div></div>
+      </div>
+    </section>
+
+    <!-- 5 · EN LA FARMACIA -->
+    <section class="slide paper" data-notes="5 min de los 10 de frases. En la farmacia siempre piden apellido y fecha de nacimiento — es lo primero. Por eso las dos slides que siguen practican justo eso.">
+      <div class="eyebrow">Frases útiles · farmacia</div>
+      <h2 class="h1">En la <span class="hl">farmacia.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">I'm here to pick up a prescription.</span><span class="say">áim jír tu pik ap a preskrípshon</span>
+          <span class="use">Vengo a recoger una receta.</span></div>
+        <div class="f"><span class="en">What's your date of birth?</span><span class="say">juats yor déit ov berz</span>
+          <span class="use">¿Cuál es su fecha de nacimiento? — siempre la preguntan.</span></div>
+        <div class="f"><span class="en">Can you spell your last name?</span><span class="say">kan yu spel yor last néim</span>
+          <span class="use">¿Me deletrea su apellido?</span></div>
+        <div class="f"><span class="en">Do you have anything for a sore throat?</span><span class="say">du yu jav énizing for a sor zróut</span>
+          <span class="use">¿Tiene algo para el dolor de garganta?</span></div>
+        <div class="f"><span class="en">Take one pill twice a day with food.</span><span class="say">téik uán pil tuáis a dei wiz fud</span>
+          <span class="use">Tome una pastilla dos veces al día con comida.</span></div>
+      </div>
+    </section>
+
+    <!-- 6 · EN LA CLÍNICA -->
+    <section class="slide paper" data-notes="Los otros 5 min. La del uno al diez es universal — allá la usan siempre. La de alergias es de seguridad: hay que saber contestarla sí o sí.">
+      <div class="eyebrow">Frases útiles · clínica</div>
+      <h2 class="h1">Con el <span class="hl">doctor.</span></h2>
+      <div class="pron tight mt-m">
+        <div class="f"><span class="en">What brings you in today?</span><span class="say">juat brings yu in tudéi</span>
+          <span class="use">¿Qué lo trae por aquí?</span></div>
+        <div class="f"><span class="en">How long have you had these symptoms?</span><span class="say">jáu long jav yu jad dis símptoms</span>
+          <span class="use">¿Desde cuándo tiene los síntomas?</span></div>
+        <div class="f"><span class="en">I've had a fever since yesterday.</span><span class="say">áiv jad a fíver sins yésterdei</span>
+          <span class="use">Tengo fiebre desde ayer.</span></div>
+        <div class="f"><span class="en">It hurts here.</span><span class="say">it jerts jír</span>
+          <span class="use">Me duele aquí — con señalar basta.</span></div>
+        <div class="f"><span class="en">On a scale of one to ten, how bad is the pain?</span><span class="say">on a skéil ov uán tu ten, jáu bad is de péin</span>
+          <span class="use">Del uno al diez, ¿qué tan fuerte es el dolor?</span></div>
+        <div class="f"><span class="en">Are you allergic to any medications?</span><span class="say">ar yu alérdyik tu éni medikéishons</span>
+          <span class="use">¿Es alérgico a algún medicamento? — hay que saber contestarla.</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · FECHAS -->
+    <section class="slide" data-notes="Allá el orden es mes, día, año — al revés de como lo decimos. Y se usan números de orden: fifth, no five. Si sale la duda, este es el momento de explicarlo rapidito.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Números</div>
+      <h2 class="h1">Las fechas, <span class="hl">al revés.</span></h2>
+      <p class="lead wide mt-m">Primero el mes, luego el día, luego el año. Y el día se dice en número de orden: <em>fifth</em>, no <em>five</em>.</p>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">March 5, 1987</span><span class="dice">March fifth, nineteen eighty-seven</span><span class="say">march fifz, náintin éiti séven</span></div>
+        <div class="n"><span class="dato">July 22, 2001</span><span class="dice">July twenty-second, two thousand one</span><span class="say">yulái tuénti sékond, tu záusand uán</span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> first · second · third · fourth · fifth</div>
+    </section>
+
+    <!-- 8 · DELETREAR -->
+    <section class="slide" data-notes="Estas son las letras que más confunden. Después de leerlas, que cada quien deletree su apellido en voz alta — es la práctica más útil de la clase y la que de verdad van a usar.">
+      <div class="eyebrow">Deletrear</div>
+      <h2 class="h1">Las letras que <span class="hl">más confunden.</span></h2>
+      <div class="letras mt-l">
+        <div class="l"><b>A</b><span>ei</span></div>
+        <div class="l"><b>E</b><span>i</span></div>
+        <div class="l"><b>I</b><span>ai</span></div>
+        <div class="l"><b>G</b><span>yi</span></div>
+        <div class="l"><b>J</b><span>yei</span></div>
+        <div class="l"><b>H</b><span>eich</span></div>
+        <div class="l"><b>R</b><span>ar</span></div>
+        <div class="l"><b>Y</b><span>uái</span></div>
+        <div class="l"><b>W</b><span>dábel yu</span></div>
+        <div class="l"><b>Z</b><span>zi</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Cada quien deletrea su apellido en voz alta</div>
+    </section>
+
+    <!-- 9 · DIÁLOGO -->
+    <section class="slide paper" data-notes="15 min. Léelo tú con un voluntario y luego en parejas. Fíjate en 'gárit' por 'got it' — es el ejemplo perfecto de la t que suena como r, que se explica en la slide siguiente.">
+      <div class="eyebrow">Diálogo modelo · 15 min</div>
+      <h2 class="h1">Recogiendo <span class="hl">una receta.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea"><span class="quien">Farmacia</span><span class="txt">Hi, how can I help you?<span class="say">jái, jáu kan ái jelp yu</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Hi, I'm here to pick up a prescription.<span class="say">jái, áim jír tu pik ap a preskrípshon</span></span></div>
+        <div class="linea"><span class="quien">Farmacia</span><span class="txt">Sure. What's your last name and date of birth?<span class="say">shur. juats yor last néim and déit ov berz</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Garcia, G-A-R-C-I-A. March fifth, nineteen eighty-seven.<span class="say">garsía, yi ei ar si ai ei. march fifz, náintin éiti séven</span></span></div>
+        <div class="linea"><span class="quien">Farmacia</span><span class="txt">Okay, I've got it. Your copay is ten bucks.<span class="say">okéi, áiv gárit. yor kóupei is ten baks</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Are there any side effects?<span class="say">ar der éni sáid ifékts</span></span></div>
+        <div class="linea"><span class="quien">Farmacia</span><span class="txt">It might make you a little sleepy, so don't drive after you take it.<span class="say">it máit méik yu a lírol slípi, sóu dóunt dráiv áfter yu téik it</span></span></div>
+      </div>
+    </section>
+
+    <!-- 10 · LA T QUE SUENA COMO R -->
+    <section class="slide" data-notes="Esta es la regla de oro del inglés de Estados Unidos y casi nadie la enseña. Cuando la t queda en medio de dos vocales, suena como una r suave. Practica los cuatro ejemplos en coro — cuando lo agarran, entienden mucho más de lo que oyen.">
+      <div class="glow br"></div>
+      <div class="eyebrow">La regla de oro</div>
+      <h2 class="h1">La «t» que suena <span class="hl">como «r».</span></h2>
+      <p class="lead wide mt-m">Cuando la «t» queda en medio de dos vocales, en Estados Unidos suena como una «r» suave. Pasa todo el tiempo.</p>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">little</span><span class="dice">lírol</span></div>
+        <div class="n"><span class="dato">water</span><span class="dice">wárer</span></div>
+        <div class="n"><span class="dato">better</span><span class="dice">bérer</span></div>
+        <div class="n"><span class="dato">got it</span><span class="dice">gárit</span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> Cuando agarras esto, entiendes mucho más de lo que oyes</div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="5 min. 'Under the weather' es el más usado de todos para decir que uno anda malo. El último es el opuesto y sirve para cerrar con buen sabor.">
+      <div class="eyebrow">Modismos · 5 min</div>
+      <h2 class="h1">Cómo se dice <span class="hl">que andas mal.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo"><div class="en">I'm feeling under the weather</div><div class="say">áim fíling ánder de uéder</div>
+          <div class="lit">Me siento bajo el clima</div><div class="real">Me siento medio malo</div></div>
+        <div class="modismo"><div class="en">I think I'm coming down with something</div><div class="say">ái zink áim káming dáun wiz sámzing</div>
+          <div class="lit">Creo que voy bajando con algo</div><div class="real">Creo que me voy a enfermar</div></div>
+        <div class="modismo"><div class="en">Take it easy</div><div class="say">téik it ísi</div>
+          <div class="lit">Tómalo fácil</div><div class="real">Tómalo con calma, descansa</div></div>
+        <div class="modismo"><div class="en">I feel like a million bucks</div><div class="say">ái fil láik a mílion baks</div>
+          <div class="lit">Me siento como un millón de dólares</div><div class="real">Me siento de maravilla</div></div>
+      </div>
+    </section>
+
+    <!-- 12 · PRÁCTICA -->
+    <section class="slide" data-notes="15 min. Dos rondas: primero clínica, luego farmacia. En la de farmacia insiste en que deletreen el apellido de verdad y digan su fecha de nacimiento real — así se les queda.">
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="parejas mt-l">
+        <div class="rol">
+          <div class="quien">Ronda 1 · con el doctor</div>
+          <div class="hace">El paciente escoge un síntoma, lo explica, dice desde cuándo lo tiene y del uno al diez qué tanto duele.</div>
+        </div>
+        <div class="rol">
+          <div class="quien">Ronda 2 · en la farmacia</div>
+          <div class="hace">El paciente recoge su receta: deletrea su apellido y dice su fecha de nacimiento.</div>
+        </div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Usen su apellido y su fecha de verdad — así se les queda</div>
+    </section>
+
+    <!-- 13 · CORO -->
+    <section class="slide paper" data-notes="Repaso coral antes del cierre. Las rojas son las que más se usan.">
+      <div class="eyebrow">Repaso</div>
+      <h2 class="h1">Todo lo de <span class="hl">hoy.</span></h2>
+      <div class="coro mt-l">
+        <span>I'm here to pick up a prescription.</span><span>What's your date of birth?</span>
+        <span>Can you spell your last name?</span><span>What brings you in today?</span>
+        <span>It hurts here.</span><span>Are you allergic to any medications?</span>
+        <span class="r">under the weather</span><span class="r">take it easy</span>
+        <span class="r">March fifth</span><span class="r">lírol · wárer · gárit</span>
+      </div>
+    </section>
+
+    <!-- 14 · CIERRE + RETO -->
+    <section class="slide center" data-notes="5 min. Que cada quien diga su fecha de nacimiento en inglés como se dice allá. Si sale la duda de por qué 'fifth' y no 'five', aquí es buen momento para explicar los números de orden.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Cierre · 5 min</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Ya puedes explicar qué te duele <span class="hl">y recoger tu receta.</span></p>
+      <p class="lead mt-m" style="text-align:center">Cada quien dice su fecha de nacimiento en inglés. Reto de la semana: apréndete de memoria tu apellido deletreado — lo vas a usar mucho más de lo que crees.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

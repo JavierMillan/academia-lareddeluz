@@ -82,6 +82,49 @@
           "deck": "sesion-8.html"
         }
       ]
+    },
+    {
+      "id": "dia-a-dia",
+      "titulo": "Situaciones del día a día",
+      "subtitulo": "5 clases de práctica",
+      "etiqueta": "Día a día",
+      "clases": [
+        {
+          "id": "sesion-9",
+          "parte": "Clase 1",
+          "titulo": "En el súper",
+          "resumen": "Encontrar lo que buscas, entenderle al cajero y pagar sin sudar. Con los precios como se dicen allá.",
+          "deck": "sesion-9.html"
+        },
+        {
+          "id": "sesion-10",
+          "parte": "Clase 2",
+          "titulo": "Farmacia y clínica",
+          "resumen": "Recoger una receta, explicar qué te duele y deletrear tu apellido sin trabarte.",
+          "deck": "sesion-10.html"
+        },
+        {
+          "id": "sesion-11",
+          "parte": "Clase 3",
+          "titulo": "Por teléfono",
+          "resumen": "Hacer una cita, reclamar un cobro y las frases de rescate para cuando no entiendes.",
+          "deck": "sesion-11.html"
+        },
+        {
+          "id": "sesion-12",
+          "parte": "Clase 4",
+          "titulo": "De compras",
+          "resumen": "Pedir tu talla, probarte algo y devolverlo si no te quedó.",
+          "deck": "sesion-12.html"
+        },
+        {
+          "id": "sesion-13",
+          "parte": "Clase 5",
+          "titulo": "Gasolinera y taller",
+          "resumen": "Cargar gasolina, explicar una falla y pedir presupuesto antes de que te cobren.",
+          "deck": "sesion-13.html"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>De compras: ropa, tallas y devoluciones — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/motor/temas/ingles.css">
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .say{display:block;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.12rem}
+.dialogo .acot{grid-column:1/-1;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:center;
+  padding:.5rem 0;border-top:1px dashed var(--line-d);border-bottom:1px dashed var(--line-d);margin:.3rem 0}
+
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;max-width:52rem}
+@media(max-width:900px){.vocab{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vocab{grid-template-columns:1fr}}
+.vocab .v{padding:.6rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:9px}
+.vocab .en{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;line-height:1.15}
+.vocab .say{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.03em;
+  color:var(--accent-text);margin-top:.18rem}
+.vocab .es{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-soft);margin-top:.3rem}
+.vocab .v.ojo{border-color:rgba(200,16,46,.4)}
+.vocab .v.ojo .es{color:var(--on-char)}
+
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%;max-width:48rem}
+@media(max-width:760px){.parejas{grid-template-columns:1fr}}
+.rol{padding:1rem 1.2rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.rol .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.rol .hace{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.97rem);
+  color:var(--on-char-soft);line-height:1.45;margin-top:.55rem}
+
+.coro{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;max-width:50rem}
+.coro span{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;padding:.5rem .8rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:999px}
+.coro span.r{border-color:rgba(200,16,46,.45);color:var(--accent-text)}
+
+/* tallas en fila */
+.tallas{display:flex;flex-wrap:wrap;gap:.6rem;width:100%;max-width:48rem}
+.tallas .t{flex:1 1 8rem;padding:.8rem .9rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:11px;text-align:center}
+.tallas .t b{display:block;font-family:var(--font-display);font-size:clamp(.95rem,1.4vw,1.15rem);
+  text-transform:none;font-weight:400}
+.tallas .t .say{font-family:var(--font-mono);font-size:.62rem;color:var(--accent-text);margin-top:.2rem}
+.tallas .t .es{font-family:var(--font-body);font-size:.74rem;color:var(--on-char-soft);margin-top:.3rem}
+</style>
+</head>
+<body class="theme-ingles" data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center active" data-notes="Clase 4 del bloque. Esta es más relajada que la de la clínica, y se agradece después de dos clases intensas. Pero tiene una parte seria: devolver algo. Mucha gente no devuelve por no saber pedirlo.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">De <span class="hl">compras.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Pedir tu talla, probarte algo y devolverlo si no te quedó. Situaciones del día a día · Clase 4.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Día a día · 4/5</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Preguntas ligeras. Aprovecha para que digan nombres de tiendas — practican pronunciación sin darse cuenta.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Para <span class="hl">empezar.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Do you like shopping?</span><span class="say">du yu láik shóping</span>
+          <span class="use">¿Te gusta ir de compras?</span></div>
+        <div class="f"><span class="en">What's your favorite store?</span><span class="say">juats yor féivorit stor</span>
+          <span class="use">¿Cuál es tu tienda favorita?</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Que digan nombres de tiendas — practican sin darse cuenta</div>
+    </section>
+
+    <!-- 3 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Hoy hay dos momentos: comprar y devolver. El segundo es el que menos practica la gente y el que más falta hace.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Así vamos hoy</div>
+      <h2 class="h1">Comprar <span class="hl">y devolver.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Vocabulario de tallas y tienda</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Buscar, probarse y devolver</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Diálogo modelo — compra y devolución</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Modismos</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Práctica en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Cierre — tu talla y tu color</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · TALLAS -->
+    <section class="slide paper" data-notes="Las tallas son lo primero porque son lo que más se usa. Que repitan en coro. 'Large' se dice larch, no large a la española.">
+      <div class="eyebrow">Tallas</div>
+      <h2 class="h1">Tu <span class="hl">talla.</span></h2>
+      <div class="tallas mt-l">
+        <div class="t"><b>small</b><div class="say">smol</div><div class="es">chica</div></div>
+        <div class="t"><b>medium</b><div class="say">mídium</div><div class="es">mediana</div></div>
+        <div class="t"><b>large</b><div class="say">larch</div><div class="es">grande</div></div>
+        <div class="t"><b>extra large</b><div class="say">ékstra larch</div><div class="es">extra grande · «XL» = ex el</div></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> «I'm a medium» — así se dice qué talla usas</div>
+    </section>
+
+    <!-- 5 · VOCABULARIO -->
+    <section class="slide paper" data-notes="10 min. Las tres marcadas son las que importan al devolver: refund es tu dinero de vuelta, store credit es saldo en la tienda, y final sale significa que no hay devolución. Esa última evita disgustos.">
+      <div class="eyebrow">Vocabulario · 10 min</div>
+      <h2 class="h1">Palabras <span class="hl">de tienda.</span></h2>
+      <div class="vocab mt-m">
+        <div class="v"><div class="en">size</div><div class="say">sáiz</div><div class="es">talla</div></div>
+        <div class="v"><div class="en">fitting room</div><div class="say">fíting rum</div><div class="es">probador</div></div>
+        <div class="v"><div class="en">tight</div><div class="say">táit</div><div class="es">apretado</div></div>
+        <div class="v"><div class="en">loose</div><div class="say">lus</div><div class="es">flojo, holgado</div></div>
+        <div class="v"><div class="en">fit</div><div class="say">fit</div><div class="es">quedar de talla</div></div>
+        <div class="v"><div class="en">price tag</div><div class="say">práis tag</div><div class="es">etiqueta del precio</div></div>
+        <div class="v"><div class="en">return</div><div class="say">ritérn</div><div class="es">devolver</div></div>
+        <div class="v"><div class="en">exchange</div><div class="say">ekschéinch</div><div class="es">cambiar por otra cosa</div></div>
+        <div class="v ojo"><div class="en">refund</div><div class="say">rífand</div><div class="es">reembolso — tu dinero de vuelta</div></div>
+        <div class="v ojo"><div class="en">store credit</div><div class="say">stor crédit</div><div class="es">saldo en la tienda, no efectivo</div></div>
+        <div class="v"><div class="en">clearance</div><div class="say">clírans</div><div class="es">liquidación</div></div>
+        <div class="v ojo"><div class="en">final sale</div><div class="say">fáinal séil</div><div class="es">sin cambios ni devoluciones</div></div>
+      </div>
+    </section>
+
+    <!-- 6 · BUSCANDO Y PROBÁNDOSE -->
+    <section class="slide paper" data-notes="5 min. 'I'm just looking' es la que más se usa: en las tiendas de allá siempre se acerca alguien a preguntar. Sirve para que te dejen ver en paz sin sonar grosero.">
+      <div class="eyebrow">Frases útiles · buscando</div>
+      <h2 class="h1">Buscando <span class="hl">y probándote.</span></h2>
+      <div class="pron tight mt-m">
+        <div class="f"><span class="en">Can I help you find anything?</span><span class="say">kan ái jelp yu fáind énizing</span>
+          <span class="use">¿Le ayudo a buscar algo? — siempre te lo preguntan.</span></div>
+        <div class="f"><span class="en">I'm just looking, thanks.</span><span class="say">áim yast lúking, zanks</span>
+          <span class="use">Nomás estoy viendo, gracias.</span></div>
+        <div class="f"><span class="en">Do you have this in a medium?</span><span class="say">du yu jav dis in a mídium</span>
+          <span class="use">¿Tiene esto en mediana?</span></div>
+        <div class="f"><span class="en">Where are the fitting rooms?</span><span class="say">juer ar de fíting rums</span>
+          <span class="use">¿Dónde están los probadores?</span></div>
+        <div class="f"><span class="en">It doesn't fit. It's too tight.</span><span class="say">it dásent fit. its tu táit</span>
+          <span class="use">No me queda. Está muy apretado.</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · DEVOLVIENDO -->
+    <section class="slide paper" data-notes="Los otros 5 min. Estas son las importantes. La última es la que hay que entender bien: te preguntan si quieres el dinero de vuelta a tu tarjeta o saldo en la tienda. No es lo mismo.">
+      <div class="eyebrow">Frases útiles · devolviendo</div>
+      <h2 class="h1">Para <span class="hl">devolver.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">I'd like to return this.</span><span class="say">áid láik tu ritérn dis</span>
+          <span class="use">Quiero devolver esto.</span></div>
+        <div class="f"><span class="en">Can I exchange this for a smaller size?</span><span class="say">kan ái ekschéinch dis for a smóler sáiz</span>
+          <span class="use">¿Lo puedo cambiar por una talla más chica?</span></div>
+        <div class="f"><span class="en">Do you have your receipt?</span><span class="say">du yu jav yor risít</span>
+          <span class="use">¿Trae su ticket? — siempre lo piden.</span></div>
+        <div class="f"><span class="en">Would you like it back on your card or store credit?</span><span class="say">wud yu láik it bak on yor kard or stor crédit</span>
+          <span class="use">¿A su tarjeta o como saldo en la tienda? — no es lo mismo.</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · DESCUENTOS -->
+    <section class="slide" data-notes="BOGO aparece en letreros por todos lados y casi nadie sabe qué significa. 'Bucks' es como decir varos — se usa todo el tiempo.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Números</div>
+      <h2 class="h1">Descuentos <span class="hl">y precios.</span></h2>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">25% off</span><span class="dice">twenty-five percent off</span><span class="say">tuénti fáiv persént of</span></div>
+        <div class="n"><span class="dato">BOGO</span><span class="dice">buy one get one</span><span class="say">bógou — compra uno y llévate otro</span></div>
+        <div class="n"><span class="dato">$40</span><span class="dice">forty bucks</span><span class="say">fórti baks — «bucks» es como decir varos</span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> BOGO está en los letreros de media tienda — ahora ya sabes qué dice</div>
+    </section>
+
+    <!-- 9 · DIÁLOGO · COMPRANDO -->
+    <section class="slide paper" data-notes="15 min entre esta y la siguiente. Señala la nota: 'How's it going?' no es una pregunta de verdad, es un saludo. Se contesta 'Good, you?' y ya. Mucha gente se traba tratando de contestarla en serio.">
+      <div class="eyebrow">Diálogo modelo · comprando</div>
+      <h2 class="h1">Buscando <span class="hl">una talla.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea"><span class="quien">Empleado</span><span class="txt">Hey, how's it going? Can I help you find anything?<span class="say">jéi, jáus it góing? kan ái jelp yu fáind énizing</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">I'm just looking, thanks. Actually, do you have this shirt in a large?<span class="say">áim yast lúking, zanks. ákchuali, du yu jav dis shert in a larch</span></span></div>
+        <div class="linea"><span class="quien">Empleado</span><span class="txt">Let me check. Yep, here you go. It's twenty-five percent off today.<span class="say">let mi chek. yep, jír yu góu. its tuénti fáiv persént of tudéi</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Nice. Where are the fitting rooms?<span class="say">náis. juer ar de fíting rums</span></span></div>
+        <div class="linea"><span class="quien">Empleado</span><span class="txt">Right over there, by the shoes.<span class="say">ráit óuver der, bái de shus</span></span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> «How's it going?» es un saludo, no una pregunta. Contestas «Good, you?»</div>
+    </section>
+
+    <!-- 10 · DIÁLOGO · DEVOLVIENDO -->
+    <section class="slide paper" data-notes="La segunda parte, una semana después. Fíjate en la última línea: tres a cinco días hábiles para que regrese el dinero. Es lo normal allá y conviene saberlo para no preocuparse.">
+      <div class="eyebrow">Diálogo modelo · una semana después</div>
+      <h2 class="h1">Devolviendo <span class="hl">la camisa.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Hi, I'd like to return this shirt. It doesn't fit.<span class="say">jái, áid láik tu ritérn dis shert. it dásent fit</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Sure. Do you have your receipt?<span class="say">shur. du yu jav yor risít</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Yes, here it is.<span class="say">yes, jír it is</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Would you like a refund or an exchange?<span class="say">wud yu láik a rífand or an ekschéinch</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">A refund, please. Back on my card.<span class="say">a rífand, plis. bak on mái kard</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">No problem. It should show up in three to five business days.<span class="say">nou próblem. it shud shóu ap in zri tu fáiv bísnes deis</span></span></div>
+      </div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="5 min. 'It's on point' es de los más actuales — lo dicen mucho los jóvenes. 'Fits like a glove' es el equivalente exacto de 'te queda pintado'.">
+      <div class="eyebrow">Modismos · 5 min</div>
+      <h2 class="h1">Como lo dice <span class="hl">la gente.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo"><div class="en">It fits like a glove</div><div class="say">it fits láik a glav</div>
+          <div class="lit">Queda como un guante</div><div class="real">Te queda pintado</div></div>
+        <div class="modismo"><div class="en">Window shopping</div><div class="say">uíndou shóping</div>
+          <div class="lit">Compras de ventana</div><div class="real">Nomás ver sin comprar</div></div>
+        <div class="modismo"><div class="en">It won't break the bank</div><div class="say">it wóunt bréik de bank</div>
+          <div class="lit">No va a romper el banco</div><div class="real">No te va a dejar pobre</div></div>
+        <div class="modismo"><div class="en">It's on point</div><div class="say">its on póint</div>
+          <div class="lit">Está en punto</div><div class="real">Está perrón, está bien padre</div></div>
+      </div>
+    </section>
+
+    <!-- 12 · PRÁCTICA -->
+    <section class="slide" data-notes="15 min. Dos rondas. En la segunda insiste en que el empleado pregunte por el ticket y ofrezca las tres opciones: reembolso, cambio o saldo. Ahí es donde se traba la gente en la vida real.">
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="parejas mt-l">
+        <div class="rol">
+          <div class="quien">Ronda 1 · comprando</div>
+          <div class="hace">El cliente busca una prenda, pide su talla y color, se la «prueba» y dice si le queda o no.</div>
+        </div>
+        <div class="rol">
+          <div class="quien">Ronda 2 · devolviendo</div>
+          <div class="hace">El cliente regresa a devolverla. El empleado pregunta por el ticket y ofrece reembolso, cambio o saldo.</div>
+        </div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> La ronda 2 es donde más se traba la gente en la vida real</div>
+    </section>
+
+    <!-- 13 · CORO -->
+    <section class="slide paper" data-notes="Repaso coral antes del cierre.">
+      <div class="eyebrow">Repaso</div>
+      <h2 class="h1">Todo lo de <span class="hl">hoy.</span></h2>
+      <div class="coro mt-l">
+        <span>I'm just looking, thanks.</span><span>Do you have this in a medium?</span>
+        <span>Where are the fitting rooms?</span><span>It doesn't fit.</span>
+        <span>I'd like to return this.</span><span>A refund, please.</span>
+        <span class="r">fits like a glove</span><span class="r">it's on point</span>
+        <span class="r">BOGO</span><span class="r">forty bucks</span>
+      </div>
+    </section>
+
+    <!-- 14 · CIERRE + RETO -->
+    <section class="slide center" data-notes="5 min. Que cada quien diga su talla y su color favorito en una frase completa: 'I'm a medium and I like blue'. Es corto, se dice rápido, y todos alcanzan a participar.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Cierre · 5 min</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Ya puedes comprar ropa <span class="hl">y devolverla.</span></p>
+      <p class="lead mt-m" style="text-align:center">Cada quien dice: «I'm a medium and I like blue» — con su talla y su color. Reto de la semana: busca la palabra BOGO en algún letrero y tómale foto.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

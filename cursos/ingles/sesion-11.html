@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>Por teléfono: citas y servicio al cliente — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/motor/temas/ingles.css">
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .say{display:block;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.12rem}
+
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;max-width:52rem}
+@media(max-width:900px){.vocab{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vocab{grid-template-columns:1fr}}
+.vocab .v{padding:.6rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:9px}
+.vocab .en{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;line-height:1.15}
+.vocab .say{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.03em;
+  color:var(--accent-text);margin-top:.18rem}
+.vocab .es{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-soft);margin-top:.3rem}
+
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%;max-width:48rem}
+@media(max-width:760px){.parejas{grid-template-columns:1fr}}
+.rol{padding:1rem 1.2rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.rol .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.rol .hace{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.97rem);
+  color:var(--on-char-soft);line-height:1.45;margin-top:.55rem}
+
+.coro{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;max-width:50rem}
+.coro span{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;padding:.5rem .8rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:999px}
+.coro span.r{border-color:rgba(200,16,46,.45);color:var(--accent-text)}
+
+/* frases de rescate — destacadas porque son las que salvan la llamada */
+.rescate{display:flex;flex-direction:column;gap:.55rem;width:100%;max-width:46rem}
+.rescate .f{padding:.85rem 1.1rem;background:rgba(200,16,46,.07);
+  border:1px solid rgba(200,16,46,.4);border-radius:11px}
+.rescate .en{font-family:var(--font-display);font-size:clamp(.92rem,1.4vw,1.12rem);
+  text-transform:none;line-height:1.2}
+.rescate .say{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.04em;
+  color:var(--accent-text);margin-top:.2rem}
+.rescate .use{font-family:var(--font-body);font-size:clamp(.78rem,1.1vw,.9rem);
+  color:var(--on-char-soft);margin-top:.35rem}
+</style>
+</head>
+<body class="theme-ingles" data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center active" data-notes="Clase 3, y la que más miedo da de todas. Diles por qué: por teléfono no hay gestos, no ves la cara del otro, y no puedes señalar. Por eso hoy lo importante no es entenderlo todo — son las frases de rescate.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Por <span class="hl">teléfono.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Hacer una cita, reclamar un cobro y sobrevivir al menú automático. Situaciones del día a día · Clase 3.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Día a día · 3/5</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Esta conversación es importante: deja que digan por qué el teléfono da más miedo. Llévalos a la conclusión — no hay gestos que ayuden. Por eso hay que tener frases listas de antemano.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">¿Por qué cuesta <span class="hl">más el teléfono?</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Do you like talking on the phone in English?</span><span class="say">du yu láik tóking on de fóun in ínglish</span>
+          <span class="use">¿Te gusta hablar por teléfono en inglés?</span></div>
+        <div class="f"><span class="en">Why is it harder than talking in person?</span><span class="say">juái is it járder dan tóking in pérson</span>
+          <span class="use">¿Por qué es más difícil que en persona?</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Sin gestos que ayuden — por eso hay que llevar frases listas</div>
+    </section>
+
+    <!-- 3 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Señala que la parte más valiosa de hoy son las frases de rescate, no el vocabulario.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Así vamos hoy</div>
+      <h2 class="h1">Una hora <span class="hl">al teléfono.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Vocabulario del teléfono</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Menús automáticos, citas y frases de rescate</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Diálogo modelo — agendar una cita</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Modismos</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Práctica — espalda con espalda</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Cierre — tu número en inglés</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · VOCABULARIO -->
+    <section class="slide paper" data-notes="10 min. Lee y que repitan dos veces. 'Schedule' es la que más cuesta: skédyul, no ske-du-le.">
+      <div class="eyebrow">Vocabulario · 10 min</div>
+      <h2 class="h1">Palabras <span class="hl">del teléfono.</span></h2>
+      <div class="vocab mt-m">
+        <div class="v"><div class="en">call</div><div class="say">kol</div><div class="es">llamada, llamar</div></div>
+        <div class="v"><div class="en">hang up</div><div class="say">jang ap</div><div class="es">colgar</div></div>
+        <div class="v"><div class="en">hold</div><div class="say">jóuld</div><div class="es">esperar en la línea</div></div>
+        <div class="v"><div class="en">representative</div><div class="say">repriséntativ</div><div class="es">representante, persona real</div></div>
+        <div class="v"><div class="en">extension</div><div class="say">eksténshon</div><div class="es">extensión</div></div>
+        <div class="v"><div class="en">voicemail</div><div class="say">vóismeil</div><div class="es">buzón de voz</div></div>
+        <div class="v"><div class="en">callback</div><div class="say">kólbak</div><div class="es">que te regresen la llamada</div></div>
+        <div class="v"><div class="en">bill</div><div class="say">bil</div><div class="es">recibo, cuenta</div></div>
+        <div class="v"><div class="en">charge</div><div class="say">charch</div><div class="es">cargo, cobrar</div></div>
+        <div class="v"><div class="en">account</div><div class="say">akáunt</div><div class="es">cuenta</div></div>
+        <div class="v"><div class="en">available</div><div class="say">avéilabol</div><div class="es">disponible</div></div>
+        <div class="v"><div class="en">schedule</div><div class="say">skédyul</div><div class="es">agendar, horario</div></div>
+      </div>
+    </section>
+
+    <!-- 5 · MENÚS AUTOMÁTICOS -->
+    <section class="slide paper" data-notes="El truco del final es de los que más agradecen: si el robot no te entiende, repite 'Representative' varias veces y casi siempre te pasan con una persona. Muchos no lo saben.">
+      <div class="eyebrow">Frases útiles · el robot</div>
+      <h2 class="h1">El menú <span class="hl">automático.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">For English, press one.</span><span class="say">for ínglish, pres uán</span>
+          <span class="use">Para inglés, marque uno.</span></div>
+        <div class="f"><span class="en">Please say or enter your account number.</span><span class="say">plis sei or énter yor akáunt námber</span>
+          <span class="use">Diga o marque su número de cuenta.</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> ¿No te entiende? Di «Representative» varias veces y te pasan con alguien</div>
+    </section>
+
+    <!-- 6 · HACER UNA CITA -->
+    <section class="slide paper" data-notes="5 min. Estas cuatro frases resuelven cualquier cita: dentista, taller, peluquería. Son intercambiables.">
+      <div class="eyebrow">Frases útiles · citas</div>
+      <h2 class="h1">Para hacer <span class="hl">una cita.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Hi, I'd like to make an appointment.</span><span class="say">jái, áid láik tu méik an apóintment</span>
+          <span class="use">Hola, quisiera hacer una cita.</span></div>
+        <div class="f"><span class="en">Do you have anything available on Friday?</span><span class="say">du yu jav énizing avéilabol on fráidei</span>
+          <span class="use">¿Tiene algo disponible el viernes?</span></div>
+        <div class="f"><span class="en">Does two thirty work for you?</span><span class="say">das tu zérti uérk for yu</span>
+          <span class="use">¿Le queda bien a las dos y media?</span></div>
+        <div class="f"><span class="en">That works for me.</span><span class="say">dat uérks for mi</span>
+          <span class="use">Me queda bien.</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · FRASES DE RESCATE -->
+    <section class="slide" data-notes="Esta es LA slide de la clase. Diles que si solo se llevan cuatro frases de hoy, que sean estas. No hay que entenderlo todo — hay que saber pedir que lo repitan. Practícalas en coro dos veces.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Las más importantes</div>
+      <h2 class="h1">Frases de <span class="hl">rescate.</span></h2>
+      <p class="lead wide mt-m">No tienes que entenderlo todo. Tienes que saber pedir que lo repitan.</p>
+      <div class="rescate mt-m">
+        <div class="f"><div class="en">Sorry, could you say that again?</div><div class="say">sóri, kud yu sei dat eguén</div>
+          <div class="use">Perdón, ¿me lo repite?</div></div>
+        <div class="f"><div class="en">Could you speak a little slower, please?</div><div class="say">kud yu spik a lírol slóuer, plis</div>
+          <div class="use">¿Podría hablar más despacio?</div></div>
+        <div class="f"><div class="en">Sorry, you're breaking up.</div><div class="say">sóri, yur bréiking ap</div>
+          <div class="use">Perdón, se está cortando.</div></div>
+        <div class="f"><div class="en">Can you hold on a sec?</div><div class="say">kan yu jóuld on a sek</div>
+          <div class="use">¿Me espera un segundo?</div></div>
+      </div>
+    </section>
+
+    <!-- 8 · RECLAMAR -->
+    <section class="slide paper" data-notes="Cortita. Estas tres resuelven la mayoría de los reclamos por cobros. 'Can I get a callback' es útil cuando la espera es larga.">
+      <div class="eyebrow">Frases útiles · reclamar</div>
+      <h2 class="h1">Cuando te cobraron <span class="hl">de más.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">I'm calling about my bill.</span><span class="say">áim kóling abáut mái bil</span>
+          <span class="use">Llamo por mi recibo.</span></div>
+        <div class="f"><span class="en">I was charged twice.</span><span class="say">ái wos chárdyd tuáis</span>
+          <span class="use">Me cobraron dos veces.</span></div>
+        <div class="f"><span class="en">Can I get a callback?</span><span class="say">kan ái guet a kólbak</span>
+          <span class="use">¿Me pueden regresar la llamada? — útil si la espera es larga.</span></div>
+      </div>
+    </section>
+
+    <!-- 9 · NÚMEROS Y HORAS -->
+    <section class="slide" data-notes="El teléfono se dice en grupos y el cero se dice 'oh', no 'zero'. Eso sorprende a todos. Practica el ejemplo completo en coro.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Números</div>
+      <h2 class="h1">Tu número <span class="hl">y la hora.</span></h2>
+      <p class="lead wide mt-m">El teléfono se dice en grupos, y el cero se dice <em>«oh»</em>, no <em>zero</em>.</p>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">520-555-0123</span><span class="dice">five-two-oh, five-five-five, oh-one-two-three</span><span class="say">fáiv tu óu, fáiv fáiv fáiv, óu uán tu zri</span></div>
+        <div class="n"><span class="dato">2:30</span><span class="dice">two thirty</span><span class="say">tu zérti</span></div>
+        <div class="n"><span class="dato">4:45</span><span class="dice">a quarter to five</span><span class="say">a kuórer tu fáiv</span></div>
+        <div class="n"><span class="dato">12:00</span><span class="dice">noon</span><span class="say">nun</span></div>
+      </div>
+    </section>
+
+    <!-- 10 · DIÁLOGO -->
+    <section class="slide paper" data-notes="15 min. Fíjate que en medio del diálogo el cliente usa una frase de rescate — eso es a propósito. Señálalo: pedir que repitan es normal, no es pena.">
+      <div class="eyebrow">Diálogo modelo · 15 min</div>
+      <h2 class="h1">Agendando <span class="hl">una cita.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea"><span class="quien">Recepción</span><span class="txt">Thank you for calling Desert Dental, this is Jenny. How can I help you?<span class="say">zank yu for kóling désert déntal, dis is yéni</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Hi Jenny, I'd like to make an appointment for a cleaning.<span class="say">jái yéni, áid láik tu méik an apóintment for a klíning</span></span></div>
+        <div class="linea"><span class="quien">Recepción</span><span class="txt">Sure. Are you a new patient?<span class="say">shur. ar yu a nu péishent</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Yes, I am.<span class="say">yes, ái am</span></span></div>
+        <div class="linea"><span class="quien">Recepción</span><span class="txt">We have something on Thursday at ten, or Friday at two thirty.<span class="say">ui jav sámzing on zérsdei at ten, or fráidei at tu zérti</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Sorry, could you say that again a little slower?<span class="say">sóri, kud yu sei dat eguén a lírol slóuer</span></span></div>
+        <div class="linea"><span class="quien">Recepción</span><span class="txt">No problem. Thursday at ten, or Friday at two thirty.<span class="say">nou próblem. zérsdei at ten, or fráidei at tu zérti</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Friday at two thirty works for me.<span class="say">fráidei at tu zérti uérks for mi</span></span></div>
+        <div class="linea"><span class="quien">Recepción</span><span class="txt">Great, you're all set. See you Friday!<span class="say">gréit, yur ol set. si yu fráidei</span></span></div>
+      </div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="5 min. 'You're all set' aparece en el diálogo — señálalo. Significa 'ya quedó' y se usa en todos lados: tiendas, citas, bancos.">
+      <div class="eyebrow">Modismos · 5 min</div>
+      <h2 class="h1">Lo que oyes <span class="hl">al teléfono.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo"><div class="en">Hang on</div><div class="say">jang on</div>
+          <div class="lit">Cuélgate</div><div class="real">Espérate tantito</div></div>
+        <div class="modismo"><div class="en">You're all set</div><div class="say">yur ol set</div>
+          <div class="lit">Estás todo puesto</div><div class="real">Ya quedó, todo listo</div></div>
+        <div class="modismo"><div class="en">I'll get back to you</div><div class="say">áil guet bak tu yu</div>
+          <div class="lit">Volveré a ti</div><div class="real">Te aviso luego</div></div>
+        <div class="modismo"><div class="en">Touch base</div><div class="say">tach béis</div>
+          <div class="lit">Tocar base</div><div class="real">Ponernos en contacto, platicar rápido</div></div>
+      </div>
+    </section>
+
+    <!-- 12 · PRÁCTICA -->
+    <section class="slide" data-notes="15 min, y este montaje es clave: espalda con espalda, para que no se vean la cara. Así se siente como un teléfono de verdad. Dile a quien atiende que hable un poco rápido a propósito — es la única forma de practicar las frases de rescate.">
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Espalda <span class="hl">con espalda.</span></h2>
+      <p class="lead wide mt-m">Siéntense sin verse la cara, como si fuera teléfono de verdad.</p>
+      <div class="parejas mt-m">
+        <div class="rol">
+          <div class="quien">Ronda 1 · hacer una cita</div>
+          <div class="hace">Dentista, peluquería o taller. Pide día y hora, y confirma.</div>
+        </div>
+        <div class="rol">
+          <div class="quien">Ronda 2 · reclamar un cobro</div>
+          <div class="hace">Llama a la compañía de internet porque te cobraron dos veces.</div>
+        </div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> Quien atiende debe hablar rápido a propósito — para eso son las frases de rescate</div>
+    </section>
+
+    <!-- 13 · CORO -->
+    <section class="slide paper" data-notes="Repaso coral. Insiste en las rojas: son las de rescate, las que de verdad importan.">
+      <div class="eyebrow">Repaso</div>
+      <h2 class="h1">Todo lo de <span class="hl">hoy.</span></h2>
+      <div class="coro mt-l">
+        <span>I'd like to make an appointment.</span><span>Do you have anything on Friday?</span>
+        <span>That works for me.</span><span>I was charged twice.</span>
+        <span>You're all set.</span>
+        <span class="r">Could you say that again?</span><span class="r">A little slower, please.</span>
+        <span class="r">You're breaking up.</span><span class="r">Hold on a sec.</span>
+        <span class="r">oh-one-two-three</span>
+      </div>
+    </section>
+
+    <!-- 14 · CIERRE + RETO -->
+    <section class="slide center" data-notes="5 min. Que cada quien diga su número de teléfono en inglés, en grupos y con 'oh'. El reto es buenísimo: dejarse un mensaje de voz a sí mismos en inglés — así se oyen y pierden el miedo.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Cierre · 5 min</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Ya puedes hacer una cita <span class="hl">y reclamar un cobro.</span></p>
+      <p class="lead mt-m" style="text-align:center">Cada quien dice su número de teléfono en inglés. Reto de la semana: déjate un mensaje de voz a ti mismo en inglés, presentándote y dando tu número.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

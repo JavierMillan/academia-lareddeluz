@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>En la gasolinera y el taller — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/motor/temas/ingles.css">
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .say{display:block;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.12rem}
+.dialogo .acot{grid-column:1/-1;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:center;
+  padding:.5rem 0;border-top:1px dashed var(--line-d);border-bottom:1px dashed var(--line-d);margin:.3rem 0}
+
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;max-width:52rem}
+@media(max-width:900px){.vocab{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vocab{grid-template-columns:1fr}}
+.vocab .v{padding:.6rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:9px}
+.vocab .en{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;line-height:1.15}
+.vocab .say{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.03em;
+  color:var(--accent-text);margin-top:.18rem}
+.vocab .es{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-soft);margin-top:.3rem}
+.vocab .v.ojo{border-color:rgba(200,16,46,.4)}
+.vocab .v.ojo .es{color:var(--on-char)}
+
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%;max-width:48rem}
+@media(max-width:760px){.parejas{grid-template-columns:1fr}}
+.rol{padding:1rem 1.2rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.rol .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.rol .hace{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.97rem);
+  color:var(--on-char-soft);line-height:1.45;margin-top:.55rem}
+
+.coro{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;max-width:50rem}
+.coro span{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;padding:.5rem .8rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:999px}
+.coro span.r{border-color:rgba(200,16,46,.45);color:var(--accent-text)}
+
+/* repaso final del bloque: cinco temas */
+.bloque{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;width:100%;max-width:52rem}
+@media(max-width:900px){.bloque{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.bloque{grid-template-columns:repeat(2,1fr)}}
+.bloque .b{padding:.9rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:11px;text-align:center}
+.bloque .b .n{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.14em;
+  color:var(--accent-text)}
+.bloque .b .q{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;margin-top:.4rem;line-height:1.2}
+</style>
+</head>
+<body class="theme-ingles" data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center active" data-notes="Última clase del bloque. Además de gasolinera y taller, hay una parte corta pero importante: qué decir si te para la policía. Trátala con naturalidad, sin dramatizar — es información práctica.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">Gasolinera <span class="hl">y taller.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Cargar gasolina, explicar una falla y pedir un presupuesto. Situaciones del día a día · Clase 5.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Día a día · 5/5</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · CALENTAMIENTO -->
+    <section class="slide paper" data-notes="5 min. Aprovecha el dato: allá casi nadie dice 'pickup', dicen 'truck'. Una troca es a truck. Es de esas cosas que nadie enseña y todos necesitan.">
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Para <span class="hl">empezar.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Do you have a car?</span><span class="say">du yu jav a kar</span>
+          <span class="use">¿Tienes carro?</span></div>
+        <div class="f"><span class="en">What kind of car do you drive?</span><span class="say">juat káind ov kar du yu dráiv</span>
+          <span class="use">¿Qué carro manejas?</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Allá no dicen «pickup», dicen «truck» — trak. Una troca es «a truck»</div>
+    </section>
+
+    <!-- 3 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Menciona que hoy cierran el bloque de cinco clases y que al final hay un repaso de todo.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Así vamos hoy</div>
+      <h2 class="h1">La última <span class="hl">del bloque.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Vocabulario del carro</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Gasolinera, taller y la policía</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Diálogo modelo — en el taller</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Modismos</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Práctica en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Cierre — repaso de las cinco clases</span></div>
+      </div>
+    </section>
+
+    <!-- 4 · VOCABULARIO -->
+    <section class="slide paper" data-notes="10 min. 'Estimate' y 'parts and labor' son las que hay que saber sí o sí para no acabar pagando de más. Detente en esas dos.">
+      <div class="eyebrow">Vocabulario · 10 min</div>
+      <h2 class="h1">Palabras <span class="hl">del carro.</span></h2>
+      <div class="vocab mt-m">
+        <div class="v"><div class="en">gas station</div><div class="say">gas stéishon</div><div class="es">gasolinera</div></div>
+        <div class="v"><div class="en">pump</div><div class="say">pamp</div><div class="es">bomba de gasolina</div></div>
+        <div class="v"><div class="en">fill it up</div><div class="say">fil it ap</div><div class="es">llénelo</div></div>
+        <div class="v"><div class="en">prepay</div><div class="say">príipei</div><div class="es">pagar antes</div></div>
+        <div class="v"><div class="en">car wash</div><div class="say">kar uásh</div><div class="es">autolavado</div></div>
+        <div class="v"><div class="en">mechanic</div><div class="say">mekánik</div><div class="es">mecánico</div></div>
+        <div class="v"><div class="en">oil change</div><div class="say">óil chéinch</div><div class="es">cambio de aceite</div></div>
+        <div class="v"><div class="en">tire</div><div class="say">táier</div><div class="es">llanta</div></div>
+        <div class="v"><div class="en">flat tire</div><div class="say">flat táier</div><div class="es">llanta ponchada</div></div>
+        <div class="v"><div class="en">brakes</div><div class="say">bréiks</div><div class="es">frenos</div></div>
+        <div class="v"><div class="en">battery</div><div class="say">báteri</div><div class="es">batería</div></div>
+        <div class="v"><div class="en">check engine light</div><div class="say">chek éndyin láit</div><div class="es">el foco de «check engine»</div></div>
+        <div class="v ojo"><div class="en">estimate</div><div class="say">éstimat</div><div class="es">presupuesto — pídelo siempre</div></div>
+        <div class="v ojo"><div class="en">parts and labor</div><div class="say">parts and léibor</div><div class="es">refacciones y mano de obra</div></div>
+      </div>
+    </section>
+
+    <!-- 5 · EN LA GASOLINERA -->
+    <section class="slide paper" data-notes="Dato que sorprende: allá casi siempre te sirves tú solo. Si vas a pagar adentro, dices la bomba y la cantidad. Practica el número de bomba en voz alta.">
+      <div class="eyebrow">Frases útiles · gasolinera</div>
+      <h2 class="h1">En la <span class="hl">gasolinera.</span></h2>
+      <p class="lead wide mt-m">Allá casi siempre te sirves tú solo. Si pagas adentro, dices la bomba y la cantidad.</p>
+      <div class="pron mt-m">
+        <div class="f"><span class="en">Can I get forty on pump six?</span><span class="say">kan ái guet fórti on pamp siks</span>
+          <span class="use">¿Me pone cuarenta en la bomba seis?</span></div>
+        <div class="f"><span class="en">Can I get a fill-up on pump four?</span><span class="say">kan ái guet a fil-ap on pamp for</span>
+          <span class="use">¿Me llena el tanque en la bomba cuatro?</span></div>
+        <div class="f"><span class="en">The pump isn't working.</span><span class="say">de pamp ísent uérking</span>
+          <span class="use">La bomba no funciona.</span></div>
+      </div>
+    </section>
+
+    <!-- 6 · EN EL TALLER -->
+    <section class="slide paper" data-notes="Las tres últimas son las que protegen tu bolsillo: cuánto sale, dame presupuesto, cuándo está listo. Insiste en que las digan siempre, aunque sientan pena.">
+      <div class="eyebrow">Frases útiles · taller</div>
+      <h2 class="h1">En el <span class="hl">taller.</span></h2>
+      <div class="pron tight mt-m">
+        <div class="f"><span class="en">My check engine light is on.</span><span class="say">mái chek éndyin láit is on</span>
+          <span class="use">Se me prendió el foco de check engine.</span></div>
+        <div class="f"><span class="en">My car is making a weird noise.</span><span class="say">mái kar is méiking a uírd nóis</span>
+          <span class="use">Mi carro está haciendo un ruido raro.</span></div>
+        <div class="f"><span class="en">It won't start.</span><span class="say">it wóunt start</span>
+          <span class="use">No arranca.</span></div>
+        <div class="f"><span class="en">How much is it gonna be?</span><span class="say">jáu mach is it gána bi</span>
+          <span class="use">¿Cuánto va a salir?</span></div>
+        <div class="f"><span class="en">Can you give me an estimate?</span><span class="say">kan yu guiv mi an éstimat</span>
+          <span class="use">¿Me da un presupuesto? — pídelo siempre.</span></div>
+        <div class="f"><span class="en">When will it be ready?</span><span class="say">juen wil it bi rédi</span>
+          <span class="use">¿Cuándo va a estar listo?</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · WON'T VS WANT -->
+    <section class="slide" data-notes="Esta confusión sí causa malentendidos de verdad: 'it won't start' (no arranca) contra 'I want' (quiero). La diferencia está en la o, bien redonda. Practícalo en coro varias veces.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Ojo con esta</div>
+      <h2 class="h1">«Won't» no es <span class="hl">«want».</span></h2>
+      <p class="lead wide mt-m">Se confunden fácil y cambian todo el sentido. La diferencia está en la «o», bien redonda.</p>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">won't</span><span class="dice">wóunt</span><span class="say">no va a — «It won't start» = no arranca</span></div>
+        <div class="n"><span class="dato">want</span><span class="dice">wánt</span><span class="say">quiero — «I want» = quiero</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · SI TE PARA LA POLICÍA -->
+    <section class="slide paper" data-notes="Breve pero importante. Trátalo con naturalidad, sin dramatizar: son tres frases y saberlas quita nervios. Lo principal es entender qué te piden y contestar con calma.">
+      <div class="eyebrow">Por si acaso</div>
+      <h2 class="h1">Si te para <span class="hl">la policía.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">License and registration, please.</span><span class="say">láisens and redyistréishon, plis</span>
+          <span class="use">Licencia y tarjeta de circulación.</span></div>
+        <div class="f"><span class="en">Do you know why I pulled you over?</span><span class="say">du yu nóu juái ái puld yu óuver</span>
+          <span class="use">¿Sabe por qué lo detuve?</span></div>
+        <div class="f"><span class="en">Here you go, officer.</span><span class="say">jír yu góu, ófiser</span>
+          <span class="use">Aquí tiene, oficial.</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Son tres frases — saberlas quita nervios</div>
+    </section>
+
+    <!-- 9 · DIÁLOGO -->
+    <section class="slide paper" data-notes="15 min. Fíjate en la nota del final: 'an hour' se dice an áuer, la h no suena, por eso es 'an' y no 'a'. Es una pregunta que siempre sale.">
+      <div class="eyebrow">Diálogo modelo · 15 min</div>
+      <h2 class="h1">Llevando el carro <span class="hl">al taller.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea"><span class="quien">Mecánico</span><span class="txt">Hey, what can I do for you?<span class="say">jéi, juat kan ái du for yu</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">My check engine light is on, and my car is making a weird noise when I brake.<span class="say">mái chek éndyin láit is on, and mái kar is méiking a uírd nóis juen ái bréik</span></span></div>
+        <div class="linea"><span class="quien">Mecánico</span><span class="txt">Okay, we'll need to run a diagnostic. It's about a hundred bucks.<span class="say">okéi, uíl nid tu ran a daiagnóstik. its abáut a jándred baks</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">That's fine. When will it be ready?<span class="say">dats fáin. juen wil it bi rédi</span></span></div>
+        <div class="linea"><span class="quien">Mecánico</span><span class="txt">Give me about an hour.<span class="say">guiv mi abáut an áuer</span></span></div>
+        <div class="linea acot">Una hora después</div>
+        <div class="linea"><span class="quien">Mecánico</span><span class="txt">You need new brakes in the front. It's gonna be around three fifty for parts and labor.<span class="say">yu nid nu bréiks in de frant. its gána bi aráund zri fífti for parts and léibor</span></span></div>
+        <div class="linea tu"><span class="quien">Tú</span><span class="txt">Wow, that's a lot. Can you give me an estimate in writing?<span class="say">wáu, dats a lot. kan yu guiv mi an éstimat in ráiting</span></span></div>
+        <div class="linea"><span class="quien">Mecánico</span><span class="txt">Sure thing.<span class="say">shur zing</span></span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> «an hour» = an áuer. La «h» no suena, por eso es «an» y no «a»</div>
+    </section>
+
+    <!-- 10 · MODISMOS -->
+    <section class="slide" data-notes="5 min. 'Costs an arm and a leg' es idéntico a nuestro 'cuesta un ojo de la cara' — les va a dar risa. 'Go ahead' aparece en el diálogo, señálalo.">
+      <div class="eyebrow">Modismos · 5 min</div>
+      <h2 class="h1">Como lo dice <span class="hl">la gente.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo"><div class="en">It costs an arm and a leg</div><div class="say">it kosts an arm and a leg</div>
+          <div class="lit">Cuesta un brazo y una pierna</div><div class="real">Cuesta un ojo de la cara</div></div>
+        <div class="modismo"><div class="en">My car is on its last legs</div><div class="say">mái kar is on its last legs</div>
+          <div class="lit">Mi carro está en sus últimas piernas</div><div class="real">Mi carro ya está en las últimas</div></div>
+        <div class="modismo"><div class="en">Let's hit the road</div><div class="say">lets jit de róud</div>
+          <div class="lit">Golpeemos el camino</div><div class="real">Vámonos, arranquemos</div></div>
+        <div class="modismo"><div class="en">Go ahead</div><div class="say">góu ajéd</div>
+          <div class="lit">Ve adelante</div><div class="real">Adelante, dale — también «pull over» = orillarse</div></div>
+      </div>
+    </section>
+
+    <!-- 11 · PRÁCTICA -->
+    <section class="slide" data-notes="15 min. En la ronda del taller, insiste en que el cliente pida presupuesto y pregunte cuándo estará listo — son las dos preguntas que más dinero ahorran.">
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="parejas mt-l">
+        <div class="rol">
+          <div class="quien">Ronda 1 · gasolinera</div>
+          <div class="hace">Uno pide gasolina en una bomba y cantidad específica. El otro es el cajero.</div>
+        </div>
+        <div class="rol">
+          <div class="quien">Ronda 2 · taller</div>
+          <div class="hace">El cliente explica una falla — ruido raro, no arranca, llanta ponchada — y el mecánico le da un precio.</div>
+        </div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> El cliente siempre pide presupuesto y pregunta cuándo estará listo</div>
+    </section>
+
+    <!-- 12 · CORO -->
+    <section class="slide paper" data-notes="Repaso coral de hoy, antes del repaso grande del bloque.">
+      <div class="eyebrow">Repaso</div>
+      <h2 class="h1">Todo lo de <span class="hl">hoy.</span></h2>
+      <div class="coro mt-l">
+        <span>Can I get forty on pump six?</span><span>My check engine light is on.</span>
+        <span>It won't start.</span><span>Can you give me an estimate?</span>
+        <span>When will it be ready?</span><span>Here you go, officer.</span>
+        <span class="r">an arm and a leg</span><span class="r">let's hit the road</span>
+        <span class="r">parts and labor</span><span class="r">an áuer</span>
+      </div>
+    </section>
+
+    <!-- 13 · REPASO DEL BLOQUE -->
+    <section class="slide" data-notes="Este es el cierre del bloque completo. Que cada quien diga una frase de cada tema — es la mejor forma de ver qué se les quedó de las cinco clases. Tómate el tiempo, vale la pena.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Las cinco clases</div>
+      <h2 class="h1">Una frase <span class="hl">de cada tema.</span></h2>
+      <div class="bloque mt-l">
+        <div class="b"><div class="n">Clase 1</div><div class="q">Súper</div></div>
+        <div class="b"><div class="n">Clase 2</div><div class="q">Farmacia</div></div>
+        <div class="b"><div class="n">Clase 3</div><div class="q">Teléfono</div></div>
+        <div class="b"><div class="n">Clase 4</div><div class="q">Ropa</div></div>
+        <div class="b"><div class="n">Clase 5</div><div class="q">Carro</div></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Cada quien dice una frase de cada uno — así cerramos el bloque</div>
+    </section>
+
+    <!-- 14 · CIERRE -->
+    <section class="slide center" data-notes="Cierre del bloque de cinco clases. Recuérdales todo lo que ya pueden resolver: el mandado, una consulta, una llamada, una devolución y el taller. Hace cinco semanas ninguna de esas les parecía posible.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¡Terminaste las cinco clases!</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:32ch">El mandado, el doctor, una llamada, una devolución <span class="hl">y el taller.</span></p>
+      <p class="lead mt-m" style="text-align:center">Todo eso ya lo puedes resolver en inglés. Reto de la semana: escoge una de las cinco situaciones y vívela de verdad — aunque sea con nervios.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>

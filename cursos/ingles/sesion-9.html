@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/motor/imgs/reddeluz.png">
+<title>En el supermercado — ¡Hablemos Inglés!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="assets/motor/deck.css">
+<!-- piel propia "Constelación": pisa el tema de deck.css con negro+rojo -->
+<link rel="stylesheet" href="assets/motor/temas/ingles.css">
+<link rel="stylesheet" href="assets/ingles.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.pron, .modismos y .nums viven en assets/ingles.css)
+   ============================================================ */
+
+/* agenda de la hora — misma anatomía que en sesion-6, 7 y 8 */
+.agenda{display:flex;flex-direction:column;gap:.4rem;width:100%;max-width:40rem}
+.agenda .a{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:baseline;
+  padding:.55rem .9rem;border-radius:8px;border:1px solid transparent}
+.agenda .a:nth-child(odd){background:var(--char-soft);border-color:var(--line-d)}
+.agenda .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--accent-text)}
+.agenda .q{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--on-char-soft)}
+
+/* diálogo modelo — mismo patrón del bloque anterior */
+.dialogo{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:40rem}
+.dialogo .linea{display:grid;grid-template-columns:5.8rem 1fr;gap:.8rem;align-items:baseline}
+.dialogo .quien{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--on-char-mute)}
+.dialogo .linea.tu .quien{color:var(--accent-text);font-weight:600}
+.dialogo .txt{font-family:var(--font-body);font-size:clamp(.86rem,1.3vw,1rem);line-height:1.4}
+.dialogo .say{display:block;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.04em;color:var(--accent-text);margin-top:.12rem}
+.dialogo .acot{grid-column:1/-1;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--on-char-mute);text-align:center;
+  padding:.5rem 0;border-top:1px dashed var(--line-d);border-bottom:1px dashed var(--line-d);margin:.3rem 0}
+
+/* vocabulario en rejilla */
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;max-width:52rem}
+@media(max-width:900px){.vocab{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vocab{grid-template-columns:1fr}}
+.vocab .v{padding:.6rem .8rem;background:var(--char-soft);border:1px solid var(--line-d);
+  border-radius:9px}
+.vocab .en{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;line-height:1.15}
+.vocab .say{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.03em;
+  color:var(--accent-text);margin-top:.18rem}
+.vocab .es{font-family:var(--font-body);font-size:.76rem;color:var(--on-char-soft);margin-top:.3rem}
+.vocab .v.ojo{border-color:rgba(200,16,46,.4)}
+.vocab .v.ojo .es{color:var(--on-char)}
+
+/* práctica en parejas */
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%;max-width:48rem}
+@media(max-width:760px){.parejas{grid-template-columns:1fr}}
+.rol{padding:1rem 1.2rem;background:var(--char-soft);border:1px solid var(--line-d);border-radius:12px}
+.rol .quien{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.rol .hace{font-family:var(--font-body);font-size:clamp(.85rem,1.2vw,.97rem);
+  color:var(--on-char-soft);line-height:1.45;margin-top:.55rem}
+
+/* coro de cierre */
+.coro{display:flex;flex-wrap:wrap;gap:.5rem;width:100%;max-width:50rem}
+.coro span{font-family:var(--font-display);font-size:clamp(.82rem,1.2vw,.95rem);
+  text-transform:none;padding:.5rem .8rem;background:var(--char-soft);
+  border:1px solid var(--line-d);border-radius:999px}
+.coro span.r{border-color:rgba(200,16,46,.45);color:var(--accent-text)}
+</style>
+</head>
+<body class="theme-ingles" data-volver="index.html" data-volver-texto="‹ Clases">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide center active" data-notes="Primera clase del bloque de situaciones del día a día. Arranca diciendo que todo lo de hoy pasa en un lugar al que van cada semana — eso baja la guardia. Aclara que el inglés de esta clase es el de Estados Unidos, con todo y sus mañas.">
+      <div class="constelacion-tag" style="margin-inline:auto">
+        <span class="k1">Constelación</span><span class="k2">Clases de Inglés</span>
+      </div>
+      <h1 class="mega" style="text-align:center">En el <span class="hl">súper.</span></h1>
+      <p class="lead wide mt-m" style="text-align:center;margin-inline:auto">Encontrar lo que buscas, entenderle al cajero y pagar sin sudar. Situaciones del día a día · Clase 1.</p>
+      <div class="live-badge" style="margin-inline:auto;margin-top:1.4rem">
+        <span class="dot"></span><span class="label">En vivo</span><span class="clock">Día a día · 1/5</span>
+      </div>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · GUÍA DE PRONUNCIACIÓN -->
+    <section class="slide paper" data-notes="Léela al inicio de cualquier sesión del bloque. Son las cuatro claves para leer las pronunciaciones de todo el material. No te detengas mucho: se entienden mejor practicando que explicando. Haz que repitan 'think' y 'house' en voz alta.">
+      <div class="eyebrow">Cómo leer esta clase</div>
+      <h2 class="h1">Cuatro claves de <span class="hl">pronunciación.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">La «z» es la th suave</span><span class="say">think → zink</span>
+          <span class="use">Lengua entre los dientes y soplas. No es una z española.</span></div>
+        <div class="f"><span class="en">La «d» de the, this</span><span class="say">the → de</span>
+          <span class="use">Una d suave, con la lengua tocando los dientes.</span></div>
+        <div class="f"><span class="en">La «j» es casi un suspiro</span><span class="say">house → jáus</span>
+          <span class="use">Muy suavecita, nada de la j fuerte del español.</span></div>
+        <div class="f"><span class="en">El acento marca dónde cargas la voz</span><span class="say">grócerís</span>
+          <span class="use">Si mueves el acento, la palabra deja de entenderse.</span></div>
+      </div>
+    </section>
+
+    <!-- 3 · CALENTAMIENTO -->
+    <section class="slide" data-notes="5 min. Pregunta en inglés y deja que contesten como puedan — con una palabra basta. El objetivo no es que respondan bien, es que abran la boca antes de que empiece lo difícil.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Calentamiento · 5 min</div>
+      <h2 class="h1">Para <span class="hl">romper el hielo.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Where do you usually buy groceries?</span><span class="say">juer du yu yúshuali bái gróuseris</span>
+          <span class="use">¿Dónde compras normalmente el mandado?</span></div>
+        <div class="f"><span class="en">Do you like going to the store?</span><span class="say">du yu láik góing tu de stor</span>
+          <span class="use">¿Te gusta ir a la tienda?</span></div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Contesten como puedan — una palabra es suficiente</div>
+    </section>
+
+    <!-- 4 · AGENDA -->
+    <section class="slide" data-notes="Un minuto. Enseñar el mapa de la hora baja la ansiedad: ven que hay práctica y no solo escuchar. Señala que la parte más larga es la de hablar en parejas.">
+      <div class="eyebrow">Así vamos hoy</div>
+      <h2 class="h1">Una hora, <span class="hl">siete pasos.</span></h2>
+      <div class="agenda mt-l">
+        <div class="a"><span class="t">5 min</span><span class="q">Calentamiento — soltar la lengua</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Vocabulario del súper</span></div>
+        <div class="a"><span class="t">10 min</span><span class="q">Frases que dices y frases que te dicen</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Diálogo modelo — leerlo en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Modismos</span></div>
+        <div class="a"><span class="t">15 min</span><span class="q">Práctica en parejas</span></div>
+        <div class="a"><span class="t">5 min</span><span class="q">Cierre y reto de la semana</span></div>
+      </div>
+    </section>
+
+    <!-- 5 · VOCABULARIO -->
+    <section class="slide paper" data-notes="10 min. Lee cada palabra en voz alta y que el grupo repita dos veces. Las tres marcadas en rojo son las que más confunden: en 'aisle' no suena la s, en 'receipt' no suena la p. Detente en esas dos.">
+      <div class="eyebrow">Vocabulario · 10 min</div>
+      <h2 class="h1">Las palabras <span class="hl">del súper.</span></h2>
+      <div class="vocab mt-m">
+        <div class="v"><div class="en">groceries</div><div class="say">gróuseris</div><div class="es">mandado, despensa</div></div>
+        <div class="v"><div class="en">cart</div><div class="say">kart</div><div class="es">carrito</div></div>
+        <div class="v"><div class="en">basket</div><div class="say">básket</div><div class="es">canasta</div></div>
+        <div class="v ojo"><div class="en">aisle</div><div class="say">áil</div><div class="es">pasillo — la «s» no suena</div></div>
+        <div class="v"><div class="en">checkout</div><div class="say">chékaut</div><div class="es">caja</div></div>
+        <div class="v"><div class="en">self-checkout</div><div class="say">self chékaut</div><div class="es">caja de autocobro</div></div>
+        <div class="v ojo"><div class="en">receipt</div><div class="say">risít</div><div class="es">ticket — la «p» no suena</div></div>
+        <div class="v"><div class="en">bag</div><div class="say">bag</div><div class="es">bolsa</div></div>
+        <div class="v"><div class="en">on sale</div><div class="say">on séil</div><div class="es">en oferta</div></div>
+        <div class="v"><div class="en">coupon</div><div class="say">kúpon</div><div class="es">cupón</div></div>
+        <div class="v"><div class="en">produce</div><div class="say">próudus</div><div class="es">frutas y verduras</div></div>
+        <div class="v"><div class="en">dairy</div><div class="say">déri</div><div class="es">lácteos</div></div>
+        <div class="v"><div class="en">frozen food</div><div class="say">fróuzen fud</div><div class="es">congelados</div></div>
+        <div class="v"><div class="en">deli</div><div class="say">déli</div><div class="es">salchichonería</div></div>
+      </div>
+    </section>
+
+    <!-- 6 · LO QUE TÚ DICES -->
+    <section class="slide paper" data-notes="5 min de los 10 de frases. Estas son las que ellos inician. La de la libra de pavo es la más útil de todas: en el deli siempre preguntan cómo lo quieres rebanado.">
+      <div class="eyebrow">Frases útiles · lo que tú dices</div>
+      <h2 class="h1">Para <span class="hl">preguntar.</span></h2>
+      <div class="pron mt-l">
+        <div class="f"><span class="en">Excuse me, where can I find the milk?</span><span class="say">ekskiús mi, juer kan ái fáind de milk</span>
+          <span class="use">Disculpe, ¿dónde encuentro la leche?</span></div>
+        <div class="f"><span class="en">Which aisle is the bread in?</span><span class="say">juích áil is de bred in</span>
+          <span class="use">¿En qué pasillo está el pan?</span></div>
+        <div class="f"><span class="en">Can I get a pound of turkey, sliced thin?</span><span class="say">kan ái guet a páund ov térki, sláist zin</span>
+          <span class="use">¿Me da una libra de pavo, rebanado delgadito?</span></div>
+        <div class="f"><span class="en">That's it, thanks.</span><span class="say">dats it, zanks</span>
+          <span class="use">Es todo, gracias.</span></div>
+      </div>
+    </section>
+
+    <!-- 7 · LO QUE TE DICEN -->
+    <section class="slide paper" data-notes="Los otros 5 min. Estas son las que les van a llegar sin avisar, y por eso son las que más nervios dan. Insiste en que el cajero SIEMPRE pregunta lo mismo — son siete frases, no cien. 'Have a good one' se usa muchísimo más que 'have a nice day'.">
+      <div class="eyebrow">Frases útiles · lo que te dicen</div>
+      <h2 class="h1">Lo que pregunta <span class="hl">el cajero.</span></h2>
+      <div class="pron tight mt-m">
+        <div class="f"><span class="en">Did you find everything okay?</span><span class="say">did yu fáind évrizing okéi</span>
+          <span class="use">¿Encontró todo lo que buscaba?</span></div>
+        <div class="f"><span class="en">Do you have a rewards card?</span><span class="say">du yu jav a riwárds kard</span>
+          <span class="use">¿Tiene tarjeta de puntos?</span></div>
+        <div class="f"><span class="en">Do you need a bag?</span><span class="say">du yu nid a bag</span>
+          <span class="use">¿Necesita bolsa? En muchos estados se cobran.</span></div>
+        <div class="f"><span class="en">Debit or credit?</span><span class="say">débit or crédit</span>
+          <span class="use">¿Débito o crédito?</span></div>
+        <div class="f"><span class="en">Do you want cash back?</span><span class="say">du yu wánt kash bak</span>
+          <span class="use">¿Quiere retirar efectivo?</span></div>
+        <div class="f"><span class="en">Have a good one.</span><span class="say">jav a gud uán</span>
+          <span class="use">Que le vaya bien — se usa mucho más que «have a nice day».</span></div>
+      </div>
+    </section>
+
+    <!-- 8 · PRECIOS -->
+    <section class="slide" data-notes="Esta slide sorprende a todos. Allá casi nunca dicen 'dollars and cents': parten el número en dos mitades. Practica en coro los cinco — es de lo que más se usa y casi nadie lo enseña.">
+      <div class="glow bl"></div>
+      <div class="eyebrow">Números</div>
+      <h2 class="h1">Cómo se dicen <span class="hl">los precios.</span></h2>
+      <p class="lead wide mt-m">Casi nunca dicen «dollars and cents». Parten el número en dos mitades.</p>
+      <div class="nums mt-m">
+        <div class="n"><span class="dato">$4.50</span><span class="dice">four fifty</span><span class="say">for fífti</span></div>
+        <div class="n"><span class="dato">$12.99</span><span class="dice">twelve ninety-nine</span><span class="say">tuélv náinti náin</span></div>
+        <div class="n"><span class="dato">$32.80</span><span class="dice">thirty-two eighty</span><span class="say">zérti tu éiti</span></div>
+        <div class="n"><span class="dato">$105.25</span><span class="dice">a hundred five twenty-five</span><span class="say">a jándred fáiv tuénti fáiv</span></div>
+        <div class="n"><span class="dato">$1,250</span><span class="dice">twelve fifty</span><span class="say">tuélv fífti</span></div>
+      </div>
+    </section>
+
+    <!-- 9 · DIÁLOGO · BUSCANDO -->
+    <section class="slide paper" data-notes="15 min entre esta slide y la siguiente. Primero léelo tú con un voluntario, luego en parejas intercambiando papeles. No corrijas la pronunciación en la primera pasada — deja que fluya.">
+      <div class="eyebrow">Diálogo modelo · en el pasillo</div>
+      <h2 class="h1">Buscando <span class="hl">los huevos.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea tu"><span class="quien">Cliente</span><span class="txt">Excuse me, where can I find the eggs?<span class="say">ekskiús mi, juer kan ái fáind di egs</span></span></div>
+        <div class="linea"><span class="quien">Empleado</span><span class="txt">They're in the dairy section, aisle twelve, all the way in the back.<span class="say">der in de déri sékshon, áil tuélv, ol de wei in de bak</span></span></div>
+        <div class="linea tu"><span class="quien">Cliente</span><span class="txt">Thanks. Are they on sale this week?<span class="say">zanks. ar dei on séil dis wik</span></span></div>
+        <div class="linea"><span class="quien">Empleado</span><span class="txt">Yeah, they're buy one get one free.<span class="say">yea, der bái uán guet uán fri</span></span></div>
+      </div>
+    </section>
+
+    <!-- 10 · DIÁLOGO · EN LA CAJA -->
+    <section class="slide paper" data-notes="La segunda mitad del diálogo. Señala que 'No, I'm good' significa 'no, gracias' — es de lo más común y suena muy natural. Muchos contestan 'no thank you' y suena más formal de lo necesario.">
+      <div class="eyebrow">Diálogo modelo · en la caja</div>
+      <h2 class="h1">Pagando <span class="hl">sin sudar.</span></h2>
+      <div class="dialogo mt-m">
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Hi there! Did you find everything okay?<span class="say">jái der! did yu fáind évrizing okéi</span></span></div>
+        <div class="linea tu"><span class="quien">Cliente</span><span class="txt">Yes, thanks.<span class="say">yes, zanks</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Do you have a rewards card?<span class="say">du yu jav a riwárds kard</span></span></div>
+        <div class="linea tu"><span class="quien">Cliente</span><span class="txt">No, I don't.<span class="say">nou, ái dóunt</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">No problem. Your total is thirty-two eighty. Debit or credit?<span class="say">nou próblem. yor tóutal is zérti tu éiti. débit or crédit</span></span></div>
+        <div class="linea tu"><span class="quien">Cliente</span><span class="txt">Debit. <span class="op">/</span> No, I'm good.<span class="say">débit — nou, áim gud</span></span></div>
+        <div class="linea"><span class="quien">Cajero</span><span class="txt">Here's your receipt. Have a good one!<span class="say">jírs yor risít. jav a gud uán</span></span></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> «No, I'm good» = «no, gracias». Suena muy natural</div>
+    </section>
+
+    <!-- 11 · MODISMOS -->
+    <section class="slide" data-notes="5 min. Los modismos son lo que más se les queda porque son divertidos. Pregunta si alguien ya los había oído en una serie — casi siempre alguien dice que sí.">
+      <div class="eyebrow">Modismos · 5 min</div>
+      <h2 class="h1">Como lo dice <span class="hl">la gente.</span></h2>
+      <div class="modismos mt-l">
+        <div class="modismo"><div class="en">It's a steal</div><div class="say">its a stíl</div>
+          <div class="lit">Es un robo</div><div class="real">Es una ganga, está baratísimo</div></div>
+        <div class="modismo"><div class="en">That's a rip-off</div><div class="say">dats a ríp-of</div>
+          <div class="lit">Es un arrancón</div><div class="real">Es un robo, está carísimo</div></div>
+        <div class="modismo"><div class="en">I'm gonna grab some milk</div><div class="say">áim gána grab som milk</div>
+          <div class="lit">Voy a agarrar leche</div><div class="real">Voy por leche — «grab» se usa para todo</div></div>
+        <div class="modismo"><div class="en">I need to run to the store</div><div class="say">ái nid tu ran tu de stor</div>
+          <div class="lit">Necesito correr a la tienda</div><div class="real">Tengo que ir rapidito a la tienda</div></div>
+      </div>
+    </section>
+
+    <!-- 12 · PRÁCTICA -->
+    <section class="slide" data-notes="15 min, la parte más importante de la hora. Que cada pareja invente su propio total para practicar los precios — es lo que más cuesta. Camina entre las parejas y escucha; corrige solo si no se entiende.">
+      <div class="glow br"></div>
+      <div class="eyebrow">Práctica en parejas · 15 min</div>
+      <h2 class="h1">Ahora <span class="hl">ustedes.</span></h2>
+      <div class="parejas mt-l">
+        <div class="rol">
+          <div class="quien">Cliente</div>
+          <div class="hace">Haz una lista de 5 cosas que necesitas. Pregunta dónde están y luego paga.</div>
+        </div>
+        <div class="rol">
+          <div class="quien">Cajero o empleado</div>
+          <div class="hace">Dile en qué pasillo está cada cosa. En la caja, haz las preguntas de siempre.</div>
+        </div>
+      </div>
+      <div class="chip mt-l"><span class="dot"></span> Inventen su propio total — es lo que más cuesta decir</div>
+    </section>
+
+    <!-- 13 · CORO -->
+    <section class="slide paper" data-notes="Repaso coral rápido antes del cierre. Léelas en voz alta y que las repitan todos juntos. Las rojas son las de hoy.">
+      <div class="eyebrow">Repaso</div>
+      <h2 class="h1">Todo lo de <span class="hl">hoy.</span></h2>
+      <div class="coro mt-l">
+        <span>Where can I find…?</span><span>Which aisle is…?</span>
+        <span>That's it, thanks.</span><span>Did you find everything okay?</span>
+        <span>Do you need a bag?</span><span>Debit or credit?</span>
+        <span>No, I'm good.</span><span>Have a good one!</span>
+        <span class="r">it's a steal</span><span class="r">that's a rip-off</span>
+        <span class="r">thirty-two eighty</span><span class="r">buy one get one free</span>
+      </div>
+    </section>
+
+    <!-- 14 · CIERRE + RETO -->
+    <section class="slide center" data-notes="5 min. Que cada quien diga en voz alta su frase favorita de la clase — eso marca cuál se les quedó. El reto es tonto a propósito: decir 'Have a good one' al salir de cualquier tienda, aunque sea en español, para agarrarle el ritmo.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Cierre · 5 min</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:30ch">Ya puedes hacer el mandado <span class="hl">de principio a fin.</span></p>
+      <p class="lead mt-m" style="text-align:center">Reto de la semana: di «Have a good one» al salir de cualquier tienda — aunque sea una tienda en español. Es para agarrarle el ritmo.</p>
+      <p class="frase-red mt-l">La luz se construye <span class="hl">en red</span></p>
+      <div class="brandmark">¡Hablemos Inglés! · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="assets/motor/deck.js" defer></script>
+</body>
+</html>
