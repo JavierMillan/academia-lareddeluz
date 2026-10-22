@@ -403,6 +403,13 @@
               "titulo": "Los 3 prompts · tu marca en Claude Design",
               "descripcion": "El director de arte, la fábrica de recursos y el diseño de piezas, con lo que aprendimos con Lumiku. Se guarda como PDF.",
               "url": "herramientas-ia/recursos/tu-marca-en-claude-design.html"
+            },
+            {
+              "tipo": "skill",
+              "icono": "◈",
+              "titulo": "Skill Prism · tu director de arte",
+              "descripcion": "El método de la clase instalado en tu Claude. Se descarga como .zip y se sube en Personalizar › Skills; funciona desde el plan gratis.",
+              "url": "herramientas-ia/recursos/prism.zip"
             }
           ]
         }
