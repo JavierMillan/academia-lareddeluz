@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Los 3 prompts · Tu marca en Claude Design — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3.2rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:46ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+strong,b{color:var(--on-char);font-weight:600}
+code{font-family:'Martian Mono',monospace;font-size:.86em;
+  background:rgba(243,234,215,.07);border:1px solid var(--line-d);
+  border-radius:5px;padding:.1em .42em;color:var(--sesame)}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+.promptbox{position:relative;margin-top:1.6rem;
+  background:#0f0c09;border:1px solid var(--line-d2);border-radius:14px;overflow:hidden}
+.promptbox .pb-head{display:flex;align-items:center;gap:.5rem;
+  padding:.6rem .9rem;border-bottom:1px solid var(--line-d);
+  background:rgba(243,234,215,.04)}
+.promptbox .pb-head i{width:9px;height:9px;border-radius:50%;background:var(--line-d2);display:block}
+.promptbox .pb-head .tt{margin-left:.4rem;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+.promptbox pre{padding:clamp(1rem,2.4vw,1.5rem);overflow-x:auto;
+  font-family:'Martian Mono',monospace;font-size:clamp(.72rem,1.15vw,.86rem);
+  line-height:1.7;color:var(--on-char-soft);white-space:pre-wrap;word-break:break-word}
+.copybtn{position:absolute;top:.5rem;right:.6rem;
+  background:rgba(232,161,60,.12);border:1px solid var(--sesame);color:var(--sesame);
+  border-radius:7px;padding:.3rem .7rem;cursor:pointer;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  transition:.25s var(--ease)}
+.copybtn:hover{background:rgba(232,161,60,.24)}
+.copybtn.done{background:rgba(124,154,62,.2);border-color:var(--lettuce);color:var(--lettuce)}
+
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--sesame);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar,.copybtn{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  p{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  code{background:#f2f2f2;border-color:#ddd;color:#8a3b18}
+  .promptbox{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .promptbox .pb-head{background:#f0f0f0;border-color:#ddd}
+  .promptbox .pb-head i{background:#ccc}
+  .promptbox .pb-head .tt{color:#666}
+  .promptbox pre{color:#222;font-size:8.5pt}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+.cuadro{width:100%;border-collapse:collapse;margin-top:1.2rem}
+.cuadro th,.cuadro td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line-d);font-size:.95rem;vertical-align:top}
+.cuadro th{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-char-mute);font-weight:500}
+.cuadro td{color:var(--on-char-soft)} .cuadro td:first-child{color:var(--on-char);font-weight:500}
+@media print{.cuadro th,.cuadro td{border-color:#ddd;color:#333}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=tu-marca-en-claude-design-4">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Herramientas de IA · Clase 4 · Recurso</div>
+  <h1>Tu marca en<br><span class="hl">Claude Design</span></h1>
+  <p class="sub">Los tres prompts con los que pasamos a Lumiku de un logo y una página web a un template que diseña sus posts. Úsalos en orden.</p>
+  <div class="rule"></div>
+
+  <h2>Antes de empezar</h2>
+  <div class="lesson"><div class="lt">Claude Design viene desde el plan gratis</div><p>Puedes hacer todo sin pagar. Con Pro tienes más uso y no se te acaba a media sesión.</p></div>
+  <div class="lesson"><div class="lt">Ten a la mano tu logo en PNG</div><p>Con fondo transparente. El SVG a veces se rompe al subirlo. Si tienes web o Instagram, ten el link: de ahí Claude saca tus colores y tus letras exactas.</p></div>
+  <div class="lesson"><div class="lt">Primero direcciones, luego diseño</div><p>Cada prompt le pide a la IA que se detenga y espere tu visto bueno. No te saltes esas pausas: cada vez que la IA diseñó sin preguntar, salió genérico.</p></div>
+
+  <h2>Prompt 1 · Claude define tu marca y arma el template</h2>
+  <p>Pégalo en <strong>Claude</strong>. Sube tu logo y pega el link de tu web o tu Instagram. Te entrevista, te propone tres estilos, define tus códigos, tus layouts y la lista de imágenes que tu marca necesita, y al final crea tu template en Claude Design.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude · conversación nueva</span></div>
+    <button class="copybtn" data-target="p1">Copiar</button>
+<pre id="p1">Actúa como mi director de arte. Quiero crear el template de mi marca en Claude Design (un Design System) para que todo lo que te pida después salga con la cara de mi negocio y no se vea genérico ni "hecho con IA".
+
+Reglas para todo el proceso:
+- No diseñes suponiendo. Al final de los pasos 2, 3, 4 y 5, detente y espera mi visto bueno.
+- Explícame todo en lenguaje sencillo.
+
+PASO 1 · LEER LO QUE YA EXISTE
+- Lee mi logo y dime qué comunica su forma.
+- Si te doy mi web, lee su código y sácame los colores exactos (hex) y las tipografías que ya uso.
+- Lee mis textos y dime cómo suena mi marca. Cita 2 o 3 frases mías.
+- Dime qué tensiones ves. Ejemplo: "el logo es infantil y la web es adulta". No las borres: pueden ser la marca.
+- Después hazme SOLO las preguntas que falten, una por una: qué vendo, quién es mi cliente ideal (una persona concreta), qué es LO ÚNICO que quiero que sienta, 3 a 5 palabras de mi personalidad y a qué no me quiero parecer.
+
+PASO 2 · DIRECCIÓN DE ESTILO
+Propón 3 direcciones. Cada una con:
+- Mezcla de corrientes en porcentaje (pueden venir del diseño, la arquitectura, los oficios, el cine o una época).
+- Por qué existió esa corriente y por qué esa idea le queda a mi marca (no solo que "se ve bonito").
+- Qué señales mías la sostienen y cuáles la contradicen.
+- Cómo se traduce a layout, letra, color, textura, movimiento y forma de hablar.
+- Cómo se sentiría, en una frase.
+Recomienda una y espera.
+
+PASO 3 · CÓDIGOS, COLORES Y LETRAS
+- 5 a 7 códigos de marca: cosas que solo mi marca hace (una forma propia, un recurso de layout, un tratamiento de texto, cuándo aparece el color de acento, una textura y una forma de moverse). Cada uno con su regla y "qué NO es". Si otra marca del mismo estilo podría usarlo igual, afílalo más.
+- Paleta de 8 a 14 colores con nombre, hex y uso. Mide el contraste de cada color de texto sobre el fondo y ponlo en una tabla. Texto normal: 4.5:1 o más; títulos grandes: 3:1 o más. Marca cuáles NO sirven como texto.
+- 2 o 3 tipografías de Google Fonts, cada una con su rol. Ojo: las etiquetas también tienen que sonar a mi marca. No uses MAYÚSCULAS chiquitas con espacio entre letras solo por costumbre.
+Espera.
+
+PASO 4 · BIBLIOTECA DE LAYOUTS
+Diseña de 6 a 10 layouts que nazcan del estilo elegido. Cubre: frase fuerte, antes/después, lista o pasos, dato, testimonio, servicio, evento, portada de carrusel y cierre con contacto. Para cada uno:
+- Un nombre propio.
+- Para qué sirve.
+- Dónde va cada cosa y el orden de lectura 1-2-3.
+- Qué cambia en 1:1, 4:5 y 9:16 (en 9:16 deja libres arriba y abajo las zonas que tapa Instagram).
+- Qué códigos y qué imagen usa.
+Prohibido: tres columnas iguales con ícono, degradados morados, brillos sin significado, emojis como íconos, metáforas gastadas (foco, cohete, corazón, apretón de manos) y fotos de stock sonriendo.
+Espera.
+
+PASO 5 · INVENTARIO DE IMÁGENES Y ADN VISUAL
+- Saca 3 a 5 conceptos de mi marca (ideas, no objetos).
+- Convierte cada concepto en una imagen propia con significado y repártelas en: protagonistas, apoyo, contenedores (superficies para poner texto), conectores (lo que une slides de un carrusel), editoriales (fondos y texturas) y cierre. Ponlas en una tabla con: la imagen, qué concepto representa, en qué layouts va, el formato (con fondo transparente, vertical, cuadrado) y la prioridad. Máximo 10.
+- Separa lo que se dibuja en vector (líneas, marcos) de lo que se genera con IA.
+- Escribe un bloque "ADN VISUAL" (técnica, material, luz, paleta en hex, composición y lo que nunca aparece).
+Espera. Después voy a llevar todo esto a la Fábrica de recursos (Prompt 2) y te traigo las imágenes.
+
+PASO 6 · REVISAR MIS IMÁGENES
+Cuando te las suba, revísalas una por una:
+- ¿Respetan el ADN visual y la paleta?
+- ¿Tienen defectos (bordes raros, fondos manchados, texto inventado)?
+- ¿Rompen alguna regla del manual?
+Dime cuáles se quedan, cuáles se descartan y cuáles van a un grupo "Extras" con una regla de uso. Ponles nombres claros.
+
+PASO 7 · CREAR EL TEMPLATE EN CLAUDE DESIGN
+Crea mi Design System con:
+- Título: el nombre de mi marca.
+- README (el manual): esencia y voz, color, tipografía, códigos de marca, layouts, recursos, movimiento, reglas aprendidas y lo que nunca se hace. Reglas cortas que nombren los tokens.
+- Tokens: colores con su uso y su contraste, estilos de texto, espacios y radios.
+- Fuentes: sube los archivos woff2 reales de cada tipografía y regístralos. Si solo las nombras, el template muestra una letra genérica.
+- Logo: usa el PNG con fondo transparente que te di.
+- Grupos de imágenes: Logo, Extras y uno por cada tipo de recurso de MI inventario, con nombres que tengan sentido para mi marca (no copies los grupos de otra marca). Cada grupo con una nota de cuándo se usa cada archivo.
+- Una portada para el template.</pre>
+  </div>
+
+  <h2>Prompt 2 · Fábrica de recursos</h2>
+  <p>Pégalo en <strong>ChatGPT o Gemini</strong>, en una conversación nueva. Arriba del prompt, pega lo que te entregó Claude en el Prompt 1: el perfil, los layouts y el inventario con el ADN visual. Este prompt no inventa tu marca: la produce.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">ChatGPT o Gemini · conversación nueva</span></div>
+    <button class="copybtn" data-target="p2">Copiar</button>
+<pre id="p2">FÁBRICA DE RECURSOS VISUALES DE MARCA
+
+ROL
+Actúa como director de producción visual: director de arte, especialista en materiales y luz, ingeniero de prompts para generadores de imágenes y control de calidad. Tu trabajo es convertir el perfil de mi marca en una biblioteca de recursos visuales coherente, variada y reutilizable para mi template de Claude Design. No generes imágenes bonitas sueltas: construye un sistema.
+
+LA FUENTE DE VERDAD
+Arriba de este mensaje te pego lo que definí con mi director de arte: esencia, códigos de marca, paleta con hex, tipografías, layouts e inventario de recursos con su ADN VISUAL.
+- No cambies el estilo, la paleta ni el ADN visual. Si algo falta o se contradice, hazme como máximo 3 preguntas concretas, y solo esa vez.
+- No supongas materiales ni estilos que no estén en mi perfil.
+- Los objetos salen de los conceptos de MI marca. No copies objetos de ejemplos ni de otras marcas: si mi marca no tiene nada que ver con hilos, flores o nubes, no deben aparecer.
+- Cada recurso debe responder: "¿qué entiende o siente la persona gracias a esto?". Si no responde nada, no entra.
+
+FASE 1 · FICHA DE ADN VISUAL
+Resume mi ADN visual en una ficha corta que será la regla para todo:
+- Dirección y nivel de realismo.
+- Materiales, fibras, acabados e imperfecciones.
+- Paleta permitida (hex) y colores prohibidos.
+- Luz: dirección, temperatura y sombras.
+- Composición: perspectiva, márgenes y espacio libre para texto.
+- Lo que nunca aparece.
+El ADN no cambia. Lo que cambia entre imágenes es el objeto.
+
+FASE 2 · PLAN DE LA BIBLIOTECA
+Parte del inventario de mi perfil y complétalo hasta tener variedad para varias semanas de publicaciones, repartido en estas categorías:
+A. Protagonistas: objetos que dicen un concepto de la marca.
+B. Apoyo: detalles discretos que acompañan (trazos, pequeñas formas).
+C. Contenedores: papel, tarjetas, marcos o superficies listas para poner texto encima. Siempre sin texto.
+D. Conectores: lo que une slides de un carrusel (una línea, un camino, una cinta, un trazo, un rastro… lo que tenga sentido para mi marca). Diseñados para salir por un borde y entrar por el otro a la misma altura.
+E. Editoriales: fondos, texturas y escenas para portadas.
+F. Cierre: recursos para llamados a la acción y última slide.
+Entrégalo en una tabla: ID, nombre, categoría, objeto exacto, concepto que representa, layout de mi manual donde se usa, formato y prioridad.
+Muéstrame la tabla y espera mi visto bueno antes de generar.
+
+FASE 3 · UN PROMPT COMPLETO POR IMAGEN
+Cada recurso lleva su propio prompt, que se entiende solo. Nunca escribas "igual que la anterior", "otra versión" ni "continúa la colección". Usa esta plantilla:
+
+Crea una imagen de [OBJETO EXACTO] para la identidad visual de [MARCA].
+Concepto: [qué idea de la marca dice].
+Objeto principal: [descripción precisa].
+Cantidad: exactamente [NÚMERO].
+Material: [material y propiedades].
+Colores: [hex y dónde va cada uno].
+Construcción: [forma, textura, uniones y acabado].
+Perspectiva: [cenital / frontal / 3/4].
+Iluminación: [tipo, dirección y sombras, según el ADN].
+Composición: [posición, escala y espacio libre].
+Fondo: [transparente real / color liso específico].
+Formato: [relación de aspecto y resolución].
+Uso final: [layout de mi manual donde va].
+Restricciones: sin texto, sin letras, sin logos, sin marcas de agua, sin [prohibidos de mi perfil].
+La imagen contiene únicamente este recurso. No es un catálogo, moodboard, collage ni hoja de stickers.
+
+FASE 4 · REGLAS DE PRODUCCIÓN
+- Aislamiento: un recurso = un archivo. Si pido una nube, una flor y una cinta, son tres imágenes, no una. Si el generador junta varios, se recortan bien o se regeneran por separado.
+- Antirrepetición: lleva un registro (ID, objeto, forma, colores, composición, estado). No repitas un objeto que ya existe ni presentes dos versiones del mismo como recursos distintos.
+- Si una imagen sale mal: identifica el error, revisa el prompt que realmente se envió, quita cualquier imagen anterior que esté contaminando el resultado, escribe un prompt nuevo con un sujeto inequívoco y regenera solo esa. Si vuelve a fallar, cambia de estrategia en lugar de insistir.
+- Transparencia: genera con transparencia real si la herramienta lo permite (PNG con canal alfa), sin halos ni bordes de otro color. El cuadriculado de la vista previa no es transparencia. Si no puedes darla, dímelo y propón cómo quitar el fondo.
+- Lotes: si pido 10 imágenes, son 10 recursos distintos. Si hay un límite por mensaje, dímelo y divide en lotes. No simules imágenes ni inventes archivos o enlaces.
+
+FASE 5 · CONTROL DE CALIDAD
+Revisa cada imagen antes de seguir:
+- Identidad: ¿respeta el ADN visual y la paleta?
+- Contenido: ¿es exactamente el objeto pedido?
+- Unicidad: ¿es distinto de los anteriores?
+- Integridad: ¿bordes limpios, proporciones correctas, sin texto inventado?
+- Marca: ¿rompe alguna regla de mi manual? (metáforas gastadas, estilo genérico, colores fuera de paleta)
+Clasifica cada una como APROBADO, CORREGIR, REGENERAR o BLOQUEADO. Si es un cliché que aun así quiero conservar, márcalo como EXTRA con una regla de uso.
+
+FASE 6 · ENTREGA
+Por cada recurso: número, nombre con el formato MARCA_CATEGORIA_001_NOMBRE.png, formato y medidas, si la transparencia está verificada, estado y el layout donde se usa.
+Al final, dime en qué grupo de mi template de Claude Design va cada archivo, usando los grupos que definí en mi perfil.
+
+Si no tienes herramienta para generar imágenes, entrégame los prompts listos para copiar.</pre>
+  </div>
+  <div class="lesson"><div class="lt">Transparencia</div><p>ChatGPT sí puede dar fondo transparente. Gemini casi nunca: pídele un fondo liso del mismo color que el fondo de tu marca y recórtalo después si hace falta.</p></div>
+  <div class="lesson"><div class="lt">Al terminar, regresa a Claude</div><p>Súbele las imágenes (paso 6 del Prompt 1). Las revisa, descarta las que rompen tu manual y las acomoda en su grupo dentro del template.</p></div>
+
+  <h2>Prompt 3 · Diseñar una pieza con tu template</h2>
+  <p>El que vas a usar todos los días. Pégalo en <strong>Claude Design</strong> con tu template conectado y cambia lo que está entre corchetes.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude Design · con tu template</span></div>
+    <button class="copybtn" data-target="p3">Copiar</button>
+<pre id="p3">Con el template de [MI MARCA], diseña [un post 4:5 / una historia 9:16 / un carrusel de 3 slides / un flyer 1:1] sobre: [TEMA].
+
+Antes de diseñar, propón 3 direcciones. Cada una debe salir de un layout de mi manual, con el texto de cada parte. Recomienda una y espera a que elija.
+
+Cuando elija, diseña y, antes de entregarme, revisa esto y dime qué corregiste:
+1. ¿Hay un solo foco? (lo principal debe ser al menos el doble de grande que lo demás)
+2. ¿Un solo fondo, sin bandas de otro tono?
+3. ¿Las imágenes se ven a la misma escala y son máximo dos?
+4. ¿Todo está dentro de los márgenes?
+5. ¿Ningún texto mide menos de 34 px y todos pasan el contraste?
+6. ¿No hay palabras solas al final de una línea?
+7. Si tapo el logo, ¿se reconoce mi marca? ¿Hay al menos 3 códigos?
+8. ¿Se ve como algo que haría cualquiera con IA? Si sí, corrígelo.
+Si algo de esto falla y lo corriges, agrégalo a "Reglas aprendidas" de mi manual.</pre>
+  </div>
+
+  <h2>Tu marca no lleva hilo</h2>
+  <p>Lumiku usa hilo, fieltro y lino porque su marca habla de tejer vínculos. Los objetos de tu marca salen de lo que <strong>tú</strong> haces y crees. Por ejemplo:</p>
+  <table class="cuadro">
+    <thead><tr><th>Marca</th><th>Su idea</th><th>Sus objetos podrían ser</th></tr></thead>
+    <tbody>
+      <tr><td>Cafetería</td><td>"Cada taza tiene un origen"</td><td>Granos, vapor, taza de barro, costal de yute</td></tr>
+      <tr><td>Abogados</td><td>"Tu tranquilidad, por escrito"</td><td>Papel grueso, sello de lacre, pluma fuente</td></tr>
+      <tr><td>Gimnasio</td><td>"Cada repetición cuenta"</td><td>Gis, cinta de tela, pesas de hierro</td></tr>
+      <tr><td>Florería</td><td>"Lo que no sabes decir"</td><td>Tallos, papel kraft, listón, una tarjeta escrita a mano</td></tr>
+    </tbody>
+  </table>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../../clase.html?id=tu-marca-en-claude-design-4">Tu marca en Claude Design</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const txt=document.getElementById(btn.dataset.target).textContent;
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1800);
+  });
+});
+</script>
+</body>
+</html>

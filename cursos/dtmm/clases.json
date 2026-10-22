@@ -382,6 +382,29 @@
               "url": "herramientas-ia/recursos/documento-de-voz.html"
             }
           ]
+        },
+        {
+          "id": "tu-marca-en-claude-design-4",
+          "parte": "Clase 4",
+          "titulo": "Tu marca en Claude Design",
+          "resumen": "Le enseñas a Claude cómo se ve y cómo habla tu marca, y después diseña tus posts con tu cara.",
+          "deck": "herramientas-ia/tu-marca-en-claude-design-4.html",
+          "temas": [
+            "Por qué un template no es tu logo: las cinco capas de una marca.",
+            "Caso Lumiku: de un logo y una web a un template que diseña.",
+            "Cada marca tiene sus propios objetos, nunca se copian.",
+            "El método: cuatro etapas y tres prompts.",
+            "Lo que hay que revisar antes de publicar una pieza."
+          ],
+          "recursos": [
+            {
+              "tipo": "prompt",
+              "icono": "⌘",
+              "titulo": "Los 3 prompts · tu marca en Claude Design",
+              "descripcion": "El director de arte, la fábrica de recursos y el diseño de piezas, con lo que aprendimos con Lumiku. Se guarda como PDF.",
+              "url": "herramientas-ia/recursos/tu-marca-en-claude-design.html"
+            }
+          ]
         }
       ]
     },
