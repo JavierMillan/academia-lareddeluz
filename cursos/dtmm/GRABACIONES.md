@@ -39,6 +39,7 @@ https://drive.google.com/drive/folders/1jHrdDtJNGLSnbH84cmjmCWH62hbDN0kk
 | 9 | Ventas - Conseguir Prospectos | 31 jul | Ventas · Clase 2 | `creatividad-prospectos-2` |
 | 10 | Clase IA - Practico | 6 ago | Clases abiertas | `clase-ia-practico` |
 | 11 | Creacion de Videos con IA - 1 | 12 ago | Herramientas de IA · Clase 1 | `video-con-codigo-1` |
+| 12 | Clase IA - Diseño Claude (editado) | 21 oct | Herramientas de IA · Clase 4 | `tu-marca-en-claude-design-4` |
 
 ## Clases sin grabación
 

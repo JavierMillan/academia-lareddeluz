@@ -389,6 +389,13 @@
           "titulo": "Tu marca en Claude Design",
           "resumen": "Le enseñas a Claude cómo se ve y cómo habla tu marca, y después diseña tus posts con tu cara.",
           "deck": "herramientas-ia/tu-marca-en-claude-design-4.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-10-21",
+              "url": "https://www.youtube.com/watch?v=4Jpfxj2OVdc"
+            }
+          ],
           "temas": [
             "Por qué un template no es tu logo: las cinco capas de una marca.",
             "Caso Lumiku: de un logo y una web a un template que diseña.",
