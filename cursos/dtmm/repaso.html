@@ -43,34 +43,63 @@ body{display:flex;flex-direction:column;background:var(--char)}
   border-color:var(--sesame);color:var(--sesame)}
 .gens button:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
 
-/* recursos de la clase, a un clic sin salir del repaso */
-.recursos{position:relative;flex-shrink:0}
-.recursos[hidden]{display:none}
-.recursos-btn{font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.12em;
-  text-transform:uppercase;background:rgba(232,161,60,.12);border:1px solid var(--sesame);
-  color:var(--sesame);border-radius:999px;padding:.42rem .9rem;cursor:pointer;white-space:nowrap;
-  transition:.25s var(--ease);touch-action:manipulation}
-.recursos-btn:hover,.recursos-btn[aria-expanded="true"]{background:var(--sesame);color:#1a1103}
-.recursos-btn:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
-.recursos-panel{position:absolute;right:0;top:calc(100% + .6rem);z-index:20;
-  width:min(380px, calc(100vw - 2rem));display:flex;flex-direction:column;gap:.4rem;
-  padding:.6rem;background:var(--char-soft);border:1px solid var(--line-d2);border-radius:14px;
-  box-shadow:0 18px 50px rgba(0,0,0,.5)}
-.recursos-panel[hidden]{display:none}
-.recursos-panel a{display:flex;gap:.8rem;align-items:flex-start;text-decoration:none;
-  color:var(--on-char);padding:.75rem .8rem;border-radius:10px;border:1px solid transparent;
-  transition:.2s var(--ease)}
-.recursos-panel a:hover{border-color:var(--line-d2);background:rgba(232,161,60,.06)}
-.recursos-panel a:focus-visible{outline:2px solid var(--sesame);outline-offset:-2px}
-.recursos-panel .ico{color:var(--sesame);font-size:1rem;line-height:1.3;width:1.2rem;flex-shrink:0;text-align:center}
-.recursos-panel .t{display:block;font-family:'Unbounded',sans-serif;font-weight:500;
-  font-size:.78rem;line-height:1.35}
-.recursos-panel .d{display:block;margin-top:.25rem;font-size:.78rem;line-height:1.45;
-  color:var(--on-char-soft)}
+/* dos paneles; el ancho de cada uno lo mueve el divisor (--izq / --der) */
+.panes{flex:1;display:grid;min-height:0;background:var(--char);
+  grid-template-columns:minmax(0,var(--izq,1fr)) 9px minmax(0,var(--der,1fr))}
 
-/* dos paneles */
-.panes{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;
-  background:var(--line-d);min-height:0}
+/* divisor arrastrable entre video y presentación */
+.divisor{position:relative;cursor:col-resize;touch-action:none;background:var(--char)}
+.divisor::before{content:"";position:absolute;inset:0 4px;background:var(--line-d);
+  transition:background .2s var(--ease)}
+.divisor::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:44px;
+  transform:translateY(-50%);border-radius:999px;background:var(--line-d2);
+  transition:background .2s var(--ease)}
+.divisor:hover::before,.divisor:focus-visible::before,.arrastrando .divisor::before{background:var(--sesame)}
+.divisor:hover::after,.divisor:focus-visible::after,.arrastrando .divisor::after{background:var(--sesame)}
+.divisor:focus-visible{outline:none}
+/* mientras se arrastra, los iframes no se quedan con el puntero */
+.arrastrando{cursor:col-resize;user-select:none}
+.arrastrando iframe{pointer-events:none}
+
+/* pestañas del panel derecho: Presentación / Recursos */
+.vistas{display:flex;gap:.25rem}
+.vistas button{font:inherit;letter-spacing:inherit;text-transform:inherit;
+  background:transparent;border:0;border-bottom:2px solid transparent;color:var(--on-char-mute);
+  padding:.15rem .1rem;margin-right:.7rem;cursor:pointer;transition:.2s var(--ease)}
+.vistas button:hover{color:var(--on-char-soft)}
+.vistas button[aria-selected="true"]{color:var(--sesame);border-bottom-color:var(--sesame)}
+.vistas button:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
+.vista{position:absolute;inset:0}
+.vista[hidden]{display:none}
+.vista > iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* lista de recursos dentro del panel */
+.lista-recursos{position:absolute;inset:0;overflow:auto;
+  padding:clamp(1.2rem,3vw,2.4rem);display:flex;flex-direction:column;gap:.6rem}
+.lista-recursos[hidden]{display:none}
+.lista-recursos .item{display:flex;gap:.9rem;align-items:flex-start;text-decoration:none;
+  color:var(--on-char);padding:1rem 1.1rem;border-radius:12px;border:1px solid var(--line-d2);
+  background:var(--char-soft);transition:.2s var(--ease);max-width:640px}
+.lista-recursos .item:hover{border-color:var(--sesame)}
+.lista-recursos .item:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+.lista-recursos .ico{color:var(--sesame);font-size:1.05rem;line-height:1.3;width:1.3rem;
+  flex-shrink:0;text-align:center}
+.lista-recursos .t{display:block;font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:.82rem;line-height:1.35}
+.lista-recursos .d{display:block;margin-top:.3rem;font-size:.82rem;line-height:1.5;
+  color:var(--on-char-soft)}
+.lista-recursos .go{margin-left:auto;padding-left:.6rem;flex-shrink:0;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.1em;color:var(--sesame);white-space:nowrap}
+/* un recurso abierto dentro del panel */
+.recurso-abierto{position:absolute;inset:0;display:flex;flex-direction:column}
+.recurso-abierto[hidden]{display:none}
+.recurso-abierto .volver-lista{flex-shrink:0;align-self:flex-start;margin:.6rem clamp(.7rem,2vw,1.1rem);
+  font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.4rem .75rem;cursor:pointer;transition:.2s var(--ease)}
+.recurso-abierto .volver-lista:hover{border-color:var(--sesame);color:var(--sesame)}
+.recurso-abierto .volver-lista:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+.recurso-abierto iframe{flex:1;width:100%;border:0;border-top:1px solid var(--line-d)}
 .pane{background:var(--char);min-width:0;min-height:0;display:flex;flex-direction:column}
 .pane .cab{font-family:'Martian Mono',monospace;font-size:.58rem;letter-spacing:.2em;
   text-transform:uppercase;color:var(--on-char-mute);
@@ -100,7 +129,7 @@ body{display:flex;flex-direction:column;background:var(--char)}
 
 /* clase sin presentación: el video ocupa toda la pantalla */
 .panes.solo-video{grid-template-columns:1fr}
-.panes.solo-video .pane:last-child{display:none}
+.panes.solo-video .pane:last-child,.panes.solo-video .divisor{display:none}
 .panes.solo-video .pane.video .cuerpo{flex:1}
 
 /* ---- vertical: el video arriba, la presentación abajo ---- */
@@ -111,10 +140,9 @@ body{display:flex;flex-direction:column;background:var(--char)}
   /* .cuerpo es flex:1 en el layout base; aquí se fija a la altura del 16:9 */
   .pane.video .cuerpo{flex:0 0 min(38vh, 56.25vw);position:relative}
   .video-marco{position:absolute;inset:0}
+  /* apilados no hay nada que arrastrar */
+  .divisor{display:none}
   .repaso-bar{flex-wrap:wrap}
-  /* el panel se ancla a la barra completa, no al botón */
-  .recursos{position:static;margin-left:auto}
-  .recursos-panel{left:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);width:auto;top:calc(100% + .4rem)}
   .repaso-bar .titulo{order:3;width:100%;white-space:normal;flex-basis:100%;
     font-size:.8rem;line-height:1.3}
 }
@@ -126,22 +154,31 @@ body{display:flex;flex-direction:column;background:var(--char)}
   <a class="volver" id="volver" href="index.html">‹ Clase</a>
   <div class="titulo" id="titulo">Cargando…</div>
   <div class="gens" id="gens"></div>
-  <div class="recursos" id="recursos" hidden>
-    <button type="button" class="recursos-btn" id="recursosBtn"
-      aria-expanded="false" aria-controls="recursosPanel">Recursos</button>
-    <div class="recursos-panel" id="recursosPanel" hidden></div>
-  </div>
 </div>
 
-<div class="panes">
+<div class="panes" id="panes">
   <section class="pane video">
     <div class="cab"><span id="cabVideo">Grabación</span></div>
     <div class="cuerpo" id="paneVideo"></div>
   </section>
+  <div class="divisor" id="divisor" role="separator" tabindex="0"
+    aria-orientation="vertical" aria-label="Ancho del video y la presentación"
+    aria-valuemin="25" aria-valuemax="75" aria-valuenow="50"
+    title="Arrastra para cambiar el tamaño · doble clic para centrar"></div>
   <section class="pane">
-    <div class="cab"><span>Presentación</span>
+    <div class="cab">
+      <div class="vistas" id="vistas" role="tablist"><span>Presentación</span></div>
       <a id="abrirDeck" href="#" target="_blank" rel="noopener">Abrir sola ↗</a></div>
-    <div class="cuerpo" id="paneDeck"></div>
+    <div class="cuerpo">
+      <div class="vista" id="paneDeck" role="tabpanel"></div>
+      <div class="vista" id="paneRecursos" role="tabpanel" hidden>
+        <div class="lista-recursos" id="listaRecursos"></div>
+        <div class="recurso-abierto" id="recursoAbierto" hidden>
+          <button type="button" class="volver-lista" id="volverLista">‹ Recursos</button>
+          <iframe id="recursoFrame" title="Recurso de la clase"></iframe>
+        </div>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -173,37 +210,72 @@ body{display:flex;flex-direction:column;background:var(--char)}
       document.getElementById('titulo').textContent = clase.titulo;
       document.getElementById('volver').href = 'clase.html?id='+encodeURIComponent(clase.id);
 
-      // los recursos se abren en otra pestaña para no cortar el video
-      if(clase.recursos && clase.recursos.length){
-        const caja  = document.getElementById('recursos');
-        const btn   = document.getElementById('recursosBtn');
-        const panel = document.getElementById('recursosPanel');
-        btn.textContent = 'Recursos · '+clase.recursos.length;
-        panel.innerHTML = clase.recursos.map(r=>
-          '<a href="'+esc(r.url)+'" target="_blank" rel="noopener">'+
-            '<span class="ico" aria-hidden="true">'+esc(r.icono||'⌘')+'</span>'+
-            '<span><span class="t">'+esc(r.titulo)+'</span>'+
-            '<span class="d">'+esc(r.descripcion||'')+'</span></span></a>').join('');
-        caja.hidden = false;
-        function abrir(si){
-          panel.hidden = !si;
-          btn.setAttribute('aria-expanded', si?'true':'false');
-        }
-        btn.onclick = ()=>abrir(panel.hidden);
-        document.addEventListener('click', e=>{ if(!caja.contains(e.target)) abrir(false); });
-        document.addEventListener('keydown', e=>{
-          if(e.key==='Escape' && !panel.hidden){ abrir(false); btn.focus(); }
-        });
-      }
-
-      // la presentación, en su panel. Si la clase no tiene deck (p.ej. una
+      // el panel derecho alterna entre la presentación y los recursos, sin
+      // tocar el video. Si la clase no tiene ninguno de los dos (p.ej. una
       // sesión abierta que solo se grabó), el video se queda con toda la pantalla.
+      const recursos = clase.recursos || [];
+      const abrirSola = document.getElementById('abrirDeck');
+      const vistas = [];
+      let recursoUrl = '';   // el recurso abierto en el panel, si hay uno
       if(clase.deck){
         document.getElementById('paneDeck').innerHTML =
           '<iframe src="'+esc(clase.deck)+'" title="Presentación de la clase"></iframe>';
-        document.getElementById('abrirDeck').href = clase.deck;
+        vistas.push({id:'deck', nombre:'Presentación', panel:'paneDeck'});
+      }
+      if(recursos.length){
+        // las páginas se abren dentro del panel; lo demás (un .zip) se descarga
+        const enPanel = r => /\.html?($|[?#])/i.test(r.url||'');
+        const lista   = document.getElementById('listaRecursos');
+        const abierto = document.getElementById('recursoAbierto');
+        const frame   = document.getElementById('recursoFrame');
+        lista.innerHTML = recursos.map((r,i)=>
+          '<a class="item" href="'+esc(r.url)+'" data-i="'+i+'"'+
+            (enPanel(r) ? '' : ' download')+'>'+
+            '<span class="ico" aria-hidden="true">'+esc(r.icono||'⌘')+'</span>'+
+            '<span><span class="t">'+esc(r.titulo)+'</span>'+
+            '<span class="d">'+esc(r.descripcion||'')+'</span></span>'+
+            '<span class="go">'+(enPanel(r) ? 'Ver →' : 'Descargar ↓')+'</span></a>').join('');
+        lista.addEventListener('click', e=>{
+          const a = e.target.closest('a[data-i]');
+          if(!a) return;
+          const r = recursos[+a.dataset.i];
+          if(!enPanel(r)) return;
+          e.preventDefault();
+          frame.src = r.url;
+          frame.title = r.titulo;
+          lista.hidden = true; abierto.hidden = false;
+          recursoUrl = r.url;
+          abrirSola.href = r.url; abrirSola.hidden = false;
+        });
+        document.getElementById('volverLista').onclick = ()=>{
+          abierto.hidden = true; lista.hidden = false;
+          recursoUrl = '';
+          abrirSola.hidden = true;
+        };
+        vistas.push({id:'recursos', nombre:'Recursos · '+recursos.length, panel:'paneRecursos'});
+      }
+
+      if(!vistas.length){
+        document.getElementById('panes').classList.add('solo-video');
       }else{
-        document.querySelector('.panes').classList.add('solo-video');
+        const tabs = document.getElementById('vistas');
+        tabs.innerHTML = vistas.length > 1
+          ? vistas.map(v=>'<button type="button" role="tab" aria-selected="false" '+
+              'aria-controls="'+v.panel+'">'+esc(v.nombre)+'</button>').join('')
+          : '<span>'+esc(vistas[0].nombre)+'</span>';
+        function verVista(n){
+          vistas.forEach((v,i)=>{
+            document.getElementById(v.panel).hidden = i!==n;
+            if(tabs.children[i] && vistas.length>1)
+              tabs.children[i].setAttribute('aria-selected', i===n?'true':'false');
+          });
+          const v = vistas[n];
+          const url = v.id==='deck' ? clase.deck : recursoUrl;
+          abrirSola.hidden = !url;
+          if(url) abrirSola.href = url;
+        }
+        if(vistas.length > 1) [...tabs.children].forEach((b,i)=>b.onclick=()=>verVista(i));
+        verVista(0);
       }
 
       // grabaciones: formato nuevo o el viejo de una sola URL
@@ -251,6 +323,50 @@ body{display:flex;flex-direction:column;background:var(--char)}
         '<div class="vacio">No se pudo cargar la clase.</div>';
       console.error('[repaso]',e);
     });
+})();
+
+// divisor: arrastra para repartir el ancho entre video y presentación
+(function(){
+  'use strict';
+  const panes = document.getElementById('panes');
+  const div   = document.getElementById('divisor');
+  const MIN = 25, MAX = 75, CLAVE = 'repaso-division';
+
+  function poner(p){
+    p = Math.round(Math.max(MIN, Math.min(MAX, p)));
+    panes.style.setProperty('--izq', p+'fr');
+    panes.style.setProperty('--der', (100-p)+'fr');
+    div.setAttribute('aria-valuenow', p);
+    return p;
+  }
+  let actual = 50;
+  try{ actual = parseFloat(localStorage.getItem(CLAVE)) || 50; }catch(e){}
+  actual = poner(actual);
+  function guardar(){ try{ localStorage.setItem(CLAVE, actual); }catch(e){} }
+
+  div.addEventListener('pointerdown', e=>{
+    e.preventDefault();
+    div.setPointerCapture(e.pointerId);
+    panes.classList.add('arrastrando');
+    const caja = panes.getBoundingClientRect();
+    const mover = ev => { actual = poner((ev.clientX - caja.left) / caja.width * 100); };
+    const soltar = () => {
+      panes.classList.remove('arrastrando');
+      div.removeEventListener('pointermove', mover);
+      div.removeEventListener('pointerup', soltar);
+      div.removeEventListener('pointercancel', soltar);
+      guardar();
+    };
+    div.addEventListener('pointermove', mover);
+    div.addEventListener('pointerup', soltar);
+    div.addEventListener('pointercancel', soltar);
+  });
+  div.addEventListener('dblclick', ()=>{ actual = poner(50); guardar(); });
+  div.addEventListener('keydown', e=>{
+    const paso = {ArrowLeft:-5, ArrowRight:5}[e.key];
+    if(paso){ e.preventDefault(); actual = poner(actual+paso); guardar(); }
+    else if(e.key==='Home'){ e.preventDefault(); actual = poner(50); guardar(); }
+  });
 })();
 </script>
 </body>
