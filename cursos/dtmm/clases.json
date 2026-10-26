@@ -419,6 +419,28 @@
               "url": "herramientas-ia/recursos/prism.zip"
             }
           ]
+        },
+        {
+          "id": "tu-video-empieza-en-el-guion-5",
+          "parte": "Clase 5",
+          "titulo": "Tu video empieza en el guion",
+          "resumen": "Claude ya anima con tu marca. Aquí aprendes lo que no puede adivinar: qué contar y por qué cada escena lleva a la siguiente.",
+          "deck": "herramientas-ia/tu-video-empieza-en-el-guion-5.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-10-28",
+              "url": ""
+            }
+          ],
+          "temas": [
+            "Por qué la primera versión de un video parece PowerPoint.",
+            "La regla de South Park: nunca \"y luego\", siempre \"pero\" o \"por eso\".",
+            "Cada transición necesita un porqué: la misma regla, en movimiento.",
+            "El esqueleto de un video corto en cinco pasos.",
+            "Escribir tomas, no escenas: las 4 preguntas para pedirle a Claude.",
+            "Revisar con tres preguntas y corregir con una fórmula."
+          ]
         }
       ]
     },

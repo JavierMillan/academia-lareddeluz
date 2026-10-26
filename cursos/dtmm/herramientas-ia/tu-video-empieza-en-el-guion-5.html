@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Tu video empieza en el guion — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/motor/deck.css">
+<link rel="stylesheet" href="../assets/motor/temas/dtmm.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (si alguno se repite en otros decks, súbelo a deck.css)
+   ============================================================ */
+
+/* --- video cuadrado con sombra --- */
+.clip{display:block;width:auto;height:min(58vh,30rem);max-width:100%;aspect-ratio:1/1;border-radius:12px;background:#000;
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.18)}
+.con-clip{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(1.4rem,4vw,3rem);align-items:center;width:100%}
+.con-clip .h1{font-size:clamp(1.8rem,3.4vw,3.2rem);overflow-wrap:break-word}
+@media(max-width:820px){.con-clip{grid-template-columns:1fr}.clip{height:auto;width:100%}}
+
+/* --- conector grande: pero / por eso --- */
+.conector{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sesame);
+  display:inline-flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.conector::before{content:"";width:1.6rem;height:2px;background:currentColor}
+.slide.paper .conector{color:var(--ketchup)}
+
+/* --- la regla: y luego vs pero / por eso --- */
+.regla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2.4vw,2rem);width:100%}
+@media(max-width:820px){.regla{grid-template-columns:1fr}}
+.regla .lado{border-radius:16px;padding:clamp(1.2rem,2.4vw,1.8rem);display:flex;flex-direction:column;gap:.8rem;
+  background:var(--paper-soft);border:1px solid var(--line-l)}
+.regla .lado.si{background:rgba(200,68,46,.07);border-color:var(--ketchup)}
+.regla .pal{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1;color:var(--on-paper-mute)}
+.regla .si .pal{color:var(--ketchup)}
+.regla .pal s{text-decoration-thickness:3px}
+.regla p{font-family:var(--font-serif);font-size:clamp(1rem,1.6vw,1.3rem);line-height:1.4;color:var(--on-paper-soft)}
+.regla .si p{color:var(--on-paper)}
+.regla p b{font-family:var(--font-body);font-weight:600;color:var(--ketchup);font-style:normal}
+
+/* --- cadena de escenas: X → Y → Z --- */
+.cadena{display:flex;align-items:center;gap:clamp(.4rem,1.2vw,.9rem);width:100%;flex-wrap:wrap}
+.cadena .esc{border:1px solid var(--line-d2);border-radius:14px;padding:clamp(.8rem,1.6vw,1.1rem) clamp(1rem,2vw,1.4rem);
+  font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,1.7vw,1.3rem);background:rgba(243,234,215,.04)}
+.cadena .esc.luz{border-color:var(--sesame);background:rgba(232,161,60,.1)}
+.cadena .por{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sesame);
+  display:flex;flex-direction:column;align-items:center;gap:.2rem;text-align:center}
+.cadena .por::after{content:"→";font-size:1.2rem;letter-spacing:0}
+.cadena.mal .esc{opacity:.55}
+.cadena.mal .por{color:var(--on-char-mute)}
+.fila-cad{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1rem;align-items:center;width:100%;
+  padding:clamp(.9rem,1.8vw,1.3rem) 0;border-bottom:1px solid var(--line-d)}
+.fila-cad .k{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+@media(max-width:700px){.fila-cad{grid-template-columns:1fr}}
+
+/* --- guion de ejemplo: una línea por escena, con su conector --- */
+.guion{width:100%;max-width:56rem;display:flex;flex-direction:column}
+.guion .ln{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:1.2rem;align-items:baseline;
+  padding:.85rem 0;border-bottom:1px solid var(--line-l)}
+.guion .k{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-paper-mute)}
+.guion .k.c{color:var(--ketchup);font-weight:600}
+.guion .t{font-family:var(--font-serif);font-size:clamp(1.02rem,1.7vw,1.35rem);line-height:1.35;color:var(--on-paper)}
+@media(max-width:600px){.guion .ln{grid-template-columns:1fr;gap:.3rem}}
+
+/* --- las 4 preguntas por toma --- */
+.toma{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.7rem,1.5vw,1.1rem);width:100%}
+@media(max-width:900px){.toma{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.toma{grid-template-columns:1fr}}
+.toma div{border:1px solid var(--line-d2);border-radius:14px;padding:clamp(1rem,2vw,1.3rem);display:flex;flex-direction:column;gap:.45rem}
+.toma .n{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.18em;color:var(--sesame)}
+.toma .t{font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,1.6vw,1.22rem);line-height:1.2}
+.toma .d{color:var(--on-char-soft);font-size:clamp(.86rem,1.15vw,.98rem);line-height:1.45}
+.toma .luz{border-color:var(--sesame);background:rgba(232,161,60,.08)}
+
+/* --- revisión y corrección --- */
+.revisa{width:100%;max-width:60rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.7rem,1.5vw,1.1rem)}
+@media(max-width:820px){.revisa{grid-template-columns:1fr}}
+.revisa div{background:var(--paper-soft);border:1px solid var(--line-l);border-radius:14px;padding:clamp(1rem,2vw,1.3rem)}
+.revisa .n{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ketchup)}
+.revisa .t{display:block;margin-top:.4rem;font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-paper)}
+.corrige{margin-top:clamp(1.2rem,2.6vw,1.8rem);max-width:60rem;padding:clamp(1rem,2vw,1.3rem) clamp(1.1rem,2.2vw,1.5rem);
+  border-left:3px solid var(--ketchup)}
+.corrige .k{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-paper-mute)}
+.corrige p{font-family:var(--font-serif);font-size:clamp(1.02rem,1.7vw,1.32rem);margin-top:.4rem;line-height:1.4;color:var(--on-paper)}
+.corrige p b{font-family:var(--font-body);font-weight:600;font-style:normal;color:var(--ketchup)}
+</style>
+</head>
+<body data-volver="../clase.html?id=tu-video-empieza-en-el-guion-5" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Bienvenida. La promesa: Claude ya anima con tu marca; hoy aprenden lo que Claude no puede adivinar, que es la historia. Aviso: la clase misma está construida con la regla que van a aprender. No lo revelo hasta el final.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Herramientas de IA · Clase 5</div>
+      <h1 class="mega">Tu video empieza <span class="hl">en el guion.</span></h1>
+      <p class="lead wide mt-m">Claude ya puede animar con tu marca. Lo que no puede adivinar es qué contar, en qué orden y por qué cada escena lleva a la siguiente.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · GANCHO: LA V3 -->
+    <section class="slide" data-notes="Poner el video con sonido. Es el cierre de la clase pasada, hecho 100% con Claude y código. No explicar nada todavía: solo que lo vean.">
+      <div class="glow bl"></div>
+      <div class="con-clip">
+        <div>
+          <div class="eyebrow">Esto lo hizo Claude</div>
+          <h2 class="h1">Un video con mi marca, <span class="hl">sin abrir un editor.</span></h2>
+          <p class="lead mt-m">El cierre de la clase pasada. Cámara, capas, luz y texto: todo pedido en una conversación.</p>
+        </div>
+        <video class="clip" src="recursos/video/cierre-v3.mp4" poster="recursos/video/cierre-v3.jpg" controls playsinline preload="none"></video>
+      </div>
+    </section>
+
+    <!-- 3 · PERO: LA V1 -->
+    <section class="slide" data-notes="La versión 1 del mismo video. Lo que le dije a Claude cuando la vi: 'parece diapositivas de PowerPoint animadas'. Cosas que entran y salen en su lugar, encimadas, sin ritmo. Misma herramienta, misma marca.">
+      <div class="glow tr"></div>
+      <div class="con-clip">
+        <div>
+          <span class="conector">Pero…</span>
+          <h2 class="h1">La primera versión <span class="hl">parecía PowerPoint.</span></h2>
+          <p class="lead mt-m">Misma herramienta. Misma marca. Cosas que entraban y salían en su lugar, sin ningún porqué.</p>
+        </div>
+        <video class="clip" src="recursos/video/cierre-v1.mp4" poster="recursos/video/cierre-v1.jpg" controls muted playsinline preload="none"></video>
+      </div>
+    </section>
+
+    <!-- 4 · POR ESO: QUÉ CAMBIÓ -->
+    <section class="slide paper" data-notes="La diferencia no fue técnica. En la primera le pedí un resultado ('animaciones chingonas'). En la segunda le conté una historia: un personaje, un espacio y un porqué para cada cambio.">
+      <span class="conector">Por eso…</span>
+      <h2 class="h1">No cambió la herramienta. <span class="hl">Cambió lo que pedí.</span></h2>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <div class="label">Lo que pedí primero</div>
+          <div class="txt">"Un video de cierre de clase con animaciones chingonas."</div>
+        </div>
+        <div class="pub b">
+          <div class="label">Lo que pedí después</div>
+          <div class="txt">Una luz que recorre un solo espacio. Cada escena nace de la anterior. El texto aparece cuando la luz lo toca.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · PERO: DEL TORO -->
+    <section class="slide" data-notes="Guillermo del Toro, en una conferencia (Javi lo vio en el ITESO): escribir el guion es de lo más pesado de hacer una película. Él no escribe escenas, escribe tomas: desde cómo lo escribe ya se sabe cómo se mueve la cámara y qué tiene que sentir quien lo ve. Si a él le cuesta, a nosotros también. Y está bien.">
+      <div class="glow br"></div>
+      <span class="conector">Pero…</span>
+      <h2 class="h1">Pedir bien es contar una historia. <span class="hl">Y eso es lo más difícil.</span></h2>
+      <p class="quote mt-l" style="max-width:34ch">Para Guillermo del Toro, escribir el guion es de lo más pesado de hacer una película. <span class="hl">Él no escribe escenas: escribe tomas.</span></p>
+    </section>
+
+    <!-- 6 · POR ESO: LA REGLA DE SOUTH PARK -->
+    <section class="slide paper" data-notes="Si escribir es tan difícil, aprendamos de quienes escriben rápido y bien. Trey Parker y Matt Stone hacen cada capítulo de South Park en una semana, y su regla cabe en cuatro palabras: pero y por eso. Si tus escenas se unen con 'y luego', solo pasan cosas. Si se unen con 'pero' (un problema) o 'por eso' (una consecuencia), hay historia. La prueba: lee tu guion en voz alta y di la palabra que une cada escena con la siguiente.">
+      <span class="conector">Por eso aprendemos de South Park…</span>
+      <h2 class="h1">Nunca "y luego". <span class="hl">Siempre "pero" o "por eso".</span></h2>
+      <p class="lead wide mt-m">Trey Parker y Matt Stone sacan un capítulo cada semana. Su regla para escribir cabe en cuatro palabras.</p>
+      <div class="regla mt-l">
+        <div class="lado">
+          <span class="pal"><s>y luego</s></span>
+          <p>Abrí Canva, <b>y luego</b> hice el post, <b>y luego</b> lo publiqué.</p>
+        </div>
+        <div class="lado si">
+          <span class="pal">pero · por eso</span>
+          <p>Abrí Canva, <b>pero</b> me tardé tres horas en un post. <b>Por eso</b> le enseñé mi marca a Claude.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · PERO: ¿Y LA ANIMACIÓN? -->
+    <section class="slide center" data-notes="Pausa. Dejar la pregunta en el aire un momento. Alguien en el chat seguro ya lo intuye.">
+      <div class="glow bl"></div>
+      <span class="conector" style="justify-content:center">Pero…</span>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:22ch">¿Y esto qué tiene que ver <span class="hl">con animar?</span></p>
+    </section>
+
+    <!-- 8 · POR ESO: MISMA REGLA -->
+    <section class="slide" data-notes="Es la misma regla. Lo que yo reviso en un video, que no pase de X a Z de golpe, es 'por eso' en movimiento. Las cosas se transforman a partir de lo que ya estaba en pantalla. Si el guion no tiene porqué, la animación tampoco lo va a tener, por bonita que sea.">
+      <div class="glow tr"></div>
+      <span class="conector">Por eso…</span>
+      <h2 class="h1">Es la misma regla. <span class="hl">Cada transición necesita un porqué.</span></h2>
+      <div class="mt-l" style="width:100%">
+        <div class="fila-cad">
+          <span class="k">Sin porqué</span>
+          <div class="cadena mal"><span class="esc">Logo</span><span class="por">corte</span><span class="esc">Lista de datos</span><span class="por">corte</span><span class="esc">Precio</span></div>
+        </div>
+        <div class="fila-cad">
+          <span class="k">Con porqué</span>
+          <div class="cadena"><span class="esc">Una chispa</span><span class="por">crece y</span><span class="esc">se vuelve tu logo</span><span class="por">se abre y</span><span class="esc luz">suelta tu mensaje</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · EL ESQUELETO -->
+    <section class="slide paper" data-notes="El esqueleto para videos cortos de 15 a 40 segundos. Ojo: es un esqueleto, no una jaula. Del Toro también lo dice: no hay una fórmula perfecta, la historia va encontrando su forma. Esto es para arrancar, no para encerrarse.">
+      <span class="conector">Pero un video corto dura 15 a 40 segundos. Por eso…</span>
+      <h2 class="h1">El esqueleto, <span class="hl">en cinco pasos.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t"><b>Gancho.</b> En los primeros 3 segundos, algo que te detiene.</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t"><b>Problema.</b> Lo que le duele a quien lo ve.</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t"><b>Pero…</b> El giro: aparece lo que lo cambia todo.</div></div>
+        <div class="gitem"><div class="box">4</div><div class="t"><b>Por eso…</b> Lo que pasa gracias a eso. Una o dos pruebas.</div></div>
+        <div class="gitem"><div class="box">5</div><div class="t"><b>Remate.</b> Una frase que se queda, y tu marca como firma.</div></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> Es un esqueleto, no una jaula</div>
+    </section>
+
+    <!-- 10 · EJEMPLO -->
+    <section class="slide paper" data-notes="El esqueleto lleno con una historia real, la mía. Leerlo en voz alta marcando los conectores. Cada 'pero' y cada 'por eso' es una transición del video.">
+      <span class="conector">Pero un esqueleto vacío no se entiende. Por eso, uno lleno…</span>
+      <h2 class="h1">Un guion de <span class="hl">20 segundos.</span></h2>
+      <div class="guion mt-l">
+        <div class="ln"><span class="k">Gancho</span><span class="t">"Antes tenía mi marca en Canva."</span></div>
+        <div class="ln"><span class="k">Problema</span><span class="t">Cada diseño me tomaba horas, y eso que soy diseñador.</span></div>
+        <div class="ln"><span class="k c">Pero…</span><span class="t">le enseñé mi marca a Claude.</span></div>
+        <div class="ln"><span class="k c">Por eso…</span><span class="t">ahora diseña conmigo en minutos, con mi cara.</span></div>
+        <div class="ln"><span class="k">Remate</span><span class="t">"Tu marca, en cualquier formato." Y el logo de DTMM.</span></div>
+      </div>
+    </section>
+
+    <!-- 11 · ESCRIBE TOMAS -->
+    <section class="slide" data-notes="Regreso a del Toro: él escribe tomas. Claude necesita lo mismo, porque no ve lo que tú imaginas. Por cada escena del guion, cuatro respuestas. La tercera es la que todos se brincan, y es la que hace que el video fluya.">
+      <div class="glow br"></div>
+      <span class="conector">Pero Claude no ve lo que imaginas. Por eso…</span>
+      <h2 class="h1">Escribe tomas, <span class="hl">como del Toro.</span></h2>
+      <div class="toma mt-l">
+        <div><span class="n">01</span><span class="t">¿Qué se dice?</span><span class="d">Una sola idea, en pocas palabras.</span></div>
+        <div><span class="n">02</span><span class="t">¿Qué se ve?</span><span class="d">Algo que muestre esa misma idea.</span></div>
+        <div class="luz"><span class="n">03</span><span class="t">¿Cómo llega?</span><span class="d">Qué de la escena anterior se transforma en esta.</span></div>
+        <div><span class="n">04</span><span class="t">¿Cuánto dura?</span><span class="d">Lo suficiente para leerlo dos veces.</span></div>
+      </div>
+    </section>
+
+    <!-- 12 · EN VIVO -->
+    <section class="slide paper" data-notes="Elegimos a 1 nodo que trajo su sistema de marca y una referencia. Armamos su guion en voz alta con el esqueleto, lo pasamos a tomas y se lo damos a Claude con su marca.">
+      <span class="conector">Pero esto se aprende haciéndolo. Por eso…</span>
+      <h2 class="h1">Hoy armamos un video <span class="hl">en vivo.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Elegimos a 1 nodo que trajo su marca y su referencia.</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Escribimos su guion con el esqueleto, en voz alta.</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Cada escena se vuelve una toma con sus 4 respuestas.</div></div>
+        <div class="gitem"><div class="box">4</div><div class="t">Se lo damos a Claude con su sistema de marca.</div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> Escriban en el chat su gancho de 3 segundos</div>
+    </section>
+
+    <!-- 13 · PERO: REVISAR -->
+    <section class="slide paper" data-notes="La primera versión casi nunca queda, ni a mí. Tres preguntas para revisar y una fórmula para corregir. 'No me gusta, mejóralo' no le dice nada a Claude; momento + problema + cambio, sí.">
+      <span class="conector">Pero la primera versión casi nunca queda. Por eso…</span>
+      <h2 class="h1">Revisa con tres preguntas, <span class="hl">corrige con una fórmula.</span></h2>
+      <div class="revisa mt-l">
+        <div><span class="n">Sin sonido</span><span class="t">¿Se entiende el mensaje?</span></div>
+        <div><span class="n">Pausando</span><span class="t">¿Hay cosas encimadas?</span></div>
+        <div><span class="n">De corrido</span><span class="t">¿Hay saltos sin porqué?</span></div>
+      </div>
+      <div class="corrige">
+        <span class="k">Momento + problema + cambio</span>
+        <p><b>En el segundo 4</b>, el texto se va antes de que lo alcance a leer. <b>Déjalo un segundo más quieto.</b></p>
+      </div>
+    </section>
+
+    <!-- 14 · REMATE -->
+    <section class="slide center" data-notes="El remate. Hacer memoria con ellos: el video de Claude, pero la v1; por eso cambió lo que pedí; pero escribir es difícil; por eso South Park… Toda la clase fue un guion.">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">¿Se dieron cuenta?</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">Esta clase está escrita <span class="hl">con pero y por eso.</span></p>
+    </section>
+
+    <!-- 15 · TAREA -->
+    <section class="slide paper" data-notes="La tarea para la siguiente clase. Que lo compartan en el grupo para verlo juntos.">
+      <span class="conector">Pero de nada sirve si se queda aquí. Por eso, de tarea…</span>
+      <h2 class="h1">Tu video de <span class="hl">15 segundos.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Escribe tu guion: gancho, problema, pero, por eso y remate.</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Pasa cada escena a toma, con sus 4 respuestas.</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Pídeselo a Claude con tu sistema de marca y tu referencia.</div></div>
+        <div class="gitem"><div class="box">4</div><div class="t">Revisa, corrige una vez y compártelo en el grupo.</div></div>
+      </div>
+    </section>
+
+    <!-- 16 · CIERRE -->
+    <section class="slide center" data-notes="Cierre de la clase.">
+      <div class="glow bl"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">Claude pone el movimiento. <span class="hl">Tú pones el porqué.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/motor/deck.js" defer></script>
+</body>
+</html>
