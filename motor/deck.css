@@ -418,3 +418,15 @@ body.notes-on .brandmark{--reserva-hint:0rem}
   .slide{transition-duration:.01ms}
   #bar,.navbtn,#notes{transition-duration:.01ms}
 }
+
+/* videos dentro de una slide: botón de pantalla completa siempre visible
+   (deck.js envuelve cada <video> en .media y agrega .media-fs) */
+.media{position:relative;width:fit-content;max-width:100%}
+.media video{display:block}
+.media-fs{position:absolute;top:.6rem;right:.6rem;width:44px;height:44px;border-radius:10px;
+  display:grid;place-items:center;cursor:pointer;color:var(--on-char);
+  background:rgba(15,12,9,.62);border:1px solid var(--line-d2);backdrop-filter:blur(8px);
+  opacity:.85;transition:.25s var(--ease)}
+.media:hover .media-fs,.media-fs:focus-visible{opacity:1;border-color:var(--sesame);color:var(--sesame)}
+.media-fs:focus-visible{outline:2px solid var(--sesame);outline-offset:2px}
+@media(max-width:820px){.media{width:100%}}

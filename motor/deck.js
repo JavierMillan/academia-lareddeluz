@@ -93,6 +93,8 @@
     if(cur) cur.textContent = String(i+1).padStart(2,'0');
     if(bar) bar.style.width = ((i+1)/tot*100)+'%';
     pintarNotas();
+    // un video que sigue sonando en otra slide distrae: se pausa al salir
+    slides.forEach((s,k)=>{ if(k!==i) s.querySelectorAll('video').forEach(v=>v.pause()) });
     // deja la slide en la URL para poder compartir o recargar sin perder el sitio
     // (falla en contextos sin origen propio, p.ej. dentro de un iframe srcdoc)
     try{ history.replaceState(null,'','#'+(i+1)); }catch(e){}
@@ -115,8 +117,35 @@
   if(notesBtn) notesBtn.onclick = ()=>toggleNotas();
   if(notesClose) notesClose.onclick = ()=>toggleNotas(false);
 
+  /* ---- videos: botón de pantalla completa siempre visible ----
+     El de los controles nativos se esconde en el menú (⋮) cuando el video
+     es angosto, y en iPhone solo existe webkitEnterFullscreen. */
+  function pantallaCompleta(v){
+    if(document.fullscreenElement===v) return document.exitFullscreen();
+    if(v.requestFullscreen) v.requestFullscreen().catch(()=>{});
+    else if(v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+  }
+  document.querySelectorAll('.slide video').forEach(v=>{
+    const caja = document.createElement('div');
+    caja.className = 'media';
+    v.parentNode.insertBefore(caja, v);
+    caja.appendChild(v);
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'media-fs';
+    b.setAttribute('aria-label','Ver el video en pantalla completa');
+    b.title = 'Pantalla completa (doble clic)';
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+    b.onclick = ()=>pantallaCompleta(v);
+    caja.appendChild(b);
+    v.addEventListener('dblclick', e=>{ e.preventDefault(); pantallaCompleta(v) });
+  });
+
   document.addEventListener('keydown', e=>{
     if(e.metaKey||e.ctrlKey||e.altKey) return;
+    // con un video enfocado, espacio y F son del video, no del deck
+    const v = e.target && e.target.closest && e.target.closest('.media') ? e.target.closest('.media').querySelector('video') : null;
+    if(v && e.key===' '){ e.preventDefault(); v.paused ? v.play() : v.pause(); return }
+    if(v && (e.key==='f'||e.key==='F')){ pantallaCompleta(v); return }
     if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ e.preventDefault(); go(1) }
     else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); go(-1) }
     else if(e.key==='Home'){ e.preventDefault(); show(0) }
@@ -137,6 +166,8 @@
     sx = e.touches[0].clientX; sy = e.touches[0].clientY;
   }, {passive:true});
   document.addEventListener('touchend', e=>{
+    // arrastrar la barra de un video no es cambiar de slide
+    if(e.target.closest && e.target.closest('.media')) return;
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
     if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(dx<0?1:-1);

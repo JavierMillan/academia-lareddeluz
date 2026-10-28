@@ -440,6 +440,15 @@
             "El esqueleto de un video corto en cinco pasos.",
             "Escribir tomas, no escenas: las 4 preguntas para pedirle a Claude.",
             "Revisar con tres preguntas y corregir con una fórmula."
+          ],
+          "recursos": [
+            {
+              "tipo": "prompt",
+              "icono": "⌘",
+              "titulo": "Plantilla de guion y prompt de editor",
+              "descripcion": "La plantilla para escribir tu video corto con pero y por eso, y el prompt que convierte a Claude en un editor con 30 años de oficio. Se guarda como PDF.",
+              "url": "herramientas-ia/recursos/tu-video-empieza-en-el-guion.html"
+            }
           ]
         }
       ]

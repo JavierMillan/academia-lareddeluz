@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>Plantilla de guion y prompt de editor · Tu video empieza en el guion — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3.2rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:46ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+strong,b{color:var(--on-char);font-weight:600}
+code{font-family:'Martian Mono',monospace;font-size:.86em;
+  background:rgba(243,234,215,.07);border:1px solid var(--line-d);
+  border-radius:5px;padding:.1em .42em;color:var(--sesame)}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+.promptbox{position:relative;margin-top:1.6rem;
+  background:#0f0c09;border:1px solid var(--line-d2);border-radius:14px;overflow:hidden}
+.promptbox .pb-head{display:flex;align-items:center;gap:.5rem;
+  padding:.6rem .9rem;border-bottom:1px solid var(--line-d);
+  background:rgba(243,234,215,.04)}
+.promptbox .pb-head i{width:9px;height:9px;border-radius:50%;background:var(--line-d2);display:block}
+.promptbox .pb-head .tt{margin-left:.4rem;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+.promptbox pre{padding:clamp(1rem,2.4vw,1.5rem);overflow-x:auto;
+  font-family:'Martian Mono',monospace;font-size:clamp(.72rem,1.15vw,.86rem);
+  line-height:1.7;color:var(--on-char-soft);white-space:pre-wrap;word-break:break-word}
+.copybtn{position:absolute;top:.5rem;right:.6rem;
+  background:rgba(232,161,60,.12);border:1px solid var(--sesame);color:var(--sesame);
+  border-radius:7px;padding:.3rem .7rem;cursor:pointer;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  transition:.25s var(--ease)}
+.copybtn:hover{background:rgba(232,161,60,.24)}
+.copybtn.done{background:rgba(124,154,62,.2);border-color:var(--lettuce);color:var(--lettuce)}
+
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--sesame);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar,.copybtn{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  p{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  code{background:#f2f2f2;border-color:#ddd;color:#8a3b18}
+  .promptbox{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .promptbox .pb-head{background:#f0f0f0;border-color:#ddd}
+  .promptbox .pb-head i{background:#ccc}
+  .promptbox .pb-head .tt{color:#666}
+  .promptbox pre{color:#222;font-size:8.5pt}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+.cuadro{width:100%;border-collapse:collapse;margin-top:1.2rem}
+.cuadro th,.cuadro td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line-d);font-size:.95rem;vertical-align:top}
+.cuadro th{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-char-mute);font-weight:500}
+.cuadro td{color:var(--on-char-soft)} .cuadro td:first-child{color:var(--on-char);font-weight:500}
+@media print{.cuadro th,.cuadro td{border-color:#ddd;color:#333}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=tu-video-empieza-en-el-guion-5">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Herramientas de IA · Clase 5 · Recurso</div>
+  <h1>Tu guion y<br><span class="hl">tu editor de video</span></h1>
+  <p class="sub">La plantilla para escribir la historia de un video corto y el prompt que convierte a Claude en un editor con más de 30 años de oficio. Úsalos en ese orden.</p>
+  <div class="rule"></div>
+
+  <h2>Antes de empezar</h2>
+  <div class="lesson"><div class="lt">Primero la historia, después el movimiento</div><p>Claude anima muy bien. Lo que no puede adivinar es qué contar y por qué cada escena lleva a la siguiente. Eso lo pones tú con la plantilla.</p></div>
+  <div class="lesson"><div class="lt">Ten a la mano tu sistema de marca</div><p>El que armaste en la clase 4. Si tu video usa tus colores, tus letras y tus objetos, no se ve genérico.</p></div>
+  <div class="lesson"><div class="lt">Tu referencia, en capturas</div><p>Claude no puede ver un video de YouTube desde el link. Toma 3 o 4 capturas de la referencia que te gusta y súbelas, o describe con tus palabras qué se mueve y cómo.</p></div>
+  <div class="lesson"><div class="lt">Es un esqueleto, no una jaula</div><p>No hay una estructura perfecta. Empieza con esta y deja que tu historia encuentre su forma.</p></div>
+
+  <h2>La regla de las cuatro palabras</h2>
+  <p>Los creadores de South Park sacan un capítulo cada semana con una sola regla: las escenas nunca se unen con <strong>"y luego"</strong>. Se unen con <strong>"pero"</strong> (aparece un problema o un giro) o con <strong>"por eso"</strong> (pasa algo como consecuencia).</p>
+  <p>En animación es la misma regla: cada transición necesita un porqué. Algo de la escena anterior se transforma en la siguiente; nada aparece de la nada.</p>
+  <table class="cuadro">
+    <thead><tr><th>Así no</th><th>Así sí</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:400;color:var(--on-char-mute)">Abrí Canva, <b>y luego</b> hice el post, <b>y luego</b> lo publiqué.</td><td style="color:var(--on-char)">Abrí Canva, <b>pero</b> me tardé tres horas en un post. <b>Por eso</b> le enseñé mi marca a Claude.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Plantilla · Tu guion de video corto</h2>
+  <p>Cópiala y llénala con tus palabras, en tu libreta o directo en Claude. Un video de 15 a 40 segundos cabe en estas cinco escenas.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Plantilla · llénala tú</span></div>
+    <button class="copybtn" data-target="p1">Copiar</button>
+<pre id="p1">MI GUION · VIDEO CORTO
+
+Marca: [tu marca]
+Para quién: [una persona concreta, no "todos"]
+Lo único que quiero que sienta: [una sola emoción]
+Formato: [1:1 para WhatsApp · 9:16 para reels e historias]
+Duración: [15 a 40 segundos]
+Referencia: [link + 3 o 4 capturas, o qué te gusta de ella]
+
+LA HISTORIA (lee en voz alta: si en algún punto dice "y luego", reescríbelo)
+
+1 · GANCHO (0 a 3 s) — algo que te detiene
+   [ ]
+
+2 · PROBLEMA — lo que le duele a quien lo ve
+   [ ]
+
+3 · PERO… — el giro, lo que lo cambia todo
+   [ ]
+
+4 · POR ESO… — lo que pasa gracias a eso (una o dos pruebas)
+   [ ]
+
+5 · REMATE — una frase que se queda + tu marca como firma
+   [ ]
+
+LAS TOMAS (una por escena, como Guillermo del Toro: escribe lo que se ve)
+
+Toma 1
+- ¿Qué se dice? (una sola idea, pocas palabras): [ ]
+- ¿Qué se ve? (algo que muestre esa misma idea): [ ]
+- ¿Cómo llega? (qué de la toma anterior se transforma en esta): [ ]
+- ¿Cuánto dura? (lo suficiente para leerlo dos veces): [ ] s
+
+Toma 2
+- ¿Qué se dice?: [ ]
+- ¿Qué se ve?: [ ]
+- ¿Cómo llega?: [ ]
+- ¿Cuánto dura?: [ ] s
+
+(repite para cada escena)</pre>
+  </div>
+
+  <h2>Prompt · Tu editor de video con 30 años de oficio</h2>
+  <p>Pégalo en <strong>Claude</strong>, en una conversación nueva. Si tu template de marca vive en un Proyecto o en Claude Design, ábrelo ahí. Pega tu guion (aunque sea a medias) y sube tus capturas de referencia. Claude te ayuda a terminar la historia, la convierte en tomas, la anima y la revisa como lo haría un editor veterano antes de entregártela.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude · conversación nueva</span></div>
+    <button class="copybtn" data-target="p2">Copiar</button>
+<pre id="p2">Actúa como un editor de video y director de motion graphics con más de 30 años de experiencia. Has editado comerciales, títulos de cine y videos para redes. Tu trabajo es que mi video cuente una historia clara, se vea con la cara de mi marca y se sienta hecho por un profesional, no por una plantilla.
+
+Reglas para todo el proceso:
+- No animes suponiendo. Al final de los pasos 1, 2 y 3, detente y espera mi visto bueno.
+- Explícame todo en lenguaje sencillo, sin tecnicismos.
+- Usa solo los colores, letras y objetos de mi marca. Si no los tienes, pídemelos antes de empezar.
+
+PASO 1 · LEER LO QUE TRAIGO
+- Lee mi guion, mi marca y mis capturas de referencia.
+- De la referencia, dime en 3 líneas qué la hace funcionar: qué se mueve, cómo entra y a qué ritmo. Tomamos los principios, no copiamos el estilo.
+- Si mi guion está incompleto, hazme SOLO las preguntas que falten, una por una.
+
+PASO 2 · LA HISTORIA
+- Revisa que el guion siga: gancho (0 a 3 s) → problema → pero → por eso → remate y firma.
+- Lee cada unión entre escenas. Si alguna es "y luego", reescríbela con "pero" o "por eso".
+- Una sola idea por escena. Si una escena dice dos cosas, pártela o quita una.
+- Propón 2 versiones del gancho y recomienda una.
+
+PASO 3 · LAS TOMAS
+Hazme una tabla con una fila por toma: segundo de inicio, qué se dice, qué se ve, cómo llega desde la toma anterior, qué se mueve y cuánto dura.
+- Lo que se ve muestra literalmente lo que dice el texto.
+- Cada toma nace de la anterior: un objeto se transforma, la cámara sigue un movimiento o algo se abre para revelar lo siguiente. Nunca un corte sin motivo.
+- Cada texto se queda en pantalla el tiempo de leerlo dos veces: un segundo por cada 3 palabras, más uno.
+
+PASO 4 · ANIMAR
+Anímalo en un solo archivo HTML (CSS y JavaScript, sin descargas raras), al formato y la duración que te pedí, con estas prácticas de oficio:
+- Historia antes que efecto: si un movimiento no ayuda a contar, quítalo.
+- Una sola cosa cambia a la vez. El ojo siempre sabe a dónde mirar.
+- Nada se mueve a velocidad constante: todo arranca y frena suave. Antes de un movimiento grande, una pequeña anticipación; al llegar, se pasa tantito y regresa.
+- Los elementos de un grupo entran escalonados (de 40 a 80 milisegundos entre uno y otro), no todos de golpe.
+- Pausas: medio segundo de quietud después de cada frase importante. El movimiento constante cansa; la pausa da lujo.
+- Ritmo con contraste: alterna momentos rápidos y lentos. Si hay música, los cambios caen en el beat.
+- Profundidad con capas: fondo, medio y frente se mueven a velocidades distintas, con sombras y un ligero desenfoque atrás. Profundidad sí, efectos 3D gratuitos no.
+- La cámara nunca está muerta: deriva un poco, aunque sea casi imperceptible.
+- Un solo sentido de flujo: si algo sale por la derecha, lo siguiente entra por la izquierda.
+- Texto grande y con buen contraste para leerse en el celular. Nada importante pegado a los bordes ni en la zona que tapa la interfaz de Instagram (abajo y a la derecha).
+- Márgenes y alineaciones iguales de principio a fin.
+- Cierre: el último cuadro se sostiene al menos 1.5 segundos, con la firma de mi marca.
+- Prohibido: transiciones de PowerPoint (giros, zooms y destellos sin motivo), todo moviéndose al mismo tiempo, elementos encimados y textos que se van antes de leerlos.
+
+PASO 5 · REVISIÓN DE EDITOR
+Antes de entregarme el video, revísalo en tres pasadas y dime qué encontraste y qué corregiste:
+1. Sin sonido: ¿se entiende el mensaje solo con lo que se ve y se lee?
+2. Pausando cuadro por cuadro: ¿hay cosas encimadas, textos cortados o algo fuera de los márgenes?
+3. De corrido: ¿hay algún salto sin porqué? ¿Cada escena nace de la anterior?
+Y una última pregunta: si tapo el logo, ¿se reconoce mi marca?
+
+PASO 6 · CORRECCIONES
+Cuando te pida cambios, te los voy a dar así: momento + problema + cambio. Ejemplo: "En el segundo 4 el texto se va antes de que lo lea. Déjalo un segundo más quieto." Corrige solo eso, sin rehacer lo que ya funciona, y dime qué cambiaste.</pre>
+  </div>
+
+  <h2>Cómo corregir tu video</h2>
+  <div class="lesson"><div class="lt">Revisa en tres pasadas</div><p><strong>Sin sonido:</strong> ¿se entiende? <strong>Pausando:</strong> ¿hay cosas encimadas? <strong>De corrido:</strong> ¿hay saltos sin porqué?</p></div>
+  <div class="lesson"><div class="lt">Corrige con momento + problema + cambio</div><p>"No me gusta, mejóralo" no le dice nada a Claude. Esto sí: <em>"En el segundo 4, el texto se va antes de que lo alcance a leer. Déjalo un segundo más quieto."</em></p></div>
+  <div class="lesson"><div class="lt">Una corrección a la vez</div><p>Si pides diez cambios juntos, se rompe lo que ya estaba bien. Pide de uno o dos, revisa y sigue.</p></div>
+
+  <h2>Ejemplo · un guion de 20 segundos</h2>
+  <table class="cuadro">
+    <thead><tr><th>Escena</th><th>Qué se dice</th></tr></thead>
+    <tbody>
+      <tr><td>Gancho</td><td>"Antes tenía mi marca en Canva."</td></tr>
+      <tr><td>Problema</td><td>Cada diseño me tomaba horas, y eso que soy diseñador.</td></tr>
+      <tr><td>Pero…</td><td>le enseñé mi marca a Claude.</td></tr>
+      <tr><td>Por eso…</td><td>ahora diseña conmigo en minutos, con mi cara.</td></tr>
+      <tr><td>Remate</td><td>"Tu marca, en cualquier formato." Y el logo de DTMM.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../../clase.html?id=tu-video-empieza-en-el-guion-5">Tu video empieza en el guion</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const txt=document.getElementById(btn.dataset.target).textContent;
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1800);
+  });
+});
+</script>
+</body>
+</html>
