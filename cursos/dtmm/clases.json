@@ -405,18 +405,18 @@
           ],
           "recursos": [
             {
-              "tipo": "prompt",
-              "icono": "⌘",
-              "titulo": "Los 3 prompts · tu marca en Claude Design",
-              "descripcion": "El director de arte, la fábrica de recursos y el diseño de piezas, con lo que aprendimos con Lumiku. Se guarda como PDF.",
-              "url": "herramientas-ia/recursos/tu-marca-en-claude-design.html"
-            },
-            {
               "tipo": "skill",
               "icono": "◈",
               "titulo": "Skill Prism · tu director de arte",
               "descripcion": "El método de la clase instalado en tu Claude. Se descarga como .zip y se sube en Personalizar › Skills; funciona desde el plan gratis.",
               "url": "herramientas-ia/recursos/prism.zip"
+            },
+            {
+              "tipo": "prompt",
+              "icono": "⌘",
+              "titulo": "Los 3 prompts · tu marca en Claude Design",
+              "descripcion": "El director de arte, la fábrica de recursos y el diseño de piezas, con lo que aprendimos con Lumiku. Se guarda como PDF.",
+              "url": "herramientas-ia/recursos/tu-marca-en-claude-design.html"
             }
           ]
         },
@@ -429,7 +429,7 @@
           "grabaciones": [
             {
               "generacion": "1ª",
-              "fecha": "2026-10-28",
+              "fecha": "2026-11-05",
               "url": ""
             }
           ],
@@ -445,9 +445,30 @@
             {
               "tipo": "prompt",
               "icono": "⌘",
-              "titulo": "Plantilla de guion y prompt de editor",
-              "descripcion": "La plantilla para escribir tu video corto con pero y por eso, y el prompt que convierte a Claude en un editor con 30 años de oficio. Se guarda como PDF.",
+              "titulo": "Los 5 pasos y el prompt del video",
+              "descripcion": "Paso a paso y en orden: instala las 3 skills, escribe tu historia en 5 frases y pega el prompt. Se guarda como PDF.",
               "url": "herramientas-ia/recursos/tu-video-empieza-en-el-guion.html"
+            },
+            {
+              "tipo": "skill",
+              "icono": "◈",
+              "titulo": "Skill 1 · Prism",
+              "descripcion": "Cómo se ve tu marca. Instálala primero. Se sube en Personalizar › Skills.",
+              "url": "herramientas-ia/recursos/prism.zip"
+            },
+            {
+              "tipo": "skill",
+              "icono": "◈",
+              "titulo": "Skill 2 · Ad Alchemist",
+              "descripcion": "Qué decir: la idea, el gancho y el guion. Va después de Prism.",
+              "url": "herramientas-ia/recursos/ad-alchemist.zip"
+            },
+            {
+              "tipo": "skill",
+              "icono": "◈",
+              "titulo": "Skill 3 · Animador de reels",
+              "descripcion": "Cómo se mueve: el mundo, la cámara y el video final. Va al último.",
+              "url": "herramientas-ia/recursos/animador-reels.zip"
             }
           ]
         }
