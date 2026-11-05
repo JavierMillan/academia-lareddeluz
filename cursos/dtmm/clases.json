@@ -450,6 +450,13 @@
               "url": "herramientas-ia/recursos/tu-video-empieza-en-el-guion.html"
             },
             {
+              "tipo": "guia",
+              "icono": "▶",
+              "titulo": "Caso real: del video feo al cinematográfico",
+              "descripcion": "Las versiones 1, 2 y 5 de un mismo video, qué cambió en cada una y las 10 lecciones. Con frases listas para pedírselo a Claude.",
+              "url": "herramientas-ia/recursos/del-video-feo-al-cinematografico.html"
+            },
+            {
               "tipo": "skill",
               "icono": "◈",
               "titulo": "Skill 1 · Prism",
