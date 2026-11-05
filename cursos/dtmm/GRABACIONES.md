@@ -40,6 +40,7 @@ https://drive.google.com/drive/folders/1jHrdDtJNGLSnbH84cmjmCWH62hbDN0kk
 | 10 | Clase IA - Practico | 6 ago | Clases abiertas | `clase-ia-practico` |
 | 11 | Creacion de Videos con IA - 1 | 12 ago | Herramientas de IA · Clase 1 | `video-con-codigo-1` |
 | 12 | Clase IA - Diseño Claude (editado) | 21 oct | Herramientas de IA · Clase 4 | `tu-marca-en-claude-design-4` |
+| 13 | clase ia video nov 4 (editado) | 4 nov | Herramientas de IA · Clase 5 | `tu-video-empieza-en-el-guion-5` |
 
 ## Clases sin grabación
 
