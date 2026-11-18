@@ -1,0 +1,75 @@
+/* =========================================================
+   Movimiento del hub — estructura compartida.
+   El motor no conoce a ninguna constelación: aquí sólo vive
+   el "cuándo" (entradas, trazos, barras). El "cómo se siente"
+   lo decide cada tema con estas variables:
+     --hm-ease     curva de entrada
+     --hm-dur      duración de entrada
+     --hm-rise     desplazamiento vertical de entrada
+     --hm-row-x    desplazamiento horizontal de las filas
+   Sólo transform y opacity. Con prefers-reduced-motion,
+   hub.css ya reduce todo a su estado final.
+   ========================================================= */
+:root{
+  --hm-ease:cubic-bezier(.22,1,.36,1);
+  --hm-dur:.8s;
+  --hm-rise:28px;
+  --hm-row-x:0px;
+}
+
+@media (prefers-reduced-motion:no-preference){
+
+  /* ---- portada: entra en orden de lectura ---- */
+  .hub-identity>*,.featured-class{
+    animation:hmRise var(--hm-dur) var(--hm-ease) both}
+  .hub-identity>.constellation-avatar{animation-delay:.05s}
+  .hub-identity>.constellation-name{animation-delay:.12s}
+  .hub-identity>h1{animation-delay:.2s}
+  .hub-identity>p{animation-delay:.3s}
+  .hub-identity>.course-progress{animation-delay:.38s}
+  .featured-class{animation-delay:.48s}
+  @keyframes hmRise{from{opacity:0;transform:translateY(var(--hm-rise))}to{opacity:1;transform:none}}
+
+  /* ---- la figura de la constelación se dibuja ---- */
+  .constellation-avatar path{stroke-dasharray:400;stroke-dashoffset:400;
+    animation:hmDraw 1.6s cubic-bezier(.76,0,.24,1) .35s forwards}
+  .constellation-avatar circle{transform-box:fill-box;transform-origin:center;
+    animation:hmStar .6s var(--hm-ease) both}
+  .constellation-avatar circle:nth-of-type(1){animation-delay:.45s}
+  .constellation-avatar circle:nth-of-type(2){animation-delay:.6s}
+  .constellation-avatar circle:nth-of-type(3){animation-delay:.75s}
+  .constellation-avatar circle:nth-of-type(4){animation-delay:.9s}
+  .constellation-avatar circle:nth-of-type(5){animation-delay:1.05s}
+  .constellation-avatar circle:nth-of-type(n+6){animation-delay:1.2s}
+  @keyframes hmDraw{to{stroke-dashoffset:0}}
+  @keyframes hmStar{from{opacity:0;transform:scale(0)}to{opacity:1;transform:none}}
+
+  /* ---- la barra de avance se llena ---- */
+  .course-progress .bar i{transform-origin:left center;
+    animation:hmFill 1.2s var(--hm-ease) .6s both}
+  @keyframes hmFill{from{transform:scaleX(0)}to{transform:none}}
+
+  /* ---- filas de clases: entran cada vez que cambias de categoría ---- */
+  .lesson-list>.lesson-row{animation:hmRow .55s var(--hm-ease) both}
+  .lesson-list>.lesson-row:nth-child(2){animation-delay:.05s}
+  .lesson-list>.lesson-row:nth-child(3){animation-delay:.1s}
+  .lesson-list>.lesson-row:nth-child(4){animation-delay:.15s}
+  .lesson-list>.lesson-row:nth-child(5){animation-delay:.2s}
+  .lesson-list>.lesson-row:nth-child(6){animation-delay:.25s}
+  .lesson-list>.lesson-row:nth-child(n+7){animation-delay:.3s}
+  @keyframes hmRow{from{opacity:0;transform:translate3d(var(--hm-row-x),12px,0)}to{opacity:1;transform:none}}
+  .active-category-header{animation:hmRise .5s var(--hm-ease) both}
+
+  /* ---- microinteracciones (150–300 ms) ---- */
+  .lesson-row .lesson-status{transition:transform .25s var(--hm-ease),border-color .25s,background-color .25s}
+  .lesson-row:hover .lesson-status{transform:scale(1.08);border-color:var(--accent-text)}
+  .lesson-row .lesson-action,.featured-go{display:inline-block;transition:transform .25s var(--hm-ease)}
+  .lesson-row:hover .lesson-action,.featured-class:hover .featured-go{transform:translateX(4px)}
+  .course-map-button{transition:background-color .2s,color .2s}
+  .course-map-button::before{transition:transform .25s var(--hm-ease),background-color .2s,border-color .2s}
+  .course-map-button:hover::before{transform:scale(1.4)}
+  .course-tab::after{transform-origin:left center;animation:hmFill .5s var(--hm-ease) .5s both}
+}
+
+/* La señal (barras de voz) la inyecta hub-motion.js; el tema decide si se ve. */
+.hm-signal{display:none}

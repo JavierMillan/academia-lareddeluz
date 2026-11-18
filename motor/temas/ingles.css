@@ -84,3 +84,48 @@
 @media(max-width:480px){
   .theme-ingles{--mega:clamp(1.7rem,9vw,2.6rem)}
 }
+
+/* ===== Movimiento · Al aire =====
+   Gemini es una transmisión en vivo entre dos voces: la portada abre con
+   un barrido rojo, las órbitas respiran a destiempo (una voz y la otra),
+   la señal junto al nombre late y las filas entran como guía de programación. */
+.theme-ingles{--hm-ease:cubic-bezier(.22,1,.36,1);--hm-dur:.7s;--hm-rise:22px;--hm-row-x:-14px}
+
+@media (prefers-reduced-motion:no-preference){
+  /* barrido rojo de arranque de transmisión */
+  .theme-ingles .hub-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;z-index:-1;
+    width:28%;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(200,16,46,.16) 70%,rgba(200,16,46,.75) 99%,transparent);
+    transform:translateX(-110%);animation:inglesBarrido 1.15s cubic-bezier(.76,0,.24,1) .1s both}
+  @keyframes inglesBarrido{0%{transform:translateX(-110%);opacity:1}85%{opacity:1}100%{transform:translateX(420%);opacity:0}}
+
+  /* las dos órbitas respiran a destiempo */
+  .theme-ingles .constellation-motif::before{animation:inglesVozA 9s ease-in-out infinite alternate}
+  .theme-ingles .constellation-motif::after{animation:inglesVozB 11s ease-in-out infinite alternate}
+  @keyframes inglesVozA{from{transform:rotate(5deg) scaleY(.94)}to{transform:rotate(7.5deg) scaleY(1.06)}}
+  @keyframes inglesVozB{from{transform:rotate(-3deg) scaleY(1.05)}to{transform:rotate(-5.5deg) scaleY(.95)}}
+
+  /* las dos estrellas principales se responden */
+  .theme-ingles .constellation-avatar circle.core{
+    animation:hmStar .6s var(--hm-ease) .45s both,inglesTurno 2.8s ease-in-out 1.8s infinite}
+  .theme-ingles .constellation-avatar circle.core[data-voz="1"]{animation-delay:.75s,3.2s}
+  @keyframes inglesTurno{0%,100%{transform:none;opacity:1}20%{transform:scale(1.6);opacity:1}45%{transform:none;opacity:.7}}
+
+  /* señal de voz junto a GEMINI · DOS VOCES */
+  .theme-ingles .hm-signal{display:inline-flex;align-items:center;gap:2px;height:12px;
+    margin-left:.7rem;vertical-align:middle}
+  .theme-ingles .hm-signal i{display:block;width:2px;height:100%;border-radius:2px;
+    background:var(--accent-surface);transform-origin:center;animation:inglesNivel 1.3s ease-in-out infinite}
+  .theme-ingles .hm-signal i:nth-child(1){animation-delay:-.2s}
+  .theme-ingles .hm-signal i:nth-child(2){animation-delay:-.75s}
+  .theme-ingles .hm-signal i:nth-child(3){animation-delay:-.4s}
+  .theme-ingles .hm-signal i:nth-child(4){animation-delay:-1s}
+  .theme-ingles .hm-signal i:nth-child(5){animation-delay:-.55s}
+  @keyframes inglesNivel{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+
+  /* "Tu siguiente paso" con punto de señal, como el badge EN VIVO */
+  .theme-ingles .featured-label::before{content:"";display:inline-block;width:7px;height:7px;
+    margin-right:.6rem;border-radius:50%;background:var(--accent-surface);vertical-align:.08em;
+    animation:inglesPunto 1.8s ease-in-out infinite}
+  @keyframes inglesPunto{0%,100%{opacity:1;transform:none}50%{opacity:.35;transform:scale(.8)}}
+}

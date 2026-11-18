@@ -173,7 +173,7 @@
   .am-js .coord::after{animation:amLine 1.2s var(--am-ease) .5s both}
   @keyframes amLine{from{transform:scaleX(0)}to{transform:none}}
   .am-js h1 em{display:inline-block;animation:amWord 1.3s var(--am-ease) .55s both}
-  @keyframes amWord{from{opacity:0;letter-spacing:.12em;filter:blur(8px)}to{opacity:1;letter-spacing:normal;filter:none}}
+  @keyframes amWord{from{opacity:0;transform:translateY(.25em)}to{opacity:1;transform:none}}
   /* PERSONA = NODO: la luz pasa de una persona a la otra */
   .network .nodes i{animation:amNode 4.8s var(--am-ease-io) infinite}
   .network .nodes i:nth-of-type(2){animation-delay:.45s}

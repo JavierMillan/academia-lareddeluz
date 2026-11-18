@@ -55,3 +55,16 @@
   linear-gradient(rgba(232,161,60,.035) 1px,transparent 1px),
   linear-gradient(90deg,rgba(232,161,60,.035) 1px,transparent 1px);
   background-size:auto,34px 34px,34px 34px}
+
+/* ===== Movimiento · La luz que revela =====
+   Lyra es la creación: una sola fuente de luz. La portada no "entra":
+   se revela. El corte diagonal de luz barre una vez y se queda quieto;
+   la figura se dibuja y todo lo demás sube con calma, sin rebote. */
+.theme-dtmm{--hm-ease:cubic-bezier(.22,1,.36,1);--hm-dur:.9s;--hm-rise:28px;--hm-row-x:0px}
+
+@media (prefers-reduced-motion:no-preference){
+  .theme-dtmm .constellation-motif{animation:dtmmRevela 1.8s cubic-bezier(.76,0,.24,1) both}
+  @keyframes dtmmRevela{from{opacity:0;transform:translateX(-8%)}to{opacity:1;transform:none}}
+  /* la estrella principal de Lyra se enciende al final del trazo */
+  .theme-dtmm .constellation-avatar circle.core{animation:hmStar .9s var(--hm-ease) 1.5s both}
+}

@@ -39,11 +39,11 @@ html.am-arrive::after{content:"";position:fixed;inset:0;z-index:1000;pointer-eve
 @media (prefers-reduced-motion:no-preference){
 
   /* entradas escalonadas: sólo CSS, siempre terminan visibles */
-  .am-js [data-reveal]{animation:amRise 1s var(--am-ease) both;
+  .am-js [data-reveal]{animation:amRise .8s var(--am-ease) both;
     animation-delay:calc(var(--i,0) * 85ms + 120ms)}
   /* usa translate (no transform) para no pelear con el tilt de las tarjetas */
-  @keyframes amRise{from{opacity:0;translate:0 18px;filter:blur(6px)}
-    to{opacity:1;translate:none;filter:none}}
+  @keyframes amRise{from{opacity:0;translate:0 28px}
+    to{opacity:1;translate:none}}
 
   /* constelaciones que se dibujan */
   .am-js .am-draw path{stroke-dasharray:1;stroke-dashoffset:1;
