@@ -22,5 +22,8 @@
       "publicPath": "ingles",
       "canonicalBase": "https://academia.lareddeluz.com/ingles/"
     }
+  },
+  "analitica": {
+    "ga4": ""
   }
 }

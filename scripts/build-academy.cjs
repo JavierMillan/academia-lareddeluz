@@ -33,6 +33,98 @@ function copyRequired(sourcePath, destinationPath, label) {
   fs.cpSync(sourcePath, destinationPath, { recursive: true, force: true });
 }
 
+/* ---------- lo que no debe publicarse ----------
+   Notas de trabajo (.md), brand profiles y pruebas de cada curso viven en
+   el repositorio pero no son parte del sitio. */
+function removeInternals(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const absolutePath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === 'scripts') fs.rmSync(absolutePath, { recursive: true, force: true });
+      else removeInternals(absolutePath);
+    } else if (entry.name.toLowerCase().endsWith('.md')) {
+      fs.rmSync(absolutePath, { force: true });
+    }
+  }
+}
+
+/* ---------- sitemap.xml ----------
+   Se arma con las páginas publicadas: todo HTML que no diga noindex. Así
+   cada clase nueva entra sola, sin editar el sitemap a mano. */
+function writeSitemap(outDir, base) {
+  const urls = walkFiles(outDir, '.html')
+    .filter((file) => !/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(fs.readFileSync(file, 'utf8')))
+    .map((file) => {
+      const rel = path.relative(outDir, file).split(path.sep).join('/');
+      if (rel === '404.html') return null;
+      return rel === 'index.html' ? base : new URL(rel.replace(/(^|\/)index\.html$/, '$1'), base).href;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b));
+  const xml = ['<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls.map((u) => `  <url><loc>${u}</loc></url>`), '</urlset>', ''].join('\n');
+  fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml);
+  return urls.length;
+}
+
+/* ---------- llms.txt ----------
+   Resumen para asistentes de IA, armado desde los datos de cada curso. */
+function plainText(html) {
+  return String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+function writeLlms(outDir, academyRoot, manifest, base) {
+  const lines = ['# Academia La Red de Luz', '',
+    '> Academia gratuita de La Red de Luz: clases en vivo, decks y recursos para aprender haciendo y crecer en comunidad. Cada curso se llama constelación; cada persona es un nodo de la red.', '',
+    `Sitio: ${base} · Organización: https://lareddeluz.com/`, ''];
+  for (const course of Object.values(manifest.courses)) {
+    const root = path.join(academyRoot, course.sourcePath);
+    const read = (name) => {
+      const file = path.join(root, name);
+      return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+    };
+    const cfg = read('constelacion.json') || {};
+    const data = read('clases.json') || { filas: [] };
+    const recursos = read('recursos.json');
+    lines.push(`## ${cfg.nombre || course.publicPath}`, '');
+    if (cfg.resumen) lines.push(cfg.resumen, '');
+    lines.push(`- [${cfg.nombre || course.publicPath} · hub](${course.canonicalBase})`);
+    for (const fila of data.filas || []) {
+      for (const clase of fila.clases || []) {
+        if (!clase.deck) continue;
+        lines.push(`- [${plainText(clase.titulo)}](${new URL(clase.deck, course.canonicalBase).href})` +
+          (clase.resumen ? `: ${plainText(clase.resumen)}` : ''));
+      }
+    }
+    for (const r of (recursos && recursos.recursos) || []) {
+      lines.push(`- [${plainText(r.titulo)}](${new URL(r.url, course.canonicalBase).href})` +
+        (r.descripcion ? `: ${plainText(r.descripcion)}` : ''));
+    }
+    lines.push('');
+  }
+  fs.writeFileSync(path.join(outDir, 'llms.txt'), lines.join('\n'));
+}
+
+/* ---------- analítica ----------
+   Se enciende con "analitica": {"ga4": "G-XXXXXXX"} en academy.courses.json.
+   Vacío = el sitio no mide nada y no carga scripts de terceros. */
+function injectAnalytics(outDir, analytics) {
+  const id = analytics && analytics.ga4;
+  if (!id) return 0;
+  if (!/^G-[A-Z0-9]+$/.test(id)) throw new Error(`ID de GA4 inválido: ${id}`);
+  const tag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>` +
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
+    `gtag('js',new Date());gtag('config','${id}');</script>`;
+  let n = 0;
+  for (const file of walkFiles(outDir, '.html')) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (html.includes('googletagmanager.com/gtag/js') || !html.includes('</head>')) continue;
+    fs.writeFileSync(file, html.replace('</head>', `${tag}\n</head>`));
+    n += 1;
+  }
+  return n;
+}
+
 function walkFiles(root, extension) {
   const files = [];
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
@@ -167,7 +259,7 @@ function buildAcademy(options) {
     localizeAcademyLinks(fs.readFileSync(academyIndexPath, 'utf8'), academyBase));
   copyRequired(path.join(academyRoot, 'CNAME'), path.join(outDir, 'CNAME'), 'Academy CNAME');
   copyRequired(path.join(academyRoot, 'assets'), path.join(outDir, 'assets'), 'Academy assets');
-  for (const seoFile of ['robots.txt', 'sitemap.xml', 'llms.txt', '404.html', 'privacidad.html', 'manifest.webmanifest']) {
+  for (const seoFile of ['robots.txt', '404.html', 'privacidad.html', 'manifest.webmanifest']) {
     const seoSource = path.join(academyRoot, seoFile);
     if (fs.existsSync(seoSource)) fs.copyFileSync(seoSource, path.join(outDir, seoFile));
   }
@@ -198,8 +290,12 @@ function buildAcademy(options) {
       );
     }
     normalizeHtml(targetRoot, course, academyBase);
+    removeInternals(targetRoot);
   }
 
+  writeSitemap(outDir, academyBase);
+  writeLlms(outDir, academyRoot, manifest, academyBase);
+  injectAnalytics(outDir, manifest.analitica);
   const htmlFiles = validateArtifact(outDir, manifest.legacyHostname);
   return { hubs: Object.keys(manifest.courses).length, htmlFiles, outDir };
 }

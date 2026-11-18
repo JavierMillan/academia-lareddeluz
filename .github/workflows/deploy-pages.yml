@@ -33,6 +33,7 @@ jobs:
           node scripts/test-academy-index.cjs
           node scripts/test-monorepo-boundaries.cjs
           node scripts/test-build-academy.cjs
+          node scripts/test-site-health.cjs
           node scripts/test-academy-hubs-structure.cjs
           node scripts/test-motor-hub.cjs
           node scripts/test-hub-model.cjs
