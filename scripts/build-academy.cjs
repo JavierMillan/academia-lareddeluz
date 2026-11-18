@@ -167,7 +167,7 @@ function buildAcademy(options) {
     localizeAcademyLinks(fs.readFileSync(academyIndexPath, 'utf8'), academyBase));
   copyRequired(path.join(academyRoot, 'CNAME'), path.join(outDir, 'CNAME'), 'Academy CNAME');
   copyRequired(path.join(academyRoot, 'assets'), path.join(outDir, 'assets'), 'Academy assets');
-  for (const seoFile of ['robots.txt', 'sitemap.xml', 'llms.txt', '404.html']) {
+  for (const seoFile of ['robots.txt', 'sitemap.xml', 'llms.txt', '404.html', 'privacidad.html', 'manifest.webmanifest']) {
     const seoSource = path.join(academyRoot, seoFile);
     if (fs.existsSync(seoSource)) fs.copyFileSync(seoSource, path.join(outDir, seoFile));
   }

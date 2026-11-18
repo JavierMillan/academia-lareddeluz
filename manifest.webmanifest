@@ -1,0 +1,25 @@
+{
+  "name": "Academia La Red de Luz",
+  "short_name": "Academia",
+  "description": "Clases gratuitas de La Red de Luz: contenido, IA e inglés, en comunidad.",
+  "lang": "es-MX",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0d0b16",
+  "theme_color": "#0d0b16",
+  "icons": [
+    {
+      "src": "/assets/imgs/app/icono-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/imgs/app/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
