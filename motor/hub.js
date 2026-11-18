@@ -101,7 +101,8 @@
     }
     var resumen = HubModel.resumenFila(cfg, row, progreso);
     return '<section class="active-category" aria-live="polite" data-active-category="' +
-      esc(row.id) + '"><header class="active-category-header"><span>' +
+      esc(row.id) + '"><button class="back-to-catalog" type="button">← Todos los cursos</button>' +
+      '<header class="active-category-header"><span>' +
         '<span class="category-meta">' + esc(row.subtitulo || '') + '</span>' +
         '<h2>' + esc(row.titulo) + '</h2></span>' +
         '<span class="category-progress">' + resumen.vistas + ' / ' + resumen.total +
@@ -124,32 +125,56 @@
       '</div></div>';
   }
 
-  function categoriaMovil(cfg, row, progreso, abierta) {
-    var resumen = HubModel.resumenFila(cfg, row, progreso);
-    var panelId = 'mobile-panel-' + row.id;
-    return '<section class="mobile-category" id="' + esc(row.id) +
-      '" data-mobile-category="' + esc(row.id) + '">' +
-      '<button class="mobile-category-heading" type="button" aria-expanded="' +
-        (abierta ? 'true' : 'false') + '" aria-controls="' + esc(panelId) + '">' +
-        '<span class="mobile-category-copy"><strong>' + esc(row.titulo) + '</strong>' +
-        '<small>' + esc(row.subtitulo || '') + '</small></span>' +
-        '<span class="mobile-category-progress">' + resumen.vistas + '/' + resumen.total +
-        ' <span aria-hidden="true">⌄</span></span></button>' +
-      '<div class="mobile-category-panel" id="' + esc(panelId) + '"' +
-        (abierta ? '' : ' hidden') + '><div class="lesson-list">' +
-        contenidoCategoria(cfg, row, progreso) + '</div></div></section>';
+  /* ---------- catálogo: los cursos primero ----------
+     Cada fila de clases.json es un curso. Se muestran todos como
+     tarjetas, agrupados como vengan en "grupos"; al elegir uno se
+     abren sus clases. El estado sale del progreso, no del curso. */
+  function estadoCurso(cfg, row, progreso, inicial) {
+    var r = HubModel.resumenFila(cfg, row, progreso);
+    var empezado = (row.clases || []).some(function (c) {
+      return HubModel.estadoDe(progreso, c.id) !== 'nuevo';
+    });
+    if (!r.total) return { clase: 'pronto', texto: 'Próximamente', r: r };
+    if (r.vistas === r.total) return { clase: 'completo', texto: 'Completo', r: r };
+    if (empezado) return { clase: 'en-curso', texto: 'En curso', r: r };
+    if (inicial) return { clase: 'inicio', texto: 'Empieza aquí', r: r };
+    return { clase: 'nuevo', texto: r.total + (r.total === 1 ? ' clase' : ' clases'), r: r };
   }
 
-  function curriculoMovil(cfg, data, progreso, activa) {
-    return '<div class="mobile-curriculum">' + (data.filas || []).map(function (row) {
-      return categoriaMovil(cfg, row, progreso, activa && row.id === activa.id);
+  function tarjetaCurso(cfg, row, progreso, n, inicial) {
+    var e = estadoCurso(cfg, row, progreso, inicial);
+    return '<button class="course-card ' + e.clase + '" type="button" data-category-id="' +
+      esc(row.id) + '">' +
+      '<span class="course-card-top"><span class="course-card-num">' + String(n).padStart(2, '0') +
+        '</span><span class="course-card-state">' + esc(e.texto) + '</span></span>' +
+      '<span class="course-card-title">' + esc(row.titulo) + '</span>' +
+      '<span class="course-card-sub">' + esc(row.subtitulo || '') + '</span>' +
+      '<span class="course-card-meta">' + e.r.total + (e.r.total === 1 ? ' clase' : ' clases') +
+        (e.r.vistas ? ' · ' + e.r.vistas + ' vistas' : '') + '</span>' +
+      '<span class="course-card-bar" aria-hidden="true"><i style="width:' + e.r.porcentaje + '%"></i></span>' +
+      '<span class="course-card-go">Ver clases →</span></button>';
+  }
+
+  function catalogo(cfg, data, progreso, activa) {
+    var grupos = agrupaFilas(data), n = 0;
+    var unico = grupos.length === 1;
+    return '<div class="course-catalog">' + grupos.map(function (g) {
+      return '<section class="catalog-group">' +
+        (unico ? '<header class="catalog-head"><span class="category-meta">Elige un curso</span>' +
+          '<h2>Cursos</h2></header>' :
+          '<header class="catalog-head"><span class="category-meta">' + esc(g.descripcion || '') +
+          '</span><h2>' + esc(g.titulo) + '</h2></header>') +
+        '<div class="catalog-grid">' + g.filas.map(function (row) {
+          n += 1;
+          return tarjetaCurso(cfg, row, progreso, n, activa && activa.id === row.id);
+        }).join('') + '</div></section>';
     }).join('') + '</div>';
   }
 
   function curriculoEnfocado(cfg, data, progreso) {
     var activa = HubModel.categoriaInicial(cfg, data, progreso);
-    return '<div class="focused-curriculum" id="curriculum">' +
-      mapaCurso(cfg, data, progreso, activa) + curriculoMovil(cfg, data, progreso, activa) +
+    return '<div class="focused-curriculum" id="curriculum" data-vista="catalogo">' +
+      catalogo(cfg, data, progreso, activa) + mapaCurso(cfg, data, progreso, activa) +
       '</div>';
   }
 
@@ -210,7 +235,7 @@
     var grupos = (data.grupos || []).map(function (g) {
       var filas = (g.filas || []).map(function (id) { usadas.add(id); return porId.get(id); })
         .filter(Boolean);
-      return { id: g.id, titulo: g.titulo, filas: filas };
+      return { id: g.id, titulo: g.titulo, descripcion: g.descripcion || '', filas: filas };
     }).filter(function (g) { return g.filas.length; });
     var sueltas = data.filas.filter(function (f) { return !usadas.has(f.id); });
     if (sueltas.length) {
@@ -412,30 +437,53 @@
       if (slot) slot.innerHTML = panelCategoria(cfg, row, progreso);
     }
 
-    function abrirMovil(button) {
-      document.querySelectorAll('.mobile-category-heading').forEach(function (other) {
-        var abierta = other === button;
-        other.setAttribute('aria-expanded', abierta ? 'true' : 'false');
-        document.getElementById(other.getAttribute('aria-controls')).hidden = !abierta;
-      });
+
+    var raiz = document.getElementById('curriculum');
+    var PREFIJO = '#curso/';
+
+    function vista(nombre) { if (raiz) raiz.setAttribute('data-vista', nombre); }
+
+    function abrir(id, guardar) {
+      if (!(data.filas || []).some(function (f) { return f.id === id; })) return;
+      seleccionar(id);
+      vista('curso');
+      if (guardar && location.hash !== PREFIJO + id) history.pushState(null, '', PREFIJO + id);
+      if (raiz) raiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var h = slot && slot.querySelector('h2');
+      if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
     }
 
-    document.querySelectorAll('.course-map-button').forEach(function (button) {
-      button.addEventListener('click', function () { seleccionar(button.dataset.categoryId); });
+    function aCatalogo(guardar) {
+      vista('catalogo');
+      if (guardar && location.hash.indexOf(PREFIJO) === 0) {
+        history.pushState(null, '', location.pathname + location.search);
+      }
+      if (raiz) raiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function desdeUrl() {
+      if (location.hash.indexOf(PREFIJO) === 0) {
+        var id = decodeURIComponent(location.hash.slice(PREFIJO.length));
+        seleccionar(id); vista('curso');
+      } else vista('catalogo');
+    }
+
+    if (raiz) raiz.addEventListener('click', function (event) {
+      var tarjeta = event.target.closest('.course-card');
+      if (tarjeta) { abrir(tarjeta.dataset.categoryId, true); return; }
+      if (event.target.closest('.back-to-catalog')) aCatalogo(true);
     });
-    document.querySelectorAll('.mobile-category-heading').forEach(function (button) {
-      button.addEventListener('click', function () { abrirMovil(button); });
+    window.addEventListener('popstate', desdeUrl);
+    desdeUrl();
+
+    document.querySelectorAll('.course-map-button').forEach(function (button) {
+      button.addEventListener('click', function () { abrir(button.dataset.categoryId, true); });
     });
 
     document.querySelectorAll('[data-fila]').forEach(function (link) {
       link.addEventListener('click', function (event) {
         event.preventDefault();
-        seleccionar(link.dataset.fila);
-        var mobileButton = document.querySelector('.mobile-category[data-mobile-category="' +
-          CSS.escape(link.dataset.fila) + '"] .mobile-category-heading');
-        if (mobileButton) abrirMovil(mobileButton);
-        var curriculum = document.getElementById('curriculum');
-        if (curriculum) curriculum.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        abrir(link.dataset.fila, true);
       });
     });
   }

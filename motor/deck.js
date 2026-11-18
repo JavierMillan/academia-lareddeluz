@@ -17,6 +17,7 @@
 (function(){
   'use strict';
 
+  const scriptSrc = document.currentScript && document.currentScript.src;
   const slides = [...document.querySelectorAll('.slide')];
   if(!slides.length) return;
 
@@ -98,6 +99,7 @@
     // deja la slide en la URL para poder compartir o recargar sin perder el sitio
     // (falla en contextos sin origen propio, p.ej. dentro de un iframe srcdoc)
     try{ history.replaceState(null,'','#'+(i+1)); }catch(e){}
+    if(i===tot-1) avance.alTerminar();
   }
   function go(d){ show(i+d) }
 
@@ -172,6 +174,71 @@
     const dy = e.changedTouches[0].clientY - sy;
     if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(dx<0?1:-1);
   }, {passive:true});
+
+  /* ---- avance del alumno ----
+     El deck se reconoce solo: busca en clases.json del curso la clase cuyo
+     "deck" es esta página. Al abrir queda "en curso"; al llegar a la última
+     lámina queda "vista", con un aviso para deshacer. Si no hay
+     almacenamiento o la página no está en clases.json, no hace nada. */
+  const avance = (function(){
+    let curso = null, clase = null, avisado = false;
+    const listo = (function(){
+      if(!scriptSrc || !window.fetch) return Promise.resolve();
+      const raiz = new URL('../../', scriptSrc);
+      const cargarProgreso = window.Progreso ? Promise.resolve() : new Promise(function(ok){
+        const s = document.createElement('script');
+        s.src = new URL('progreso.js', scriptSrc).href; s.onload = ok; s.onerror = ok;
+        document.head.appendChild(s);
+      });
+      return Promise.all([
+        fetch(new URL('constelacion.json', raiz)).then(r=>r.ok?r.json():null),
+        fetch(new URL('clases.json', raiz)).then(r=>r.ok?r.json():null),
+        cargarProgreso
+      ]).then(function(res){
+        const cfg = res[0], data = res[1];
+        if(!cfg || !data || !window.Progreso || !Progreso.disponible()) return;
+        const aqui = location.pathname.replace(/\/index\.html$/,'/');
+        (data.filas||[]).forEach(f=>(f.clases||[]).forEach(c=>{
+          if(c.deck && new URL(c.deck, raiz).pathname === aqui) clase = c;
+        }));
+        if(!clase) return;
+        curso = cfg.id;
+        return Progreso.visto(curso, clase.id).then(function(estado){
+          if(estado !== Progreso.ESTADOS.VISTO) Progreso.marcar(curso, clase.id, Progreso.ESTADOS.CURSO);
+          else avisado = true;   // ya estaba vista: no se vuelve a anunciar
+        });
+      }).catch(function(){});
+    })();
+
+    function aviso(){
+      let t = document.getElementById('avance');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'avance'; t.setAttribute('role','status');
+        document.body.appendChild(t);
+      }
+      t.innerHTML = '<span>✓ Clase marcada como vista</span>'+
+        '<button type="button" class="navbtn" id="avanceDeshacer">Deshacer</button>';
+      t.classList.add('on');
+      document.getElementById('avanceDeshacer').onclick = function(){
+        Progreso.marcar(curso, clase.id, Progreso.ESTADOS.CURSO);
+        t.innerHTML = '<span>Listo, la clase sigue en curso</span>';
+        setTimeout(()=>t.classList.remove('on'), 1800);
+      };
+      clearTimeout(aviso.reloj);
+      aviso.reloj = setTimeout(()=>t.classList.remove('on'), 6000);
+    }
+
+    return {
+      alTerminar: function(){
+        listo.then(function(){
+          if(!clase || avisado) return;
+          avisado = true;
+          Progreso.marcar(curso, clase.id, Progreso.ESTADOS.VISTO).then(aviso);
+        });
+      }
+    };
+  })();
 
   /* ---- arranque: respeta #7 en la URL ---- */
   const desdeUrl = parseInt(location.hash.replace('#',''),10);

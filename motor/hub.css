@@ -469,3 +469,60 @@ a.item:focus-visible{outline:2px solid var(--sesame);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){
   .mobile-category-progress span,.lesson-row{transition:none}
 }
+
+/* ===== Catálogo: los cursos primero =====
+   El currículo tiene dos vistas en el mismo lugar: el catálogo de cursos
+   (por defecto) y las clases de un curso. La de clases conserva el mapa
+   lateral para brincar entre cursos en escritorio. */
+.focused-curriculum[data-vista="catalogo"] .curriculum-workspace{display:none}
+.focused-curriculum[data-vista="curso"] .course-catalog{display:none}
+.mobile-curriculum{display:none !important}
+
+.course-catalog{display:flex;flex-direction:column;gap:clamp(2rem,5vw,3.25rem)}
+.catalog-head{margin-bottom:1.1rem}
+.catalog-head h2{margin-top:.3rem;font-family:'Unbounded',sans-serif;
+  font-size:clamp(1.3rem,2.4vw,1.75rem);font-weight:600}
+.catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+
+.course-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;
+  min-height:220px;padding:1.25rem 1.25rem 1.1rem;text-align:left;cursor:pointer;
+  color:var(--on-char);font:inherit;border-radius:16px;
+  border:1px solid var(--line-d);background:rgba(var(--hub-panel-rgb),.55);
+  transition:transform .25s var(--ease),border-color .25s var(--ease),background-color .25s var(--ease)}
+.course-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent-text) 55%,transparent);
+  background:rgba(var(--hub-panel-rgb),.85)}
+.course-card:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+.course-card-top{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:.4rem}
+.course-card-num{color:var(--on-char-mute);font:500 .7rem/1 'Martian Mono',monospace;letter-spacing:.12em}
+.course-card-state{padding:.38rem .6rem;border-radius:999px;border:1px solid var(--line-d2);
+  color:var(--on-char-soft);font:500 .6rem/1 'Martian Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.course-card.inicio .course-card-state,.course-card.en-curso .course-card-state{
+  border-color:color-mix(in srgb,var(--accent-surface) 60%,transparent);color:var(--accent-text);
+  background:color-mix(in srgb,var(--accent-surface) 12%,transparent)}
+.course-card.completo .course-card-state{border-color:var(--lettuce);color:var(--lettuce)}
+.course-card-title{font-family:'Unbounded',sans-serif;font-size:1.2rem;font-weight:600;line-height:1.15}
+.course-card-sub{color:var(--on-char-soft);font-size:.88rem;line-height:1.45}
+.course-card-meta{margin-top:auto;padding-top:.6rem;color:var(--on-char-mute);
+  font:400 .66rem/1 'Martian Mono',monospace;letter-spacing:.08em}
+.course-card-bar{display:block;width:100%;height:3px;border-radius:99px;background:var(--line-d)}
+.course-card-bar i{display:block;height:100%;border-radius:inherit;background:var(--accent-surface)}
+.course-card.completo .course-card-bar i{background:var(--lettuce)}
+.course-card-go{color:var(--accent-text);font:600 .66rem/1 'Martian Mono',monospace;letter-spacing:.12em;
+  text-transform:uppercase;transition:transform .25s var(--ease)}
+.course-card:hover .course-card-go{transform:translateX(4px)}
+.course-card.pronto{opacity:.6}
+
+.back-to-catalog{display:inline-flex;align-items:center;min-height:44px;margin-bottom:.6rem;padding:0 .9rem;
+  border:1px solid var(--line-d2);border-radius:999px;background:none;color:var(--on-char-soft);cursor:pointer;
+  font:500 .66rem/1 'Martian Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.back-to-catalog:hover{color:var(--on-char);border-color:var(--accent-text)}
+.back-to-catalog:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.active-category h2:focus{outline:none}
+
+@media(max-width:760px){
+  .focused-curriculum[data-vista="curso"] .curriculum-workspace{display:block}
+  .course-map{display:none}
+  .catalog-grid{grid-template-columns:1fr}
+  .course-card{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){.course-card,.course-card-go{transition:none}}

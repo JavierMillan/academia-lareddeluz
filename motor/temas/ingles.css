@@ -61,6 +61,8 @@
   font-size:clamp(2.8rem,6vw,6.2rem);line-height:.88;letter-spacing:.005em}
 .theme-ingles .featured-class h2,
 .theme-ingles .row-head h3,
+.theme-ingles .course-card-title,
+.theme-ingles .catalog-head h2,
 .theme-ingles .deck-card h4{
   font-family:var(--font-display);text-transform:uppercase;letter-spacing:-.01em}
 

@@ -81,3 +81,11 @@
 /* el texto siempre gana: el lienzo se apaga detrás de la columna de lectura */
 .hm-3d-on .hub-identity,.hm-3d-on .featured-class{position:relative}
 @media (prefers-reduced-motion:reduce){.hm-3d{transition:none}}
+
+/* catálogo: las tarjetas entran escalonadas */
+@media (prefers-reduced-motion:no-preference){
+  .catalog-grid>.course-card{animation:hmRow .55s var(--hm-ease) both}
+  .catalog-grid>.course-card:nth-child(2){animation-delay:.06s}
+  .catalog-grid>.course-card:nth-child(3){animation-delay:.12s}
+  .catalog-grid>.course-card:nth-child(n+4){animation-delay:.18s}
+}
