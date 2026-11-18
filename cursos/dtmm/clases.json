@@ -505,8 +505,15 @@
               "tipo": "prompt",
               "icono": "⌘",
               "titulo": "El pedido CORTA",
-              "descripcion": "El prompt para copiar en Claude Code, cómo grabar pensando en tu editor, la revisión letra por letra y el caso real. Se guarda como PDF.",
+              "descripcion": "Instala la skill y sus herramientas, graba pensando en tu editor, copia el pedido y revisa letra por letra. Con el caso real. Se guarda como PDF.",
               "url": "herramientas-ia/recursos/pedido-corta.html"
+            },
+            {
+              "tipo": "skill",
+              "icono": "◈",
+              "titulo": "Skill · Editor CORTA",
+              "descripcion": "Le enseña a Claude Code a editar con CORTA: corta, quita silencios y muletillas, sigue tus manos, pone subtítulos y mezcla. Se instala en la carpeta de skills de Claude Code.",
+              "url": "herramientas-ia/recursos/editor-corta.zip"
             },
             {
               "tipo": "guia",

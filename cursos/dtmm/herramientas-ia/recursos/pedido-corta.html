@@ -152,9 +152,35 @@ code{font-family:'Martian Mono',monospace;font-size:.86em;
   </table>
   <div class="lesson"><div class="lt">CORTA también es el orden</div><p>Primero se corta, luego se escucha, luego se lee a la persona, luego el texto y al final lo que aparece. Y cuando Claude te entrega, revisas en ese mismo orden.</p></div>
 
-  <h2>Paso 1 · Lo que necesitas</h2>
+  <h2>Paso 1 · Dale a Claude su caja de herramientas</h2>
   <p>Para que Claude edite un video de verdad y te entregue un <code>.mp4</code>, usa <strong>Claude Code</strong>, el que instalamos en la clase 1. En la app normal de Claude puedes planear el corte y los textos, pero no armar el video.</p>
-  <div class="lesson"><div class="lt">Tu video</div><p>Ponlo en una carpeta propia, sin otros archivos. Mientras más corto el crudo, más rápido trabaja.</p></div>
+  <table class="cuadro">
+    <thead><tr><th>#</th><th>Qué</th><th>Para qué</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>Skill Editor CORTA</b></td><td>Le enseña a Claude a editar con CORTA: cortar, quitar silencios, seguir tus manos, subtítulos y mezcla.</td><td><a class="tb-btn primary" href="editor-corta.zip" download>⇩ Bajar</a></td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><div class="lt">Instala la skill en Claude Code</div><p>1. Descomprime <strong>editor-corta.zip</strong>.<br>2. Copia la carpeta <strong>editor-corta</strong> a la carpeta de skills de Claude Code: <code>~/.claude/skills/</code> (en Windows: <code>C:\Users\TU-USUARIO\.claude\skills\</code>).<br>3. Abre Claude Code y escribe <em>"¿tienes la skill editor-corta?"</em>. Si dice que sí, sigue.</p></div>
+  <p>La skill usa cinco herramientas gratuitas. No tienes que instalarlas a mano: copia esto en Claude Code y él lo hace.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude Code · instalar las herramientas</span></div>
+    <button class="copybtn" data-target="p0">Copiar</button>
+<pre id="p0">Usa la skill editor-corta. Corre su script verificar.py y dime qué falta.
+Instálame lo que falte (pídeme permiso antes de cada instalación) y vuelve
+a correr verificar.py hasta que diga "Todo listo".</pre>
+  </div>
+  <table class="cuadro">
+    <thead><tr><th>Herramienta</th><th>Letra</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td>ffmpeg</td><td>C · O</td><td>Corta, une y exporta el video.</td></tr>
+      <tr><td>faster-whisper</td><td>C · O · T</td><td>Transcribe palabra por palabra, con tiempos.</td></tr>
+      <tr><td>MediaPipe</td><td>R</td><td>Ve tus manos cuadro por cuadro: sabe cuándo apuntas.</td></tr>
+      <tr><td>rembg</td><td>R</td><td>Recorta tu silueta para poner texto detrás de ti (opcional).</td></tr>
+      <tr><td>OpenCV y Pillow</td><td>T · A</td><td>Dibujan los subtítulos y lo que aparece.</td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><div class="lt">Tu video</div><p>Ponlo en una carpeta propia, sin otros archivos, y abre Claude Code en esa carpeta. Mientras más corto el crudo, más rápido trabaja. Nada se sube a internet: todo pasa en tu computadora.</p></div>
+  <div class="lesson"><div class="lt">Los sonidos y la música</div><p>Claude te va a pedir permiso para bajar de <strong>Pixabay</strong> (gratis y sin derechos) un sonido por cada cosa que aparece y una música de fondo. Si ya tienes los tuyos, dáselos.</p></div>
 
   <h2>Paso 2 · Graba pensando en tu editor</h2>
   <p>Cinco hábitos que le facilitan todo a Claude (y a cualquier editor):</p>
@@ -174,7 +200,8 @@ code{font-family:'Martian Mono',monospace;font-size:.86em;
   <div class="promptbox">
     <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude Code · en la carpeta de tu video</span></div>
     <button class="copybtn" data-target="p1">Copiar</button>
-<pre id="p1">Edítame este video. Primero dime qué vas a cortar y qué vas a meter,
+<pre id="p1">Usa la skill editor-corta. Edítame este video.
+Primero dime qué vas a cortar y qué vas a meter,
 y espera a que lo apruebe.
 
 QUÉ ES Y PARA QUIÉN: [un reel de 60 s para ... / una clase de 50 min para ...]
