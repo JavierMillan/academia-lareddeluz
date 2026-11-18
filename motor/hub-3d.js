@@ -1,7 +1,7 @@
 /* =========================================================
    Motivo 3D de la portada del hub (Three.js).
    El motor no conoce constelaciones: el hub elige una escena con
-   <body data-motivo3d="ondas|esfera">, y los colores salen de las
+   <script type="module" src=".../hub-3d.js" data-motivo3d="ondas|esfera">, y los colores salen de las
    variables CSS del tema (--accent-surface, --on-char).
 
    - "ondas":  dos voces que se turnan. Cintas de onda en perspectiva,
@@ -15,7 +15,8 @@
    ========================================================= */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-const escena = document.body.dataset.motivo3d;
+const etiqueta = document.querySelector('script[data-motivo3d]');
+const escena = etiqueta && etiqueta.dataset.motivo3d;
 const slot = document.getElementById('heroSlot');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
