@@ -129,3 +129,15 @@
     animation:inglesPunto 1.8s ease-in-out infinite}
   @keyframes inglesPunto{0%,100%{opacity:1;transform:none}50%{opacity:.35;transform:scale(.8)}}
 }
+
+/* Motivo 3D: el piso de sonido vive abajo; deja aire para las ondas. */
+.theme-ingles .hub-hero.hm-3d-ondas{padding-bottom:clamp(4.5rem,9vw,7rem)}
+.theme-ingles .hm-3d-ondas .hm-3d{
+  -webkit-mask-image:linear-gradient(180deg,transparent 30%,#000 70%);
+  mask-image:linear-gradient(180deg,transparent 30%,#000 70%)}
+@media(max-width:760px){
+  .theme-ingles .hub-hero.hm-3d-ondas{padding-bottom:6.5rem}
+  .theme-ingles .hm-3d-ondas .hm-3d{
+    -webkit-mask-image:linear-gradient(180deg,transparent 72%,#000 92%);
+    mask-image:linear-gradient(180deg,transparent 72%,#000 92%)}
+}

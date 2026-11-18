@@ -68,3 +68,10 @@
   /* la estrella principal de Lyra se enciende al final del trazo */
   .theme-dtmm .constellation-avatar circle.core{animation:hmStar .9s var(--hm-ease) 1.5s both}
 }
+
+/* Motivo 3D: la esfera cortada es la única fuente de luz, así que el
+   corte diagonal de fondo se apaga cuando la esfera está presente. */
+.theme-dtmm .hub-hero.hm-3d-esfera .constellation-motif{background:
+  linear-gradient(rgba(232,161,60,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(232,161,60,.035) 1px,transparent 1px);
+  background-size:34px 34px,34px 34px}

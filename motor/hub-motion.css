@@ -73,3 +73,11 @@
 
 /* La señal (barras de voz) la inyecta hub-motion.js; el tema decide si se ve. */
 .hm-signal{display:none}
+
+/* ---------- lienzo 3D de la portada (hub-3d.js) ---------- */
+.hm-3d{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;
+  opacity:0;transition:opacity 1.2s var(--hm-ease)}
+.hm-3d.is-on{opacity:1}
+/* el texto siempre gana: el lienzo se apaga detrás de la columna de lectura */
+.hm-3d-on .hub-identity,.hm-3d-on .featured-class{position:relative}
+@media (prefers-reduced-motion:reduce){.hm-3d{transition:none}}
