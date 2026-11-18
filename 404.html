@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Esta página no existe · Academia La Red de Luz</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/assets/imgs/reddeluz.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=JetBrains+Mono:wght@500&family=Spectral:ital,wght@0,600;1,500&display=swap">
+<style>
+:root{--void:#0d0b16;--void2:#161423;--gold:#e4cd85;--gold-dark:#c08a2d;--ink:#fff;--ink-soft:rgba(255,255,255,.72);--ink-mute:rgba(255,255,255,.6);--line:rgba(228,205,133,.22);--grid:rgba(228,205,133,.05)}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:var(--void);color:var(--ink);font-family:Inter,system-ui,sans-serif;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:48px 48px}
+main{max-width:560px;text-align:center}
+.logo{width:48px;height:48px;object-fit:contain;margin:0 auto 28px;display:block}
+.coord{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:12px}
+.coord::after{content:"";width:64px;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+h1{font:600 clamp(40px,8vw,64px)/1 Spectral,Georgia,serif;letter-spacing:-.02em;margin:20px 0 18px}
+h1 em{font-weight:500;color:var(--gold)}
+p{font-size:17px;font-weight:300;line-height:1.6;color:var(--ink-soft)}
+.acciones{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+a.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:14px;text-decoration:none;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.primario{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--void)}
+.fantasma{border:1px solid var(--line);color:var(--ink)}
+a.btn:hover{filter:brightness(1.08)}a.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.nodo{display:inline-block;width:9px;height:9px;border:1px solid var(--gold);border-radius:50%;margin:40px auto 0;opacity:.6}
+@media (prefers-reduced-motion:no-preference){main{animation:sube .8s ease-out both}@keyframes sube{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}}
+</style></head>
+<body><main>
+<img class="logo" src="/assets/imgs/reddeluz.png" alt="La Red de Luz">
+<span class="coord">Error 404 · Fuera del mapa</span>
+<h1>Esta página <em>no existe.</em></h1>
+<p>Quizá el enlace cambió o tiene un error. Las clases siguen aquí: regresa a la academia y entra a tu constelación.</p>
+<div class="acciones">
+  <a class="btn primario" href="https://academia.lareddeluz.com/">Ir a la Academia</a>
+  <a class="btn fantasma" href="https://academia.lareddeluz.com/dtmm/">De tu Mente al Mundo</a>
+  <a class="btn fantasma" href="https://academia.lareddeluz.com/ingles/">¡Hablemos Inglés!</a>
+</div>
+<span class="nodo" aria-hidden="true"></span>
+</main></body></html>

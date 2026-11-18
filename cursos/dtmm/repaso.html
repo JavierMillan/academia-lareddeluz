@@ -148,6 +148,13 @@ body{display:flex;flex-direction:column;background:var(--char)}
 .panes.solo-video .pane:last-child,.panes.solo-video .divisor{display:none}
 .panes.solo-video .pane.video .cuerpo{flex:1}
 
+/* clase sin grabación todavía: la presentación ocupa toda la pantalla
+   y el aviso se queda en la barra, sin media pantalla vacía */
+.panes.solo-deck{grid-template-columns:1fr !important;grid-template-rows:minmax(0,1fr) !important}
+.panes.solo-deck .pane.video,.panes.solo-deck .divisor{display:none}
+.repaso-bar .aviso{margin-left:auto;font-family:'Martian Mono',monospace;font-size:.62rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-char-mute);white-space:nowrap}
+
 /* ---- vertical: el video arriba, la presentación abajo ---- */
 @media (max-width:900px), (orientation:portrait){
   .panes{grid-template-columns:1fr;
@@ -310,6 +317,11 @@ body{display:flex;flex-direction:column;background:var(--char)}
       if(!grabs.length){
         paneVideo.innerHTML =
           '<div class="vacio">La grabación de esta clase se sube después de la sesión.</div>';
+        document.getElementById('panes').classList.add('solo-deck');
+        const aviso = document.createElement('span');
+        aviso.className = 'aviso';
+        aviso.textContent = 'Grabación: próximamente';
+        document.querySelector('.repaso-bar').appendChild(aviso);
         return;
       }
 
