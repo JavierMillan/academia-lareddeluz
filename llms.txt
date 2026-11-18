@@ -1,0 +1,73 @@
+# Academia La Red de Luz
+
+> Academia gratuita de La Red de Luz: clases en vivo, decks y recursos para aprender haciendo y crecer en comunidad. Cada curso se llama constelación; cada persona es un nodo de la red.
+
+Sitio: https://academia.lareddeluz.com/ · Organización: https://lareddeluz.com/
+
+## De tu Mente al Mundo
+
+Clases gratuitas de La Red de Luz sobre contenido, redes sociales, ventas por chat e inteligencia artificial: de la idea a algo que puedas construir y publicar.
+
+- [De tu Mente al Mundo · hub](https://academia.lareddeluz.com/dtmm/)
+- [Por qué nadiete escribe.](https://academia.lareddeluz.com/dtmm/masterclass/por-que-nadie-te-escribe.html): El error silencioso que apaga tus ventas antes de que el embudo empiece. Psicología del consumidor aplicada a tu mensaje.
+- [Antes de publicar, ¿a quién le hablas?](https://academia.lareddeluz.com/dtmm/basico/redes-desde-cero-1.html): Define tu mensaje con el Ikigai. La primera decisión que casi nadie toma… y la que lo cambia todo.
+- [Ya sabes a quién, ahora aprende a decirlo](https://academia.lareddeluz.com/dtmm/basico/formatos-que-funcionan-2.html): Reel, carrusel, historia: qué hace cada uno y por qué. Datos reales, no moda.
+- [Mejor 2 veces por semana durante un año](https://academia.lareddeluz.com/dtmm/basico/cadencia-sostenible-3.html): Cómo construir una cadencia de posteo que sí puedas sostener.
+- [Tu perfil y tu primer post](https://academia.lareddeluz.com/dtmm/basico/tu-primer-post-4.html): Taller en vivo: foto, bio y tu primer post publicado. Graduación de nivel.
+- [Tu celular ya es suficiente](https://academia.lareddeluz.com/dtmm/basico/tu-celular-ya-es-suficiente-5.html): Luz, encuadre y audio con lo que ya tienes en la mano. Sin comprar nada.
+- [Qué hacer cuando nadie te ve todavía](https://academia.lareddeluz.com/dtmm/basico/nadie-te-ve-todavia-6.html): Las primeras semanas son silenciosas para todos. Qué hacer con ese silencio.
+- [Cómo hacer que el algoritmo te ame](https://academia.lareddeluz.com/dtmm/intermedio/intermedio-algoritmo-1.html): El algoritmo es un espejo. Hook que promete, contenido que cumple, final que se comparte.
+- [Deja de hablarle a todos](https://academia.lareddeluz.com/dtmm/intermedio/avatar-cliente-2.html): Volante vs. carta, 3 tiros al bat y el ejercicio de la silla vacía.
+- [Deja de copiar recetas ajenas](https://academia.lareddeluz.com/dtmm/intermedio/leer-metricas-3.html): Decidir con tus números, no copiando recetas ajenas.
+- [Crea tu carrusel o guion con ChatGPT](https://academia.lareddeluz.com/dtmm/intermedio/crea-tu-carrusel-4.html): Taller en vivo: construye tu prompt y sal con contenido real. Graduación de nivel.
+- [Te escribieron. Y ahora, ¿qué?](https://academia.lareddeluz.com/dtmm/intermedio/te-escribieron-5.html): No es vender — es no arruinarlo en los primeros mensajes. El puente entre publicar y vender.
+- [Chuleta de respuestas rápidas](https://academia.lareddeluz.com/dtmm/intermedio/recursos/chuleta-respuestas.html): Los tres tipos de mensaje, con ejemplo de respuesta para cada uno.
+- [Constancia sin quemarte](https://academia.lareddeluz.com/dtmm/intermedio/constancia-sin-quemarte-6.html): El siguiente problema después de la cadencia: sostenerla sin que se vuelva trabajo forzado.
+- [Plantilla de banco de ideas + calendario de lotes](https://academia.lareddeluz.com/dtmm/intermedio/recursos/banco-de-ideas.html): Para llenar hoy y reutilizar cada semana, con ejemplos de cada categoría.
+- [Tu historia como material](https://academia.lareddeluz.com/dtmm/intermedio/tu-historia-como-material-7.html): De dónde sacar contenido cuando se te acaban las ideas del negocio, sin exponerte de más.
+- [Plantilla de banco de historias](https://academia.lareddeluz.com/dtmm/intermedio/recursos/banco-de-historias.html): Un espacio por zona (pública, trabajo, personal filtrada) para armar tus 5 historias.
+- [La conversación que vende sin vender](https://academia.lareddeluz.com/dtmm/avanzado/avanzado-conversacion-1.html): La venta se juega en el chat. Calificar, entender y acompañar a quien ya estaba listo.
+- [Vender sin que se sienta a venta](https://academia.lareddeluz.com/dtmm/avanzado/vender-sin-hartar-2.html): Máscaras, historia y el Caballo de Troya. Se puede vender y volverse viral a la vez.
+- [La IA es tu intern, no tu jefe](https://academia.lareddeluz.com/dtmm/avanzado/automatizar-ia-3.html): Regla del 75/25: la IA da la estructura, tú pones el alma.
+- [Lo que hace que alguien diga "exacto, eso me pasa a mí"](https://academia.lareddeluz.com/dtmm/avanzado/conexion-humana-3.html): Labeling, mirroring y feel-felt-found: cómo sostener la conversación una vez que la máscara ya abrió la puerta.
+- [Tu sistema completo, funcionando hoy](https://academia.lareddeluz.com/dtmm/avanzado/tu-sistema-completo-4.html): Taller en vivo: arma tu faceta, tu guion de chat y tu prompt personal. Graduación de nivel.
+- [Guiones que controlan la conversación](https://academia.lareddeluz.com/dtmm/ventas/guiones-estrategicos-1.html): De tocar puertas en Estados Unidos a cerrar en bienes raíces — con Arturo.
+- [Se te acabó la lista. Ahora, ¿qué?](https://academia.lareddeluz.com/dtmm/ventas/creatividad-prospectos-2.html): Creatividad para conseguir prospectos nuevos sin quemar tus contactos.
+- [El seguimiento que no incomoda](https://academia.lareddeluz.com/dtmm/ventas/seguimiento-sin-incomodar-3.html): Con Arturo. Qué pasa entre el "déjame lo pienso" y la venta.
+- [Los 3 mensajes de seguimiento, en plantilla](https://academia.lareddeluz.com/dtmm/ventas/recursos/plantilla-seguimiento.html): Listos para adaptar a cualquier prospecto, con el calendario de 3-7-14 días.
+- [Una página web que se convierte en video](https://academia.lareddeluz.com/dtmm/herramientas-ia/video-con-codigo-1.html): Editar video escribiendo código: instalación, flujo de trabajo y las trampas que cuestan tiempo.
+- [Prompt de arranque · pipeline de video](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/prompt-pipeline-video.html): Cópialo y pégalo en una conversación nueva. Trae dentro los comandos de instalación y las tres trampas, para que no las repitas. Se guarda como PDF.
+- [Mi espacio de trabajo](https://academia.lareddeluz.com/dtmm/herramientas-ia/mi-espacio-de-trabajo.html): Notion, Drive y tu asistente trabajando juntos: tú le hablas, él organiza.
+- [Conectar tu IA a Notion y Drive](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/conectar-tu-ia.html): Los pasos para dejar tu asistente conectado, los primeros prompts y qué hacer cuando algo falla. Se guarda como PDF.
+- [Tu asistente con tu voz](https://academia.lareddeluz.com/dtmm/herramientas-ia/tu-asistente-con-tu-voz-3.html): Cómo darle a cualquier asistente tu forma de escribir, para que deje de sonar genérico.
+- [Prompt de arranque · documento de voz](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/documento-de-voz.html): Se copia y se pega al inicio de cualquier conversación con un asistente.
+- [Tu marca en Claude Design](https://academia.lareddeluz.com/dtmm/herramientas-ia/tu-marca-en-claude-design-4.html): Le enseñas a Claude cómo se ve y cómo habla tu marca, y después diseña tus posts con tu cara.
+- [Los 3 prompts · tu marca en Claude Design](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/tu-marca-en-claude-design.html): El director de arte, la fábrica de recursos y el diseño de piezas, con lo que aprendimos con Lumiku. Se guarda como PDF.
+- [Tu video empieza en el guion](https://academia.lareddeluz.com/dtmm/herramientas-ia/tu-video-empieza-en-el-guion-5.html): Claude ya anima con tu marca. Aquí aprendes lo que no puede adivinar: qué contar y por qué cada escena lleva a la siguiente.
+- [Los 5 pasos y el prompt del video](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/tu-video-empieza-en-el-guion.html): Paso a paso y en orden: instala las 3 skills, escribe tu historia en 5 frases y pega el prompt. Se guarda como PDF.
+- [Caso real: del video feo al cinematográfico](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/del-video-feo-al-cinematografico.html): Las versiones 1, 2 y 5 de un mismo video, qué cambió en cada una y las 10 lecciones. Con frases listas para pedírselo a Claude.
+- [Claude como tu editor](https://academia.lareddeluz.com/dtmm/herramientas-ia/claude-como-editor-6.html): Editar bien es saber pedir. Una palabra, CORTA, para que Claude edite tu video sin cortes a media frase, sin silencios incómodos y sin animaciones de adorno.
+- [El pedido CORTA](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/pedido-corta.html): Instala la skill y sus herramientas, graba pensando en tu editor, copia el pedido y revisa letra por letra. Con el caso real. Se guarda como PDF.
+- [Referencias para cada letra](https://academia.lareddeluz.com/dtmm/herramientas-ia/recursos/referencias-corta.html): Videos de editores para explorar la letra que más te cuesta. Principios, no estilos.
+
+## ¡Hablemos Inglés!
+
+Clases de inglés en comunidad: sesiones en vivo para practicar conversaciones reales (presentaciones, juntas, viajes, compras, teléfono) con decks y recursos.
+
+- [¡Hablemos Inglés! · hub](https://academia.lareddeluz.com/ingles/)
+- [Cinco palabras al día](https://academia.lareddeluz.com/ingles/sesion-1.html): Presentaciones, gustos personales, la regla de la "s" en tercera persona y el sufijo -ing. Con Arturo.
+- [Construyendo nuestras primeras conversaciones](https://academia.lareddeluz.com/ingles/sesion-2.html): Pronunciación sin miedo, mini role-play y los errores más chistosos que todos cometemos al empezar.
+- [Yo soy, tú eres](https://academia.lareddeluz.com/ingles/sesion-3.html): Presentarte, saludar y preguntar sobre otra persona — con el verbo TO BE.
+- [What do you do every day?](https://academia.lareddeluz.com/ingles/sesion-4.html): Tu rutina diaria en presente simple — y la "s" que se te puede olvidar.
+- [I'd like... I'm going to...](https://academia.lareddeluz.com/ingles/sesion-5.html): Gustos, planes de fin de semana, y un role-play completo pidiendo comida en McDonald's.
+- [En una fiesta](https://academia.lareddeluz.com/ingles/sesion-6.html): Presentarte, sostener small talk y despedirte bien. Con modismos de fiesta y cómo se dicen los teléfonos.
+- [Una junta de trabajo](https://academia.lareddeluz.com/ingles/sesion-7.html): Dar tu actualización, opinar y pedir que te repitan sin pena. Más la regla del "twelve hundred".
+- [De viaje](https://academia.lareddeluz.com/ingles/sesion-8.html): Aeropuerto, Uber y hotel — tres diálogos cortos para resolver un viaje completo en inglés.
+- [En el súper](https://academia.lareddeluz.com/ingles/sesion-9.html): Encontrar lo que buscas, entenderle al cajero y pagar sin sudar. Con los precios como se dicen allá.
+- [Farmacia y clínica](https://academia.lareddeluz.com/ingles/sesion-10.html): Recoger una receta, explicar qué te duele y deletrear tu apellido sin trabarte.
+- [Por teléfono](https://academia.lareddeluz.com/ingles/sesion-11.html): Hacer una cita, reclamar un cobro y las frases de rescate para cuando no entiendes.
+- [De compras](https://academia.lareddeluz.com/ingles/sesion-12.html): Pedir tu talla, probarte algo y devolverlo si no te quedó.
+- [Gasolinera y taller](https://academia.lareddeluz.com/ingles/sesion-13.html): Cargar gasolina, explicar una falla y pedir presupuesto antes de que te cobren.
+- [Practica para pedir comida](https://academia.lareddeluz.com/ingles/recursos/grammar-grill.html): Elige un lugar (McDonald's, cafetería...) y practica como cliente o como quien atiende. Cada pedido empieza con la frase correcta en inglés.
+- [Flashcards con repetición espaciada](https://academia.lareddeluz.com/ingles/recursos/flashcards.html): Repasa el vocabulario justo antes de olvidarlo — el sistema con más evidencia para que se quede. Guarda tu progreso en este navegador.
+- [Las 100 palabras más usadas en inglés](https://academia.lareddeluz.com/ingles/recursos/100-palabras.html): Vocabulario base con pronunciación y significado, agrupado por categoría. Sirve para cualquier sesión.
