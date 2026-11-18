@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../../assets/imgs/reddeluz.png">
+<title>El pedido CORTA · Claude como tu editor — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#19140f; --char-soft:#241d16;
+  --paper:#f3ead7; --paper-soft:#ece0c6;
+  --sesame:#e8a13c; --ketchup:#c8442e; --lettuce:#7c9a3e;
+  --on-char:#f3ead7; --on-char-soft:#c4b69d; --on-char-mute:#8a7c68;
+  --on-paper:#221a12; --on-paper-soft:#5c4f3d; --on-paper-mute:#8a7d6a;
+  --line-d:rgba(243,234,215,0.12); --line-d2:rgba(243,234,215,0.22);
+  --line-l:rgba(25,20,15,0.14); --line-l2:rgba(25,20,15,0.26);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--char);color:var(--on-char);
+  font-family:'Spline Sans',system-ui,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.8rem clamp(1.2rem,4vw,3rem);
+  background:rgba(25,20,15,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-d)}
+.tb-btn{background:transparent;border:1px solid var(--line-d2);color:var(--on-char-soft);
+  border-radius:8px;padding:.42rem .8rem;cursor:pointer;text-decoration:none;
+  font-family:'Martian Mono',monospace;font-size:.66rem;letter-spacing:.12em;
+  transition:.25s var(--ease);display:inline-flex;align-items:center;gap:.4rem}
+.tb-btn:hover{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary{border-color:var(--sesame);color:var(--sesame)}
+.tb-btn.primary:hover{background:rgba(232,161,60,.12)}
+.tb-sp{flex:1}
+
+.wrap{max-width:56rem;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,3rem) 6rem}
+
+.eyebrow{font-family:'Martian Mono',monospace;font-size:.68rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--sesame);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-.02em;
+  line-height:1.02;font-size:clamp(1.9rem,4.6vw,3.2rem)}
+h1 .hl{color:var(--sesame)}
+.sub{font-size:clamp(1rem,1.6vw,1.2rem);color:var(--on-char-soft);
+  max-width:46ch;margin-top:1.2rem}
+
+h2{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.15rem,2.2vw,1.6rem);margin-top:clamp(2.4rem,5vw,3.4rem);
+  padding-top:1.4rem;border-top:1px solid var(--line-d)}
+p{margin-top:.9rem;color:var(--on-char-soft)}
+strong,b{color:var(--on-char);font-weight:600}
+code{font-family:'Martian Mono',monospace;font-size:.86em;
+  background:rgba(243,234,215,.07);border:1px solid var(--line-d);
+  border-radius:5px;padding:.1em .42em;color:var(--sesame)}
+
+.rule{width:90px;height:2px;margin:1.6rem 0;
+  background:linear-gradient(90deg,var(--ketchup),var(--sesame))}
+
+.promptbox{position:relative;margin-top:1.6rem;
+  background:#0f0c09;border:1px solid var(--line-d2);border-radius:14px;overflow:hidden}
+.promptbox .pb-head{display:flex;align-items:center;gap:.5rem;
+  padding:.6rem .9rem;border-bottom:1px solid var(--line-d);
+  background:rgba(243,234,215,.04)}
+.promptbox .pb-head i{width:9px;height:9px;border-radius:50%;background:var(--line-d2);display:block}
+.promptbox .pb-head .tt{margin-left:.4rem;font-family:'Martian Mono',monospace;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+.promptbox pre{padding:clamp(1rem,2.4vw,1.5rem);overflow-x:auto;
+  font-family:'Martian Mono',monospace;font-size:clamp(.72rem,1.15vw,.86rem);
+  line-height:1.7;color:var(--on-char-soft);white-space:pre-wrap;word-break:break-word}
+.copybtn{position:absolute;top:.5rem;right:.6rem;
+  background:rgba(232,161,60,.12);border:1px solid var(--sesame);color:var(--sesame);
+  border-radius:7px;padding:.3rem .7rem;cursor:pointer;
+  font-family:'Martian Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  transition:.25s var(--ease)}
+.copybtn:hover{background:rgba(232,161,60,.24)}
+.copybtn.done{background:rgba(124,154,62,.2);border-color:var(--lettuce);color:var(--lettuce)}
+
+.lesson{margin-top:1.1rem;padding:1rem 1.2rem;
+  background:var(--char-soft);border:1px solid var(--line-d);
+  border-left:3px solid var(--sesame);border-radius:10px}
+.lesson .lt{font-family:'Unbounded',sans-serif;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--on-char)}
+.lesson p{margin-top:.45rem;font-size:.95rem}
+
+.foot{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line-d);
+  font-family:'Fraunces',serif;font-size:.88rem;color:var(--on-char-mute)}
+.foot a{color:var(--sesame);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#111;font-size:10.5pt;line-height:1.45}
+  .topbar,.copybtn{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  h1{font-size:22pt;color:#111}
+  h1 .hl{color:#a8600f}
+  .sub{color:#444}
+  h2{font-size:13pt;color:#111;border-top:1px solid #ccc;
+    margin-top:18pt;padding-top:8pt;break-after:avoid}
+  p{color:#333}
+  strong,b{color:#000}
+  .eyebrow{color:#a8600f}
+  .rule{background:#a8600f}
+  code{background:#f2f2f2;border-color:#ddd;color:#8a3b18}
+  .promptbox{background:#fafafa;border-color:#ccc;break-inside:avoid}
+  .promptbox .pb-head{background:#f0f0f0;border-color:#ddd}
+  .promptbox .pb-head i{background:#ccc}
+  .promptbox .pb-head .tt{color:#666}
+  .promptbox pre{color:#222;font-size:8.5pt}
+  .lesson{background:#faf7f0;border-color:#ddd;border-left-color:#a8600f;break-inside:avoid}
+  .lesson .lt{color:#111}
+  .foot{color:#666;border-color:#ccc}
+  .foot a{color:#a8600f}
+}
+.cuadro{width:100%;border-collapse:collapse;margin-top:1.2rem}
+.cuadro th,.cuadro td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line-d);font-size:.95rem;vertical-align:top}
+.cuadro th{font-family:'Martian Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-char-mute);font-weight:500}
+.cuadro td{color:var(--on-char-soft)} .cuadro td:first-child{color:var(--on-char);font-weight:500}
+@media print{.cuadro th,.cuadro td{border-color:#ddd;color:#333}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-btn" href="../../index.html">‹ Hub</a>
+  <a class="tb-btn" href="../../clase.html?id=claude-como-editor-6">Ver la clase</a>
+  <div class="tb-sp"></div>
+  <button class="tb-btn primary" onclick="window.print()">⇩ Guardar como PDF</button>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">Herramientas de IA · Clase 6 · Recurso</div>
+  <h1>El pedido<br><span class="hl">CORTA</span></h1>
+  <p class="sub">Una palabra para pedirle a Claude que edite tu video como un editor de verdad, y para revisar lo que te entrega. Sin cortes a media frase, sin silencios incómodos, sin animaciones de adorno.</p>
+  <div class="rule"></div>
+
+  <table class="cuadro">
+    <thead><tr><th>Letra</th><th>Lo que cuida</th><th>Lo que evita</th></tr></thead>
+    <tbody>
+      <tr><td><b>C</b> · Cortes completos</td><td>Cortar en bloques completos de lo que piensas</td><td>Cortes a media frase, inicio vacío, final colgado</td></tr>
+      <tr><td><b>O</b> · Oído</td><td>Escuchar el corte: pausas, muletillas, música</td><td>Silencios incómodos y palabras mochas</td></tr>
+      <tr><td><b>R</b> · Reacciona a mí</td><td>Que la edición siga tus manos y tu cara</td><td>Cosas que salen lejos del dedo o encima de tu cara</td></tr>
+      <tr><td><b>T</b> · Texto</td><td>Subtítulos que se leen al ritmo de tu voz</td><td>Subtítulos chiquitos o que terminan en "de"</td></tr>
+      <tr><td><b>A</b> · Animación con motivo</td><td>Que cada cosa que aparece conteste algo, con su sonido</td><td>Adornos, todo a la vez, cierres mudos</td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><div class="lt">CORTA también es el orden</div><p>Primero se corta, luego se escucha, luego se lee a la persona, luego el texto y al final lo que aparece. Y cuando Claude te entrega, revisas en ese mismo orden.</p></div>
+
+  <h2>Paso 1 · Lo que necesitas</h2>
+  <p>Para que Claude edite un video de verdad y te entregue un <code>.mp4</code>, usa <strong>Claude Code</strong>, el que instalamos en la clase 1. En la app normal de Claude puedes planear el corte y los textos, pero no armar el video.</p>
+  <div class="lesson"><div class="lt">Tu video</div><p>Ponlo en una carpeta propia, sin otros archivos. Mientras más corto el crudo, más rápido trabaja.</p></div>
+
+  <h2>Paso 2 · Graba pensando en tu editor</h2>
+  <p>Cinco hábitos que le facilitan todo a Claude (y a cualquier editor):</p>
+  <table class="cuadro">
+    <thead><tr><th>#</th><th>Hábito</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Un segundo de silencio antes y después de cada idea</td><td>Le das un corte limpio.</td></tr>
+      <tr><td>2</td><td>Si te trabas, repite la frase <b>completa</b></td><td>Así hay un bloque entero para quedarse.</td></tr>
+      <tr><td>3</td><td>Manos dentro del cuadro, a la altura del pecho</td><td>Si salen del cuadro o van muy rápido, no se ven.</td></tr>
+      <tr><td>4</td><td>Haz el gesto <b>antes</b> de la palabra y sostenlo hasta terminarla</td><td>La mano llega antes que la voz. Si apuntas cuando ya la dijiste, llega tarde.</td></tr>
+      <tr><td>5</td><td>Cámara fija, luz de frente y espacio a los lados</td><td>Ahí es donde van a aparecer las cosas.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Paso 3 · Copia, llena y pega</h2>
+  <p>Toca <strong>Copiar</strong>, pégalo en Claude Code y llena <strong>solo lo que está entre corchetes [ ]</strong>. La primera línea es la más importante: Claude te dice qué va a hacer <strong>antes</strong> de hacerlo. Así corriges en un minuto lo que te costaría una hora.</p>
+  <div class="promptbox">
+    <div class="pb-head"><i></i><i></i><i></i><span class="tt">Claude Code · en la carpeta de tu video</span></div>
+    <button class="copybtn" data-target="p1">Copiar</button>
+<pre id="p1">Edítame este video. Primero dime qué vas a cortar y qué vas a meter,
+y espera a que lo apruebe.
+
+QUÉ ES Y PARA QUIÉN: [un reel de 60 s para ... / una clase de 50 min para ...]
+DÓNDE SE PUBLICA: [Instagram / TikTok / YouTube / WhatsApp]
+MI MARCA: [nombre, colores, tipografías]
+EL VIDEO: [nombre del archivo]
+
+
+=== CORTA (así se edita y así lo vas a revisar) ===
+
+C · CORTES COMPLETOS
+- Corta en bloques completos de lo que pienso, nunca a media frase.
+- Pocos bloques bien elegidos le ganan a muchos cortes chiquitos.
+- Corta en el silencio real del audio, no donde la transcripción dice
+  que termina la palabra.
+- Quita el inicio vacío y REVISA EL FINAL: que no queden minutos muertos
+  ni frases colgadas.
+- [Quita también: tomas que repito / la parte de ...]
+
+O · OÍDO
+- Quita las pausas de más de medio segundo y deja una respiración corta.
+- Quita muletillas ("este", "eh"). Los "entonces" que conectan se quedan.
+- No aceleres mi voz.
+- Música [tipo], bajita, que siga la historia: casi nada al inicio,
+  baja en la frase más fuerte, sube al final.
+
+R · REACCIONA A MÍ
+- Sigue mis manos: si apunto, lo que digo aparece justo ahí.
+- Pon los efectos donde está mi mano, no donde digo la palabra:
+  mi mano suele llegar antes que mi voz.
+- Nada encima de mi cara.
+- Si no hago gestos, reacciona a mi cara y a mi voz: un acercamiento
+  cuando subo el tono, quietud en la frase fuerte.
+
+T · TEXTO
+- Subtítulos [color / tipografía], grandes, la palabra que digo encendida.
+- Nunca terminar un bloque en "de", "que" o "y".
+- La palabra importante cierra su bloque.
+- Nombres y marcas bien escritos.
+
+A · ANIMACIÓN CON MOTIVO
+- Una cosa a la vez.
+- Cada cosa que aparece contesta lo que la gente está pensando en ese
+  segundo (si digo un nombre, aparece quién es).
+- Cada cosa que aparece trae su sonido: un clic, un pop, un golpe suave.
+  Si no puedes decir a qué evento va un sonido, quítalo.
+- Nada de partículas, rebotes ni adornos.
+- El cierre lleva audio y MI marca real: [logo / nombre]. No inventes logos.
+
+
+=== CÓMO TRABAJAR ===
+
+1. Antes de editar, dame la lista: qué cortas (con tiempos), qué metes
+   y en qué segundo. Espera mi visto bueno.
+2. Antes del video completo, enséñame unos cuadros de los momentos clave.
+3. Antes de entregar, revisa C-O-R-T-A y dime qué letra no pudiste
+   verificar.
+4. No puedes oír el video. Mide el volumen (entre -20 y -23 LUFS) y
+   dime que la revisión de oído me toca a mí.
+5. Cuando te diga qué letra falló y qué sentí, créeme antes que a tus
+   números y pregúntame qué debería pasar.</pre>
+  </div>
+
+  <h2>Paso 4 · Revisa con C-O-R-T-A</h2>
+  <p>Ve el video tres veces: una con sonido, una sin sonido y una pausando en los momentos donde aparece algo. Palomea:</p>
+  <table class="cuadro">
+    <thead><tr><th>Letra</th><th>Pregúntate</th></tr></thead>
+    <tbody>
+      <tr><td><b>C</b></td><td>¿Algún corte a media frase? ¿El inicio arranca directo? ¿El final termina donde debe?</td></tr>
+      <tr><td><b>O</b></td><td>¿Queda algún silencio incómodo o un "este"? ¿La música tapa mi voz? ¿Le tuve que bajar el volumen?</td></tr>
+      <tr><td><b>R</b></td><td>¿Lo que apareció salió donde apunté y cuando apunté? ¿Algo tapa mi cara?</td></tr>
+      <tr><td><b>T</b></td><td>¿Los subtítulos se leen en el celular? ¿Alguno termina en "de" o "que"?</td></tr>
+      <tr><td><b>A</b></td><td>¿Algo apareció sin motivo? ¿Cada cosa suena? ¿El cierre tiene audio y mi marca?</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Paso 5 · Si algo falla, di la letra y qué sentiste</h2>
+  <p>"No me gusta, mejóralo" no le dice nada a Claude. La letra y lo que sentiste, sí. Copia la que te sirva:</p>
+  <div class="lesson"><div class="lt">C · Cortes</div><p>"En el segundo 12 me cortaste a media frase. Deja el bloque completo."<br>"El final se quedó colgado. Termina en '...'."</p></div>
+  <div class="lesson"><div class="lt">O · Oído</div><p>"En el segundo 30 hay un silencio que se siente eterno."<br>"La música tapa mi voz en la parte de '...'."</p></div>
+  <div class="lesson"><div class="lt">R · Reacciona a mí</div><p>"La fecha no coincide con mi dedo, ni en el lugar ni en el momento. Apunté antes de decirla."<br>"El texto del segundo 8 me tapa la cara."</p></div>
+  <div class="lesson"><div class="lt">T · Texto</div><p>"En el celular no se leen los subtítulos: más grandes."<br>"Este bloque termina en 'de': pásalo al siguiente."</p></div>
+  <div class="lesson"><div class="lt">A · Animación</div><p>"Aparecen tres cosas a la vez: una por una."<br>"El cierre está mudo y ese no es mi logo."</p></div>
+
+  <h2>Caso real · El aviso de DESPEGA</h2>
+  <p>Así nació CORTA. Le pasé a Claude un video donde avisaba que la clase de DESPEGA se movía de fecha. Casi no hice señas.</p>
+  <div class="lesson"><div class="lt">Primera versión: 4 de 10</div><p>La fecha salía donde yo decía "28", no donde estaba mi dedo. No había efectos de sonido. El cierre estaba mudo y como logo puso… mi firma. Fallaron la <strong>R</strong> y la <strong>A</strong>.</p></div>
+  <div class="lesson"><div class="lt">Lo que lo cambió todo</div><p>Al revisar cuadro por cuadro salió algo que no esperaba: <strong>levanté el dedo dos segundos antes de decir "28"</strong>. La mano llega antes que la voz. Desde ahí, los efectos se ponen siguiendo la mano, no la palabra.</p></div>
+  <div class="lesson"><div class="lt">Mi corrección</div><p>Lo que le escribí, tal cual: <em>"la primera vez que muestras la fecha del 28 nov no coincide con el dedo, ni el espacio ni el timing"</em>. Una corrección de <strong>R</strong>, con lo que sentí. Esa frase cambió todo el método.</p></div>
+
+  <h2>Para explorar</h2>
+  <p>Referencias de editores, una por letra, para que agarres ideas (principios, no estilos): <a href="referencias-corta.html" style="color:var(--sesame)">Referencias para cada letra de CORTA ›</a></p>
+
+  <p class="foot">De tu mente al mundo · una iniciativa de <a href="../../../index.html">La Red de Luz</a> · Recurso de la clase <a href="../../clase.html?id=claude-como-editor-6">Claude como tu editor</a></p>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const txt=document.getElementById(btn.dataset.target).textContent;
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1800);
+  });
+});
+</script>
+</body>
+</html>

@@ -46,6 +46,22 @@ hacerse en dos lugares tarde o temprano.
 **No copies** la barra de progreso, el HUD, el panel de notas ni el script de
 navegación: `deck.js` los genera.
 
+**Tema de la marca:** los decks de DTMM nuevos (Herramientas de IA en adelante)
+cargan además el tema, justo después de `deck.css`:
+
+```html
+<link rel="stylesheet" href="../assets/motor/temas/dtmm.css">
+```
+
+## Videos dentro de una slide
+
+Pon el `<video>` tal cual (`controls playsinline preload="none"` y un `poster`).
+`deck.js` lo envuelve solo en `.media` y le agrega un botón de pantalla completa
+siempre visible (también doble clic, o **espacio** y **F** cuando el video está
+enfocado). Al cambiar de slide, los videos de las demás se pausan solos. Los
+archivos van en `recursos/video/` de la sección, con su `.jpg` de póster, y
+ligeros (2–3 MB): se descargan desde GitHub Pages.
+
 ## Botón "volver"
 
 Por defecto apunta al hub. Para que vuelva a la vista de detalle de la clase:
@@ -126,6 +142,36 @@ una slide concreta.
 Si una slide necesita algo que no está aquí, va en un `<style>` dentro de ese
 deck. **Si el mismo átomo aparece en tres o más decks, súbelo a `deck.css`** —
 así es como creció este catálogo.
+
+Átomos propios que ya se repiten (candidatos a subir al motor si aparecen en
+un tercer deck): `.conector` ("Pero…" / "Por eso…" en mono, Clases 5 y 6) y
+`.con-clip` + `.clip` (texto a un lado, video al otro).
+
+## Publicar una clase nueva (checklist)
+
+Así se subieron las Clases 5 y 6 de Herramientas de IA. En orden:
+
+1. **El deck**: `cursos/dtmm/<seccion>/<id>.html`, con `data-volver` hacia
+   `../clase.html?id=<id>` y notas del ponente en cada slide.
+2. **Los recursos**: páginas sueltas en `<seccion>/recursos/`. Copian la
+   estructura de `herramientas-ia/recursos/tu-video-empieza-en-el-guion.html`:
+   barra superior (‹ Hub · Ver la clase · ⇩ Guardar como PDF), `.wrap`,
+   `.eyebrow` "Sección · Clase N · Recurso", `.promptbox` con botón **Copiar**
+   para los prompts, `.lesson` para avisos y estilos de impresión.
+3. **`clases.json`**: la clase dentro de su fila, con `id`, `parte`, `titulo`,
+   `resumen`, `deck`, `temas` (5–6 frases), `recursos`
+   (`tipo` prompt/guia/skill, `icono`, `titulo`, `descripcion`, `url`) y
+   `grabaciones` con su fecha y `"url": ""` hasta que exista el video.
+4. **`scripts/academy-live-routes.json`**: agrega cada `.html` nuevo con su
+   ruta pública (`dtmm/...`), en orden alfabético. Si falta, el deploy falla en
+   "Verify public route parity".
+5. **Prueba local**: `node scripts/build-academy.cjs --out _site`,
+   `node scripts/test-route-parity.cjs _site` y los tests del workflow
+   (`.github/workflows/deploy-pages.yml`). Abre el hub, la clase, el deck y
+   cada recurso en el navegador, también a ancho de celular.
+6. **Publica**: commit y push a `master`; GitHub Pages despliega solo.
+7. **Después de la clase**: pega la URL de la grabación (abajo) y anótala en
+   `cursos/dtmm/GRABACIONES.md`.
 
 ## Agregar la grabación de una clase
 

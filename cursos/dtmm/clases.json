@@ -478,6 +478,44 @@
               "url": "herramientas-ia/recursos/animador-reels.zip"
             }
           ]
+        },
+        {
+          "id": "claude-como-editor-6",
+          "parte": "Clase 6",
+          "titulo": "Claude como tu editor",
+          "resumen": "Editar bien es saber pedir. Una palabra, CORTA, para que Claude edite tu video sin cortes a media frase, sin silencios incómodos y sin animaciones de adorno.",
+          "deck": "herramientas-ia/claude-como-editor-6.html",
+          "grabaciones": [
+            {
+              "generacion": "1ª",
+              "fecha": "2026-11-18",
+              "url": ""
+            }
+          ],
+          "temas": [
+            "Por qué la primera edición de Claude se siente mal cortada.",
+            "La mano llega antes que la voz: lo que aprendí de un video con 4 de 10.",
+            "CORTA: cortes completos, oído, reacciona a mí, texto y animación con motivo.",
+            "El pedido completo: se lee como la palabra y es el orden de trabajo.",
+            "Cómo corregir: di qué letra falló y qué sentiste.",
+            "Una toma grabada en vivo, calificada letra por letra."
+          ],
+          "recursos": [
+            {
+              "tipo": "prompt",
+              "icono": "⌘",
+              "titulo": "El pedido CORTA",
+              "descripcion": "El prompt para copiar en Claude Code, cómo grabar pensando en tu editor, la revisión letra por letra y el caso real. Se guarda como PDF.",
+              "url": "herramientas-ia/recursos/pedido-corta.html"
+            },
+            {
+              "tipo": "guia",
+              "icono": "▶",
+              "titulo": "Referencias para cada letra",
+              "descripcion": "Videos de editores para explorar la letra que más te cuesta. Principios, no estilos.",
+              "url": "herramientas-ia/recursos/referencias-corta.html"
+            }
+          ]
         }
       ]
     },

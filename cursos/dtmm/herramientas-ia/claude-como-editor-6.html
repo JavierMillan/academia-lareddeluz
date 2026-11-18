@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../../assets/imgs/reddeluz.png">
+<title>Claude como tu editor — De tu mente al mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Spline+Sans:wght@300;400;500;600&family=Martian+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- motor compartido: estructura, chrome, navegación y responsive -->
+<link rel="stylesheet" href="../assets/motor/deck.css">
+<link rel="stylesheet" href="../assets/motor/temas/dtmm.css">
+
+<style>
+/* ============================================================
+   Átomos propios de esta clase
+   (.conector se repite con la Clase 5: si aparece en un tercer deck, súbelo a deck.css)
+   ============================================================ */
+
+/* --- conector grande: pero / por eso --- */
+.conector{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sesame);
+  display:inline-flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.conector::before{content:"";width:1.6rem;height:2px;background:currentColor}
+.slide.paper .conector{color:var(--ketchup)}
+
+/* --- una letra de CORTA: letra gigante + regla + frase para el pedido --- */
+.letra{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1.2rem,4vw,3.2rem);align-items:center;width:100%}
+.letra .L{font-family:var(--font-display);font-weight:800;line-height:.8;font-size:clamp(7rem,20vw,15rem);letter-spacing:-.04em;
+  color:var(--paper);position:relative}
+.letra .L::after{content:"";position:absolute;left:-6%;right:-6%;top:56%;height:6px;border-radius:3px;transform:rotate(-9deg);
+  background:linear-gradient(90deg,var(--sesame),var(--ketchup));box-shadow:0 0 22px rgba(232,161,60,.6)}
+.slide.paper .letra .L{color:var(--on-paper)}
+.letra .nom{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--sesame)}
+.slide.paper .letra .nom{color:var(--ketchup)}
+.letra .h1{margin-top:.5rem;font-size:clamp(1.6rem,3vw,2.8rem)}
+.letra p.lead{max-width:40ch}
+@media(max-width:760px){.letra{grid-template-columns:1fr}.letra .L{font-size:clamp(5rem,26vw,8rem)}}
+
+/* --- frase para el pedido / corrección --- */
+.pide{margin-top:clamp(1rem,2.4vw,1.6rem);max-width:56rem;padding:clamp(.9rem,1.8vw,1.2rem) clamp(1rem,2vw,1.4rem);
+  border-left:3px solid var(--sesame);background:rgba(232,161,60,.07);border-radius:0 12px 12px 0}
+.slide.paper .pide{border-left-color:var(--ketchup);background:rgba(200,68,46,.06)}
+.pide .k{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-char-mute)}
+.slide.paper .pide .k{color:var(--on-paper-mute)}
+.pide p{font-family:var(--font-serif);font-size:clamp(1rem,1.7vw,1.3rem);margin-top:.35rem;line-height:1.4}
+.pide p b{font-family:var(--font-body);font-weight:600;font-style:normal;color:var(--sesame)}
+.slide.paper .pide p b{color:var(--ketchup)}
+
+/* --- CORTA en fila (resumen del pedido) --- */
+.corta{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.5rem,1.2vw,.9rem);width:100%}
+@media(max-width:820px){.corta{grid-template-columns:1fr 1fr}.corta .d{display:none}.corta div{padding:.7rem .8rem}}
+.corta div{border:1px solid var(--line-l);border-radius:14px;padding:clamp(.9rem,1.8vw,1.2rem);background:var(--paper-soft);display:flex;flex-direction:column;gap:.35rem}
+.corta .l{font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,4vw,3rem);line-height:1;color:var(--ketchup)}
+.corta .t{font-family:var(--font-display);font-weight:600;font-size:clamp(.92rem,1.4vw,1.08rem);color:var(--on-paper)}
+.corta .d{font-size:clamp(.84rem,1.1vw,.95rem);line-height:1.4;color:var(--on-paper-soft)}
+</style>
+</head>
+<body data-volver="../clase.html?id=claude-como-editor-6" data-volver-texto="‹ Clase">
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 · PORTADA -->
+    <section class="slide" data-notes="Bienvenida. Hoy grabamos algo <em>en vivo</em>. La promesa: editar bien no es saber usar un programa, es saber pedir. No digo todavía cuál es la palabra.">
+      <div class="glow tr"></div>
+      <div class="eyebrow">Herramientas de IA · Clase 6</div>
+      <h1 class="mega">Claude como <span class="hl">tu editor.</span></h1>
+      <p class="lead wide mt-m">Sin cortes a media frase, sin silencios incómodos, sin animaciones de adorno. Todo empieza en cómo se lo pides.</p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+    <!-- 2 · GANCHO -->
+    <section class="slide center" data-notes="Cara a cámara. Pausa después de la primera frase. NO decir cuál es la palabra: se revela letra por letra y se paga completa al final, con la toma de prueba.">
+      <div class="glow bl"></div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">Le di un <span class="hl">4 de 10</span> a un video que me editó Claude.</p>
+      <p class="lead mt-l" style="margin-inline:auto;text-align:center">Lo arreglé con una palabra de cinco letras.</p>
+    </section>
+
+    <!-- 3 · TOMA DE PRUEBA -->
+    <section class="slide paper" data-notes="Graba 30 segundos ahí mismo. A propósito: quédate callado 3 segundos, di un 'este' y apunta a un lado mientras dices una fecha o un nombre. Mándasela a Claude con el pedido CORTA, sin enseñarles el pedido. Plan B: una toma igual ya editada por si el render no termina.">
+      <span class="conector">Antes de empezar…</span>
+      <h2 class="h1">Grabamos 30 segundos <span class="hl">en vivo.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Me quedo callado 3 segundos en algún momento.</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Se me escapa un "este…".</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Apunto a un lado mientras digo una fecha.</div></div>
+        <div class="gitem"><div class="box">4</div><div class="t">Se lo mando a Claude con un pedido que todavía no les enseño.</div></div>
+      </div>
+      <div class="chip mt-m"><span class="dot"></span> Si la riega, la riega en vivo</div>
+    </section>
+
+    <!-- 4 · LA CICATRIZ -->
+    <section class="slide" data-notes="El aviso de DESPEGA de esta semana (ponlo desde tu compu). Leer tal cual lo que le escribí a Claude. Luego lo del logo: me puso mi firma. Dejar que se rían.">
+      <div class="glow tr"></div>
+      <span class="conector">Esta semana…</span>
+      <h2 class="h1">Le di a Claude un aviso para DESPEGA. <span class="hl">Primera versión: 4 de 10.</span></h2>
+      <div class="ab mt-l">
+        <div class="pub a">
+          <div class="label">Lo que le escribí, tal cual</div>
+          <div class="txt">"La primera vez que muestras la fecha del 28 nov no coincide con el dedo, ni el espacio ni el timing."</div>
+        </div>
+        <div class="pub b">
+          <div class="label">Y de cierre</div>
+          <div class="txt">Sin audio. Y como logo… puso mi firma.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · PERO / EL HALLAZGO -->
+    <section class="slide paper" data-notes="Claude no estaba mal: hizo lo que le pedí, 'edítalo bonito'. Al revisar cuadro por cuadro salió el dato: levanté el dedo dos segundos ANTES de decir '28'. Claude se guiaba por mis palabras; siempre iba a llegar tarde.">
+      <span class="conector">Pero no era culpa de Claude…</span>
+      <h2 class="h1">Levanté el dedo <span class="hl">dos segundos antes</span> de decir "28".</h2>
+      <p class="lead wide mt-m">La mano llega antes que la voz. Si el editor solo escucha tus palabras, siempre llega tarde.</p>
+    </section>
+
+    <!-- 6 · LA PALABRA -->
+    <section class="slide center" data-notes="Contar cinco con los dedos. Revelar la palabra letra por letra en las siguientes slides, no completa.">
+      <div class="glow bl"></div>
+      <span class="conector" style="justify-content:center">Por eso…</span>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">Todo lo que le faltaba a ese video <span class="hl">cabe en una palabra.</span></p>
+    </section>
+
+    <!-- 7 · C -->
+    <section class="slide" data-notes="Mi primer reel con Claude cortaba cada 2–3 segundos: quitaba cada silencio. Walter Murch (El Padrino II, Apocalypse Now): en un corte la emoción pesa 51 %, más que todo lo demás junto. Y revisa el final: una vez subí una clase con ~10 minutos muertos al final.">
+      <div class="glow tr"></div>
+      <div class="letra">
+        <span class="L">C</span>
+        <div>
+          <span class="nom">Cortes completos</span>
+          <h2 class="h1">Un editor no corta silencios. <span class="hl">Corta por emoción.</span></h2>
+          <p class="lead mt-m">Walter Murch, el editor de <em>El Padrino II</em>: en un corte, la emoción pesa 51 %. Más que todo lo demás junto.</p>
+        </div>
+      </div>
+      <div class="pide"><span class="k">Para el pedido</span><p>"Corta en bloques completos, <b>nunca a media frase</b>. Quita el inicio vacío y <b>revisa el final</b>."</p></div>
+    </section>
+
+    <!-- 8 · O -->
+    <section class="slide paper" data-notes="Hay videos virales que cortan todo silencio de una décima de segundo: se ven rápidos y todos suenan igual. Pero tampoco 3 segundos de nada. La regla: medio segundo. Verdad honesta: Claude mide el volumen, pero no escucha. El oído es de ustedes.">
+      <div class="letra">
+        <span class="L">O</span>
+        <div>
+          <span class="nom">Oído</span>
+          <h2 class="h1">Ni cortar cada respiro, <span class="hl">ni dejar 3 segundos de nada.</span></h2>
+          <p class="lead mt-m">Si la pausa dura más de medio segundo, se recorta y se deja una respiración. Las muletillas se van; los "entonces" que conectan, se quedan.</p>
+        </div>
+      </div>
+      <div class="pide"><span class="k">Para el pedido</span><p>"Quita pausas de <b>más de medio segundo</b> y muletillas. Música bajita que <b>siga la historia</b>."</p></div>
+    </section>
+
+    <!-- 9 · R -->
+    <section class="slide" data-notes="Aquí fue mi 4 de 10. APUNTA a un lado y sostén: '¿ven? ya miraron para acá sin que les dijera'. Murch le llama seguir el ojo. Si apuntas y no aparece nada, desperdiciaste la mirada de la gente. Regla que no se rompe: nada encima de tu cara.">
+      <div class="glow br"></div>
+      <div class="letra">
+        <span class="L">R</span>
+        <div>
+          <span class="nom">Reacciona a mí</span>
+          <h2 class="h1">Si apuntas, <span class="hl">ahí tiene que aparecer.</span></h2>
+          <p class="lead mt-m">Claude tiene que ver tus manos, no solo oír tus palabras. Y nada encima de tu cara.</p>
+        </div>
+      </div>
+      <div class="pide"><span class="k">Para el pedido</span><p>"<b>Sigue mis manos</b>: si apunto, ahí aparece. Ponlo donde está mi mano, no donde digo la palabra. <b>Nada encima de mi cara.</b>"</p></div>
+    </section>
+
+    <!-- 10 · T -->
+    <section class="slide paper" data-notes="El error más común: subtítulos que terminan en 'de', 'que', 'y'. Te dejan colgado a media idea. Bloques cortos, la palabra que dices encendida y la importante al final del bloque.">
+      <div class="letra">
+        <span class="L">T</span>
+        <div>
+          <span class="nom">Texto</span>
+          <h2 class="h1">Subtítulos que se leen <span class="hl">al ritmo de tu voz.</span></h2>
+          <p class="lead mt-m">Bloques cortos, la palabra que dices encendida y la palabra importante al final. Nunca termines un bloque en "de".</p>
+        </div>
+      </div>
+      <div class="pide"><span class="k">Para el pedido</span><p>"Subtítulos grandes, la palabra que digo <b>encendida</b>. <b>Nunca terminar en 'de' o 'que'.</b>"</p></div>
+    </section>
+
+    <!-- 11 · A -->
+    <section class="slide" data-notes="Cuando dije 'Walter Murch', más de uno pensó '¿quién?'. Eso es una animación con motivo: contesta la pregunta antes de que la hagas. El error: meter cosas porque se ven bonitas. Cada cosa trae su sonido. Y el cierre con TU marca, no tu firma (guiño).">
+      <div class="glow tr"></div>
+      <div class="letra">
+        <span class="L">A</span>
+        <div>
+          <span class="nom">Animación con motivo</span>
+          <h2 class="h1">Cada cosa que aparece <span class="hl">contesta algo.</span></h2>
+          <p class="lead mt-m">Una a la vez, cada una con su sonido. Y el cierre lleva audio y tu marca de verdad.</p>
+        </div>
+      </div>
+      <div class="pide"><span class="k">Para el pedido</span><p>"<b>Una cosa a la vez</b>, cada una con su sonido. El cierre con audio y <b>mi marca</b>."</p></div>
+    </section>
+
+    <!-- 12 · REMATE -->
+    <section class="slide center" data-notes="Frase para llevarse. Pausa.">
+      <div class="glow bl"></div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:24ch">Un editor no quita lo que sobra. <span class="hl">Pone lo que la gente estaba buscando.</span></p>
+    </section>
+
+    <!-- 13 · EL PEDIDO -->
+    <section class="slide paper" data-notes="El pedido se lee de arriba abajo como la palabra. Y CORTA también es el orden: primero se corta, luego se escucha, luego se lee a la persona, luego el texto y al final lo que aparece. La primera línea es la más importante: 'primero dime qué vas a hacer y espera'.">
+      <span class="conector">Por eso el pedido completo…</span>
+      <h2 class="h1">Se lee como la palabra. <span class="hl">Y es el orden de trabajo.</span></h2>
+      <div class="corta mt-l">
+        <div><span class="l">C</span><span class="t">Cortes completos</span><span class="d">Nunca a media frase. Revisa el final.</span></div>
+        <div><span class="l">O</span><span class="t">Oído</span><span class="d">Pausas de más de medio segundo, fuera.</span></div>
+        <div><span class="l">R</span><span class="t">Reacciona a mí</span><span class="d">Sigue mis manos. Nada en mi cara.</span></div>
+        <div><span class="l">T</span><span class="t">Texto</span><span class="d">Grande y nunca termina en "de".</span></div>
+        <div><span class="l">A</span><span class="t">Animación</span><span class="d">Una a la vez, con su sonido.</span></div>
+      </div>
+      <div class="pide"><span class="k">La primera línea, la más importante</span><p>"Primero dime qué vas a cortar y qué vas a meter, <b>y espera a que lo apruebe</b>."</p></div>
+    </section>
+
+    <!-- 14 · CÓMO CORREGIR -->
+    <section class="slide" data-notes="La primera versión nunca es la final, igual que con un editor humano. 'No me gusta, mejóralo' no le dice nada. La letra y lo que sentiste, sí. Mi frase del dedo fue una corrección de R, y cambió todo el método.">
+      <div class="glow br"></div>
+      <span class="conector">Pero la primera versión nunca queda. Por eso…</span>
+      <h2 class="h1">Dile qué letra falló <span class="hl">y qué sentiste.</span></h2>
+      <div class="pide"><span class="k">R · así lo corregí yo</span><p>"La fecha <b>no coincide con mi dedo</b>, ni en el lugar ni en el momento. <b>Apunté antes de decirla.</b>"</p></div>
+      <div class="pide"><span class="k">C · otro ejemplo</span><p>"En el segundo 12 <b>me cortaste a media frase</b>. Deja el bloque completo."</p></div>
+    </section>
+
+    <!-- 15 · EL PAGO -->
+    <section class="slide paper" data-notes="¿Se acuerdan de los 30 segundos del inicio? Ponla: original y editada. Ahora sí enseña el pedido: era CORTA. Que la califiquen en el chat del 1 al 10, letra por letra. Si algo salió mal, di qué letra falló: eso vende más que un truco perfecto.">
+      <span class="conector">¿Se acuerdan de los 30 segundos?</span>
+      <h2 class="h1">Califiquen la toma <span class="hl">letra por letra.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">C</div><div class="t">¿Quedó algún corte a media frase?</div></div>
+        <div class="gitem"><div class="box">O</div><div class="t">¿Se fueron el silencio y el "este"?</div></div>
+        <div class="gitem"><div class="box">R</div><div class="t">¿Lo que dije apareció donde apunté?</div></div>
+        <div class="gitem"><div class="box">T</div><div class="t">¿Se leen los subtítulos en el celular?</div></div>
+        <div class="gitem"><div class="box">A</div><div class="t">¿Algo apareció sin motivo?</div></div>
+      </div>
+      <div class="chip"><span class="dot"></span> En el chat: del 1 al 10, por letra</div>
+    </section>
+
+    <!-- 16 · TAREA -->
+    <section class="slide paper" data-notes="La tarea: un video corto editado con CORTA, compartido en el grupo con su calificación por letra. Abajo los dos recursos: el pedido para copiar y las referencias para explorar la letra que más les cueste.">
+      <span class="conector">Pero de nada sirve si se queda aquí. Por eso, de tarea…</span>
+      <h2 class="h1">Tu video, <span class="hl">editado con CORTA.</span></h2>
+      <div class="gradlist mt-l">
+        <div class="gitem"><div class="box">1</div><div class="t">Graba 30 a 60 segundos pensando en tu editor.</div></div>
+        <div class="gitem"><div class="box">2</div><div class="t">Pídeselo a Claude Code con el pedido CORTA.</div></div>
+        <div class="gitem"><div class="box">3</div><div class="t">Revisa letra por letra y corrige una vez.</div></div>
+        <div class="gitem"><div class="box">4</div><div class="t">Compártelo en el grupo con tu calificación por letra.</div></div>
+      </div>
+      <div class="reslist mt-m">
+        <a class="res" href="recursos/pedido-corta.html" target="_blank" rel="noopener">
+          <span class="ri">⌘</span>
+          <span class="rb">
+            <span class="rt">El pedido CORTA</span>
+            <span class="rd">El prompt para copiar, la revisión letra por letra y cómo corregir.</span>
+          </span>
+          <span class="rgo">Abrir →</span>
+        </a>
+        <a class="res" href="recursos/referencias-corta.html" target="_blank" rel="noopener">
+          <span class="ri">▶</span>
+          <span class="rb">
+            <span class="rt">Referencias para cada letra</span>
+            <span class="rd">Videos de editores para explorar la letra que más te cuesta.</span>
+          </span>
+          <span class="rgo">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 17 · CIERRE -->
+    <section class="slide center" data-notes="Loop al gancho. 'Mándaselo a alguien que tenga 20 videos grabados sin subir porque editar le da flojera.'">
+      <div class="glow tr"></div>
+      <div class="eyebrow" style="justify-content:center">Antes de irte</div>
+      <p class="quote" style="margin-inline:auto;text-align:center;max-width:26ch">Tu primer video con Claude también va a ser un 4. <span class="hl">La diferencia es que ahora sabes qué letra falló.</span></p>
+      <div class="brandmark">De tu mente al mundo · una iniciativa de La Red de Luz</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="../assets/motor/deck.js" defer></script>
+</body>
+</html>
