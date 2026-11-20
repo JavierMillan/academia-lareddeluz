@@ -41,6 +41,7 @@ https://drive.google.com/drive/folders/1jHrdDtJNGLSnbH84cmjmCWH62hbDN0kk
 | 11 | Creacion de Videos con IA - 1 | 12 ago | Herramientas de IA · Clase 1 | `video-con-codigo-1` |
 | 12 | Clase IA - Diseño Claude (editado) | 21 oct | Herramientas de IA · Clase 4 | `tu-marca-en-claude-design-4` |
 | 13 | clase ia video nov 4 (editado) | 4 nov | Herramientas de IA · Clase 5 | `tu-video-empieza-en-el-guion-5` |
+| 14 | Clase IA 6 - Claude como tu editor (final) · local, no en Drive | 18 nov | Herramientas de IA · Clase 6 | `claude-como-editor-6` |
 
 ## Clases sin grabación
 
